@@ -1,0 +1,136 @@
+main {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.container-header h1 {
+  font-weight: lighter;
+  font-size: 2rem;
+}
+
+.container-header p {
+  font-weight: lighter;
+  font-size: 14px;
+  margin-bottom: 2rem;
+}
+
+div.__container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+div.sub_container:first-child {
+  width: 30%;
+  padding-right: 0.5rem;
+}
+
+div.sub_container:last-child {
+  width: 70%;
+  padding-left: 0.5rem;
+}
+
+
+table#changelogs-list {
+  width: 100%;
+  display: table;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, .05);
+}
+
+table#changelogs-list tbody tr.even {
+  background-color: #fff;
+}
+
+table#changelogs-list tbody tr.odd {
+  background-color: rgba(0, 0, 0, .05);
+}
+
+table#changelogs-list tbody tr:hover {
+  background-color: #2d6e3d45;
+  cursor: pointer;
+}
+
+table#changelogs-list thead th {
+  color: #2d6e3d;
+  text-align: start
+}
+
+table#changelogs-list tbody tr td {
+  font-size: 14px;
+  padding: 6px 8px;
+}
+
+form>div {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+form>div>label {
+  font-size: 14px;
+}
+
+label[data-sign]::before {
+  content: attr(data-sign);
+  color: white;
+  font-weight: 600;
+}
+
+div.form_data {
+  display: flex;
+  align-items: center;
+}
+
+div.form_data label {
+  width: 2rem;
+  background-color: #2d6e3d;
+  border: 1px solid #2d6e3d;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  text-align: center;
+  line-height: 1.75rem;
+  max-height: 1.75rem;
+}
+
+div.form_data input {
+  font-size: 14px;
+  padding: 0.25rem 0.25rem;
+  border: 1px solid #2b2b2b25;
+  border-left-color: rgba(43, 43, 43, 0.145);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-left: none;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  height: 1.75rem;
+}
+
+div.form_data input::placeholder {
+  font-size: 14px;
+}
+
+#changelogs-list_wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+#updateTarifaButton {
+  background-color: #2d6e3d;
+  border-radius: 3px;
+  border: 1px solid #2d6e3d;
+  color: white;
+  width: 100%;
+  margin: 1rem auto;
+  display: block;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+input[type=submit]:disabled {
+  background-color: gray !important;
+  cursor: default !important;
+  border: 1px solid gray !important;
+}

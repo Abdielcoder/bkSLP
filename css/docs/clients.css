@@ -1,0 +1,68 @@
+main { 
+    overflow-y: hidden;
+    overflow-x: hidden; 
+} 
+
+div#clients-list_filter {
+    margin-bottom: 1rem;
+  }
+  
+table#clients-list {
+    width: 100%;
+    display: table;
+    position: relative;
+    border-top: 1px solid rgba(0,0,0,.05);
+}
+
+table#clients-list tbody tr.even {
+    background-color: #fff; 
+}
+
+table#clients-list tbody tr.odd {
+    background-color: rgba(0,0,0,.05);
+}
+table#clients-list tbody tr:hover {
+    background-color: #2d6e3d45;
+    cursor: pointer; 
+} 
+
+table#clients-list thead th {
+    color: #2d6e3d;
+    text-align: start
+}
+
+table#clients-list tbody tr td {
+    font-size: 14px;
+    padding: 6px 8px;
+}  
+
+div#clients-list > label {
+    background-color: #2d6e3d;
+    padding-left: 8px;
+    border-radius: 3px;
+    color: whitesmoke;
+    display: inline-block;
+    font-size: 0.8571em;
+    margin-bottom: 5px;
+}
+
+input[aria-controls="clients-list"] {
+    width: 400px;
+    background-color: whitesmoke !important;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left: none !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    outline: 1px solid transparent;
+}
+
+div#clients-list_filter > label  {
+    display: inline-block;
+    background-color: #2d6e3d;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    padding-left: 8px;
+    border-radius: 3px; 
+    color: whitesmoke;
+}

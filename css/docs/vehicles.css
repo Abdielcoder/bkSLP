@@ -1,0 +1,70 @@
+main { 
+    overflow-y: auto;
+    overflow-x: hidden;
+} 
+
+div#vehicle-list_filter {
+    margin-bottom: 1rem;
+  }
+  
+table#vehicle-list {
+    width: 100%;
+    display: table;
+    position: relative;
+    border-top: 1px solid rgba(0,0,0,.05);
+}
+
+table#vehicle-list tbody tr.even {
+    background-color: #fff; 
+}
+
+table#vehicle-list tbody tr.odd {
+background-color: rgba(0,0,0,.05);
+}
+
+table#vehicle-list tbody tr:hover {
+    background-color: #0c435a51;
+    cursor: pointer; 
+} 
+table#vehicle-list thead th {
+    color: #2d6e3d;
+    text-align: start
+}
+
+table#vehicle-list tbody tr td {
+    font-size: 14px;
+    padding: 6px 8px;
+}
+
+table#vehicle-list tbody td:not(:nth-child(-n+2)) {
+    text-transform: capitalize;
+}
+
+table#vehicle-list tbody td:nth-child(-n+2) {
+    text-transform: uppercase;
+}
+
+div#vehicle-list_filter > label {
+    background-color: #2d6e3d;
+    padding-left: 8px;
+    border-radius: 3px;
+    color: whitesmoke;
+    display: inline-block;
+    font-size: 0.8571em;
+    margin-bottom: 5px;
+}
+
+input[aria-controls="vehicle-list"] {
+    width: 400px;
+    background-color: whitesmoke !important;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left: none !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    outline: 1px solid transparent;
+}
+ 
+tr td:first-child {
+    white-space: nowrap;
+  }

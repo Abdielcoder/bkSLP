@@ -1,0 +1,93 @@
+/**=============================================================*/
+  
+div.stat-card {
+    width: auto;
+    border-radius: 4px; 
+    flex-grow: 1; 
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+div.stat-data {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.stat-data span[data-icon_type=currency] {
+    color: #008000;
+    font-size: 3rem;
+}
+div.stat-data span[data-icon_type=vehicle] {
+    color: #2d6e3d;
+    font-size: 3rem;
+}
+
+.dashboard-lastsession-log h4 {
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    color: #2d6e3d;
+}
+.stat-card h4 {
+    color: #2d6e3d;
+    text-transform: uppercase;
+    text-align: end;
+}
+.stat-card div {
+    display: flex;
+    justify-content: space-between; 
+}
+.stat-card div span:last-child {
+    font-weight: 600;
+    font-size: 18px;
+} 
+
+
+table#access-list {
+    width: 100%;
+    display: table;
+    position: relative;
+    border-top: 1px solid rgba(0,0,0,.05);
+}
+
+table#access-list tbody tr.even {
+    background-color: #fff; 
+}
+
+table#access-list tbody tr.odd {
+background-color: rgba(0,0,0,.05);
+}
+
+table#access-list tbody tr:hover {
+    background-color: #2d6e3d45; 
+} 
+table#access-list thead th {
+    color: #2d6e3d;
+    text-align: start
+}
+
+table#access-list tbody tr td {
+    font-size: 14px;
+    padding: 6px 8px;
+}
+
+table#access-list tbody td:not(:nth-child(-n+2)) {
+    text-transform: capitalize;
+}
+/**=============================================================*/
+ 
+div.graphics_container {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+}
+
+div.dashboard_stats {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+}

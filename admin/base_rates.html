@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="../assets/icons/favicon.ico">
+  <title>Gobierno de Chihuahua - Taximetro Digital</title>
+  <meta charset="utf-8">
+  <script src="../js/dom/local.js"></script>
+  <link rel="stylesheet" href="../css/docs/tadiDefaults.css">
+  <link rel="stylesheet" href="../css/docs/basic_rates.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css" />
+</head>
+
+<body>
+
+  <div id="root">
+    <!-- Aside -->
+    <aside>
+      <div id="aside-container">
+        <div class="logo">
+          <a class="home-link" href="../docs/main.html">TaDi - Taximetro Digital</a>
+        </div>
+        <hr />
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/maps.html">
+              <span class="link-icons material-icons-sharp">map</span>
+              Mapa
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/users.html">
+              <span class="link-icons material-icons-sharp">person</span>
+              Usuarios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/vehicles.html">
+              <span class="link-icons material-icons-sharp">directions_car</span>
+              Vehículos
+            </a>
+          </li>
+          <li class="nav-item menu-button menu-opened">
+            <a class="nav-link" href="#">
+              <span class="link-icons material-icons-sharp">manage_accounts</span>
+              Administración
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./messages.html">
+              <span class="link-icons material-icons-sharp">chat</span>
+              Mensajes
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./users.html">
+              <span class="link-icons material-icons-sharp">person</span>
+              Administradores
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./roles.html">
+              <span class="link-icons material-icons-sharp">groups</span>
+              Roles
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./clients.html">
+              <span class="link-icons material-icons-sharp">person_pin</span>
+              Clientes
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./states.html">
+              <span class="link-icons material-icons-sharp">place</span>
+              Estado
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./rates.html">
+              <span class="link-icons material-icons-sharp">paid</span>
+              Tarifas
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink isSelected" href="./base_rates.html">
+              <span class="link-icons material-icons-sharp">attach_money</span>
+              Tarifas Base
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Header  -->
+    <header>
+      <nav>
+        <h1 class="app-title">Gobierno de Chihuahua - Portal de Administración</h1>
+        <button class="close-app">
+          <span class="material-icons-sharp">logout</span>
+          Cerrar Sesión
+        </button>
+      </nav>
+      <div class="header-bg-image"></div>
+    </header>
+
+    <!-- Main -->
+    <main>
+      <div class="container">
+        <div class="tadi-card col-4">
+          <div class="card-header">
+            <h1>Tarifa Base</h1>
+            <p>Formulario de tarifas con base a ciudad e histórico de solicitudes de cambio.</p>
+          </div>
+          <div class="card-body">
+            <form>
+              <div>
+                <label>Banderazo diurno:</label>
+                <div class="form_data">
+                  <label data-sign="$"></label>
+                  <input type="text" data-name="banderaDiurna" placeholder="Precio inicial" id="initial_cost">
+                </div>
+              </div>
+              <div>
+                <label>Banderazo diurno app:</label>
+                <div class="form_data">
+                  <label data-sign="$"></label>
+                  <input type="text" data-name="banderaDiurnaApp" placeholder="Precio inicial" id="final_cost">
+                </div>
+              </div>
+              <div>
+                <label>bandera nocturna</label>
+                <div class="form_data">
+                  <label data-sign="$"></label>
+                  <input type="text" data-name="banderaNocturna" placeholder="Precio por Km" id="normal_km_cost">
+                </div>
+              </div>
+              <div>
+                <label>bandera nocturna app</label>
+                <div class="form_data">
+                  <label data-sign="$"></label>
+                  <input type="text" data-name="banderaNocturnaApp" placeholder="Precio por Km" id="special_km_cost">
+                </div>
+              </div>
+              <div>
+                <label>kilometro</label>
+                <div class="form_data">
+                  <label data-sign="$"></label>
+                  <input type="text" data-name="kilometro" placeholder="Precio por Km" id="special_km_cost">
+                </div>
+              </div>
+              <div>
+                <label>kilometro app</label>
+                <div class="form_data">
+                  <label data-sign="$"></label>
+                  <input type="text" data-name="kilometroApp" placeholder="Precio por Min" id="normal_min_cost">
+                </div>
+              </div>
+              <div>
+                <label>Minuto </label>
+                <div class="form_data">
+                  <label data-sign="$"></label>
+                  <input type="text" data-name="min" placeholder="Precio por Min" id="special_min_cost">
+                </div>
+              </div>
+              <div>
+                <label>Minuto app</label>
+                <div class="form_data">
+                  <label data-sign="$"></label>
+                  <input type="text" data-name="minApp" placeholder="Precio por Min" id="special_min_cost">
+                </div>
+              </div>
+              <div>
+               
+              </div>
+              <form id="rateForm">
+                <!-- ... tus campos de entrada ... -->
+                <input type="submit" id="updateTarifaButton" value="Guardar">
+              </form>
+              <!-- <button type="button" onclick="actualizaTarifaBase();">Guardar</button> -->
+            </form>
+          </div>
+        </div>
+        <div class="tadi-card col-8">
+          <div class="card-header">
+            <h1>Solicitudes de cambio</h1>
+            <p></p>
+          </div>
+          <div class="card-body">
+            <div id="table-list">
+              <table id="changelogs-list">
+                <thead>
+                  <tr>
+                    <th>Id Cambio</th>
+                    <th>Estatus</th>
+                    <th>Fecha</th>
+                    <th>Autorizadores</th>
+                  </tr>
+                </thead>
+                <tbody> </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      &copy; 2022, Copyright IDG.
+    </footer>
+  </div>
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript"
+  src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"></script>
+<script type="module" src="../js/admin/base_rates.js" async></script>
+<script type="module" src="../js/dom/defaults.js"></script>

@@ -1,0 +1,58 @@
+main { 
+    overflow-y: hidden;
+    overflow-x: hidden; 
+} 
+
+table {
+    width: 100%;
+    display: table;
+    position: relative;
+    border-top: 1px solid rgba(0,0,0,.05);
+}
+
+table tbody tr.even {
+    background-color: #fff!important; 
+}
+
+table tbody tr.odd {
+    background-color: rgba(0,0,0,.05)!important;
+} 
+
+table thead th {
+    color: #2d6e3d!important;
+    text-align: start;
+}
+
+table tbody tr:hover {
+    background-color: #0c435a3d!important;
+    cursor: pointer; 
+} 
+
+table tbody tr td {
+    font-size: 14px;
+    padding: 6px 8px;
+} 
+
+.tables-navigator li {
+    list-style: none;
+}
+.tables-navigator {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+.tables-navigator li a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 0px 8px;
+    color: #2d6e3d;
+}
+.tables-navigator li a.isSelected {
+    color: #2d6e3d!important;
+    font-weight: 600;
+    border-bottom: 1px solid orange;
+}
+.tables-navigator li a:hover {
+    border-bottom: 1px solid rgba(255, 166, 0, 0.568);
+}

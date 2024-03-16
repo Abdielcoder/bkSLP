@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="./assets/icons/favicon.ico">
+  <title>Gobierno de San Luis Potosi - Taximetro Digital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="bg_logo">
+    </div>
+    <div class="form_container">
+      <div class="sub_form">
+        <div class="loginForm">
+          <div class="floating-image-container">
+            <img src="/assets/img/Barra-Busqueda-slp2.png" alt="San Luis Potosi">
+          </div>
+          <h2>Gobierno de San Luis Potosi</h5>
+            <p>Portal Administrativo</p>
+            <form>
+              <input class="form_input" id="loginEmail" type="email" placeholder="Correo electronico" required>
+              <input class="form_input" id="loginPassword" type="password" placeholder="Contraseña" required
+                minlength="8">
+              <a href="./reset_pwd.html">¿Olvidaste tu Contraseña?</a>
+              <input id="loginSubmit" type="submit" value="Ingresar">
+              <p>Copyright &copy; <u>Tadi App.</u></p>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script type="module" src="./js/functions/index.js"></script>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>TADI IMOS - Taximetro Digital</title>
+  <link rel="icon" href="../assets/icons/favicon.ico">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../js/dom/local.js"></script>
+  <link rel="stylesheet" href="../css/docs/tadiDefaults.css">
+  <link rel="stylesheet" href="../css/docs/maps.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+</head>
+
+<body>
+  <div id="root">
+
+    <aside>
+      <div id="aside-container">
+        <div class="logo">
+          <a class="home-link" href="./main.html">TADI | Taximetro Digital</a>
+        </div>
+        <hr />
+      </div>
+      <div class="search-bar">
+        <input type="text" name="" id="searching-bar" placeholder="Placas ó No. económico">
+        <i class="search-icon"></i>
+      </div>
+      <div class="data-list">
+        <table id="data-list">
+          <tbody></tbody>
+        </table>
+      </div>
+
+    </aside>
+
+    <header>
+      <nav>
+        <h1 class="app-title">Gobierno de San Luis Potosi - Portal Administrativo</h1>
+        <button class="close-app">
+          <span class="material-icons-sharp">logout</span>
+          Cerrar Sesión
+        </button>
+      </nav>
+      <div class="header-bg-image"></div>
+    </header>
+
+    <main>
+      <div id='mapid'> </div>
+      <script type="text/javaScript" src="../js/dashboard/map/maps.js"></script>
+      <div class="map-data-container">
+        <button class="map-data" disabled>
+          <span>
+            Vehículos totales:
+          </span>
+          <span id="total-data">0</span>
+        </button>
+        <button class="map-data button-toggle-filter" data-event="sitio" data-vision="true">
+          <span>
+            <img class="eye-vision" src="../assets/svg/visible.svg">
+            Sitio:
+          </span>
+          <span id="sitio-data">0</span>
+        </button>
+        <button class="map-data button-toggle-filter" data-event="libre" data-vision="true">
+          <span>
+            <img class="eye-vision" src="../assets/svg/visible.svg">
+            Libre:
+          </span>
+          <span id="libre-data">0</span>
+        </button>
+        <button class="map-data button-toggle-filter" data-event="working" data-vision="true">
+          <span>
+            <img class="eye-vision" src="../assets/svg/visible.svg">
+            En servicio
+          </span>
+          <span id="working-data">0</span>
+        </button>
+        <button class="map-data button-toggle-filter" data-event="active" data-vision="true">
+          <span>
+            <img class="eye-vision" src="../assets/svg/visible.svg">
+            Activos
+          </span>
+          <span id="active-data">0</span>
+        </button>
+        <button class="map-data" data-event="inactive" data-vision="false" disabled>
+          <span>
+            <img class="eye-vision" src="../assets/svg/hidden.svg">
+            No disponible
+          </span>
+          <span id="inactive-data">0</span>
+        </button>
+        <hr class="separator warpan" style="display: none;" />
+        <button class="map-data warpan warning" data-event="warning" style="display: none;">
+          <span>
+            <img src="../assets/svg/warning.svg">
+            Warning
+          </span>
+          <span id="warning-data">0</span>
+        </button>
+        <button class="map-data warpan panic" data-event="panic" style="display: none;">
+          <span>
+            <img src="../assets/svg/panic.svg">
+            Panico
+          </span>
+          <span id="panic-data">0</span>
+        </button>
+      </div>
+      <div class="modal-alert-box" data-id="">
+        <div class="box-container">
+          <div class="box-body">
+            <div class="observations">
+              <h1>Atender alerta</h1>
+              <p>Observaciones:</p>
+              <input type="text" class="input-observations" />
+            </div>
+            <div class="body-buttons">
+              <button class="confirm-button">Finalizar</button>
+              <button class="cancel-button">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      &copy; 2022, Copyright IDG.
+    </footer>
+  </div>
+
+
+  <div class="modal alerts-modal" style="display: none;">
+    <div class="modal-container">
+      <a href="#" class="close" data-ref="alerts-modal"></a>
+      <div class="modal-container-header"></div>
+      <div class="modal-container-body">
+        <table id="alerts-list">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Gafete</th>
+              <th>Corréo</th>
+              <th>No. Economico</th>
+              <th>Vehículo</th>
+              <th>Placas</th>
+              <th>Tipo</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <audio hidden id="panic-audio">
+    <source src="../assets/audio/panic.mp3" type="audio/mpeg">
+  </audio>
+  <audio hidden id="warning-audio">
+    <source src="../assets/audio/warning.mp3" type="audio/mpeg">
+  </audio>
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+<script type="module" src="../js/dashboard/map/functionality.js" async></script>
+<script type="module" src="../js/dashboard/map/dom.js"></script>
+<script type="module" src="../js/dashboard/map/play_audio.js"></script>

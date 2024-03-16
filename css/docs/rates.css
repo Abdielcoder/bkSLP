@@ -1,0 +1,80 @@
+main {  
+    overflow-y: auto;
+    overflow-x: hidden; 
+} 
+
+div#rates-list_filter {
+    margin-bottom: 1rem;
+}
+  
+table#rates-list {
+    width: 100%;
+    display: table;
+    position: relative;
+    border-top: 1px solid rgba(0,0,0,.05);
+}
+
+table#rates-list tbody tr.even {
+    background-color: #fff; 
+}
+
+table#rates-list tbody tr.odd {
+    background-color: rgba(0,0,0,.05);
+} 
+
+table#rates-list tbody tr:hover,
+table#rates-list tbody tr td:hover {
+    background-color: #2d6e3d44;
+    cursor: pointer; 
+} 
+
+table#rates-list thead th {
+    color: #2d6e3d;
+    text-align: start
+}
+
+table#rates-list tbody tr td {
+    font-size: 14px;
+    padding: 6px 8px;
+} 
+
+.container-header h1 {
+    font-weight: lighter;
+    font-size: 2rem;
+}
+.container-header p {
+    font-weight: lighter;
+    font-size: 14px;
+    margin-bottom: 1rem;
+} 
+
+
+
+#municipios-list { 
+    width: 250px;
+    text-align-last: auto;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: white;
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: 8px 4px;
+  }
+  .list_container label {
+    position: relative;
+    top: 8px;
+    left: 8px;
+    z-index: 21;
+    display: block;
+    background-color: white;
+    width: fit-content;
+    color: #2d6e3d;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .list_container {
+    position: relative;
+    display: block; 
+  }

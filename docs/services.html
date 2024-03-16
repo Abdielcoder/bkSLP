@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+  <script src="../js/dom/local.js"></script>
+  <title>TaDi - Taximetro Digital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="container-fluid">
+        <br><br>
+        <h1 class="text-center"><small>Bienvenidos a Gobierno de San Luis Potosi</small></h1>
+        <hr style="height: 1px" width="60px" color="#FFB333">
+        <h2 class="text-center"><small>Autorización de Solicitudes TADI</small></h2>
+        <br><br>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <img src="images/IMOS-logo-1.gif" class="img-fluid" alt="IMOS BC">
+      </div>
+      <div class="col-sm-6">
+        <br>
+        <form action="">
+          <div class="form-group">
+            <!-- label for="usuario">Usuario:</label -->
+            <input type="email" class="form-control" placeholder="Correo Electronico" id="usuario">
+          </div>
+          <div class="form-group">
+            <!-- label for="pwd">Password:</label -->
+            <input type="password" class="form-control" placeholder="Contraseña" id="pwd">
+          </div>
+          <button type="button" class="btn btn-primary" style="background-color: #FFB333; color: white;"
+            onclick="loginSession('tadi_servicios2.html','tadi_servicios.html','login_error.html');">Ingresar</button>
+
+        </form>
+        <a href="./reset_pwd.html">Olvidaste tu contraseña?</a>
+        <br><br>
+
+      </div>
+    </div>
+
+    <br><br>
+    <div class="row">
+      <div class="col-sm-6">
+        <p class="text-left" style="font-size: small; color: dimgray; padding: 0px; margin-bottom: 0px;">Copyright Data
+          Tec Integration</p>
+      </div>
+      <div class="col-sm-6">
+        <p class="text-right" style="font-size: small; color: dimgray; padding: 0px; margin-bottom: 0px;">&copy;
+          2019-2021</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <hr style="height:18px; padding: 0px; margin: 0px;" width="100%" color="#6F272F" />
+    </div>
+  </div>
+</body>
+
+</html>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/firebase.js"></script>
+<script type="text/javascript" src="js/tadi.js"></script>
+<script type="text/javascript" src="js/tadi-index.js"></script>
+<script>
+
+  onloadPage = () => {
+
+    const uid = getUrlIdentity();
+    var currDate = new Date();
+
+    if (localStorage.sessionTime === undefined || (currDate - new Date(localStorage.sessionTime)) > 900000 || uid === undefined) {
+      localStorage.clear();
+      firebase.auth().signOut();
+      top.location.replace("index.html");
+    } else {
+      localStorage.sessionTime = currDate;
+      document.querySelectorAll(".link-home").forEach(e => {
+        e.setAttribute("href", "tadi_inicio.html?user=" + uid);
+      });
+    }
+  }
+
+  getUrlIdentity = () => {
+    const windowurl = window.location.href;
+    const id = windowurl.split("?")[1];
+    if (id === undefined) return undefined;
+    return id.split("=")[1];
+  }
+
+  onloadPage(); 
+</script>
+
+<script>
+  $(document).on("keyup", function (e) {
+    var key = e.which;
+
+    if (key == 13) // the enter key ascii code
+    {
+      loginSession('tadi_servicios2.html', 'tadi_servicios.html', 'login_error.html');
+    }
+  });
+  localStorage.servicio = getUrlParam("serv", "ninguno");
+  localStorage.identificador = getUrlParam("ct", "ninguno");
+</script>

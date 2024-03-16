@@ -1,0 +1,196 @@
+main {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+table#operatorsTable {
+  width: 100%;
+  display: table;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, .05);
+}
+
+table#operatorsTable tbody tr.even {
+  background-color: #fff;
+}
+
+table#operatorsTable tbody tr.odd {
+  background-color: rgba(0, 0, 0, .05);
+}
+
+table#operatorsTable tbody tr:hover {
+  background-color: #0c435a60;
+  cursor: pointer;
+}
+
+table#operatorsTable thead tr th {
+  color: #2d6e3d;
+  text-align: start;
+  font-size: 14px;
+}
+
+table#operatorsTable tbody tr td {
+  font-size: 12px;
+  padding: 6px 8px;
+}
+
+table#operatorsTable tbody tr td:nth-child(1) {
+  text-transform: capitalize;
+}
+
+div#operatorsTable_filter>label {
+  background-color: #2d6e3d;
+  padding-left: 8px;
+  border-radius: 3px;
+  color: whitesmoke;
+  display: inline-block;
+  font-size: 0.8571em;
+  margin-bottom: 5px;
+}
+
+input[aria-controls="operatorsTable"] {
+  width: 400px;
+  background-color: whitesmoke !important;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-left: none !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+  outline: 1px solid transparent;
+}
+
+div.container-header h1 {
+  font-weight: lighter;
+  font-size: 2rem;
+}
+
+div.container-header p {
+  font-weight: lighter;
+  font-size: 14px;
+  margin-bottom: 1rem;
+}
+
+div.datepicker-container {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+div.datePicker {
+  display: flex;
+  flex-flow: row nowrap;
+  color: #333;
+  align-items: center;
+}
+
+div.datePicker label {
+  font-size: 12px;
+  cursor: unset;
+  background-color: #2d6e3d;
+  color: white;
+  height: 32px;
+  line-height: 32px;
+  margin: 0;
+  padding: 0 1rem;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+div.datePicker input[type="date"] {
+  height: 32px;
+  border-left: unset;
+  padding: 0 1rem;
+  font-size: 12px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  outline: unset;
+  background-color: whitesmoke;
+  cursor: pointer;
+}
+
+button#dateSearch {
+  border: 1px solid #33333325;
+  padding: 0 1.5rem;
+  font-size: 12px;
+  color: white;
+  background-color: #2d6e3d;
+  border-radius: 3px;
+}
+
+button#dateSearch:hover {
+  background-color: #2d6e3dc7;
+  cursor: pointer;
+}
+
+/* Tabla Operadores */
+table#operatorsTable tbody tr td[data-type="tools"] {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 4px;
+}
+
+.cellButtonTool {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px;
+}
+
+.cellButtonTool:hover {
+  cursor: pointer;
+}
+
+.cellButtonTool[data-type="view"] {
+  color: #28a745;
+}
+
+.cellButtonTool[data-type="update"] {
+  color: #fd7e14;
+}
+
+.cellButtonTool[data-type="delete"] {
+  color: #dc3545;
+}
+
+#usuariosBajaModal .formContainer {
+  padding: 20px;
+}
+
+#usuariosBajaModal button {
+  border: none;
+  outline: none;
+}
+
+#usuariosBajaModal button[type=button] {
+  border: 1px solid gray;
+  background-color: white;
+}
+
+#usuariosBajaModal button[type=submit] {
+  background: #dc3545;
+}
+
+#usuariosBajaModal form#userBaja {
+  margin-top: 20px;
+}
+
+
+#modalFormUpdateSubmit {
+  background: #fd7e14;
+  border: none;
+}
+
+#modalFormUpdateSubmit:hover {
+  background: #d3660e;
+}
+
+#modalFormUpdateSubmit span {
+  color: white;
+}
+
+#operatorsTable_filter {
+  float: left !important;
+  margin-bottom: 10px;
+}

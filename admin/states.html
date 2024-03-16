@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="../assets/icons/favicon.ico">
+  <title>TaDi IMOS - Taximetro Digital</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../js/dom/local.js"></script>
+  <link rel="stylesheet" href="../css/docs/tadiDefaults.css">
+  <link rel="stylesheet" href="../css/docs/states.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css" />
+</head>
+
+<body>
+
+  <div id="root">
+    <!-- Aside -->
+    <aside>
+      <div id="aside-container">
+        <div class="logo">
+          <a class="home-link" href="../docs/main.html">TADI | Taximetro Digital</a>
+        </div>
+        <hr />
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/maps.html">
+              <span class="link-icons material-icons-sharp">map</span>
+              Mapa
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/users.html">
+              <span class="link-icons material-icons-sharp">person</span>
+              Usuarios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/vehicles.html">
+              <span class="link-icons material-icons-sharp">directions_car</span>
+              Vehículos
+            </a>
+          </li>
+          <li class="nav-item menu-button menu-opened">
+            <a class="nav-link" href="#">
+              <span class="link-icons material-icons-sharp">manage_accounts</span>
+              Administración
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./messages.html">
+              <span class="link-icons material-icons-sharp">chat</span>
+              Mensajes
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./users.html">
+              <span class="link-icons material-icons-sharp">person</span>
+              Administradores
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./roles.html">
+              <span class="link-icons material-icons-sharp">groups</span>
+              Roles
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink " href="./clients.html">
+              <span class="link-icons material-icons-sharp">person_pin</span>
+              Clientes
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink isSelected" href="./states.html">
+              <span class="link-icons material-icons-sharp">place</span>
+              Estado
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./rates.html">
+              <span class="link-icons material-icons-sharp">paid</span>
+              Tarifas
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./base_rates.html">
+              <span class="link-icons material-icons-sharp">attach_money</span>
+              Tarifas Base
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Header  -->
+    <header>
+      <nav>
+        <h1 class="app-title">Gobierno de Chihuahua - Portal de Administración</h1>
+        <button class="close-app">
+          <span class="material-icons-sharp">logout</span>
+          Cerrar Sesión
+        </button>
+      </nav>
+      <div class="header-bg-image"></div>
+    </header>
+
+    <!-- Main -->
+    <main>
+      <div class="container">
+        <div class="tadi-card col-12">
+          <div class="card-header">
+            <h1>Estados, Ciudades y Areas</h1>
+            <p>Administración de zonas geográficas</p>
+          </div>
+          <div class="card-body">
+            <div class="table_container">
+              <div>
+                <ul class="tables-navigator">
+                  <li>
+                    <a data-ref="states-list" class="isSelected" href="#">Estado</a>
+                  </li>
+                  <li>
+                    <a data-ref="cities-list" href="#">Ciudad</a>
+                  </li>
+                  <li>
+                    <a data-ref="areas-list" href="#">Area</a>
+                  </li>
+                  <li>
+                    <a data-ref="country-list" href="#">Pais</a>
+                  </li>
+                </ul>
+              </div>
+              <table class="table_list" id="states-list">
+                <thead>
+                  <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Pais</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <table class="table_list" style="display: none;" id="cities-list">
+                <thead>
+                  <tr>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Estado</th>
+                    <th>Zona Horaria</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <table class="table_list" style="display: none;" id="areas-list">
+                <thead>
+                  <tr style="height: 30px;">
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Ciudad</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <table class="table_list" style="display: none;" id="country-list">
+                <thead>
+                  <tr style="height: 30px;">
+                    <th>Codigo</th>
+                    <th>Idioma</th>
+                    <th>ISO</th>
+                    <th>Ubicación</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      &copy; 2022, Copyright IDG.
+    </footer>
+  </div>
+  <!-- <div class="modal fade" id="modalAdminCiudades">
+        <div class="modal-dialog">
+            <div class="modal-content">
+   
+                <div class="modal-body">
+    
+                    <div id="div-profile">
+                        <div class="header-profile">
+                            <h4 id="tituloModalAC">Alta de Ciudad</h4>
+                        </div>
+                    </div>
+                    <div id="div-profile">
+                        <div id="divDataCiudades">
+                            <table id="table-admin-ciudades">
+                                <tr id="trAC1">
+                                    <td class="odd-row" width="30%"><label id="titulo1">Codigo:</label></td>
+                                    <td class="even-row" width="70%"><input type="text" id="inputAC1" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAC2">
+                                    <td class="even-row"><label id="titulo2">Nombre:</label></td>
+                                    <td class="odd-row"><input type="text" id="inputAC2" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAC21">
+                                    <td class="odd-row"><label id="titulo21">Estado:</label></td>
+                                    <td class="eve-row"><select id="inputAC21" ></select></td>
+                                </tr>
+                                <tr id="trAC3">
+                                    <td class="even-row"><label id="titulo3">Zona Hr:</label></td>
+                                    <td class="odd-row"><input type="text" id="inputAC3" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAC4">
+                                    <td class=""><label id="titulo4">:</label></td>
+                                    <td class=""><input type="tel" id="inputAC4" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAC5">
+                                    <td class=""><label id="titulo5">:</label></td>
+                                    <td class=""><input type="password" id="inputAC5" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAC22">
+                                    <td class=""><label id="titulo22">:</label></td>
+                                    <td class=""><select id="inputAC22" ></select></td>
+                                </tr>
+                                <tr id="trAC11">
+                                    <td class=""><label id="titulo11">:</label></td>
+                                    <td class=""><input type="file" id="inputAC11" width="30" style="display: none;" accept="image/*" onchange="loadFile(event,'outputAC11');" name="inputAC11"> <p><label id="lblInput11" for='inputAC11' style='cursor: pointer;'>Cargar imagen</label></p> <img id="outputAC11" width="100"/> </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" id="buttonACOK" class="btn btn-success" data-dismiss="modal" onclick="addAdminCiudades();">Agregar</button>
+                    <button type="button" id="buttonACCancel" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="modal fade" id="modalAdminEstados">
+        <div class="modal-dialog">
+            <div class="modal-content">
+     
+                <div class="modal-body">
+    
+                    <div id="div-profile">
+                        <div class="header-profile">
+                            <h4 id="tituloModalAE">Alta de Estados</h4>
+                        </div>
+                    </div>
+                    <div id="div-profile">
+                        <div id="divDataEstados">
+                            <table id="table-admin-estados">
+                                <tr id="trAE1">
+                                    <td class="odd-row" width="30%"><label id="titulo1">Codigo:</label></td>
+                                    <td class="even-row" width="70%"><input type="text" id="inputAE1" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAE2">
+                                    <td class="even-row"><label id="titulo2">Nombre:</label></td>
+                                    <td class="odd-row"><input type="text" id="inputAE2" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAE21">
+                                    <td class="odd-row"><label id="titulo21">Pais:</label></td>
+                                    <td class="eve-row"><select id="inputAE21" ></select></td>
+                                </tr>
+                                <tr id="trAE3">
+                                    <td class="even-row"><label id="titulo3"></label></td>
+                                    <td class="odd-row"><input type="text" id="inputAE3" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAE4">
+                                    <td class=""><label id="titulo4">:</label></td>
+                                    <td class=""><input type="tel" id="inputAE4" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAE5">
+                                    <td class=""><label id="titulo5">:</label></td>
+                                    <td class=""><input type="password" id="inputAE5" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAE22">
+                                    <td class=""><label id="titulo22">:</label></td>
+                                    <td class=""><select id="inputAE22" ></select></td>
+                                </tr>
+                                <tr id="trAE11">
+                                    <td class=""><label id="titulo11">:</label></td>
+                                    <td class=""><input type="file" id="inputAE11" width="30" style="display: none;" accept="image/*" onchange="loadFile(event,'outputAE11');" name="inputAE11"> <p><label id="lblInput11" for='inputAE11' style='cursor: pointer;'>Cargar imagen</label></p> <img id="outputAE11" width="100"/> </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+ 
+                <div class="modal-footer">
+                    <button type="button" id="buttonAEOK" class="btn btn-success" data-dismiss="modal" onclick="addAdminEstados();">Agregar</button>
+                    <button type="button" id="buttonAECancel" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="modal fade" id="modalAdminAreas"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+     
+                <div class="modal-body">
+    
+                    <div id="div-profile">
+                        <div class="header-profile">
+                            <h4 id="tituloModalAA">Alta de Areas</h4>
+                        </div>
+                    </div>
+                    <div id="div-profile">
+                        <div id="divDataAreas">
+                            <table id="table-admin-areas">
+                                <tr id="trAA1">
+                                    <td class="odd-row" width="30%"><label id="titulo1">Codigo:</label></td>
+                                    <td class="even-row" width="70%"><input type="text" id="inputAA1" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAA2">
+                                    <td class="even-row"><label id="titulo2">Nombre:</label></td>
+                                    <td class="odd-row"><input type="text" id="inputAA2" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAA21">
+                                    <td class="odd-row"><label id="titulo21">Ciudad:</label></td>
+                                    <td class="eve-row"><select id="inputAA21" ></select></td>
+                                </tr>
+                                <tr id="trAA3">
+                                    <td class="even-row"><label id="titulo3"></label></td>
+                                    <td class="odd-row"><input type="text" id="inputAA3" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAA4">
+                                    <td class=""><label id="titulo4">:</label></td>
+                                    <td class=""><input type="tel" id="inputAA4" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAA5">
+                                    <td class=""><label id="titulo5">:</label></td>
+                                    <td class=""><input type="password" id="inputAA5" size="30"  style="text-transform:uppercase"></td>
+                                </tr>
+                                <tr id="trAA22">
+                                    <td class=""><label id="titulo22">:</label></td>
+                                    <td class=""><select id="inputAA22" ></select></td>
+                                </tr>
+                                <tr id="trAA11">
+                                    <td class=""><label id="titulo11">Poligono:</label></td>
+                                    <td class=""><input type="file" id="inputAA11" width="30" style="display: none;" accept="multipart/form-data" onchange="loadFile(event,'outputAA11');" name="inputAA11"> <p><label id="lblInput11" for='inputAA11' style='cursor: pointer;'>Cargar Kmz</label></p> <label id="outputAA11" ></label> </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" id="buttonAAOK" class="btn btn-success" data-dismiss="modal" onclick="addAdminAreas();">Agregar</button>
+                    <button type="button" id="buttonAACancel" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</body>
+
+</html>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript"
+  src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"></script>
+<script type="module" src="../js/admin/states.js"></script>
+<script type="module" src="../js/dom/defaults.js" async></script>
+<script>
+  const a_tag = document.querySelectorAll("ul.tables-navigator a");
+  const tables = document.querySelectorAll("table.table_list");
+
+  a_tag.forEach(item => {
+    item.addEventListener("click", event => {
+      a_tag.forEach(ref => { ref.classList.remove('isSelected'); })
+      const self = event.currentTarget;
+      const reference = self.getAttribute('data-ref');
+      self.classList.add('isSelected');
+      tables.forEach(table => {
+        if (table.id !== reference) {
+          table.style.display = 'none';
+          return;
+        }
+        table.style.display = 'table';
+      });
+    });
+  });
+</script>
+<!-- <script type="text/javascript" src="../js/firebase.js"></script> 
+<script type="text/javascript" src="../js/tadi-admin-ciudades.js"></script>
+<script type="text/javascript" src="../js/tadi-admin-estados.js"></script>
+<script type="text/javascript" src="../js/tadi-admin-areas.js"></script> 
+<script> showAdminCiudades(); </script> -->

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="../assets/icons/favicon.ico">
+  <title>TaDi IMOS - Taximetro Digital</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../js/dom/local.js"></script>
+  <link rel="stylesheet" href="../css/docs/tadiDefaults.css">
+  <link rel="stylesheet" href="../css/docs/roles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css" />
+</head>
+
+<body>
+  <div id="root">
+    <!-- Aside -->
+    <aside>
+      <div id="aside-container">
+        <div class="logo">
+          <a class="home-link" href="../docs/main.html">TADI | Taximetro Digital</a>
+        </div>
+        <hr />
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/maps.html">
+              <span class="link-icons material-icons-sharp">map</span>
+              Mapa
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/users.html">
+              <span class="link-icons material-icons-sharp">person</span>
+              Usuarios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../docs/vehicles.html">
+              <span class="link-icons material-icons-sharp">directions_car</span>
+              Vehículos
+            </a>
+          </li>
+          <li class="nav-item menu-button menu-opened">
+            <a class="nav-link" href="#">
+              <span class="link-icons material-icons-sharp">manage_accounts</span>
+              Administración
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./messages.html">
+              <span class="link-icons material-icons-sharp">chat</span>
+              Mensajes
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./users.html">
+              <span class="link-icons material-icons-sharp">person</span>
+              Administradores
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink isSelected" href="./roles.html">
+              <span class="link-icons material-icons-sharp">groups</span>
+              Roles
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./clients.html">
+              <span class="link-icons material-icons-sharp">person_pin</span>
+              Clientes
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./states.html">
+              <span class="link-icons material-icons-sharp">place</span>
+              Estado
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./rates.html">
+              <span class="link-icons material-icons-sharp">paid</span>
+              Tarifas
+            </a>
+          </li>
+          <li class="nav-item menu-linked ">
+            <a class="nav-sublink" href="./base_rates.html">
+              <span class="link-icons material-icons-sharp">attach_money</span>
+              Tarifas Base
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Header  -->
+    <header>
+      <nav>
+        <h1 class="app-title">Gobierno de Chihuahua - Portal de Administración</h1>
+        <button class="close-app">
+          <span class="material-icons-sharp">logout</span>
+          Cerrar Sesión
+        </button>
+      </nav>
+      <div class="header-bg-image"></div>
+    </header>
+
+    <!-- Main -->
+    <main>
+      <div class="container">
+        <div class="tadi-card">
+          <div class="card-header">
+            <h1>Roles</h1>
+            <p>Jerarquía de roles entre los usuarios.</p>
+          </div>
+          <div class="card-body">
+            <div class="table_container">
+              <table id="roles-list">
+                <thead>
+                  <tr>
+                    <th>Rol</th>
+                    <th>Descripción</th>
+                    <th>Agregar</th>
+                    <th>Actualizar</th>
+                    <th>Eliminar</th>
+                    <th>Admin</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      &copy; 2022, Copyright IDG.
+    </footer>
+  </div>
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript"
+  src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"></script>
+<script type="module" src="../js/admin/roles.js"></script>
+<script type="module" src="../js/dom/defaults.js" async></script>
