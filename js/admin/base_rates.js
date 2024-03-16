@@ -7,18 +7,6 @@ let data_table = null;
 var infoPrevio;
 var AWS_TO_ADDRESS = [];
 
-// snap_admins.once('value', async snap =>{
-//     AWS_TO_ADDRESS = [];
-//     const USER = await snap.val();
-//     for (e in USER) {
-//         if (USER[e].rol == "validador" && USER[e].activo == "true") {
-//             AWS_TO_ADDRESS.push(USER[e].email);
-//             console.log(USER);
-//         }
-//     }
-// });  
-
-
 const showTarifaBase = (city) => {
   snap_tarifas.child(city).once('value', snap => {
     const tarifas = snap.val();
@@ -33,18 +21,13 @@ const showTarifaBase = (city) => {
     document.querySelector("input[data-name='banderaNocturnaApp']").value = tarifas.banderaNocturnaApp;
     document.querySelector("input[data-name='kilometroApp']").value = tarifas.kilometroApp;
     document.querySelector("input[data-name='minApp']").value = tarifas.minApp;
-    // Asumiendo que tienes un campo para el porcentaje de viaje largo
-    // document.querySelector("input[data-name='extra_long_km_trip']").value = calcularPorcentajeExtra(tarifas.kilometro, tarifas.kilometroApp);
-    // document.querySelector("input[data-name='extra_long_min_trip']").value = calcularPorcentajeExtra(tarifas.min, tarifas.minApp);
   });
 };
 
 const formatName = (fx, dx, tx) => {
-
   fx = fx.includes("B") ? "initial" : fx.toLowerCase();
   dx = dx.toLowerCase();
   tx = tx.toLowerCase();
-
   return `${fx}_${dx}_${tx}`
 }
 
@@ -54,7 +37,6 @@ const showInfoHTML = ix => {
 }
 
 const getAllRatesChangeLogs = async (isCreated) => {
-
   try {
     const tableWasCreated = await generateDatatable(isCreated);
     if (tableWasCreated === false) {
@@ -75,7 +57,6 @@ const getAllRatesChangeLogs = async (isCreated) => {
   }
 }
 
-
 const generateDatatable = async (isCreated) => {
   if (isCreated === false) {
     data_table = new DataTable("#changelogs-list", {
@@ -88,6 +69,25 @@ const generateDatatable = async (isCreated) => {
   }
   return false;
 }
+
+// Añadiendo la funcionalidad de actualización
+document.getElementById('updateTarifaButton').addEventListener('click', (e) => {
+  e.preventDefault(); // Prevenir el envío por defecto del formulario
+
+  // Obtener los valores de los inputs
+  const inputs = document.querySelectorAll('input[data-name]');
+  const updateObj = {};
+
+  inputs.forEach(input => {
+    const key = input.getAttribute('data-name');
+    updateObj[key] = input.value;
+  });
+
+  // Actualizar en Firebase
+  snap_tarifas.child('SLP').update(updateObj)
+    .then(() => alert('Datos actualizados con éxito.'))
+    .catch(error => console.error('Error al actualizar datos:', error));
+});
 
 getAllRatesChangeLogs(false);
 showTarifaBase('SLP');
