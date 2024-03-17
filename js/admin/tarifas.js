@@ -1,71 +1,39 @@
+// tarifas.js
 import { get_tarifas } from '../config/config.js';
 
-const tarifas_list = await get_tarifas();
-let data_table = null;
-const SELECT = document.querySelector("select#municipios-list");
+document.addEventListener('DOMContentLoaded', async () => {
+  let tarifas = await get_tarifas(); // Esto debería ser un objeto con las tarifas de SLP.
+  let data_table;
 
-const getDataToFillTable = async (isCreated, val) => {
-  try {
-    const tableWasCreated = await generateDataTableObject(isCreated);
-    if (tableWasCreated === false) {
-      data_table.clear().draw(false);
-    }
+  const formatCurrency = (cx) => {
+    return `$${parseFloat(cx).toFixed(2)}`;
+  };
 
-    tarifas_list.forEach(item => {
-      if (item.city !== val) return;
-      item.t.forEach((element) => {
-        const city = item.city;
-        const data_list = [
-          `${city}_${element.service}_${element.time}`,
-          city,
-          formatCurrency(element.flag),
-          formatCurrency(element.km),
-          formatCurrency(element.min),
-          element.service,
-          element.time
-        ];
-        data_table.row.add([...data_list]).draw(false);
-      });
-    });
-  } catch (err) {
-    console.log(err.code);
-    console.log(err.message);
-    alert("Se ha presentado un problema, favor de verificarlo con el Administrador.")
-  }
-}
-const formatCurrency = cx => {
-  const coin = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-  return coin.format(cx);
-}
-
-const generateDataTableObject = async (isCreated) => {
-  if (isCreated === false) {
+  const generateDataTableObject = () => {
     data_table = new DataTable("#rates-list", {
       info: false,
       paging: false,
       searching: false,
       buttons: false
     });
-    return true;
-  }
-  return false;
-}
+  };
 
-const fillSelectTagWithOptions = () => {
+  generateDataTableObject();
 
-  tarifas_list.forEach(item => {
-    const OPTION = document.createElement("option");
-    OPTION.value = item.city;
-    OPTION.textContent = item.city.replace("_", " ");
-    OPTION.selected = OPTION.value === 'Tijuana' ? true : false;
-    SELECT.append(OPTION);
-  });
-}
+  // Suponiendo que tarifas sea un objeto con las tarifas directamente como propiedades
+  const data_list = [
+    'SLP', // ID
+    'SLP', // Ciudad
+    formatCurrency(tarifas.banderaDiurna),
+    formatCurrency(tarifas.banderaNocturna),
+    formatCurrency(tarifas.kilometro),
+    formatCurrency(tarifas.min),
+    formatCurrency(tarifas.banderaDiurnaApp),
+    formatCurrency(tarifas.banderaNocturnaApp),
+    formatCurrency(tarifas.kilometroApp),
+    formatCurrency(tarifas.minApp),
+  ];
 
-
-fillSelectTagWithOptions();
-getDataToFillTable(false, SELECT.value);
-
-document.getElementById("municipios-list").addEventListener("change", e => {
-  getDataToFillTable(true, e.currentTarget.value);
+  data_table.row.add(data_list).draw();
+  console.log("Tarifas desde tarifas.js"+data_list)
 });

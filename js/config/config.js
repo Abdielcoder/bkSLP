@@ -246,28 +246,64 @@ export const all_clients = () => {
   });
 }
 
+// export const get_tarifas = () => {
+//   return snap_tarifas.once("value").then(snap => {
+//     const tarifas = [];
+//     snap.forEach(item => {
+//       const rate = [];
+//       item.forEach(opt => {
+//         opt.forEach(val => {
+//           const __item = {
+//             service: opt.key,
+//             time: val.key,
+//             flag: val.val().Bandera,
+//             km: val.val().Km,
+//             min: val.val().Min
+//           };
+//           rate.push(__item);
+//         })
+//       });
+//       tarifas.push({ city: item.key, t: rate });
+//     });
+//     return tarifas;
+//   });
+// }
+
+// Ajuste en config.js
+// export const get_tarifas = () => {
+//   return snap_tarifas.child("SLP").once("value").then(snap => {
+//     const tarifas = [];
+//     snap.forEach(item => {
+//       const rate = [];
+//       item.forEach(opt => {
+//         const __item = {
+//           service: item.key,
+//           time: opt.key,
+//           flag: opt.val().Bandera,
+//           km: opt.val().Km,
+//           min: opt.val().Min
+//         };
+//         rate.push(__item);
+//       });
+//       tarifas.push({ city: "SLP", t: rate }); // Considerando que solo trabajas con SLP
+//     });
+//     console.log(tarifas)
+//     return tarifas;
+//   });
+// }
+
 export const get_tarifas = () => {
-  return snap_tarifas.once("value").then(snap => {
-    const tarifas = [];
-    snap.forEach(item => {
-      const rate = [];
-      item.forEach(opt => {
-        opt.forEach(val => {
-          const __item = {
-            service: opt.key,
-            time: val.key,
-            flag: val.val().Bandera,
-            km: val.val().Km,
-            min: val.val().Min
-          };
-          rate.push(__item);
-        })
-      });
-      tarifas.push({ city: item.key, t: rate });
-    });
-    return tarifas;
+  return snap_tarifas.child("SLP").once("value").then(snap => {
+    // Ahora snap.val() es el objeto que contiene las tarifas directamente
+    const tarifas = snap.val();
+    console.log("Tarifas desde config: "+tarifas);
+    return tarifas; // Retornamos el objeto de tarifas directamente
   });
 }
+
+
+
+
 
 export const generateTemporalToken = async () => {
   let token = "";
