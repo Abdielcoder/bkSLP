@@ -2,7 +2,7 @@ import { generateDynamicUid, generateRandomPassword, removeRegisterFromAdminsTab
 import { addEventLogListener } from "../config/firestore-config.js";
 import { generateDataTable } from "../admin/users_admins.js";
 
-const data_table = await generateDataTable();
+let data_table = await generateDataTable();
 const modal_container = document.querySelector("div.modal");
 const add_button = document.querySelector("#add_button");
 const update_button = document.querySelector("#update_button");
@@ -14,24 +14,24 @@ const form_header = document.querySelector("h1.form_header");
 const createCheckboxInTableRow = async (uid, dataX) => {
   try {
 
-    const trDom = data_table.row.add(['', ...dataX]).draw(false).node();
-    trDom.setAttribute('class', 'admin-row');
-    trDom.setAttribute('data-reference', uid);
-    const TR_CREATED = document.querySelector(`tr[data-reference='${uid}'].admin-row td`);
-    const CHECKBOX = document.createElement('INPUT');
-    CHECKBOX.setAttribute('type', 'checkbox');
-    CHECKBOX.setAttribute('class', 'check_button');
-    CHECKBOX.setAttribute('data-reference', uid);
-    CHECKBOX.addEventListener('click', event => {
-      const all_check_inputs = document.querySelectorAll("input[type='checkbox'].check_button");
+    const trDom = data_table.row.add(["", ...dataX]).draw(false).node();
+    trDom.setAttribute("class", "admin-row");
+    trDom.setAttribute("data-reference", uid);
+    const TR_CREATED = document.querySelector(`tr[data-reference="${uid}"].admin-row td`);
+    const CHECKBOX = document.createElement("INPUT");
+    CHECKBOX.setAttribute("type", "checkbox");
+    CHECKBOX.setAttribute("class", "check_button");
+    CHECKBOX.setAttribute("data-reference", uid);
+    CHECKBOX.addEventListener("click", event => {
+      const all_check_inputs = document.querySelectorAll(`input[type="checkbox"].check_button`);
       const cud_buttons = document.querySelectorAll("button.cup-button");
       all_check_inputs.forEach(button => {
-        if (button.getAttribute('data-reference') !== uid) {
+        if (button.getAttribute("data-reference") !== uid) {
           button.checked = false;
-          button.parentElement.parentElement.classList.remove('isSelected');
+          button.parentElement.parentElement.classList.remove("isSelected");
           return;
         }
-        button.parentElement.parentElement.classList.add('isSelected');
+        button.parentElement.parentElement.classList.add("isSelected");
       });
       if (CHECKBOX.checked === false) {
         cud_buttons.forEach((button, index) => {
@@ -41,7 +41,7 @@ const createCheckboxInTableRow = async (uid, dataX) => {
           }
         });
 
-        event.currentTarget.parentElement.parentElement.classList.remove('isSelected');
+        event.currentTarget.parentElement.parentElement.classList.remove("isSelected");
         return;
       }
 
@@ -52,7 +52,7 @@ const createCheckboxInTableRow = async (uid, dataX) => {
       });
     });
 
-    TR_CREATED.insertAdjacentElement('beforeend', CHECKBOX);
+    TR_CREATED.insertAdjacentElement("beforeend", CHECKBOX);
 
     return true;
   } catch (err) {
@@ -73,18 +73,18 @@ const createNewAdminUser = async (dataX) => {
         rol: dataX[2],
         fechaAlta: dataX[3],
         activo: (() => {
-          return dataX[4] === 'Activo' ? true : false;
+          return dataX[4] === "Activo" ? true : false;
         })(),
         id: uid,
         photo: "",
         usuario: "",
-        pswd: generic_password
+        pswd: "0123456"
       })
       .then(async success => {
         const isCreated = await createCheckboxInTableRow(uid, dataX);
         if (isCreated === true) {
           alert("Se ha agregado el usuario de manera satisfactoria.");
-          addEventLogListener(uid, 'create', dataX);
+          addEventLogListener(uid, "create", dataX);
         }
         disableUpButtons();
         removeIsSelectedClass();
@@ -109,7 +109,7 @@ const updateAdminUser = async (uid, dataX) => {
     const hasBeenUpdated = await snap_admins.child(uid).update(objectToSet)
       .then(success => {
         alert("Los datos del usuario han sido actualizados de manera satisfactoria.");
-        addEventLogListener(uid, 'updated', dataX);
+        addEventLogListener(uid, "updated", dataX);
         return true;
       })
       .catch(error => {
@@ -121,10 +121,11 @@ const updateAdminUser = async (uid, dataX) => {
 
     if (hasBeenUpdated === false) return;
 
-    const tr_selected = document.querySelector("tr.isSelected td");
+    const tr_selected = document.querySelectorAll("tr.isSelected td");
+    console.log({ tr_selected, objectToSet, dataX })
     tr_selected.forEach((item, index, val) => {
       if (index === 0) return;
-      item.textContent = dataX[index];
+      item.textContent = dataX[index - 1];
     });
 
     for (let i = 0; i < tr_selected.childElementCount; i++) {
@@ -143,7 +144,7 @@ const updateAdminUser = async (uid, dataX) => {
 }
 
 const disableUpButtons = () => {
-  const buttons = document.querySelectorAll('button.up-button');
+  const buttons = document.querySelectorAll("button.up-button");
   buttons.forEach(item => {
     item.disabled = true;
   })
@@ -152,7 +153,7 @@ const disableUpButtons = () => {
 const removeIsSelectedClass = () => {
   const table_rows = document.querySelectorAll("tr");
   table_rows.forEach(item => {
-    item.classList.remove('isSelected');
+    item.classList.remove("isSelected");
   });
 }
 
@@ -166,7 +167,7 @@ add_button.addEventListener("click", event => {
   form_inputs.forEach((item, index) => {
     if (index === 4) {
       item.checked = false;
-      label_active.textContent = 'Inactivo'
+      label_active.textContent = "Inactivo"
       return;
     }
     item.value = "";
@@ -184,13 +185,13 @@ update_button.addEventListener("click", event => {
       console.log({ index, value: cell.textContent })
       if (index === 0) return;
       if (index === 5) {
-        if (cell.textContent === 'Activo') {
+        if (cell.textContent === "Activo") {
           form_inputs[index - 1].checked = true;
-          label_active.textContent = 'Activo'
+          label_active.textContent = "Activo"
           return;
         }
         form_inputs[index - 1].checked = true;
-        label_active.textContent = 'Inactivo'
+        label_active.textContent = "Inactivo"
         return;
       }
       form_inputs[index - 1].value = cell.textContent;
@@ -215,15 +216,15 @@ del_button.addEventListener("click", async event => {
     if (confirm(confirm_message)) {
       const hasBeenDeleted = await removeRegisterFromAdminsTable(uid);
       if (hasBeenDeleted === true) {
-        data_table.row('.isSelected').remove().draw();
+        data_table.row(".isSelected").remove().draw();
         disableUpButtons();
         removeIsSelectedClass();
-        alert('Se ha eliminado el registro de manera satisfactoria.');
+        alert("Se ha eliminado el registro de manera satisfactoria.");
 
-        addEventLogListener(uid, 'deleted', { name: 'boris' });
+        addEventLogListener(uid, "deleted", { name: "boris" });
         return;
       }
-      alert('Se ha presentado un problema, favor de verificarlo con el Administrador.')
+      alert("Se ha presentado un problema, favor de verificarlo con el Administrador.")
     }
   } catch (error) {
     console.log(error)
@@ -238,28 +239,28 @@ close_modal_button.addEventListener("click", event => {
 input_add_new.addEventListener("click", event => {
   event.preventDefault();
   try {
-    const isCorU = input_add_new.getAttribute('data-event');
+    const isCorU = input_add_new.getAttribute("data-event");
     const form_inputs = document.querySelectorAll(".form_input");
     const form_data = [];
 
     form_inputs.forEach((item, index, val) => {
-      if (item.type === 'checkbox') {
+      if (item.type === "checkbox") {
         if (item.checked === true) {
-          form_data.push('Activo');
+          form_data.push("Activo");
           return;
         }
-        form_data.push('Inactivo')
+        form_data.push("Inactivo")
         return;
       }
       form_data.push(item.value);
     });
 
-    if (isCorU === 'create') {
+    if (isCorU === "create") {
       createNewAdminUser(form_data);
       return;
     }
-    if (isCorU === 'update') {
-      const selectedRow = document.querySelector("tr.isSelected").getAttribute('data-reference');
+    if (isCorU === "update") {
+      const selectedRow = document.querySelector("tr.isSelected").getAttribute("data-reference");
       if (selectedRow !== undefined || selectedRow !== null) {
         updateAdminUser(selectedRow, form_data);
         return;
