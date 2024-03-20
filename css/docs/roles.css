@@ -1,48 +1,49 @@
-main { 
-    overflow-y: auto;
-    overflow-x: hidden; 
-} 
+main {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 div#roles-list_filter {
-    margin-bottom: 1rem;
-  }
-  
+  margin-bottom: 1rem;
+}
+
 table#roles-list {
-    width: 100%;
-    display: table;
-    position: relative;
-    border-top: 1px solid rgba(0,0,0,.05);
+  width: 100%;
+  display: table;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, .05);
 }
 
 table#roles-list tbody tr.even {
-    background-color: #fff; 
+  background-color: #fff;
 }
 
 table#roles-list tbody tr.odd {
-    background-color: rgba(0,0,0,.05);
+  background-color: rgba(0, 0, 0, .05);
 }
 
 table#roles-list tbody tr:hover {
-    background-color: #2d6e3d45;
-    cursor: pointer; 
-} 
+  background-color: #2d6e3d45;
+  cursor: pointer;
+}
 
 table#roles-list thead th {
-    color: #2d6e3d;
-    text-align: start
+  color: #2d6e3d;
+  text-align: start
 }
 
 table#roles-list tbody tr td {
-    font-size: 14px;
-    padding: 6px 8px;
-} 
+  font-size: 14px;
+  padding: 6px 8px;
+}
 
 .container-header h1 {
-    font-weight: lighter;
-    font-size: 2rem;
+  font-weight: lighter;
+  font-size: 2rem;
 }
+
 .container-header p {
-    font-weight: lighter;
-    font-size: 14px;
-    margin-bottom: 1rem;
+  font-weight: lighter;
+  font-size: 14px;
+  margin-bottom: 1rem;
 }

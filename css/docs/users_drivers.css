@@ -194,3 +194,81 @@ table#operatorsTable tbody tr td[data-type="tools"] {
   float: left !important;
   margin-bottom: 10px;
 }
+
+
+/* NEW */
+div.formContainer[data-visibility="true"] {
+  display: block;
+  visibility: visible;
+}
+
+div.formContainer[data-visibility="false"] {
+  display: none;
+  visibility: hidden;
+}
+
+
+.modalContent {
+  max-width: 560px;
+  background-color: white;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.tab-list {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.contentTabs {
+  padding: 20px 20px 0 20px;
+}
+
+ul.tab-list::before {
+  content: "";
+  border-bottom: 1px solid gray;
+  display: block;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  z-index: -1;
+  padding-left: 10px;
+}
+
+ul.tab-list li:first-child {
+  margin-left: 8px;
+}
+
+.tab-button {
+  padding: 8px 20px;
+  border: 1px solid transparent;
+  background: transparent;
+  position: relative;
+  transition: all 100ms linear;
+}
+
+.tab-button span {
+  font-weight: 500;
+}
+
+.tab-button:hover:not([aria-selected="true"]) { 
+  background: linear-gradient(360deg, #f5f5f5 0%,  rgba(255, 255, 255, 0) 100%);
+  cursor: pointer;
+  transition: all 100ms linear;
+}
+
+.tab-button[aria-selected="true"] {
+  border-bottom: 1px solid white;
+  border-left: 1px solid gray;
+  border-top: 1px solid gray;
+  border-right: 1px solid gray;
+
+  &>span {
+    color: #d3660e;
+  }
+}

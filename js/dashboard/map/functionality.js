@@ -64,13 +64,12 @@ const addDriverMarkerOnMap = async (item, current, iconColor, type) => {
     marker._icon.setAttribute("data-type", type);
     marker._icon.setAttribute("data-service", whichService);
     marker._icon.setAttribute("data-vision", "visible");
-    console.log(marker);
+    // console.log(marker);
     setMarkerToArray(marker, type);
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 }
-
 
 const settingNewCarTypeInMap = (uid, snapshot) => {
 
@@ -215,25 +214,177 @@ const updateSearchInactiveFilter = i => {
 const getPopUpCardFromMarker = (item, current, type) => {
   try {
     if (item !== undefined) {
-      return `<div class="popup-container">
-                        <div>
-                            <div class="popup-personal">
-                                <div class="icon-text">${item.personal.gender == "m" ? icons.male : icons.female}<span class="capitalize bold">${item.personal.name}</span></div>
-                                <div class="icon-text">${icons.phone}<span class="upper">${item.personal.phone}</span></div>
-                                <div class="icon-text">${icons.badge}<span class="upper">${item.personal.badge}</span></div>
-                                <div class="icon-text">${icons.card}<span class="upper">${item.personal.licence}</span></div>
-                                <div class="icon-text">${icons.mail}<span class="lower">${item.personal.email}</span></div>
-                            </div>
-                            <div class="popup-vehicle">
-                                <div class="icon-text"><span class="capitalize bold">${item.vehicle.brand} ${item.vehicle.model}</span></div>
-                                <div class="icon-text">${icons.number}<span class="upper">${item.vehicle.num_economic}</span></div>
-                                <div class="icon-text">${icons.number}<span class="upper">${item.vehicle.plate}</span></div>
-                                <div class="icon-text">${icons.car}<span class="capitalize">${item.vehicle.type}</span></div>
-                                <div class="icon-text">${icons.colors}<span class="capitalize">${item.vehicle.color || "n/a"}</span></div>
-                            </div>
-                        </div>
-                        ${current === undefined ? '' : (isAlertEvent(current, type) || '')}
-                    </div>`;
+      return `   
+  <div class="driver-popup">
+    <div class="popup-tabs">
+      <ul class="tab-list">
+        <li>
+          <button type="button" class="tab-button" aria-selected="true" data-tab="conductor">
+            <span>Conductor</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="tab-button" aria-selected="false" data-tab="vehiculo">
+            <span>Vehículo</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="formContainer" data-tabcontainer="conductor" data-visibility="true">
+      <div class="popup-header">
+        <h2>Datos generales del conductor</h2>
+      </div>
+      <div class="popup-body">
+        <table>
+          <tr>
+            <td colspan="3"><span class="th">Nombre completo del conductor</span></td>
+            <td>${item.personal.name}</td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td><span class="th">Sexo:</span></td>
+            <td>${item.personal.gender == "m" ? icons.male : icons.female}</td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td><span class="th">E-mail:</span></td>
+            <td>${item.personal.email}</td>
+          </tr>
+          <tr>
+            <td><span class="th">Teléfono celular a 10 dígitos:</span></td>
+            <td>${item.personal.phone}</td>
+          </tr>
+          <tr>
+            <td><span class="th">Telefono de emergencia:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">Tipo de sangre:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">Examen antidoping:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">Enfermedades crónicas</span></td>
+            <td>
+              <table class="no-borders">
+                <tr>
+                  <td><span class="th">Hipertensión</span></td>
+                </tr>
+                <tr>
+                  <td><span class="th">Diabetes</span></td>
+                </tr>
+                <tr>
+                  <td><span class="th">Insuficiencia cardiaca</span></td>
+                </tr>
+                <tr>
+                  <td><span class="th">Epoc (Enfermedad Pulmonar Obstructiva Crónica)</span></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <p class="popup-parraf">Generar código para validar numero telefónico y terminar el registro del conductor</p>
+        <table>
+          <tr>
+            <td><span class="th">Licencia:</span> </td>
+            <td>${item.personal.licence}</td>
+          </tr>
+          <tr>
+            <td><span class="th">INE:</span></td>
+            <td>${item.personal.badge}</td>
+          </tr>
+          <tr>
+            <td><span class="th">FOTOGRAFIA CONDUCTOR</span></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="formContainer" data-tabcontainer="vehiculo" data-visibility="false">
+      <div class="popup-header">
+        <h2>Datos generales del Taxi</h2>
+      </div>
+      <div class="popup-body">
+        <table>
+          <tr>
+            <td><span class="th">Taxi incluyente:</span></td>
+            <td>
+              <table class="no-borders">
+                <tr>
+                  <td>Usuario con capacidades diferentes</td>
+                </tr>
+                <tr>
+                  <td>Mascotas</td>
+                </tr>
+                <tr>
+                  <td>Equipaje</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <table>
+          <tr>
+            <td><span class="th">Número económico de Taxi:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">ID Tarjetón:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">No. Placa:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">Marca Automovil:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">Modelo:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">Color automovil:</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><span class="th">Fotografia de automovil:</span></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>  
+      `;
+
+      //   return `
+      //   <div class="popup-container"> 
+      //     <div>
+      //       <div class="popup-personal">
+      //         <div class="icon-text">${item.personal.gender == "m" ? icons.male : icons.female}<span class="capitalize bold">${item.personal.name}</span></div>
+      //         <div class="icon-text">${icons.phone}<span class="upper">${item.personal.phone}</span></div>
+      //         <div class="icon-text">${icons.badge}<span class="upper">${item.personal.badge}</span></div>
+      //         <div class="icon-text">${icons.card}<span class="upper">${item.personal.licence}</span></div>
+      //         <div class="icon-text">${icons.mail}<span class="lower">${item.personal.email}</span></div>
+      //       </div>
+      //       <div class="popup-vehicle">
+      //         <div class="icon-text"><span class="capitalize bold">${item.vehicle.brand} ${item.vehicle.model}</span></div>
+      //         <div class="icon-text">${icons.number}<span class="upper">${item.vehicle.num_economic}</span></div>
+      //         <div class="icon-text">${icons.number}<span class="upper">${item.vehicle.plate}</span></div>
+      //         <div class="icon-text">${icons.car}<span class="capitalize">${item.vehicle.type}</span></div>
+      //         <div class="icon-text">${icons.colors}<span class="capitalize">${item.vehicle.color || "n/a"}</span></div>
+      //       </div>
+      //     </div>
+      //     ${current === undefined ? '' : (isAlertEvent(current, type) || '')}
+      // </div>`;
     }
   } catch (err) {
     return false;
@@ -321,7 +472,6 @@ const attendAlertFromListModal = (type, i) => {
   alert_box.style.display = 'block';
 }
 
-
 const checkDriverMarkerOnMap = async (type, uid, event) => {
   try {
     let whichTypeIs = '';
@@ -356,7 +506,9 @@ const checkDriverMarkerOnMap = async (type, uid, event) => {
       }
     });
 
-  } catch (err) { console.log(err); }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 const cleanAlertCountInContainerMap = (counter, type) => {
@@ -415,8 +567,12 @@ const executeWebService = () => {
   const xhr = new XMLHttpRequest();
 
   xhr.addEventListener("load", () => {
-    if (this.readyState === 4 && this.status === 200) { console.log(this.response); }
-    else { console.log(this.response) }
+    if (this.readyState === 4 && this.status === 200) {
+      console.log(this.response);
+    }
+    else {
+      console.log(this.response)
+    }
   });
   xhr.open("GET", api);
   xhr.send();
@@ -429,15 +585,17 @@ snap_working.on('child_added', snap => {
     inactive_count--;
     const driver_data = drivers_list.list.filter(item => item.id === snap.key);
     const item = driver_data[0];
-    console.log("LINE 420:")
-    console.log(item);
+    // console.log("LINE 420:")
+    // console.log(item);
     working_list.push({ ...item, w: isWorking });
     addDriverMarkerOnMap(item, isWorking, iconWorking, 'working');
     addDataDriverToList(item, 'working', dom_icons.bluecar);
     document.querySelector("span#working-data").textContent = working_count;
     document.querySelector("span#inactive-data").textContent = inactive_count;
   }
-  catch (err) { console.log(err); }
+  catch (err) {
+    console.log(err);
+  }
 });
 
 snap_active.on('child_added', snap => {
@@ -448,8 +606,8 @@ snap_active.on('child_added', snap => {
     const driver_data = drivers_list.list.filter(item => item.id === snap.key);
     const item = driver_data[0];
     active_list.push({ ...item, a: isActive });
-    console.log("LINE 438:")
-    console.log(item)
+    // console.log("LINE 438:")
+    // console.log(item)
     addDriverMarkerOnMap(item, isActive, iconActive, 'active');
     addDataDriverToList(item, 'active', dom_icons.greencar);
     document.querySelector("span#active-data").textContent = active_count;
@@ -470,7 +628,9 @@ snap_warning.on('child_added', snap => {
     addDataDriverToList(item, 'warning', dom_icons.yellowcar);
     addWarningInfoToModalTable(item, isWarning, 'warning', dom_icons.warning_icon);
     showAlertCountersOnMapContainer('warning', warning_count);
-  } catch (err) { console.log(err); }
+  } catch (err) {
+    // console.log(err); 
+  }
 });
 
 snap_panic.on('child_added', snap => {
@@ -482,14 +642,16 @@ snap_panic.on('child_added', snap => {
     panic_list.push({ ...item, p: isPanic });
     checkDriverMarkerOnMap('panic', snap.key, 'start');
     addDriverMarkerOnMap(item, isPanic, iconPanic, 'panic');
-    addCircleToMap({ uid: snap.key, node: snap.val() }, '#e83e8c', 'panic');
-    addDataDriverToList(item, 'panic', dom_icons.purplecar);
+    addCircleToMap({ uid: snap.key, node: snap.val() }, '#ff0000', 'panic');
+    addDataDriverToList(item, 'panic', dom_icons.redcar);
     addWarningInfoToModalTable(item, isPanic, 'panic', dom_icons.panic_icon);
     showAlertCountersOnMapContainer('panic', panic_count);
     // executeWebService()
 
     GeographicZone.setView([isPanic.l[0], isPanic.l[1]], 14);
-  } catch (err) { console.log(err); }
+  } catch (err) {
+    // console.log(err); 
+  }
 });
 
 eiby_warning.on("child_added", snap => {
@@ -529,15 +691,14 @@ eiby_panic.on("child_added", snap => {
     checkDriverMarkerOnMap('panic', snap.key, 'start');
     const driver = drivers_list.list.filter(item => item.id == snap.key);
     addDriverMarkerOnMap(driver[0], item, iconPanic, 'panic');
-    addCircleToMap({ uid: snap.key, node: item }, "#e83e8c", "panic");
-    addDataDriverToList(driver[0], 'panic', dom_icons.purplecar);
+    addCircleToMap({ uid: snap.key, node: item }, "#ff0000", "panic");
+    addDataDriverToList(driver[0], 'panic', dom_icons.redcar);
     addWarningInfoToModalTable(driver[0], item, 'panic', dom_icons.panic_icon);
     showAlertCountersOnMapContainer('panic', panic_count);
 
     GeographicZone.setView([item.l[0], item.l[1]], 14);
   } catch (err) { console.log(err) }
 });
-
 
 snap_working.on('child_changed', snap => {
   try {
@@ -671,15 +832,12 @@ snap_panic.on('child_changed', snap => {
   } catch (err) { console.log(err); }
 });
 
-
-
-
 snap_working.on('child_removed', snap => {
   try {
     working_count--;
     const uid = snap.key;
 
-    console.log(working_list);
+    // console.log(working_list);
     working_list = working_list.filter(item => item.id !== uid);
     const working_in_map = working_markers_list.filter(item => item.options.id === uid);
     removeMarkerFromMap(working_in_map[0]);
@@ -695,7 +853,7 @@ snap_active.on('child_removed', snap => {
     const uid = snap.key;
     active_list = active_list.filter(item => item.id !== uid);
     const active_in_map = active_markers_list.filter(item => item.options.id === uid);
-    console.log(active_in_map);
+    // console.log(active_in_map);
     removeMarkerFromMap(active_in_map[0]);
     removeDataFromTable(uid);
     active_markers_list = active_markers_list.filter(item => item.options.id !== uid);
@@ -782,3 +940,32 @@ drivers_list.list.forEach(item => {
   addDriverMarkerOnMap(item, undefined, iconInactive, 'inactive');
   addDataDriverToList(item, 'inactive', dom_icons.blackcar);
 });
+
+$(document).on("click", ".tab-button", function (e) {
+  tabModalEventListener(e);
+});
+
+function tabModalEventListener({ currentTarget }) {
+  const modalTabButtons = document.querySelectorAll("button.tab-button");
+  const nameTab = currentTarget.getAttribute("data-tab");
+  const isSelected = currentTarget.getAttribute("aria-selected");
+  if (isSelected == "true") {
+    return false;
+  }
+  modalTabButtons.forEach(element => {
+    if (element.getAttribute("aria-selected") == "true" || element.getAttribute("data-tab") !== nameTab) {
+      element.setAttribute("aria-selected", "false")
+      return;
+    }
+    element.setAttribute("aria-selected", "true");
+  })
+  // currentTarget.setAttribute("aria-selected", "true");
+  // <div class="formContainer" data-tabcontainer="data" data-visibility="true">
+  const tabContents = document.querySelectorAll("div.formContainer")
+  tabContents.forEach(element => {
+    element.setAttribute("data-visibility", "false");
+    if (element.getAttribute("data-tabcontainer") == nameTab) {
+      element.setAttribute("data-visibility", "true");
+    }
+  })
+}

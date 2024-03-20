@@ -11,6 +11,7 @@ export const icons = {
   greencar: "<img class='car_icon' src='../assets/img/green.png' />",
   blackcar: "<img class='car_icon' src='../assets/img/black.png' />",
   bluecar: "<img class='car_icon' src='../assets/img/blue.png' />",
+  redcar: "<img class='car_icon' src='../assets/img/red.png' />",
   purplecar: "<img class='car_icon' src='../assets/img/purple.png' />",
   panic_alert: "<img class='car_icon' src='../assets/svg/panic_alert.svg' />",
   warning_alert: "<img class='car_icon' src='../assets/svg/warning_alert.svg' />",
@@ -33,12 +34,11 @@ export const dom_icons = {
   greencar: '../assets/img/green.png',
   blackcar: '../assets/img/black.png',
   yellowcar: '../assets/img/yellow.png',
-  bluecar: '../assets/img/blue.png',
-
+  bluecar: '../assets/img/blue.png', 
   warning_icon: '../assets/svg/warning.svg',
-  panic_icon: '../assets/svg/panic.svg',
-
+  panic_icon: '../assets/svg/panic.svg', 
   purplecar: '../assets/img/purple.png',
+  redcar: '../assets/img/red.png',
   panic_alert: '../assets/svg/panic_alert.svg',
   warning_alert: '../assets/svg/warning_alert.svg',
   add: '../assets/img/add_b.svg',

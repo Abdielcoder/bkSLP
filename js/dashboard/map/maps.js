@@ -28,6 +28,7 @@ var __icons = {
   greencar: "<img class='car_icon' src='../assets/img/green.png' />",
   blackcar: "<img class='car_icon' src='../assets/img/black.png' />",
   bluecar: "<img class='car_icon' src='../assets/img/blue.png' />",
+  redcar: "<img class='car_icon' src='../assets/img/red.png' />",
   purplecar: "<img class='car_icon' src='../assets/img/purple.png' />",
   panic_alert: "<img class='car_icon' src='../assets/svg/panic_alert.svg' />",
   warning_alert: "<img class='car_icon' src='../assets/svg/warning_alert.svg' />",
@@ -41,9 +42,9 @@ const iconWorking = L.icon({ iconUrl: '../assets/img/blue.png', iconSize: [40, 4
 const iconActive = L.icon({ iconUrl: '../assets/img/green.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
 const iconInactive = L.icon({ iconUrl: '../assets/img/black.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
 const iconWarning = L.icon({ iconUrl: '../assets/img/yellow.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
-const iconPanic = L.icon({ iconUrl: '../assets/img/purple.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
+const iconPanic = L.icon({ iconUrl: '../assets/img/red.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
 
-const driverPanic = L.icon({ iconUrl: '../assets/img/car-icon-purple.png', iconSize: [26, 40], popupAnchor: [-2, -15] });
+const driverPanic = L.icon({ iconUrl: '../assets/img/car-icon-red.png', iconSize: [26, 40], popupAnchor: [-2, -15] });
 const iconBlue = L.icon({ iconUrl: '../assets/img/car-icon-blue.png', iconSize: [40, 40], alt: "car-icons" });
 const iconGreen = L.icon({ iconUrl: '../assets/img/green.png', iconSize: [40, 40], alt: "car-icons" });
 const cartopblack = L.icon({ iconUrl: '../assets/img/black.png', iconSize: [40, 40], alt: "car-icons" });

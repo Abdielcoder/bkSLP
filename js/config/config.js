@@ -296,7 +296,7 @@ export const get_tarifas = () => {
   return snap_tarifas.child("SLP").once("value").then(snap => {
     // Ahora snap.val() es el objeto que contiene las tarifas directamente
     const tarifas = snap.val();
-    console.log("Tarifas desde config: "+tarifas);
+    console.log("Tarifas desde config: " + tarifas);
     return tarifas; // Retornamos el objeto de tarifas directamente
   });
 }
@@ -661,5 +661,36 @@ export const resetPassword = async (email) => {
   alert("Se ha presentado un error, favor de verificar");
   return false;
 }
+
+export const getMessagesList = async () => {
+  const list = await firestore.collection("Mensajes").get().catch(error => false);
+  if (list) {
+    let information = []; 
+    list.forEach(item => {
+      const { accion, descripcion, destino, ejecutado, fechaAlta, message } = item.data();
+      information.push([message, descripcion, destino, ejecutado, accion]);
+    });
+    console.log({information})
+    return information;
+  }
+};
+
+export const addNewMessage = async (e) => {
+
+  let firestoreData = {};
+
+  firestoreData = Object
+    .assign(
+      e,
+      { fechaAlta: new Date().toISOString() }
+    );
+
+  return await firestore
+    .collection("Mensajes")
+    .doc()
+    .set(firestoreData)
+    .then(result => true)
+    .catch(error => false);
+};
 
 export default app;

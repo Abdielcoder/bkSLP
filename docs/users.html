@@ -33,13 +33,13 @@
           <li class="nav-item">
             <a class="nav-link" href="./users.html">
               <span class="link-icons material-icons-sharp">person</span>
-              Usuarios
+              Conductores
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./users.html">
               <span class="link-icons material-icons-sharp"> airline_seat_recline_extra</span>
-               
+
               Clientes
             </a>
           </li>
@@ -130,7 +130,7 @@
       <div class="container">
         <div class="tadi-card col-12">
           <div class="card-header">
-            <h1>Usuarios conductores</h1>
+            <h1>Registro conductores</h1>
             <br />
             <p>Listado de conductores y recopilación de la información de sus viajes dentro del empadronamiento actual.
             </p>
@@ -170,92 +170,287 @@
 
       <!-- Modal -->
       <div id="usuariosAltaModal" class="modalForm">
-        <div class="formContainer">
+        <div class="modalContent">
           <div class="containerHead">
-            <h2 style="font-size: 20px;">Dar de alta operador</h2>
+            <h2 style="font-size: 20px; text-align: start;">Datos del conductor</h2>
           </div>
-          <div class="containerBody">
-            <form id="userAlta">
-              <div data-columns="2">
-                <div class="formGroup inputForm">
-                  <label for="nombreCompleto">Nombre completo</label>
-                  <input type="text" placeholder="Introducir nombre..." name="nombreCompleto" id="nombreCompleto"
-                    required />
+          <div class="contentTabs">
+            <ul class="tab-list">
+              <li>
+                <button type="button" class="tab-button" aria-selected="true" data-tab="data">
+                  <span>Datos</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="tab-button" aria-selected="false" data-tab="accounts">
+                  <span>Cuentas</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="tab-button" aria-selected="false" data-tab="files">
+                  <span>Archivos</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="formContainer" data-tabcontainer="data" data-visibility="true">
+            <div class="containerBody">
+              <form id="userAlta">
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="nombreCompleto">Nombre completo</label>
+                    <input type="text" placeholder="Introducir nombre..." name="nombreCompleto" id="nombreCompleto"
+                      required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="correoElectronico">Correo electrónico</label>
+                    <input type="email" placeholder="Introducir correo..." name="correoElectronico"
+                      id="correoElectronico" required />
+                  </div>
                 </div>
-                <div class="formGroup inputForm">
-                  <label for="correoElectronico">Correo electrónico</label>
-                  <input type="email" placeholder="Introducir correo..." name="correoElectronico" id="correoElectronico"
-                    required />
+                <div class="formGroup selectForm">
+                  <label for="sexo">Sexo</label>
+                  <select name="sexo" id="sexo">
+                    <option value="M" selected>Masculino</option>
+                    <option value="F">Femenino</option>
+                  </select>
                 </div>
-              </div>
-              <div class="formGroup selectForm">
-                <label for="sexo">Sexo</label>
-                <select name="sexo" id="sexo">
-                  <option value="M" selected>Masculino</option>
-                  <option value="F">Femenino</option>
-                </select>
-              </div>
 
-              <div data-columns="2">
-                <div class="formGroup inputForm">
-                  <label for="telefono">Telefono</label>
-                  <input type="tel" placeholder="Introducir telefono..." name="telefono" id="telefono" required />
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="telefono">Telefono</label>
+                    <input type="tel" placeholder="Introducir telefono..." name="telefono" id="telefono" required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="telefono">Telefono de Emergencia</label>
+                    <input type="tel" placeholder="Introducir telefono..." name="telefonoEmergencia"
+                      id="telefonoEmergencia" required />
+                  </div>
                 </div>
-                <div class="formGroup inputForm">
-                  <label for="telefono">Telefono de Emergencia</label>
-                  <input type="tel" placeholder="Introducir telefono..." name="telefonoEmergencia"
-                    id="telefonoEmergencia" required />
-                </div>
-              </div>
 
-              <div data-columns="2">
-                <div class="formGroup inputForm">
-                  <label for="numeroEconomico">Numero Económico</label>
-                  <input type="text" placeholder="Introducir numero económico..." name="numeroEconomico"
-                    id="numeroEconomico" required />
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="numeroEconomico">Numero Económico</label>
+                    <input type="text" placeholder="Introducir numero económico..." name="numeroEconomico"
+                      id="numeroEconomico" required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="idTarjeton">ID Tarjeton</label>
+                    <input type="text" placeholder="Introducir ID de tarjeton..." name="idTarjeton" id="idTarjeton"
+                      required />
+                  </div>
                 </div>
-                <div class="formGroup inputForm">
-                  <label for="idTarjeton">ID Tarjeton</label>
-                  <input type="text" placeholder="Introducir ID de tarjeton..." name="idTarjeton" id="idTarjeton"
-                    required />
+                <div class="formParraf">
+                  <p>Desea o puede realizar viajes para personas con:</p>
                 </div>
-              </div>
-              <div class="formParraf">
-                <p>Desea o puede realizar viajes para personas con:</p>
-              </div>
-              <div class="checkboxGroup">
-                <div class="formGroup checkboxForm">
-                  <input type="checkbox" name="discapacidad" id="discapacidad">
-                  <label for="discapacidad">Discapacidad</label>
+                <div class="checkboxGroup">
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="discapacidad" id="discapacidad">
+                    <label for="discapacidad">Discapacidad</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="sillaruedas" id="sillaruedas">
+                    <label for="sillaruedas">Silla de ruedas</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="muletas" id="muletas">
+                    <label for="muletas">Muletas</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="especiales" id="especiales">
+                    <label for="especiales">Personas con condiciones especiales</label>
+                  </div>
                 </div>
-                <div class="formGroup checkboxForm">
-                  <input type="checkbox" name="sillaruedas" id="sillaruedas">
-                  <label for="sillaruedas">Silla de ruedas</label>
+                <div class="containerFooter">
+                  <div class="buttonsTools">
+                    <button type="button" id="modalFormCancel">
+                      <span>Cancelar</span>
+                    </button>
+                    <button type="submit" id="modalFormSubmit">
+                      <span>Agregar</span>
+                    </button>
+                    <button type="button" id="modalFormUpdateSubmit" style="display: none;">
+                      <span>Actualizar</span>
+                    </button>
+                  </div>
                 </div>
-                <div class="formGroup checkboxForm">
-                  <input type="checkbox" name="muletas" id="muletas">
-                  <label for="muletas">Muletas</label>
+              </form>
+              <input type="hidden" name="uid" value="" id="userAltaIdentifier" />
+            </div>
+          </div>
+
+          <div class="formContainer" data-tabcontainer="accounts" data-visibility="false">
+            <div class="containerBody">
+              <h1>Account Data</h1>
+              <!-- <form id="userAlta">
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="nombreCompleto">Nombre completo</label>
+                    <input type="text" placeholder="Introducir nombre..." name="nombreCompleto" id="nombreCompleto"
+                      required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="correoElectronico">Correo electrónico</label>
+                    <input type="email" placeholder="Introducir correo..." name="correoElectronico"
+                      id="correoElectronico" required />
+                  </div>
                 </div>
-                <div class="formGroup checkboxForm">
-                  <input type="checkbox" name="especiales" id="especiales">
-                  <label for="especiales">Personas con condiciones especiales</label>
+                <div class="formGroup selectForm">
+                  <label for="sexo">Sexo</label>
+                  <select name="sexo" id="sexo">
+                    <option value="M" selected>Masculino</option>
+                    <option value="F">Femenino</option>
+                  </select>
                 </div>
-              </div>
-              <div class="containerFooter">
-                <div class="buttonsTools">
-                  <button type="button" id="modalFormCancel">
-                    <span>Cancelar</span>
-                  </button>
-                  <button type="submit" id="modalFormSubmit">
-                    <span>Agregar</span>
-                  </button>
-                  <button type="button" id="modalFormUpdateSubmit" style="display: none;">
-                    <span>Actualizar</span>
-                  </button>
+
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="telefono">Telefono</label>
+                    <input type="tel" placeholder="Introducir telefono..." name="telefono" id="telefono" required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="telefono">Telefono de Emergencia</label>
+                    <input type="tel" placeholder="Introducir telefono..." name="telefonoEmergencia"
+                      id="telefonoEmergencia" required />
+                  </div>
                 </div>
-              </div>
-            </form>
-            <input type="hidden" name="uid" value="" id="userAltaIdentifier" />
+
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="numeroEconomico">Numero Económico</label>
+                    <input type="text" placeholder="Introducir numero económico..." name="numeroEconomico"
+                      id="numeroEconomico" required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="idTarjeton">ID Tarjeton</label>
+                    <input type="text" placeholder="Introducir ID de tarjeton..." name="idTarjeton" id="idTarjeton"
+                      required />
+                  </div>
+                </div>
+                <div class="formParraf">
+                  <p>Desea o puede realizar viajes para personas con:</p>
+                </div>
+                <div class="checkboxGroup">
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="discapacidad" id="discapacidad">
+                    <label for="discapacidad">Discapacidad</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="sillaruedas" id="sillaruedas">
+                    <label for="sillaruedas">Silla de ruedas</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="muletas" id="muletas">
+                    <label for="muletas">Muletas</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="especiales" id="especiales">
+                    <label for="especiales">Personas con condiciones especiales</label>
+                  </div>
+                </div>
+                <div class="containerFooter">
+                  <div class="buttonsTools">
+                    <button type="button" id="modalFormCancel">
+                      <span>Cancelar</span>
+                    </button>
+                    <button type="submit" id="modalFormSubmit">
+                      <span>Agregar</span>
+                    </button>
+                    <button type="button" id="modalFormUpdateSubmit" style="display: none;">
+                      <span>Actualizar</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <input type="hidden" name="uid" value="" id="userAltaIdentifier" /> -->
+            </div>
+          </div>
+
+          <div class="formContainer" data-tabcontainer="files" data-visibility="false">
+            <div class="containerBody">
+              <h2>Files Data</h2>
+              <!-- <form id="userAlta">
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="nombreCompleto">Nombre completo</label>
+                    <input type="text" placeholder="Introducir nombre..." name="nombreCompleto" id="nombreCompleto"
+                      required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="correoElectronico">Correo electrónico</label>
+                    <input type="email" placeholder="Introducir correo..." name="correoElectronico"
+                      id="correoElectronico" required />
+                  </div>
+                </div>
+                <div class="formGroup selectForm">
+                  <label for="sexo">Sexo</label>
+                  <select name="sexo" id="sexo">
+                    <option value="M" selected>Masculino</option>
+                    <option value="F">Femenino</option>
+                  </select>
+                </div>
+
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="telefono">Telefono</label>
+                    <input type="tel" placeholder="Introducir telefono..." name="telefono" id="telefono" required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="telefono">Telefono de Emergencia</label>
+                    <input type="tel" placeholder="Introducir telefono..." name="telefonoEmergencia"
+                      id="telefonoEmergencia" required />
+                  </div>
+                </div>
+
+                <div data-columns="2">
+                  <div class="formGroup inputForm">
+                    <label for="numeroEconomico">Numero Económico</label>
+                    <input type="text" placeholder="Introducir numero económico..." name="numeroEconomico"
+                      id="numeroEconomico" required />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="idTarjeton">ID Tarjeton</label>
+                    <input type="text" placeholder="Introducir ID de tarjeton..." name="idTarjeton" id="idTarjeton"
+                      required />
+                  </div>
+                </div>
+                <div class="formParraf">
+                  <p>Desea o puede realizar viajes para personas con:</p>
+                </div>
+                <div class="checkboxGroup">
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="discapacidad" id="discapacidad">
+                    <label for="discapacidad">Discapacidad</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="sillaruedas" id="sillaruedas">
+                    <label for="sillaruedas">Silla de ruedas</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="muletas" id="muletas">
+                    <label for="muletas">Muletas</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="especiales" id="especiales">
+                    <label for="especiales">Personas con condiciones especiales</label>
+                  </div>
+                </div>
+                <div class="containerFooter">
+                  <div class="buttonsTools">
+                    <button type="button" id="modalFormCancel">
+                      <span>Cancelar</span>
+                    </button>
+                    <button type="submit" id="modalFormSubmit">
+                      <span>Agregar</span>
+                    </button>
+                    <button type="button" id="modalFormUpdateSubmit" style="display: none;">
+                      <span>Actualizar</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <input type="hidden" name="uid" value="" id="userAltaIdentifier" /> -->
+            </div>
           </div>
         </div>
       </div>
@@ -462,7 +657,7 @@
         : i[1].value;
 
       return { [name]: val };
-    }); 
+    });
     const isCreated = await guardaOperador(values);
     if (isCreated === false) return;
     await handleRefetchingData();
@@ -611,5 +806,33 @@
       item.checked = data.opcionesInclusividad[index];
     })
   }
+
+  const modalTabButtons = document.querySelectorAll("button.tab-button");
+
+  modalTabButtons.forEach((tab, index) => {
+    tab.addEventListener("click", ({ currentTarget }) => {
+      const nameTab = currentTarget.getAttribute("data-tab");
+      const isSelected = currentTarget.getAttribute("aria-selected");
+      if (isSelected == "true") {
+        return false;
+      }
+      modalTabButtons.forEach(element => {
+        if (element.getAttribute("aria-selected") == "true" || element.getAttribute("data-tab") !== nameTab) {
+          element.setAttribute("aria-selected", "false")
+          return;
+        }
+        element.setAttribute("aria-selected", "true");
+      })
+      // currentTarget.setAttribute("aria-selected", "true");
+      // <div class="formContainer" data-tabcontainer="data" data-visibility="true">
+      const tabContents = document.querySelectorAll("div.formContainer")
+      tabContents.forEach(element => {
+        element.setAttribute("data-visibility", "false");
+        if (element.getAttribute("data-tabcontainer") == nameTab) {
+          element.setAttribute("data-visibility", "true");
+        }
+      })
+    })
+  })
 
 </script>
