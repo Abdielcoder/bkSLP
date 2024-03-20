@@ -1,4 +1,5 @@
-var GeographicZone = L.map("mapid").setView([32.4660333, -116.9167898], 11);
+var GeographicZone = L.map("mapid").setView([22.151456550718237, -100.97786442650008], 13);
+
 GeographicZone.zoomControl.setPosition("topright");
 
 var PanelControl = L.control.layers();
