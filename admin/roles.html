@@ -134,20 +134,156 @@
             <p>Jerarquía de roles entre los usuarios.</p>
           </div>
           <div class="card-body">
+            <div class="body-button-tools">
+              <button type="button" id="button-edit-role">
+                <span>Editar</span>
+              </button>
+            </div>
             <div class="table_container">
               <table id="roles-list">
                 <thead>
                   <tr>
+                    <th></th>
                     <th>Rol</th>
                     <th>Descripción</th>
-                    <th>Agregar</th>
-                    <th>Actualizar</th>
-                    <th>Eliminar</th>
-                    <th>Admin</th>
+                    <th>Estadisticas</th>
+                    <th>Mapa</th>
+                    <th>Conductores</th>
+                    <th>Vehículos</th>
+                    <th>Roles</th>
+                    <th>Tarifas</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="modalDialog" class="modalDialog" data-visibility="hidden" data-reference="null">
+        <div class="dialogBackground"></div>
+        <div class="dialogContent">
+          <div class="dialogTitle">
+            <h2>Especificaciones del Rol</h2>
+          </div>
+          <div class="dialogContainer">
+            <div class="formContainer" id="form-container-json-data">
+              <form action="" class="form-content" id="form-roles">
+                <div class="flexed fullwidth">
+                  <div class="formGroup inputForm" style="width: 100%;">
+                    <label for="role">Rol</label>
+                    <input type="text" name="role" id="role" />
+                  </div>
+                  <div class="formGroup inputForm" style="width: 100%;">
+                    <label for="description">Descripción </label>
+                    <input type="text" name="description" id="description" />
+                  </div>
+                </div>
+
+                <div class="flexed">
+                  <h2>Permisos: Mapa</h2>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="maps-view" id="maps-view">
+                    <label for="maps-view">Visualizar</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="maps-alarms" id="maps-alarms">
+                    <label for="maps-alarms">Alarmas</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="maps-contact" id="maps-contact">
+                    <label for="maps-contact">Contacto</label>
+                  </div>
+                </div>
+
+                <div class="flexed">
+                  <h2>Permiso: Estadísticas</h2>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="stats" id="stats">
+                    <label for="stats">Visualizar</label>
+                  </div>
+                </div>
+
+                <div class="flexed">
+                  <h2>Permisos: Roles</h2>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="roles-create" id="roles-create">
+                    <label for="roles-create">Crear</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="roles-update" id="roles-update">
+                    <label for="roles-update">Actualizar</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="roles-delete" id="roles-delete">
+                    <label for="roles-delete">Eliminar</label>
+                  </div>
+                </div>
+
+                <div class="flexed">
+                  <h2>Permisos: Tarifas</h2>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="tarifas-create" id="tarifas-create">
+                    <label for="tarifas-create">Crear</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="tarifas-update" id="tarifas-update">
+                    <label for="tarifas-update">Actualizar</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="tarifas-read" id="tarifas-read">
+                    <label for="tarifas-read">Visualizar</label>
+                  </div>
+                </div>
+
+                <div class="flexed">
+                  <h2>Permisos: Conductores</h2>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="users-create" id="users-create">
+                    <label for="users-create">Crear</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="users-update" id="users-update">
+                    <label for="users-update">Actualizar</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="users-read" id="users-read">
+                    <label for="users-read">Visualizar</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="users-delete" id="users-delete">
+                    <label for="users-delete">Eliminar</label>
+                  </div>
+                </div>
+
+                <div class="flexed">
+                  <h2>Permisos: Vehículos</h2>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="vehicles-create" id="vehicles-create">
+                    <label for="vehicles-create">Crear</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="vehicles-update" id="vehicles-update">
+                    <label for="vehicles-update">Actualizar</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="vehicles-read" id="vehicles-read">
+                    <label for="vehicles-read">Visualizar</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="vehicles-delete" id="vehicles-delete">
+                    <label for="vehicles-delete">Eliminar</label>
+                  </div>
+                </div>
+                <div class="button-tools">
+                  <button type="button" class="modal-back-button">
+                    <span>Regresar</span>
+                  </button>
+                  <button type="submit" class="modal-back-button">
+                    <span>Actualizar</span>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

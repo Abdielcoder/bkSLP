@@ -148,13 +148,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Hola [nombre usuario], par...</td>
-                    <td>Notificacion a usuari..</td>
-                    <td>INDIVIDUAL</td>
-                    <td>SI</td>
-                    <td>N/A</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
@@ -271,26 +265,22 @@
 
     const information = await getMessagesList();
     createRowToTable(information)
-    new DataTable("#messages-list", {
-      info: false,
-      paging: false,
-      searching: false,
-      buttons: false
-    });
+    new DataTable("#messages-list");
   }
 
   function createRowToTable(list) {
-    const tableRow = document.createElement("tr");
+    console.log({ Listado: list });
     list.forEach(item => {
+      const tableRow = document.createElement("tr");
       item.forEach(cell => {
         const tableCell = document.createElement("td");
         const cellNode = document.createTextNode(cell);
         tableCell.appendChild(cellNode);
         tableRow.appendChild(tableCell);
       })
+      document.querySelector("table#messages-list tbody").insertAdjacentElement("beforeend", tableRow);
     });
 
-    document.querySelector("table#messages-list tbody").insertAdjacentElement("beforeend", tableRow);
   }
 
   await generateTable();

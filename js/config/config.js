@@ -11,7 +11,7 @@ const config = {
 const app = firebase.initializeApp(config);
 const realtime = firebase.database().ref();
 const auth = firebase.auth
-const firestore = firebase.firestore();
+export const firestore = firebase.firestore();
 
 export const snap_drivers = realtime.child("Users/Drivers");
 export const snap_admins = realtime.child("Users/Admins");
