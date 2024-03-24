@@ -169,7 +169,7 @@
       </div>
 
       <!-- Modal -->
-      <div id="usuariosAltaModal" class="modalForm">
+      <div id="usuariosAltaModal" class="modalForm" data-reference="">
         <div class="modalContent">
           <div class="containerHead">
             <h2 style="font-size: 20px; text-align: start;">Datos del conductor</h2>
@@ -183,7 +183,7 @@
               </li>
               <li>
                 <button type="button" class="tab-button" aria-selected="false" data-tab="accounts">
-                  <span>Cuentas</span>
+                  <span>Vehículos</span>
                 </button>
               </li>
               <li>
@@ -261,9 +261,18 @@
                     <label for="especiales">Personas con condiciones especiales</label>
                   </div>
                 </div>
+                <div style="margin-inline: auto; display: block; width: max-content; margin-top: 1rem;">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <input type="file" name="operadorPic" id="operadorPic" style="display: none;">
+                    <label for="operadorPic">
+                      <img src="../assets/img/nopic.png" alt="operadorPreview" id="operadorPreview"
+                        class="operadorPreview" style="display: block; width: 95px; height: 95px; object-fit: cover;">
+                    </label>
+                  </div>
+                </div>
                 <div class="containerFooter">
                   <div class="buttonsTools">
-                    <button type="button" id="modalFormCancel">
+                    <button type="button" class="modalFormCancel">
                       <span>Cancelar</span>
                     </button>
                     <button type="submit" id="modalFormSubmit">
@@ -281,7 +290,36 @@
 
           <div class="formContainer" data-tabcontainer="accounts" data-visibility="false">
             <div class="containerBody">
-              <h1>Account Data</h1>
+              <p>Buscar vehículo por numero de placa:</p>
+              <br>
+
+              <div style="display: flex; width: 100%; gap: 1rem;">
+                <input type="text" placeholder="Introducir placa del vehículo" name="placa" id="placa"
+                  style="flex-grow: 1;">
+                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path d="M15 15L21 21" stroke="#323232" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                    <path
+                      d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                      stroke="#323232" stroke-width="2"></path>
+                  </g>
+                </svg>
+              </div>
+              <div id="vehicles-container-list" data-reference="">
+                <table id="vehicles-list">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Marca y modelo</th>
+                      <th>Placas</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
               <!-- <form id="userAlta">
                 <div data-columns="2">
                   <div class="formGroup inputForm">
@@ -350,7 +388,7 @@
                 </div>
                 <div class="containerFooter">
                   <div class="buttonsTools">
-                    <button type="button" id="modalFormCancel">
+                    <button type="button" class="modalFormCancel">
                       <span>Cancelar</span>
                     </button>
                     <button type="submit" id="modalFormSubmit">
@@ -363,12 +401,19 @@
                 </div>
               </form>
               <input type="hidden" name="uid" value="" id="userAltaIdentifier" /> -->
+              <div class="containerFooter">
+                <div class="buttonsTools">
+                  <button type="button" class="modalFormCancel">
+                    <span>Cancelar</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="formContainer" data-tabcontainer="files" data-visibility="false">
             <div class="containerBody">
-              <h2>Files Data</h2>
+              <h2>Archivos</h2>
               <!-- <form id="userAlta">
                 <div data-columns="2">
                   <div class="formGroup inputForm">
@@ -437,7 +482,7 @@
                 </div>
                 <div class="containerFooter">
                   <div class="buttonsTools">
-                    <button type="button" id="modalFormCancel">
+                    <button type="button" class="modalFormCancel">
                       <span>Cancelar</span>
                     </button>
                     <button type="submit" id="modalFormSubmit">
@@ -490,6 +535,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"></script>
@@ -501,8 +547,24 @@
     eliminaOperador,
     verOperador,
     actualizaOperador,
+    getVehicles,
     resetPassword
   } from "../js/config/config.js";
+
+  const monthStrings = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre"
+  ];
 
   // Main Table
   var usersTable = document.getElementById("operatorsTable");
@@ -519,14 +581,13 @@
   const userAddSubmitButton = document.getElementById("modalFormSubmit");
   const userUpdateButton = document.getElementById("modalFormUpdateSubmit");
   const deleteCancelButton = document.getElementById("modalFormDeleteCancel");
-  const addCancelButton = document.getElementById("modalFormCancel");
+  let addCancelButton = document.querySelectorAll("button.modalFormCancel");
 
-  window.addEventListener("DOMContentLoaded", async () => {
-    // Get data form DB
-    await fetchingData();
-    // Copyright Text
-    const year = new Date().getFullYear();
-    document.getElementById("copyrightFooter").textContent = "\u00A9 " + year + " Copyright, TaximetroDigital."
+  addCancelButton.forEach(element => {
+    element.addEventListener("click", async () => {
+      handleViewAltaModal(false);
+      // await handleRefetchingData();
+    });
   });
 
   userAddbutton.addEventListener("click", () => {
@@ -535,14 +596,9 @@
     handleViewAltaModal(true);
   });
 
-  addCancelButton.addEventListener("click", async () => {
-    handleViewAltaModal(false);
-    await handleRefetchingData();
-  });
-
   deleteCancelButton.addEventListener("click", async () => {
-    await handleRefetchingData();
     handleViewDeleteModal(false);
+    // await handleRefetchingData();
   });
 
   userUpdateButton.addEventListener("click", async (e) => {
@@ -575,7 +631,7 @@
       if (type === "checkbox") { element.checked = false; return; }
       return;
     });
-
+    document.getElementById("operadorPic").src = "../assets/img/nopic.png";
     modalDialogAdd.classList.remove("modalViewTrue");
   }
 
@@ -639,10 +695,16 @@
         list.telefono,
         list.numeroEconomico,
         list.idTarjeton,
-        new Date(list.fechaAlta).toDateString() || "-"
+        formatDate(list.fechaAlta)
       ]
     }
     createRowToTable(cell_list);
+  };
+
+  const formatDate = (datetime) => {
+    const [date, time] = datetime.slice(0, -5).split("T");
+    const [year, month, day] = date.split("-");
+    return day + " de " + monthStrings[parseInt(month) - 1] + " del " + year/* + " " + time.slice(0, -3)*/;
   }
 
   async function handleSubmit(e) {
@@ -750,10 +812,14 @@
   }
 
   const handleResetPassword = async (e) => {
-    const tableRow = e.parentNode;
-    const email = tableRow.childNodes[2].innerText;
-    const hasBeenReseted = await resetPassword(email);
-  }
+    if (confirm("Se le enviará al usuario un correo de reestablecimiento de contraseña, ¿Estas seguro de proceder con la acción?")) {
+      {
+        const tableRow = e.parentNode;
+        const email = tableRow.childNodes[2].innerText;
+        const hasBeenReseted = await resetPassword(email);
+      }
+    }
+  };
 
   function elementSetAttributes(el, attrs) {
     for (var key in attrs) {
@@ -763,6 +829,7 @@
 
   async function handleUpdateUser(e) {
     const uid = e.currentTarget.getAttribute("data-id");
+    document.getElementById("usuariosAltaModal").setAttribute("data-reference", uid);
     document.getElementById("userAltaIdentifier").value = uid;
     document.getElementById("modalFormSubmit").style.display = "none";
     document.getElementById("modalFormUpdateSubmit").style.display = "block";
@@ -783,28 +850,41 @@
   }
 
   async function getOperatorByUid(uid) {
-    const data = await verOperador(uid);
-    const listNames = Object.keys(data);
-    const formElementNames = Object.keys(modalForm.elements);
-    const formElementValues = Object.values(modalForm.elements);
+    let data = await verOperador(uid);
+    let formEntries = Object.values(modalForm).filter(item => (item.type !== "button" && item.type !== "submit"));
 
-    const newList = formElementNames
-      .map((item, index) => listNames.includes(item)
-        ? formElementValues[index]
-        : null
-      )
-      .filter(item => item !== null);
-
-    newList.forEach(item => {
-      const id = item.getAttribute("id");
-      item.value = data[id];
+    formEntries.forEach(element => {
+      const { name, type } = element;
+      if (type === "checkbox") {
+        element.checked = data[name];
+        return;
+      }
+      element.value = data[name];
+      return;
     });
 
-    const checkboxes = document.querySelectorAll(".formGroup.checkboxForm>input[type=checkbox]")
+    // const listNames = Object.keys(data);    
+    // const formElementNames = Object.keys(modalForm.elements);
 
-    checkboxes.forEach((item, index) => {
-      item.checked = data.opcionesInclusividad[index];
-    })
+    // const formElementValues = Object.values(modalForm.elements);
+
+    // const newList = formElementNames
+    //   .map((item, index) => listNames.includes(item)
+    //     ? formElementValues[index]
+    //     : null
+    //   )
+    //   .filter(item => item !== null);
+
+    // newList.forEach(item => {
+    //   const id = item.getAttribute("id");
+    //   item.value = data[id];
+    // });
+
+    // const checkboxes = document.querySelectorAll("div.formGroup.checkboxForm>input[type=checkbox]")
+
+    // checkboxes.forEach((item, index) => {
+    //   item.checked = data.opcionesInclusividad[index];
+    // })
   }
 
   const modalTabButtons = document.querySelectorAll("button.tab-button");
@@ -833,6 +913,53 @@
         }
       })
     })
-  })
+  });
 
+  // const getVehiclesList = async () => { 
+
+  // }
+
+  // const synchronizeVehicleToUser = () => {
+
+  // }
+
+  document.getElementById("operadorPic").addEventListener("change", function () {
+    const file = this.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      const url = event.target.result;
+      document.getElementById("operadorPreview").src = url;
+    }
+    reader.readAsDataURL(file);
+  });
+
+
+  document.querySelector(`button.tab-button[data-tab="accounts"]`)
+    .addEventListener("click", async function (e) {
+      const vehiclesFromUser = await getVehicles(document.getElementById("usuariosAltaModal").getAttribute("data-reference"));
+      if (vehiclesFromUser === false) return;
+      document.querySelector("table#vehicles-list tbody").innerHTML = "";
+      const table = document.createElement("table");
+      const tableBody = document.createElement("tbody");
+
+      vehiclesFromUser.forEach((element, index) => {
+        const { marca, modelo, placa } = element;
+        console.log({ element });
+        const tr = `
+              <tr>
+                <td>${index}</td>
+                <td>${marca} ${modelo}</td>
+                <td>${placa}</td>
+              </tr>
+              `;
+        document.querySelector("table#vehicles-list tbody").insertAdjacentHTML("beforeend", tr)
+      })
+    });
+
+  window.addEventListener("DOMContentLoaded", async () => {
+    await fetchingData();
+    const year = new Date().getFullYear();
+    document.getElementById("copyrightFooter").textContent = "\u00A9 " + year + " Copyright, TaximetroDigital."
+  });
 </script>

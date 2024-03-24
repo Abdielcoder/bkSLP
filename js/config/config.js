@@ -10,8 +10,9 @@ const config = {
 
 const app = firebase.initializeApp(config);
 const realtime = firebase.database().ref();
-const auth = firebase.auth
+const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const storage = firebase.storage();
 
 export const snap_drivers = realtime.child("Users/Drivers");
 export const snap_admins = realtime.child("Users/Admins");
@@ -302,9 +303,6 @@ export const get_tarifas = () => {
 }
 
 
-
-
-
 export const generateTemporalToken = async () => {
   let token = "";
   let string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:-@%&$#¿?{}[]()*+";
@@ -540,53 +538,60 @@ export const adminArr = async () => {
 
 /* Firestore Functions */
 export const guardaOperador = async (req) => {
+  try {
+    let firestoreData = {};
+    req?.forEach((i) => { firestoreData = Object.assign(firestoreData, i); });
 
-  let firestoreData = {};
+    firestoreData = Object.assign(firestoreData, { fechaAlta: new Date().toISOString() });
 
-  req?.forEach((i) => { firestoreData = Object.assign(firestoreData, i); });
-  const uid = "u" + new Date().getTime();
+    const { status, code, user } = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(firestoreData.correoElectronico, "1234abcd")
+      .then(user => {
+        return {
+          status: 200,
+          user: user.user
+        }
+      })
+      .catch(error => {
+        return {
+          status: 500,
+          code: error.code
+        };
+      });
+    if (status === 200) {
+      firestoreData = Object.assign(firestoreData, { uid: user.uid });
+      window.alert("Se ha guardado el operador con exito.");
+      await resetPassword(firestoreData.correoElectronico);
 
-  firestoreData = Object
-    .assign(
-      firestoreData,
-      { fechaAlta: new Date().toISOString() },
-      { uid }
-    );
+      const response = await firestore
+        .collection("OperadoresSLP")
+        .doc(user.uid)
+        .set(firestoreData);
 
-  const { status, code } = await firebase
-    .auth()
-    .createUserWithEmailAndPassword(firestoreData.correoElectronico, "1234abcd")
-    .then(user => { return { status: 200, user: user.user } })
-    .catch(error => { return { status: 500, code: error.code }; });
+      const uploadSuccess = await uploadImages(user.uid);
 
-  if (status === 200) {
-    window.alert("Se ha guardado el operador con exito.");
-    await resetPassword(firestoreData.correoElectronico);
-
-    await firestore
-      .collection("OperadoresSLP")
-      .doc(uid)
-      .set(firestoreData)
-      .catch((error) => { return false; });
-
-
-    return true;
-  }
-  if (status === 500) {
-    switch (code) {
-      case 'auth/email-already-in-use':
-        window.alert("El correo '" + firestoreData.correoElectronico + "' ya se encuentra registrado en el sistema, favor de introducir un correo distinto.")
-        break;
-      case 'auth/invalid-email':
-        window.alert("Corréo invalido, pruebe con otro.")
-        break;
-      case 'auth/operation-not-allowed':
-        window.alert("Se ha presentado un error en el registro, favor de verificar con un administrador.")
-        break;
-      default:
-        window.alert("Se ha presentado un error, favor de verificar los datos introducidos.");
-        break;
+      return true;
     }
+    if (status === 500) {
+      switch (code) {
+        case 'auth/email-already-in-use':
+          window.alert("El correo '" + firestoreData.correoElectronico + "' ya se encuentra registrado en el sistema, favor de introducir un correo distinto.")
+          break;
+        case 'auth/invalid-email':
+          window.alert("Corréo invalido, pruebe con otro.")
+          break;
+        case 'auth/operation-not-allowed':
+          window.alert("Se ha presentado un error en el registro, favor de verificar con un administrador.")
+          break;
+        default:
+          window.alert("Se ha presentado un error, favor de verificar los datos introducidos.");
+          break;
+      }
+      return false;
+    }
+  } catch (error) {
+    console.error("Se ha presentado un error al crear el usuario conductor. ", error);
     return false;
   }
 }
@@ -596,7 +601,7 @@ export const getOperatorsList = async () => {
 }
 
 export const eliminaOperador = async (uid, email) => {
-  console.log({ uid, email })
+
   const result = await firestore
     .collection("OperadoresSLP")
     .doc(uid)
@@ -620,7 +625,6 @@ export const verOperador = async (res) => {
     .get()
     .then(response => {
       if (response.exists) {
-        // console.log("exito")
         return response.data();
       }
     })
@@ -665,12 +669,12 @@ export const resetPassword = async (email) => {
 export const getMessagesList = async () => {
   const list = await firestore.collection("Mensajes").get().catch(error => false);
   if (list) {
-    let information = []; 
+    let information = [];
     list.forEach(item => {
       const { accion, descripcion, destino, ejecutado, fechaAlta, message } = item.data();
       information.push([message, descripcion, destino, ejecutado, accion]);
     });
-    console.log({information})
+    console.log({ information })
     return information;
   }
 };
@@ -691,6 +695,49 @@ export const addNewMessage = async (e) => {
     .set(firestoreData)
     .then(result => true)
     .catch(error => false);
+};
+
+export const getVehicles = async (e) => {
+  try {
+    console.log("GET VEHICLES", e)
+    const querySnapshot = await firestore.collection("VehiculosSLP").where("propietario", "==", e).get();
+
+    if (!querySnapshot.empty) {
+      const informationData = querySnapshot.docs.map(doc => {
+        return { ...doc.data(), uid: doc.id };
+      });
+      console.log(informationData)
+      return informationData;
+    } else {
+      console.log("No se encontraron vehículos.");
+      return [];
+    }
+  } catch (error) {
+    console.error("Error al obtener vehículos:", error);
+    alert("Se ha presentado un error al obtener vehículo.");
+    return false;
+  }
+};
+
+export const uploadImages = async (uid) => {
+  try {
+    const inputFiles = document.getElementById("operadorPic");
+    const archivo = inputFiles.files[0];
+
+    if (archivo === null || archivo === undefined) {
+      return;
+    }
+
+    const reference = storage.ref().child(`OperadoresSLP/${uid}/` + archivo.name);
+    await reference.put(archivo);
+
+    const url = await reference.getDownloadURL();
+
+    return url;
+  } catch (error) {
+    console.error("Error al subir imagenes, ", error);
+    return false;
+  }
 };
 
 export default app;

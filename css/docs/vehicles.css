@@ -1,70 +1,194 @@
-main { 
-    overflow-y: auto;
-    overflow-x: hidden;
-} 
+main {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 div#vehicle-list_filter {
-    margin-bottom: 1rem;
-  }
-  
+  margin-bottom: 1rem;
+}
+
 table#vehicle-list {
-    width: 100%;
-    display: table;
-    position: relative;
-    border-top: 1px solid rgba(0,0,0,.05);
+  width: 100%;
+  display: table;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, .05);
 }
 
 table#vehicle-list tbody tr.even {
-    background-color: #fff; 
+  background-color: #fff;
 }
 
 table#vehicle-list tbody tr.odd {
-background-color: rgba(0,0,0,.05);
+  background-color: rgba(0, 0, 0, .05);
 }
 
 table#vehicle-list tbody tr:hover {
-    background-color: #0c435a51;
-    cursor: pointer; 
-} 
+  background-color: #0c435a51;
+  cursor: pointer;
+}
+
 table#vehicle-list thead th {
-    color: #2d6e3d;
-    text-align: start
+  color: #2d6e3d;
+  text-align: start
 }
 
 table#vehicle-list tbody tr td {
-    font-size: 14px;
-    padding: 6px 8px;
+  font-size: 14px;
+  padding: 6px 8px;
 }
 
 table#vehicle-list tbody td:not(:nth-child(-n+2)) {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 table#vehicle-list tbody td:nth-child(-n+2) {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
-div#vehicle-list_filter > label {
-    background-color: #2d6e3d;
-    padding-left: 8px;
-    border-radius: 3px;
-    color: whitesmoke;
-    display: inline-block;
-    font-size: 0.8571em;
-    margin-bottom: 5px;
+div#vehicle-list_filter>label {
+  background-color: #2d6e3d;
+  padding-left: 8px;
+  border-radius: 3px;
+  color: whitesmoke;
+  display: inline-block;
+  font-size: 0.8571em;
+  margin-bottom: 5px;
 }
 
 input[aria-controls="vehicle-list"] {
-    width: 400px;
-    background-color: whitesmoke !important;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-left: none !important;
-    border-bottom-left-radius: 0px !important;
-    border-top-left-radius: 0px !important;
-    outline: 1px solid transparent;
+  width: 400px;
+  background-color: whitesmoke !important;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-left: none !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+  outline: 1px solid transparent;
 }
- 
+
 tr td:first-child {
-    white-space: nowrap;
-  }
+  white-space: nowrap;
+}
+
+div.modal-dialog[data-visibility="visible"] {
+  display: block;
+  visibility: visible;
+}
+
+div.modal-dialog[data-visibility="hidden"] {
+  position: fixed;
+  inset: 0 0 0 0;
+  display: none;
+  visibility: hidden;
+}
+
+div.dialog-bg {
+  width: 100%;
+  height: 100%;
+  inset: 0 0 0 0;
+  position: absolute;
+  background: #00000040;
+}
+
+div.dialog-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+}
+
+.container-head {
+  padding: 24px 24px 0 24px;
+}
+
+.container-body {
+  padding: 24px;
+}
+
+.flexed {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.formGroup {
+  flex-grow: 1;
+}
+
+.form-buttons-tools button {
+  padding: 8px 10px;
+  width: 100%;
+  max-width: 214px;
+}
+
+.form-buttons-tools button[type=submit][data-type="add"] {
+  background: #2d6e3d;
+}
+
+.form-buttons-tools button[type=submit][data-type="add"]:hover {
+  background: #276336;
+}
+
+.form-buttons-tools button[type=submit][data-type="update"] {
+  background: #ff9934;
+}
+
+.form-buttons-tools button[type=submit][data-type="update"]:hover {
+  background: #e38528;
+}
+
+.form-buttons-tools {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  padding-top: 1rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.form-buttons-tools button[type=button] {
+  background: white;
+}
+
+.form-buttons-tools button[type=button]:hover {
+  background: rgb(237, 237, 237);
+}
+
+.form-buttons-tools button {
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 1px solid #808080a6;
+}
+
+div#form-dates[data-display="none"] {
+  display: none;
+  visibility: hidden;
+}
+
+div#form-dates[data-display="block"] {
+  display: flex;
+  visibility: visible;
+}
+
+input[type="text"]:disabled {
+  background: #e7e3de;
+}
+
+#button-add {
+  border: 1px solid #33333325;
+  background-color: #2d6e3d;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  margin-left: auto;
+  padding: 4px 16px;
+}
+
+#button-add span {
+  color: white;
+  font-size: 12px;
+}

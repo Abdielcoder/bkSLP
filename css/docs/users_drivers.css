@@ -272,3 +272,19 @@ ul.tab-list li:first-child {
     color: #d3660e;
   }
 }
+
+div#vehicles-container-list {
+  padding: 10px;
+}
+
+table#vehicles-list {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table#vehicles-list td, table#vehicles-list th {
+  padding: 4px 6px;
+  text-align: start;
+  border-bottom: 1px solid #808080b3;
+  font-size: 14px;
+}
