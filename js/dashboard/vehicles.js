@@ -34,7 +34,6 @@ const createActionButtons = (uid) => {
 }
 
 const insertDataToTableBody = (i) => {
-  console.log(i)
   const tableRow = document.createElement("TR");
   const CELL_LIST = [i.placa, i.numeroEconomico, i.marca, i.modelo, i.color, i.tipoVehiculo, i.tipo];
   CELL_LIST.forEach(item => {
@@ -91,6 +90,12 @@ const getVehicleByID = async (uid) => {
     if (response.exists) {
       document.querySelectorAll("img.previewImage").forEach((element, index) => {
         element.src = urls[index] || "../assets/img/nopic.png"
+
+        element.addEventListener("click", function (e) {
+          const modal = document.querySelector("div.modal-preview-image");
+          modal.setAttribute("data-visibility", "visible");
+          document.getElementById("full-width-preview-Image").src = urls[index];
+        })
       });
 
       formEntries.forEach(element => {
@@ -123,6 +128,15 @@ const updateVehicleByID = async () => {
       .doc(uid)
       .update(formObject)
       .catch(error => false);
+
+    const uploadSuccess = await uploadImages(uid);
+
+    if (uploadSuccess) {
+      console.log("La carga de imágenes ha sido satisfactoria.");
+    } else {
+      console.log("Se ha presentado un error al cargar las imágenes.");
+    }
+
     if (response !== false) {
       alert("Se ha actualizado el usuario de manera corrrecta.");
       await handleRefetch();
@@ -285,25 +299,23 @@ async function fetchingData() {
 
 const uploadImages = async (uid) => {
   try {
-    const inputFiles = document.querySelectorAll("input[type='file'][name='urlfoto']");
+    console.log("UPLOAD IMAGES")
+    const inputFiles = document.querySelectorAll("input.vehicleFiles");
     const imageList = [];
 
-    for (let index = 0; index < inputFiles.length; index++) {
-      const element = inputFiles[index];
-      const archivo = element.files[0];
+    inputFiles.forEach(async (input) => {
+      const archivo = input.files[0];
 
       if (archivo === null || archivo === undefined) {
-        continue;
+        return;
       }
+      const reference = await storage.ref().child(`VehiculosSLP/${uid}/` + input.name).put(archivo);
 
-      const reference = storage.ref().child(`VehiculosSLP/${uid}/` + archivo.name);
-      await reference.put(archivo); 
+      const url = await reference.getDownloadURL();
+      imageList.push(url);
+    })
 
-      const url = await reference.getDownloadURL();  
-      imageList.push(url);  
-    }
- 
-    return imageList; 
+    return imageList;
   } catch (error) {
     console.error("Error al subir imagenes, ", error);
     return false;
@@ -318,8 +330,10 @@ async function handleUpdateVehicle(e) {
 };
 
 async function handleDeleteVehicle(e) {
-  const uid = e.currentTarget.getAttribute("data-uid");
-  await deleteVehicleByID(uid);
+  if (confirm("Estas seguro de eliminar este vehículo?")) {
+    const uid = e.currentTarget.getAttribute("data-uid");
+    await deleteVehicleByID(uid);
+  }
 };
 
 function cleanDataFromTable() {
@@ -333,19 +347,26 @@ function elementSetAttributes(el, attrs) {
 };
 
 
-document.querySelectorAll("input[type='file'][name='urlfoto']")
+document.querySelectorAll("input.vehicleFiles")
   .forEach((element, index) => {
+    const { name } = element;
     element.addEventListener("change", function () {
       const file = this.files[0];
       const reader = new FileReader();
 
       reader.onload = function (event) {
         const url = event.target.result;
-        const dom = `previewfoto${index + 1}`
+        const dom = `${name}Preview`
         document.getElementById(dom).src = url;
       }
       reader.readAsDataURL(file);
     })
   });
+
+document.querySelector("div.modal-bg").addEventListener("click", function (e) {
+  const modal = e.target.parentNode;
+  modal.setAttribute("data-visibility", "hidden");
+})
+
 
 fetchingData(); 

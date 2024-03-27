@@ -290,34 +290,166 @@
                 </div>
               </div>
               <p>Fotografias</p>
-              <div class="flexed" style="justify-content: flex-start; padding: 10px 0;">
-                <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                  <input type="file" name="urlfoto" id="urlfoto1" style="display: none;">
-                  <label for="urlfoto1">
-                    <img src="../assets/img/nopic.png" alt="previewfoto1" id="previewfoto1" class="previewImage"
+              <div class="flexed" style="justify-content: center; padding: 10px 0;">
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="frontalPreview" id="frontalPreview" class="previewImage"
                       style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                  </label>
+                    <label for="frontal">
+                      <input type="file" name="frontal" id="frontal" style="display: none;" class="vehicleFiles">
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+                  </div>
+                  <p>Frontal</p>
                 </div>
-                <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                  <input type="file" name="urlfoto" id="urlfoto2" style="display: none;">
-                  <label for="urlfoto2">
-                    <img src="../assets/img/nopic.png" alt="previewfoto2" id="previewfoto2" class="previewImage"
-                      style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                  </label>
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="lateralDerechoPreview" id="lateralDerechoPreview"
+                      class="previewImage" style="display: block; width: 95px; height: 95px; object-fit: cover;">
+                    <label for="lateralDerecho">
+                      <input type="file" name="lateralDerecho" id="lateralDerecho" style="display: none;" class="vehicleFiles">
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+                  </div>
+                  <p>Lateral Derecho</p>
                 </div>
-                <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                  <input type="file" name="urlfoto" id="urlfoto3" style="display: none;">
-                  <label for="urlfoto3">
-                    <img src="../assets/img/nopic.png" alt="previewfoto3" id="previewfoto3" class="previewImage"
-                      style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                  </label>
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="lateralIzquierdoPreview" id="lateralIzquierdoPreview"
+                      class="previewImage" style="display: block; width: 95px; height: 95px; object-fit: cover;">
+                    <label for="lateralIzquierdo">
+                      <input type="file" name="lateralIzquierdo" id="lateralIzquierdo" style="display: none;" class="vehicleFiles">
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+                  </div>
+                  <p>Lateral Izquierdo</p>
                 </div>
-                <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                  <input type="file" name="urlfoto" id="urlfoto4" style="display: none;">
-                  <label for="urlfoto4">
-                    <img src="../assets/img/nopic.png" alt="previewfoto4" id="previewfoto4" class="previewImage"
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="traseroPreview" id="traseroPreview" class="previewImage"
                       style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                  </label>
+                    <label for="trasero">
+                      <input type="file" name="trasero" id="trasero" style="display: none;" class="vehicleFiles">
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+                  </div>
+                  <p>Trasero</p>
                 </div>
               </div>
               <div class="form-buttons-tools">
@@ -334,6 +466,12 @@
       </div>
     </main>
 
+    <div class="modal-preview-image" data-visibility="hidden">
+      <div class="modal-bg"></div>
+      <div class="modal-container">
+        <img src="../assets/img/nopic.png" alt="previewImage" id="full-width-preview-Image">
+      </div>
+    </div>
     <!-- Footer -->
     <footer>
       &copy; 2024, Copyright IDG.

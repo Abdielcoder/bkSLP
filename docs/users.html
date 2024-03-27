@@ -261,19 +261,10 @@
                     <label for="especiales">Personas con condiciones especiales</label>
                   </div>
                 </div>
-                <div style="margin-inline: auto; display: block; width: max-content; margin-top: 1rem;">
-                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                    <input type="file" name="operadorPic" id="operadorPic" style="display: none;">
-                    <label for="operadorPic">
-                      <img src="../assets/img/nopic.png" alt="operadorPreview" id="operadorPreview"
-                        class="operadorPreview" style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                    </label>
-                  </div>
-                </div>
                 <div class="containerFooter">
                   <div class="buttonsTools">
                     <button type="button" class="modalFormCancel">
-                      <span>Cancelar</span>
+                      Cancelar
                     </button>
                     <button type="submit" id="modalFormSubmit">
                       <span>Agregar</span>
@@ -290,23 +281,29 @@
 
           <div class="formContainer" data-tabcontainer="accounts" data-visibility="false">
             <div class="containerBody">
-              <p>Buscar vehículo por numero de placa:</p>
-              <br>
+              <p style="font-size: 12px; font-weight: bold; margin-left: 4px;">Buscar vehículo por numero de placa:</p>
+              <div style="display: flex; width: 100%; gap: 1rem;" class="placa-search">
+                <label for="placa">
+                  <input type="text" placeholder="Introducir placa del vehículo" name="placa" id="placa"
+                    class="search-placa" style="flex-grow: 1;">
+                  <div class="placa-button-icon" class="search-placa">
+                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <path d="M15 15L21 21" stroke="#323232" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"></path>
+                        <path
+                          d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                          stroke="#323232" stroke-width="2"></path>
+                      </g>
+                    </svg>
+                  </div>
+                </label>
+              </div>
+              <div id="vehiculos-searched"
+                style="width: 100%; display: block; min-height: 40px; padding: 0.5rem; border: 1px solid gray; margin-top: 1rem;">
 
-              <div style="display: flex; width: 100%; gap: 1rem;">
-                <input type="text" placeholder="Introducir placa del vehículo" name="placa" id="placa"
-                  style="flex-grow: 1;">
-                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                  <g id="SVGRepo_iconCarrier">
-                    <path d="M15 15L21 21" stroke="#323232" stroke-width="2" stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-                    <path
-                      d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                      stroke="#323232" stroke-width="2"></path>
-                  </g>
-                </svg>
               </div>
               <div id="vehicles-container-list" data-reference="">
                 <table id="vehicles-list">
@@ -320,91 +317,10 @@
                   <tbody></tbody>
                 </table>
               </div>
-              <!-- <form id="userAlta">
-                <div data-columns="2">
-                  <div class="formGroup inputForm">
-                    <label for="nombreCompleto">Nombre completo</label>
-                    <input type="text" placeholder="Introducir nombre..." name="nombreCompleto" id="nombreCompleto"
-                      required />
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="correoElectronico">Correo electrónico</label>
-                    <input type="email" placeholder="Introducir correo..." name="correoElectronico"
-                      id="correoElectronico" required />
-                  </div>
-                </div>
-                <div class="formGroup selectForm">
-                  <label for="sexo">Sexo</label>
-                  <select name="sexo" id="sexo">
-                    <option value="M" selected>Masculino</option>
-                    <option value="F">Femenino</option>
-                  </select>
-                </div>
-
-                <div data-columns="2">
-                  <div class="formGroup inputForm">
-                    <label for="telefono">Telefono</label>
-                    <input type="tel" placeholder="Introducir telefono..." name="telefono" id="telefono" required />
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="telefono">Telefono de Emergencia</label>
-                    <input type="tel" placeholder="Introducir telefono..." name="telefonoEmergencia"
-                      id="telefonoEmergencia" required />
-                  </div>
-                </div>
-
-                <div data-columns="2">
-                  <div class="formGroup inputForm">
-                    <label for="numeroEconomico">Numero Económico</label>
-                    <input type="text" placeholder="Introducir numero económico..." name="numeroEconomico"
-                      id="numeroEconomico" required />
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="idTarjeton">ID Tarjeton</label>
-                    <input type="text" placeholder="Introducir ID de tarjeton..." name="idTarjeton" id="idTarjeton"
-                      required />
-                  </div>
-                </div>
-                <div class="formParraf">
-                  <p>Desea o puede realizar viajes para personas con:</p>
-                </div>
-                <div class="checkboxGroup">
-                  <div class="formGroup checkboxForm">
-                    <input type="checkbox" name="discapacidad" id="discapacidad">
-                    <label for="discapacidad">Discapacidad</label>
-                  </div>
-                  <div class="formGroup checkboxForm">
-                    <input type="checkbox" name="sillaruedas" id="sillaruedas">
-                    <label for="sillaruedas">Silla de ruedas</label>
-                  </div>
-                  <div class="formGroup checkboxForm">
-                    <input type="checkbox" name="muletas" id="muletas">
-                    <label for="muletas">Muletas</label>
-                  </div>
-                  <div class="formGroup checkboxForm">
-                    <input type="checkbox" name="especiales" id="especiales">
-                    <label for="especiales">Personas con condiciones especiales</label>
-                  </div>
-                </div>
-                <div class="containerFooter">
-                  <div class="buttonsTools">
-                    <button type="button" class="modalFormCancel">
-                      <span>Cancelar</span>
-                    </button>
-                    <button type="submit" id="modalFormSubmit">
-                      <span>Agregar</span>
-                    </button>
-                    <button type="button" id="modalFormUpdateSubmit" style="display: none;">
-                      <span>Actualizar</span>
-                    </button>
-                  </div>
-                </div>
-              </form>
-              <input type="hidden" name="uid" value="" id="userAltaIdentifier" /> -->
               <div class="containerFooter">
                 <div class="buttonsTools">
                   <button type="button" class="modalFormCancel">
-                    <span>Cancelar</span>
+                    Cancelar
                   </button>
                 </div>
               </div>
@@ -414,87 +330,269 @@
           <div class="formContainer" data-tabcontainer="files" data-visibility="false">
             <div class="containerBody">
               <h2>Archivos</h2>
-              <!-- <form id="userAlta">
-                <div data-columns="2">
-                  <div class="formGroup inputForm">
-                    <label for="nombreCompleto">Nombre completo</label>
-                    <input type="text" placeholder="Introducir nombre..." name="nombreCompleto" id="nombreCompleto"
-                      required />
+              <div class="files-container">
+
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="licenciaConductor" id="licenciaConductorPreview"
+                      class="imagePreview" style="display: block; width: 120px; height: 120px; object-fit: cover;" />
+                    <label for="licenciaConductor">
+                      <input type="file" name="licenciaConductor" id="licenciaConductor" style="display: none;"
+                        class="documentationFiles" />
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
                   </div>
-                  <div class="formGroup inputForm">
-                    <label for="correoElectronico">Correo electrónico</label>
-                    <input type="email" placeholder="Introducir correo..." name="correoElectronico"
-                      id="correoElectronico" required />
-                  </div>
-                </div>
-                <div class="formGroup selectForm">
-                  <label for="sexo">Sexo</label>
-                  <select name="sexo" id="sexo">
-                    <option value="M" selected>Masculino</option>
-                    <option value="F">Femenino</option>
-                  </select>
+                  <p>Licencia de Conducir</p>
                 </div>
 
-                <div data-columns="2">
-                  <div class="formGroup inputForm">
-                    <label for="telefono">Telefono</label>
-                    <input type="tel" placeholder="Introducir telefono..." name="telefono" id="telefono" required />
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="polizaSeguro" id="polizaSeguroPreview" class="imagePreview"
+                      style="display: block; width: 120px; height: 120px; object-fit: cover;">
+                    <label for="polizaSeguro">
+                      <input type="file" name="polizaSeguro" id="polizaSeguro" style="display: none;"
+                        class="documentationFiles" />
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
                   </div>
-                  <div class="formGroup inputForm">
-                    <label for="telefono">Telefono de Emergencia</label>
-                    <input type="tel" placeholder="Introducir telefono..." name="telefonoEmergencia"
-                      id="telefonoEmergencia" required />
-                  </div>
+                  <p>Póliza de Seguro</p>
                 </div>
 
-                <div data-columns="2">
-                  <div class="formGroup inputForm">
-                    <label for="numeroEconomico">Numero Económico</label>
-                    <input type="text" placeholder="Introducir numero económico..." name="numeroEconomico"
-                      id="numeroEconomico" required />
+
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="ine" id="inePreview" class="imagePreview"
+                      style="display: block; width: 120px; height: 120px; object-fit: cover;">
+                    <label for="ine">
+                      <input type="file" name="ine" id="ine" style="display: none;" class="documentationFiles" />
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
                   </div>
-                  <div class="formGroup inputForm">
-                    <label for="idTarjeton">ID Tarjeton</label>
-                    <input type="text" placeholder="Introducir ID de tarjeton..." name="idTarjeton" id="idTarjeton"
-                      required />
-                  </div>
+                  <p>INE</p>
                 </div>
-                <div class="formParraf">
-                  <p>Desea o puede realizar viajes para personas con:</p>
+
+
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="curp" id="curpPreview" class="imagePreview"
+                      style="display: block; width: 120px; height: 120px; object-fit: cover;">
+                    <label for="curp">
+                      <input type="file" name="curp" id="curp" style="display: none;" class="documentationFiles" />
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+                  </div>
+                  <p>CURP</p>
                 </div>
-                <div class="checkboxGroup">
-                  <div class="formGroup checkboxForm">
-                    <input type="checkbox" name="discapacidad" id="discapacidad">
-                    <label for="discapacidad">Discapacidad</label>
+
+
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="gafeteSCT" id="gafeteSCTPreview" class="imagePreview"
+                      style="display: block; width: 120px; height: 120px; object-fit: cover;">
+                    <label for="gafeteSCT">
+                      <input type="file" name="gafeteSCT" id="gafeteSCT" style="display: none;"
+                        class="documentationFiles" />
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
                   </div>
-                  <div class="formGroup checkboxForm">
-                    <input type="checkbox" name="sillaruedas" id="sillaruedas">
-                    <label for="sillaruedas">Silla de ruedas</label>
-                  </div>
-                  <div class="formGroup checkboxForm">
-                    <input type="checkbox" name="muletas" id="muletas">
-                    <label for="muletas">Muletas</label>
-                  </div>
-                  <div class="formGroup checkboxForm">
-                    <input type="checkbox" name="especiales" id="especiales">
-                    <label for="especiales">Personas con condiciones especiales</label>
-                  </div>
+                  <p>Gagete de la SCT</p>
                 </div>
-                <div class="containerFooter">
-                  <div class="buttonsTools">
-                    <button type="button" class="modalFormCancel">
-                      <span>Cancelar</span>
-                    </button>
-                    <button type="submit" id="modalFormSubmit">
-                      <span>Agregar</span>
-                    </button>
-                    <button type="button" id="modalFormUpdateSubmit" style="display: none;">
-                      <span>Actualizar</span>
-                    </button>
+
+
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="fotografiaConductor" id="fotografiaConductorPreview"
+                      class="imagePreview" style="display: block; width: 120px; height: 120px; object-fit: cover;">
+                    <label for="fotografiaConductor">
+                      <input type="file" name="fotografiaConductor" id="fotografiaConductor" style="display: none;"
+                        class="documentationFiles" />
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
                   </div>
+                  <p>Conductor</p>
                 </div>
-              </form>
-              <input type="hidden" name="uid" value="" id="userAltaIdentifier" /> -->
+              </div>
+              <div class="containerFooter">
+                <div class="buttonsTools">
+                  <button type="button" class="modalFormCancel">
+                    Cancelar
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -520,16 +618,21 @@
           </div>
         </div>
       </div>
-
     </main>
+
+    <div class="modal-preview-image" data-visibility="hidden">
+      <div class="modal-bg"></div>
+      <div class="modal-container">
+        <img src="../assets/img/nopic.png" alt="previewImage" id="full-width-preview-Image">
+      </div>
+    </div>
+
     <!-- Footer -->
     <footer>
       <p id="copyrightFooter"></p>
     </footer>
   </div>
 </body>
-
-</html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
@@ -548,7 +651,9 @@
     verOperador,
     actualizaOperador,
     getVehicles,
-    resetPassword
+    resetPassword,
+    firestore,
+    storage
   } from "../js/config/config.js";
 
   const monthStrings = [
@@ -593,6 +698,12 @@
   userAddbutton.addEventListener("click", () => {
     document.getElementById("modalFormSubmit").style.display = "block";
     document.getElementById("modalFormUpdateSubmit").style.display = "none";
+    document.querySelectorAll("button.tab-button").forEach(element => {
+      const attribute = element.getAttribute("data-tab");
+      if (attribute === "files" || attribute === "accounts") {
+        element.style.display = "none";
+      }
+    })
     handleViewAltaModal(true);
   });
 
@@ -607,12 +718,12 @@
 
   function clearDataTable() {
     usersDataTableContext.clear().destroy();
-  }
+  };
 
   async function handleRefetchingData() {
     clearDataTable();
     await fetchingData();
-  }
+  };
 
   // Modal Add Form Submit Event
   modalForm.addEventListener("submit", async (e) => await handleSubmit(e));
@@ -623,17 +734,38 @@
       modalDialogAdd.classList.add("modalViewTrue");
       return;
     }
+    document.querySelector("table#vehicles-list tbody").innerHTML = "";
+    document.querySelector("div#vehiculos-searched").innerHTML = "";
+    document.querySelector("input#placa").value = "";
+    document.getElementById("usuariosAltaModal").setAttribute("data-reference", "");
     Object.entries(modalForm).forEach(item => {
       const element = item[1];
       const type = element.type;
       if (type === "text" || type === "email" || type === "tel") { element.value = ""; return; }
       if (type === "select-one" || type === "select") { element.value = "M"; return; }
       if (type === "checkbox") { element.checked = false; return; }
+      document.querySelectorAll("button.tab-button").forEach(element => {
+        if (element.getAttribute("data-tab") === "data") {
+          element.setAttribute("aria-selected", "true");
+          return;
+        }
+        element.setAttribute("aria-selected", "false");
+      });
+      document.querySelectorAll("div.formContainer").forEach(element => {
+        if (element.getAttribute("data-tabcontainer") === "data") {
+          element.setAttribute("data-visibility", "true");
+          return;
+        }
+        element.setAttribute("data-visibility", "false");
+      })
+      document.querySelectorAll("img.imagePreview").forEach(element => {
+        element.src = "../assets/img/nopic.png";
+      })
       return;
     });
-    document.getElementById("operadorPic").src = "../assets/img/nopic.png";
+
     modalDialogAdd.classList.remove("modalViewTrue");
-  }
+  };
 
   function handleViewEditModal(e) {
     if (e === true) {
@@ -641,7 +773,7 @@
       return;
     }
     modalDialogEdit.classList.remove("modalViewTrue");
-  }
+  };
 
   function handleViewDeleteModal(e) {
     if (e === true) {
@@ -649,7 +781,7 @@
       return;
     }
     modalDialogDelete.classList.remove("modalViewTrue");
-  }
+  };
 
   async function fetchingData() {
     const querySnapshots = await getOperatorsList();
@@ -683,7 +815,7 @@
         "infoFiltered": "(Filtrado de _MAX_ registros)."
       }
     });
-  }
+  };
 
   function getDataFromDriversList(list) {
     const cell_list = {
@@ -705,7 +837,7 @@
     const [date, time] = datetime.slice(0, -5).split("T");
     const [year, month, day] = date.split("-");
     return day + " de " + monthStrings[parseInt(month) - 1] + " del " + year/* + " " + time.slice(0, -3)*/;
-  }
+  };
 
   async function handleSubmit(e) {
 
@@ -724,7 +856,7 @@
     if (isCreated === false) return;
     await handleRefetchingData();
     handleViewAltaModal(false)
-  }
+  };
 
   async function handleUpdateUserInformation(e) {
     const targets = modalForm.elements;
@@ -746,7 +878,7 @@
     if (isUpdated === false) return;
     await handleRefetchingData();
     handleViewAltaModal(false);
-  }
+  };
 
   async function handleDeleteSubmit(e) {
     e.preventDefault();
@@ -758,7 +890,7 @@
     if (hasBeenDeleted === false) return;
     await handleRefetchingData();
     handleViewDeleteModal(false)
-  }
+  };
 
   function createRowToTable(list) {
     const tableRow = document.createElement("tr");
@@ -772,7 +904,7 @@
     const tools = createActionButtons(list.uid);
     tableRow.appendChild(tools);
     document.querySelector("table#operatorsTable tbody").insertAdjacentElement("beforeend", tableRow);
-  }
+  };
 
   function createActionButtons(u) {
 
@@ -809,7 +941,7 @@
     tableCell.insertAdjacentElement("beforeend", deleteButton);
 
     return tableCell;
-  }
+  };
 
   const handleResetPassword = async (e) => {
     if (confirm("Se le enviará al usuario un correo de reestablecimiento de contraseña, ¿Estas seguro de proceder con la acción?")) {
@@ -825,7 +957,7 @@
     for (var key in attrs) {
       el.setAttribute(key, attrs[key]);
     }
-  }
+  };
 
   async function handleUpdateUser(e) {
     const uid = e.currentTarget.getAttribute("data-id");
@@ -833,9 +965,12 @@
     document.getElementById("userAltaIdentifier").value = uid;
     document.getElementById("modalFormSubmit").style.display = "none";
     document.getElementById("modalFormUpdateSubmit").style.display = "block";
+    document.querySelectorAll("button.tab-button").forEach(element => {
+      element.style.display = "block";
+    });
     handleViewAltaModal(true);
     await getOperatorByUid(uid);
-  }
+  };
 
   function handleDeleteUser(e, node) {
     const uid = e.currentTarget.getAttribute("data-id");
@@ -847,7 +982,7 @@
     input.value = uid;
     emailInput.value = email;
     handleViewDeleteModal(true);
-  }
+  };
 
   async function getOperatorByUid(uid) {
     let data = await verOperador(uid);
@@ -885,7 +1020,7 @@
     // checkboxes.forEach((item, index) => {
     //   item.checked = data.opcionesInclusividad[index];
     // })
-  }
+  };
 
   const modalTabButtons = document.querySelectorAll("button.tab-button");
 
@@ -915,27 +1050,50 @@
     })
   });
 
-  // const getVehiclesList = async () => { 
+  document
+    .querySelector(`button.tab-button[data-tab="files"]`)
+    .addEventListener("click", async function (e) {
+      const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
+      console.log(uid)
+      const storageReference = storage.ref().child("OperadoresSLP/" + uid);
+      const result = await storageReference.listAll();
+      if (result.items.length > 0) {
+        const urls = await Promise.all(result.items.map(async (item) => {
+          try {
+            return await item.getDownloadURL();
+          } catch (error) {
+            console.log("error obteniendo url: ", error);
+            return null
+          }
+        }));
+        const files = urls.map(item => {
+          return {
+            url: item,
+            name: item.split("%2F")[2].split("?")[0]
+          }
+        });
 
-  // }
+        document.querySelectorAll("img.imagePreview").forEach(element => {
+          const { name, alt } = element;
+          const currentFile = files.filter(item => item.name === alt);
+          element.src = currentFile[0].url;
 
-  // const synchronizeVehicleToUser = () => {
+          element.addEventListener("click", function (e) {
+            const modal = document.querySelector("div.modal-preview-image");
+            modal.setAttribute("data-visibility", "visible");
+            document.getElementById("full-width-preview-Image").src = currentFile[0].url;
+          })
+        });
+      }
+    });
 
-  // }
+  document.querySelector("div.modal-bg").addEventListener("click", function (e) {
+    const modal = e.target.parentNode;
+    modal.setAttribute("data-visibility", "hidden");
+  })
 
-  document.getElementById("operadorPic").addEventListener("change", function () {
-    const file = this.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function (event) {
-      const url = event.target.result;
-      document.getElementById("operadorPreview").src = url;
-    }
-    reader.readAsDataURL(file);
-  });
-
-
-  document.querySelector(`button.tab-button[data-tab="accounts"]`)
+  document
+    .querySelector(`button.tab-button[data-tab="accounts"]`)
     .addEventListener("click", async function (e) {
       const vehiclesFromUser = await getVehicles(document.getElementById("usuariosAltaModal").getAttribute("data-reference"));
       if (vehiclesFromUser === false) return;
@@ -954,12 +1112,127 @@
               </tr>
               `;
         document.querySelector("table#vehicles-list tbody").insertAdjacentHTML("beforeend", tr)
-      })
+      });
     });
 
-  window.addEventListener("DOMContentLoaded", async () => {
-    await fetchingData();
-    const year = new Date().getFullYear();
-    document.getElementById("copyrightFooter").textContent = "\u00A9 " + year + " Copyright, TaximetroDigital."
-  });
+  window
+    .addEventListener("DOMContentLoaded", async () => {
+      await fetchingData();
+      const year = new Date().getFullYear();
+      document.getElementById("copyrightFooter").textContent = "\u00A9 " + year + " Copyright, TaximetroDigital."
+    });
+
+
+  document.querySelectorAll("input.documentationFiles")
+    .forEach((element, index) => {
+      element.addEventListener("change", async function (e) {
+
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        const { name } = e.target;
+
+        const responseUpload = await uploadImages(file, name);
+
+        if (responseUpload) {
+
+          reader.onload = function (event) {
+            const url = event.target.result;
+            const dom = name + "Preview";
+            const imageDom = document.getElementById(dom);
+            imageDom.src = url;
+
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+    });
+
+  const uploadImages = async (file, name) => {
+    try {
+      const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
+
+      if (file === null || file === undefined) return;
+
+      const reference = storage.ref().child(`OperadoresSLP/${uid}/` + name);
+      await reference.put(file);
+
+      const url = await reference.getDownloadURL();
+
+      if (url) {
+        console.log("Se ha cargado el archivo de manera correcta")
+        return true;
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.error("Error al subir imagenes, ", error);
+      return false;
+    }
+  };
+
+  document.getElementById("placa").addEventListener("keyup", async function (e) {
+    try {
+      if (e.code === "Enter") {
+        const searchString = e.target.value;
+        const response = await firestore
+          .collection("VehiculosSLP")
+          .where("placa", "==", searchString)
+          .get()
+          .then(snapshot => {
+            const res = [];
+            snapshot.forEach((doc) => { res.push({ id: doc.id, data: doc.data() }); });
+            return res;
+          });
+        if (response) {
+
+          const box = document.getElementById("vehiculos-searched");
+
+          response.map((item, index) => {
+            const { id } = item;
+            const { marca, modelo, placa, propietario } = item.data;
+
+            const noHasOwner = propietario === undefined || propietario === null || propietario === false || propietario === "";
+            const list = document.createElement("div");
+            list.setAttribute("class", "optionVehicle");
+            const span = document.createElement("span");
+            const button = document.createElement("button");
+            button.setAttribute("type", "button");
+            button.setAttribute("class", noHasOwner ? "botonAsignar" : "botonCheck");
+            span.innerText = `${marca} ${modelo} - ${placa}`
+            list.insertAdjacentElement("beforeend", span);
+
+            if (noHasOwner === true) {
+              button.addEventListener("click", async function (e) {
+
+                const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
+
+                if (confirm("Estas seguro de asignar este vehiculo al conductor?")) {
+                  await firestore
+                    .collection("VehiculosSLP")
+                    .doc(id)
+                    .update({ propietario: uid })
+                    .then(snapshot => {
+                      alert("Se ha asignado el vehiculo al usuario.")
+                    })
+                    .catch(error => {
+                      alert("Se ha presentado un error, favor de verificar con un administrador.")
+                      console.error(error)
+                    });
+                }
+              });
+            }
+
+            button.innerText = noHasOwner ? "Asignar" : "Asignado";
+
+            list.insertAdjacentElement("beforeend", button);
+            box.insertAdjacentElement("beforeend", list);
+          });
+        }
+      }
+    } catch (error) {
+      console.log("Se ha presentado un error, ", error)
+    }
+  })
 </script>
+
+</html>
