@@ -698,18 +698,15 @@ export const addNewMessage = async (e) => {
 };
 
 export const getVehicles = async (e) => {
-  try {
-    console.log("GET VEHICLES", e)
+  try { 
     const querySnapshot = await firestore.collection("VehiculosSLP").where("propietario", "==", e).get();
 
     if (!querySnapshot.empty) {
       const informationData = querySnapshot.docs.map(doc => {
         return { ...doc.data(), uid: doc.id };
-      });
-      console.log(informationData)
+      }); 
       return informationData;
-    } else {
-      console.log("No se encontraron vehículos.");
+    } else { 
       return [];
     }
   } catch (error) {

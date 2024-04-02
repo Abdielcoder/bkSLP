@@ -155,6 +155,7 @@
                     <th>Sexo</th>
                     <th>Email</th>
                     <th>Teléfono</th>
+                    <th>Curp</th>
                     <th>Num. Económico</th>
                     <th>Tarjetón</th>
                     <th>Fecha de registro</th>
@@ -208,12 +209,19 @@
                       id="correoElectronico" required />
                   </div>
                 </div>
-                <div class="formGroup selectForm">
-                  <label for="sexo">Sexo</label>
-                  <select name="sexo" id="sexo">
-                    <option value="M" selected>Masculino</option>
-                    <option value="F">Femenino</option>
-                  </select>
+                <div data-columns="2">
+                  <div class="formGroup selectForm">
+                    <label for="sexo">Sexo</label>
+                    <select name="sexo" id="sexo">
+                      <option value="M" selected>Masculino</option>
+                      <option value="F">Femenino</option>
+                    </select>
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="curp">Curp</label>
+                    <input type="curp" placeholder="Introducir Curp..." name="curp"
+                      id="curp" required />
+                  </div>
                 </div>
 
                 <div data-columns="2">
@@ -240,8 +248,16 @@
                       required />
                   </div>
                 </div>
+
+                <div>
+                  <div class="formGroup inputForm">
+                    <label for="tipoSangre">Tipo de sangre</label>
+                    <input type="text" placeholder="Introducir numero económico..." name="tipoSangre"
+                      id="tipoSangre" required />
+                  </div> 
+                </div>
                 <div class="formParraf">
-                  <p>Desea o puede realizar viajes para personas con:</p>
+                  <p style="font-size: 14px;">Desea o puede realizar viajes para personas con:</p>
                 </div>
                 <div class="checkboxGroup">
                   <div class="formGroup checkboxForm">
@@ -259,6 +275,28 @@
                   <div class="formGroup checkboxForm">
                     <input type="checkbox" name="especiales" id="especiales">
                     <label for="especiales">Personas con condiciones especiales</label>
+                  </div>
+                </div>
+                <br>
+                <div class="formParraf">
+                  <p style="font-size: 14px;">Padece de alguna de las siguentes enfermedades crónicas:</p>
+                </div>
+                <div class="checkboxGroup">
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="hipertension" id="hipertension">
+                    <label for="hipertension">Hipertensión</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="diabetes" id="diabetes">
+                    <label for="diabetes">Diabetes</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="cardiaca" id="cardiaca">
+                    <label for="cardiaca">Insuficiencia cardiaca</label>
+                  </div>
+                  <div class="formGroup checkboxForm">
+                    <input type="checkbox" name="epoc" id="epoc">
+                    <label for="epoc">Epoc (Enfermedad Pulmonar Obstructiva Crónica)</label>
                   </div>
                 </div>
                 <div class="containerFooter">
@@ -312,6 +350,7 @@
                       <th>#</th>
                       <th>Marca y modelo</th>
                       <th>Placas</th>
+                      <th>Habilitado</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -543,7 +582,6 @@
                   <p>Gagete de la SCT</p>
                 </div>
 
-
                 <div class="file-box">
                   <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
                     <img src="../assets/img/nopic.png" alt="fotografiaConductor" id="fotografiaConductorPreview"
@@ -584,6 +622,48 @@
                     </label>
                   </div>
                   <p>Conductor</p>
+                </div>
+
+                <div class="file-box">
+                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
+                    <img src="../assets/img/nopic.png" alt="antidoping" id="antidopingPreview"
+                      class="imagePreview" style="display: block; width: 120px; height: 120px; object-fit: cover;">
+                    <label for="antidoping">
+                      <input type="file" name="antidoping" id="antidoping" style="display: none;"
+                        class="documentationFiles" />
+                      <div class="imageEdit">
+                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
+                              strokewidth="0">
+                            </rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+                            stroke-width="0.384"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
+                            </polyline>
+                            <path class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
+                            </path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+                  </div>
+                  <p>Antidoping</p>
                 </div>
               </div>
               <div class="containerFooter">
@@ -825,6 +905,7 @@
         list.sexo,
         list.correoElectronico,
         list.telefono,
+        list.curp || "",
         list.numeroEconomico,
         list.idTarjeton,
         formatDate(list.fechaAlta)
@@ -994,7 +1075,7 @@
         element.checked = data[name];
         return;
       }
-      element.value = data[name];
+      element.value = data[name] || "";
       return;
     });
 
@@ -1091,7 +1172,7 @@
     const modal = e.target.parentNode;
     modal.setAttribute("data-visibility", "hidden");
   })
-
+ 
   document
     .querySelector(`button.tab-button[data-tab="accounts"]`)
     .addEventListener("click", async function (e) {
@@ -1102,13 +1183,16 @@
       const tableBody = document.createElement("tbody");
 
       vehiclesFromUser.forEach((element, index) => {
-        const { marca, modelo, placa } = element;
-        console.log({ element });
+        const { marca, modelo, placa, habilitado } = element; 
         const tr = `
               <tr>
                 <td>${index}</td>
                 <td>${marca} ${modelo}</td>
                 <td>${placa}</td>
+                <td style='text-align: center;'>${habilitado === true 
+                  ? '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#399220"></path> </g></svg>'
+                  : '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM8.96965 8.96967C9.26254 8.67678 9.73742 8.67678 10.0303 8.96967L12 10.9394L13.9696 8.96969C14.2625 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0606 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73744 15.3232 9.26256 15.3232 8.96967 15.0303C8.67678 14.7374 8.67678 14.2626 8.96967 13.9697L10.9393 12L8.96965 10.0303C8.67676 9.73744 8.67676 9.26256 8.96965 8.96967Z" fill="#c7c7c7"></path> </g></svg>'
+                }</td>                
               </tr>
               `;
         document.querySelector("table#vehicles-list tbody").insertAdjacentHTML("beforeend", tr)
@@ -1207,17 +1291,19 @@
                 const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
 
                 if (confirm("Estas seguro de asignar este vehiculo al conductor?")) {
-                  await firestore
+                  const hasBeenAssigned = await firestore
                     .collection("VehiculosSLP")
                     .doc(id)
                     .update({ propietario: uid })
                     .then(snapshot => {
                       alert("Se ha asignado el vehiculo al usuario.")
+                      return true;
                     })
                     .catch(error => {
                       alert("Se ha presentado un error, favor de verificar con un administrador.")
                       console.error(error)
-                    });
+                      return false;
+                    }); 
                 }
               });
             }
