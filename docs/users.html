@@ -1273,28 +1273,28 @@
 
           response.map((item, index) => {
             const { id } = item;
-            const { marca, modelo, placa, propietario } = item.data;
-
-            const noHasOwner = propietario === undefined || propietario === null || propietario === false || propietario === "";
+            const { marca, modelo, placa, propietario, owners } = item.data;
+ 
             const list = document.createElement("div");
             list.setAttribute("class", "optionVehicle");
             const span = document.createElement("span");
             const button = document.createElement("button");
             button.setAttribute("type", "button");
-            button.setAttribute("class", noHasOwner ? "botonAsignar" : "botonCheck");
+            button.setAttribute("class", "botonAsignar");
             span.innerText = `${marca} ${modelo} - ${placa}`
             list.insertAdjacentElement("beforeend", span);
-
-            if (noHasOwner === true) {
+ 
               button.addEventListener("click", async function (e) {
 
                 const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
 
-                if (confirm("Estas seguro de asignar este vehiculo al conductor?")) {
+                if (confirm("Estas seguro de asignar este vehiculo al conductor?")) { 
                   const hasBeenAssigned = await firestore
                     .collection("VehiculosSLP")
                     .doc(id)
-                    .update({ propietario: uid })
+                    .update({
+                      owners: firebase.firestore.FieldValue.arrayUnion(uid)
+                    })
                     .then(snapshot => {
                       alert("Se ha asignado el vehiculo al usuario.")
                       return true;
@@ -1305,10 +1305,9 @@
                       return false;
                     }); 
                 }
-              });
-            }
+              }); 
 
-            button.innerText = noHasOwner ? "Asignar" : "Asignado";
+            button.innerText = "Asignar";
 
             list.insertAdjacentElement("beforeend", button);
             box.insertAdjacentElement("beforeend", list);

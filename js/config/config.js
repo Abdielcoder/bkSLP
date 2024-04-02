@@ -698,15 +698,23 @@ export const addNewMessage = async (e) => {
 };
 
 export const getVehicles = async (e) => {
-  try { 
+  try {
+    console.log("GET VEHICLES", e)
     const querySnapshot = await firestore.collection("VehiculosSLP").where("propietario", "==", e).get();
-
+    
     if (!querySnapshot.empty) {
       const informationData = querySnapshot.docs.map(doc => {
-        return { ...doc.data(), uid: doc.id };
-      }); 
-      return informationData;
-    } else { 
+        const { owners } = doc.data();
+        if(owners === undefined|| owners.length === 0) return;
+        const isOwner = owners.filter(own => own.uid === e)
+        return isOwner.length > 0 && {
+          ...doc.data(), uid: doc.id, habilitado: isOwner[0].habilitado
+        }
+      });  
+      console.log(informationData);
+      return informationData.filter(i => i !== undefined);
+    } else {
+      console.log("No se encontraron vehículos.");
       return [];
     }
   } catch (error) {
