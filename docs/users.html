@@ -219,8 +219,7 @@
                   </div>
                   <div class="formGroup inputForm">
                     <label for="curp">Curp</label>
-                    <input type="curp" placeholder="Introducir Curp..." name="curp"
-                      id="curp" required />
+                    <input type="curp" placeholder="Introducir Curp..." name="curp" id="curp" required />
                   </div>
                 </div>
 
@@ -252,9 +251,9 @@
                 <div>
                   <div class="formGroup inputForm">
                     <label for="tipoSangre">Tipo de sangre</label>
-                    <input type="text" placeholder="Introducir numero económico..." name="tipoSangre"
-                      id="tipoSangre" required />
-                  </div> 
+                    <input type="text" placeholder="Introducir numero económico..." name="tipoSangre" id="tipoSangre"
+                      required />
+                  </div>
                 </div>
                 <div class="formParraf">
                   <p style="font-size: 14px;">Desea o puede realizar viajes para personas con:</p>
@@ -323,7 +322,7 @@
               <div style="display: flex; width: 100%; gap: 1rem;" class="placa-search">
                 <label for="placa">
                   <input type="text" placeholder="Introducir placa del vehículo" name="placa" id="placa"
-                    class="search-placa" style="flex-grow: 1;">
+                    class="search-placa" style="flex-grow: 1; outline: none;">
                   <div class="placa-button-icon" class="search-placa">
                     <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -626,8 +625,8 @@
 
                 <div class="file-box">
                   <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                    <img src="../assets/img/nopic.png" alt="antidoping" id="antidopingPreview"
-                      class="imagePreview" style="display: block; width: 120px; height: 120px; object-fit: cover;">
+                    <img src="../assets/img/nopic.png" alt="antidoping" id="antidopingPreview" class="imagePreview"
+                      style="display: block; width: 120px; height: 120px; object-fit: cover;">
                     <label for="antidoping">
                       <input type="file" name="antidoping" id="antidoping" style="display: none;"
                         class="documentationFiles" />
@@ -1172,27 +1171,33 @@
     const modal = e.target.parentNode;
     modal.setAttribute("data-visibility", "hidden");
   })
- 
+
   document
     .querySelector(`button.tab-button[data-tab="accounts"]`)
     .addEventListener("click", async function (e) {
-      const vehiclesFromUser = await getVehicles(document.getElementById("usuariosAltaModal").getAttribute("data-reference"));
+      const userUID = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
+      const vehiclesFromUser = await getVehicles(userUID);
       if (vehiclesFromUser === false) return;
       document.querySelector("table#vehicles-list tbody").innerHTML = "";
       const table = document.createElement("table");
       const tableBody = document.createElement("tbody");
 
+      /*
+      ** PENDIENTE: REFRESCAR TABLA Y DATOS DESPUES DE UNA ACCION
+      */
+
+
       vehiclesFromUser.forEach((element, index) => {
-        const { marca, modelo, placa, habilitado } = element; 
+        const { marca, modelo, placa, habilitado } = element;
         const tr = `
               <tr>
                 <td>${index}</td>
                 <td>${marca} ${modelo}</td>
                 <td>${placa}</td>
-                <td style='text-align: center;'>${habilitado === true 
-                  ? '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#399220"></path> </g></svg>'
-                  : '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM8.96965 8.96967C9.26254 8.67678 9.73742 8.67678 10.0303 8.96967L12 10.9394L13.9696 8.96969C14.2625 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0606 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73744 15.3232 9.26256 15.3232 8.96967 15.0303C8.67678 14.7374 8.67678 14.2626 8.96967 13.9697L10.9393 12L8.96965 10.0303C8.67676 9.73744 8.67676 9.26256 8.96965 8.96967Z" fill="#c7c7c7"></path> </g></svg>'
-                }</td>                
+                <td style='text-align: center;'>${habilitado === true
+            ? '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#399220"></path> </g></svg>'
+            : '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM8.96965 8.96967C9.26254 8.67678 9.73742 8.67678 10.0303 8.96967L12 10.9394L13.9696 8.96969C14.2625 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0606 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73744 15.3232 9.26256 15.3232 8.96967 15.0303C8.67678 14.7374 8.67678 14.2626 8.96967 13.9697L10.9393 12L8.96965 10.0303C8.67676 9.73744 8.67676 9.26256 8.96965 8.96967Z" fill="#c7c7c7"></path> </g></svg>'
+          }</td>                
               </tr>
               `;
         document.querySelector("table#vehicles-list tbody").insertAdjacentHTML("beforeend", tr)
@@ -1274,7 +1279,7 @@
           response.map((item, index) => {
             const { id } = item;
             const { marca, modelo, placa, propietario, owners } = item.data;
- 
+
             const list = document.createElement("div");
             list.setAttribute("class", "optionVehicle");
             const span = document.createElement("span");
@@ -1283,29 +1288,27 @@
             button.setAttribute("class", "botonAsignar");
             span.innerText = `${marca} ${modelo} - ${placa}`
             list.insertAdjacentElement("beforeend", span);
- 
-              button.addEventListener("click", async function (e) {
 
-                const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
+            button.addEventListener("click", async function (e) {
 
-                if (confirm("Estas seguro de asignar este vehiculo al conductor?")) { 
-                  const hasBeenAssigned = await firestore
-                    .collection("VehiculosSLP")
-                    .doc(id)
-                    .update({
-                      owners: firebase.firestore.FieldValue.arrayUnion(uid)
-                    })
-                    .then(snapshot => {
-                      alert("Se ha asignado el vehiculo al usuario.")
-                      return true;
-                    })
-                    .catch(error => {
-                      alert("Se ha presentado un error, favor de verificar con un administrador.")
-                      console.error(error)
-                      return false;
-                    }); 
-                }
-              }); 
+              const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
+              const objectArray = { vehicleUID: id, habilitado: true };
+              if (confirm("Estas seguro de asignar este vehiculo al conductor?")) {
+                const hasBeenAssigned = await firestore
+                  .collection("OperadoresSLP")
+                  .doc(uid)
+                  .update({ vehicles: firebase.firestore.FieldValue.arrayUnion(objectArray) })
+                  .then(snapshot => {
+                    alert("Se ha asignado el vehiculo al usuario.")
+                    return true;
+                  })
+                  .catch(error => {
+                    alert("Se ha presentado un error, favor de verificar con un administrador.")
+                    console.error(error)
+                    return false;
+                  });
+              }
+            });
 
             button.innerText = "Asignar";
 
