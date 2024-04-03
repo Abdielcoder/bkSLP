@@ -767,6 +767,9 @@
   const deleteCancelButton = document.getElementById("modalFormDeleteCancel");
   let addCancelButton = document.querySelectorAll("button.modalFormCancel");
 
+  const statusTrueIcon = '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#399220"></path> </g></svg>';
+  const statusFalseIcon = '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM8.96965 8.96967C9.26254 8.67678 9.73742 8.67678 10.0303 8.96967L12 10.9394L13.9696 8.96969C14.2625 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0606 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73744 15.3232 9.26256 15.3232 8.96967 15.0303C8.67678 14.7374 8.67678 14.2626 8.96967 13.9697L10.9393 12L8.96965 10.0303C8.67676 9.73744 8.67676 9.26256 8.96965 8.96967Z" fill="#c7c7c7"></path> </g></svg>';
+
   addCancelButton.forEach(element => {
     element.addEventListener("click", async () => {
       handleViewAltaModal(false);
@@ -1166,51 +1169,93 @@
         });
       }
     });
-
+    
   document.querySelector("div.modal-bg").addEventListener("click", function (e) {
     const modal = e.target.parentNode;
     modal.setAttribute("data-visibility", "hidden");
   })
 
-  document
-    .querySelector(`button.tab-button[data-tab="accounts"]`)
-    .addEventListener("click", async function (e) {
-      const userUID = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
+  async function statusFunction(e, a) { 
+    const updatedArrayField = a.map(item => {
+      if(item.uid === e.uid) {
+        return {vehicleUID: item.uid, habilitado: !item.habilitado};
+      }
+      return {vehicleUID: item.uid, habilitado: item.habilitado};
+    })
+    const userUID = document.getElementById("usuariosAltaModal").getAttribute("data-reference"); 
+    const message = e.habilitado
+    ? "Estas seguro de deshabilitar el vehiculo al usuario?"
+    : "Estas seguro de habilitar el vehiculo al usuario";
+    if(confirm(message)) {
+      const documentUpdated = await firestore
+      .collection("OperadoresSLP")
+      .doc(userUID)
+      .update({
+        vehicles: updatedArrayField
+      })
+      .then(()=> true)
+      .catch(()=> false);
+
+      if( documentUpdated) {
+        alert("Se ha actualizado de manera correcta.")
+        await getAndRenderVehiclesFromUser();
+        return;
+      } 
+      alert("No se pudo actualizar, favor de verificar.")
+    }
+  }
+ 
+  function createVehicleRow (element, index, array) {
+    const { marca, modelo, placa, habilitado, uid } = element;
+    const tableRow = document.createElement("tr");
+    const rowCellIndex = document.createElement("td");
+    const rowCellBrandModel = document.createElement("td");
+    const rowCellPlaca = document.createElement("td");
+    const rowCellStatus = document.createElement("td");
+
+    rowCellIndex.insertAdjacentText("afterbegin", index);
+    rowCellBrandModel.insertAdjacentText("afterbegin", marca + " "+ modelo);
+    rowCellPlaca.insertAdjacentText("afterbegin", placa);
+
+    const checkboxStatus = document.createElement("button");
+    checkboxStatus.setAttribute("type", "button");
+    checkboxStatus.setAttribute("data-status", habilitado);
+    checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
+    checkboxStatus.addEventListener("click", async function(e) { await statusFunction(element, array) });
+    checkboxStatus.setAttribute("class", "statusButtonVehicle");
+    rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
+
+    tableRow.insertAdjacentElement("beforeend", rowCellIndex);
+    tableRow.insertAdjacentElement("beforeend", rowCellBrandModel);
+    tableRow.insertAdjacentElement("beforeend", rowCellPlaca);
+    tableRow.insertAdjacentElement("beforeend", rowCellStatus);
+
+    return tableRow;
+  };
+
+  async function getAndRenderVehiclesFromUser () {
+    const userUID = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
       const vehiclesFromUser = await getVehicles(userUID);
       if (vehiclesFromUser === false) return;
       document.querySelector("table#vehicles-list tbody").innerHTML = "";
+      document.getElementById("vehiculos-searched").innerHTML = "";
       const table = document.createElement("table");
       const tableBody = document.createElement("tbody");
 
-      /*
-      ** PENDIENTE: REFRESCAR TABLA Y DATOS DESPUES DE UNA ACCION
-      */
-
-
-      vehiclesFromUser.forEach((element, index) => {
-        const { marca, modelo, placa, habilitado } = element;
-        const tr = `
-              <tr>
-                <td>${index}</td>
-                <td>${marca} ${modelo}</td>
-                <td>${placa}</td>
-                <td style='text-align: center;'>${habilitado === true
-            ? '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#399220"></path> </g></svg>'
-            : '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM8.96965 8.96967C9.26254 8.67678 9.73742 8.67678 10.0303 8.96967L12 10.9394L13.9696 8.96969C14.2625 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0606 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73744 15.3232 9.26256 15.3232 8.96967 15.0303C8.67678 14.7374 8.67678 14.2626 8.96967 13.9697L10.9393 12L8.96965 10.0303C8.67676 9.73744 8.67676 9.26256 8.96965 8.96967Z" fill="#c7c7c7"></path> </g></svg>'
-          }</td>                
-              </tr>
-              `;
-        document.querySelector("table#vehicles-list tbody").insertAdjacentHTML("beforeend", tr)
+      vehiclesFromUser.forEach((element, index, array) => {
+        const tableRow = createVehicleRow(element, index, array);
+        document.querySelector("table#vehicles-list tbody").insertAdjacentElement("beforeend", tableRow)
       });
-    });
+  }
 
+  $(`button.tab-button[data-tab="accounts"]`).on("click", async function(e) { await getAndRenderVehiclesFromUser()});
+  
   window
     .addEventListener("DOMContentLoaded", async () => {
       await fetchingData();
       const year = new Date().getFullYear();
       document.getElementById("copyrightFooter").textContent = "\u00A9 " + year + " Copyright, TaximetroDigital."
     });
-
 
   document.querySelectorAll("input.documentationFiles")
     .forEach((element, index) => {
@@ -1294,6 +1339,7 @@
               const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
               const objectArray = { vehicleUID: id, habilitado: true };
               if (confirm("Estas seguro de asignar este vehiculo al conductor?")) {
+                console.log({vehicles: objectArray})
                 const hasBeenAssigned = await firestore
                   .collection("OperadoresSLP")
                   .doc(uid)

@@ -715,15 +715,12 @@ export const getVehicles = async (userUID) => {
         })
     }));
 
-    if (querySnapshot.length > 0) {
-      console.log(userInformation)
-      console.log(querySnapshot)
+    if (querySnapshot.length > 0) { 
       const requiredInformationFromVehicle = querySnapshot.map((req) => {
         const { placa, modelo, marca, uid } = req;
         const vehicles = userInformation.vehicles;
-        const habilitado = vehicles.filter(i => i.vehicleUID === uid);
-        console.log({ vehicles, habilitado })
-        return { placa, modelo, marca, habilitado: habilitado[0].habilitado }
+        const habilitado = vehicles.filter(i => i.vehicleUID === uid); 
+        return { placa, modelo, marca, habilitado: habilitado[0].habilitado, uid }
       });
       return requiredInformationFromVehicle;
     } else {

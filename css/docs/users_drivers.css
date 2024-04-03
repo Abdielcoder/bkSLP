@@ -440,3 +440,16 @@ button.botonCheck {
 button.botonAsignar:hover {
   cursor: pointer;
 }
+
+.statusButtonVehicle {
+  background: none;
+    outline: none;
+    border: none;
+    margin-inline: auto;
+    display: block;
+}
+
+.statusButtonVehicle:hover {
+  cursor: pointer;
+  transform: scale(1.15);
+}
