@@ -499,10 +499,10 @@
 
                 <div class="file-box">
                   <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                    <img src="../assets/img/nopic.png" alt="curp" id="curpPreview" class="imagePreview"
+                    <img src="../assets/img/nopic.png" alt="claveUnica" id="claveUnicaPreview" class="imagePreview"
                       style="display: block; width: 120px; height: 120px; object-fit: cover;">
-                    <label for="curp">
-                      <input type="file" name="curp" id="curp" style="display: none;" class="documentationFiles" />
+                    <label for="claveUnica">
+                      <input type="file" name="claveUnica" id="claveUnica" style="display: none;" class="documentationFiles" />
                       <div class="imageEdit">
                         <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
                           xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
@@ -578,7 +578,7 @@
                       </div>
                     </label>
                   </div>
-                  <p>Gagete de la SCT</p>
+                  <p>Gafete de la SCT</p>
                 </div>
 
                 <div class="file-box">
@@ -1169,43 +1169,43 @@
         });
       }
     });
-    
+
   document.querySelector("div.modal-bg").addEventListener("click", function (e) {
     const modal = e.target.parentNode;
     modal.setAttribute("data-visibility", "hidden");
   })
 
-  async function statusFunction(e, a) { 
+  async function statusFunction(e, a) {
     const updatedArrayField = a.map(item => {
-      if(item.uid === e.uid) {
-        return {vehicleUID: item.uid, habilitado: !item.habilitado};
+      if (item.uid === e.uid) {
+        return { vehicleUID: item.uid, habilitado: !item.habilitado };
       }
-      return {vehicleUID: item.uid, habilitado: item.habilitado};
+      return { vehicleUID: item.uid, habilitado: item.habilitado };
     })
-    const userUID = document.getElementById("usuariosAltaModal").getAttribute("data-reference"); 
+    const userUID = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
     const message = e.habilitado
-    ? "Estas seguro de deshabilitar el vehiculo al usuario?"
-    : "Estas seguro de habilitar el vehiculo al usuario";
-    if(confirm(message)) {
+      ? "Estas seguro de deshabilitar el vehiculo al usuario?"
+      : "Estas seguro de habilitar el vehiculo al usuario";
+    if (confirm(message)) {
       const documentUpdated = await firestore
-      .collection("OperadoresSLP")
-      .doc(userUID)
-      .update({
-        vehicles: updatedArrayField
-      })
-      .then(()=> true)
-      .catch(()=> false);
+        .collection("OperadoresSLP")
+        .doc(userUID)
+        .update({
+          vehicles: updatedArrayField
+        })
+        .then(() => true)
+        .catch(() => false);
 
-      if( documentUpdated) {
+      if (documentUpdated) {
         alert("Se ha actualizado de manera correcta.")
         await getAndRenderVehiclesFromUser();
         return;
-      } 
+      }
       alert("No se pudo actualizar, favor de verificar.")
     }
   }
- 
-  function createVehicleRow (element, index, array) {
+
+  function createVehicleRow(element, index, array) {
     const { marca, modelo, placa, habilitado, uid } = element;
     const tableRow = document.createElement("tr");
     const rowCellIndex = document.createElement("td");
@@ -1214,14 +1214,14 @@
     const rowCellStatus = document.createElement("td");
 
     rowCellIndex.insertAdjacentText("afterbegin", index);
-    rowCellBrandModel.insertAdjacentText("afterbegin", marca + " "+ modelo);
+    rowCellBrandModel.insertAdjacentText("afterbegin", marca + " " + modelo);
     rowCellPlaca.insertAdjacentText("afterbegin", placa);
 
     const checkboxStatus = document.createElement("button");
     checkboxStatus.setAttribute("type", "button");
     checkboxStatus.setAttribute("data-status", habilitado);
     checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
-    checkboxStatus.addEventListener("click", async function(e) { await statusFunction(element, array) });
+    checkboxStatus.addEventListener("click", async function (e) { await statusFunction(element, array) });
     checkboxStatus.setAttribute("class", "statusButtonVehicle");
     rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
 
@@ -1233,23 +1233,23 @@
     return tableRow;
   };
 
-  async function getAndRenderVehiclesFromUser () {
+  async function getAndRenderVehiclesFromUser() {
     const userUID = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
-      const vehiclesFromUser = await getVehicles(userUID);
-      if (vehiclesFromUser === false) return;
-      document.querySelector("table#vehicles-list tbody").innerHTML = "";
-      document.getElementById("vehiculos-searched").innerHTML = "";
-      const table = document.createElement("table");
-      const tableBody = document.createElement("tbody");
+    const vehiclesFromUser = await getVehicles(userUID);
+    if (vehiclesFromUser === false) return;
+    document.querySelector("table#vehicles-list tbody").innerHTML = "";
+    document.getElementById("vehiculos-searched").innerHTML = "";
+    const table = document.createElement("table");
+    const tableBody = document.createElement("tbody");
 
-      vehiclesFromUser.forEach((element, index, array) => {
-        const tableRow = createVehicleRow(element, index, array);
-        document.querySelector("table#vehicles-list tbody").insertAdjacentElement("beforeend", tableRow)
-      });
+    vehiclesFromUser.forEach((element, index, array) => {
+      const tableRow = createVehicleRow(element, index, array);
+      document.querySelector("table#vehicles-list tbody").insertAdjacentElement("beforeend", tableRow)
+    });
   }
 
-  $(`button.tab-button[data-tab="accounts"]`).on("click", async function(e) { await getAndRenderVehiclesFromUser()});
-  
+  $(`button.tab-button[data-tab="accounts"]`).on("click", async function (e) { await getAndRenderVehiclesFromUser() });
+
   window
     .addEventListener("DOMContentLoaded", async () => {
       await fetchingData();
@@ -1260,23 +1260,28 @@
   document.querySelectorAll("input.documentationFiles")
     .forEach((element, index) => {
       element.addEventListener("change", async function (e) {
+        try {
+          console.log({e});
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          const { name } = e.target;
 
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        const { name } = e.target;
+          const responseUpload = await uploadImages(file, name);
+          console.log({ responseUpload })
+          if (responseUpload) {
 
-        const responseUpload = await uploadImages(file, name);
+            reader.onload = function (event) {
+              const url = event.target.result;
+              const dom = name + "Preview";
+              const imageDom = document.getElementById(dom);
+              imageDom.src = url;
 
-        if (responseUpload) {
-
-          reader.onload = function (event) {
-            const url = event.target.result;
-            const dom = name + "Preview";
-            const imageDom = document.getElementById(dom);
-            imageDom.src = url;
-
+            }
+            console.log(file)
+            reader.readAsDataURL(file);
           }
-          reader.readAsDataURL(file);
+        } catch (error) {
+          console.error(error.message)
         }
       });
     });
@@ -1339,7 +1344,7 @@
               const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
               const objectArray = { vehicleUID: id, habilitado: true };
               if (confirm("Estas seguro de asignar este vehiculo al conductor?")) {
-                console.log({vehicles: objectArray})
+                console.log({ vehicles: objectArray })
                 const hasBeenAssigned = await firestore
                   .collection("OperadoresSLP")
                   .doc(uid)
