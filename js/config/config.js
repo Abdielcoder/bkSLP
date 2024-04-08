@@ -729,7 +729,7 @@ export const getVehicles = async (userUID) => {
     }
   } catch (error) {
     console.error("Error al obtener vehículos:", error);
-    alert("Se ha presentado un error al obtener vehículo.");
+    // alert("Se ha presentado un error al obtener vehículo.");
     return false;
   }
 };
