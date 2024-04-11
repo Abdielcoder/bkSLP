@@ -1,31 +1,29 @@
+import { auth, firestore } from "./config.js";
 import { snap_admins, tokens, generateTemporalToken } from "./config.js";
-import { logs_accesos } from "./firestore-config.js";
 
-const auth = firebase.auth();
+// const getUserData = (em) => {
+//   return snap_admins.once("value").then((snap) => {
+//     let object_data = {};
+//     const snapshot_array = Object.values(snap.val());
 
-const getUserData = (em) => {
-  return snap_admins.once("value").then((snap) => {
-    let object_data = {};
-    const snapshot_array = Object.values(snap.val());
+//     for (let i = 0; i < snapshot_array.length; i++) {
+//       if (snapshot_array[i].email === em) {
+//         object_data = {
+//           id: snapshot_array[i].id,
+//           user: snapshot_array[i].usuario,
+//           name: snapshot_array[i].name,
+//           email: snapshot_array[i].email,
+//           rol: snapshot_array[i].rol,
+//         };
+//       }
+//     }
+//     return object_data;
+//   });
+// };
 
-    for (let i = 0; i < snapshot_array.length; i++) {
-      if (snapshot_array[i].email === em) {
-        object_data = {
-          id: snapshot_array[i].id,
-          user: snapshot_array[i].usuario,
-          name: snapshot_array[i].name,
-          email: snapshot_array[i].email,
-          rol: snapshot_array[i].rol,
-        };
-      }
-    }
-    return object_data;
-  });
-};
-
-const getErrorCode = (exCode) => {
+const getErrorCode = (code) => {
   let message = "";
-  switch (exCode) {
+  switch (code) {
     case "auth/user-not-found":
       message =
         "No existe ningún registro de usuario que corresponda al identificador proporcionado.";
@@ -63,57 +61,85 @@ const setSession = async (obx, tx, tokx) => {
   return;
 };
 
-export const logInWithEmail = (em, pw) => {
-  console.log({ em, pw });
+export const logInWithEmail = async (email, password) => {
   try {
-    auth
-      .signInWithEmailAndPassword(em, pw)
-      .then(async (userCredential) => {
-        // const user = await getUserData(em);
-        const user = userCredential.user;
-        console.log({ user });
-        logs_accesos
-          .add({
-            user,
-            fechaHora: new Date().toISOString(),
-          })
-          .then(async (docRef) => {
-            const token = await generateTemporalToken();
-            const timestamp = new Date();
-
-            await setSession(user, timestamp, token);
-            tokens.child(user.id).set({
-              id: user.id,
-              token: token,
-              isConnected: true,
-              timestamp: timestamp,
-            });
-            window.location.replace("./docs/main.html");
-          })
-          .catch((error) => {
-            alert(error.message);
-            localStorage.clear();
-            
-            // window.location.reload();
-          });
-      })
+    const response = await auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => userCredential)
       .catch((error) => {
         console.log(error);
-        console.log(error.code);
-        console.log(error.message);
-        const message_error = getErrorCode(error.code);
-        alert(message_error);
-        localStorage.clear();
-        // window.location.reload();
+        return false;
       });
-  } catch (err) {
-    alert(
-      "Se ha presentado un error, favor de verificarlo con el Administrador."
-    );
-    console.log(err.code);
-    console.log(err.message);
+    if (response !== false) {
+      const { za: token, uid, email, metadata } = response.user;
+      console.log({ token, uid, email, metadata });
+
+      // const accessResponse = await firestore
+      //   .collection("loginLogs")
+      //   .doc(parseInt(metadata.a))
+      //   .set({
+      //     user: email,
+      //     uid,
+      //     loginDate: parseInt(metadata.a),
+      //   })
+      //   .then((snapshot) => {
+      //     console.log({ snapshot });
+      //     return snapshot;
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     return error;
+      //   });
+
+      // console.log(accessResponse);
+
+      const getFirebaseData = await firestore
+        .collection("accesosLogin")
+        .get()
+        .then((snap) => {
+          snap.forEach((doc) => {
+            console.log(doc.id + " -- " + doc.data());
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          return error;
+        });
+      // accesos
+      //     .add({
+      //       user: user.uid,
+      //       fechaHora: new Date().toISOString(),
+      //     })
+      //     .then(async (docRef) => {
+      //       const token = await generateTemporalToken();
+      //       const timestamp = new Date();
+
+      //       await setSession(user, timestamp, token);
+      //       tokens.child(user.id).set({
+      //         id: user.id,
+      //         token: token,
+      //         isConnected: true,
+      //         timestamp: timestamp,
+      //       });
+      //       window.location.replace("./docs/main.html");
+      //     })
+      //     .catch((error) => {
+      //       alert(error.message);
+      //       localStorage.clear();
+
+      //       // window.location.reload();
+      //     });
+    }
+
     localStorage.clear();
-    window.location.reload();
+    // window.location.reload();
+  } catch (err) {
+    console.log({err});
+    // alert(
+    //   "Se ha presentado un error, favor de verificarlo con el Administrador."
+    // );
+    // localStorage.clear();
+    // window.location.reload();
   }
 };
 

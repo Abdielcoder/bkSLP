@@ -8,11 +8,17 @@ const config = {
   appId: "1:22237047929:web:542330c6772d8f9d87b8a8",
 };
 
-
 const app = firebase.initializeApp(config);
+
+
+
+
 const realtime = firebase.database().ref();
 export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+export const firestore = firebase.firestore()/*.settings({
+  experimentalForceLongPolling: true, // this line
+  useFetchStreams: false, // and this line
+});*/
 export const storage = firebase.storage();
 
 export const snap_drivers = realtime.child("Users/Drivers");
