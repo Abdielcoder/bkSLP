@@ -1,15 +1,15 @@
 (function () {
-  'use strict';
+  "use strict";
 
-  if (typeof Chart === 'undefined') {
-    console.error('Cannot find Chart object.');
+  if (typeof Chart === "undefined") {
+    console.error("Cannot find Chart object.");
     return;
   }
 
-  if (typeof Object.assign !== 'function') {
+  if (typeof Object.assign !== "function") {
     Object.assign = function (target) {
       if (!target) {
-        throw new TypeError('Cannot convert undefined or null to object');
+        throw new TypeError("Cannot convert undefined or null to object");
       }
       const to = Object(target);
       for (let index = 1; index < arguments.length; index++) {
@@ -27,7 +27,7 @@
   }
 
   const SUPPORTED_TYPES = {};
-  ['pie', 'doughnut', 'polarArea', 'bar'].forEach(function (t) {
+  ["pie", "doughnut", "polarArea", "bar"].forEach(function (t) {
     SUPPORTED_TYPES[t] = true;
   });
 
@@ -41,24 +41,29 @@
     this.args = {};
     this.barTotal = {};
     const chartOptions = chart.config.options;
-    this.options = Object.assign({
-      position: 'default',
-      precision: 0,
-      fontSize: chartOptions.font ? chartOptions.font.size : 12,
-      fontColor: chartOptions.color || '#333333',
-      fontStyle: chartOptions.font ? chartOptions.font.style : 'normal',
-      fontFamily: chartOptions.font ? chartOptions.font.family : '\'Helvetica Neue\', \'Helvetica\', \'Arial\', sans-serif',
-      shadowOffsetX: 3,
-      shadowOffsetY: 3,
-      shadowColor: 'rgba(0,0,0,0.3)',
-      shadowBlur: 6,
-      images: [],
-      outsidePadding: 2,
-      textMargin: 2,
-      overlap: true
-    }, options);
-    if (chart.config.type === 'bar') {
-      this.options.position = 'default';
+    this.options = Object.assign(
+      {
+        position: "default",
+        precision: 0,
+        fontSize: chartOptions.font ? chartOptions.font.size : 12,
+        fontColor: chartOptions.color || "#333333",
+        fontStyle: chartOptions.font ? chartOptions.font.style : "normal",
+        fontFamily: chartOptions.font
+          ? chartOptions.font.family
+          : "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+        shadowOffsetX: 3,
+        shadowOffsetY: 3,
+        shadowColor: "rgba(0,0,0,0.3)",
+        shadowBlur: 6,
+        images: [],
+        outsidePadding: 2,
+        textMargin: 2,
+        overlap: true,
+      },
+      options
+    );
+    if (chart.config.type === "bar") {
+      this.options.position = "default";
       this.options.arc = false;
       this.options.overlap = true;
     }
@@ -73,9 +78,11 @@
     this.totalPercentage = 0;
     this.total = null;
     const arg = this.args[index];
-    arg.meta.data.forEach(function (element, index) {
-      this.renderToElement(dataset, arg, element, index);
-    }.bind(this));
+    arg.meta.data.forEach(
+      function (element, index) {
+        this.renderToElement(dataset, arg, element, index);
+      }.bind(this)
+    );
   };
 
   Label.prototype.renderToElement = function (dataset, arg, element, index) {
@@ -89,7 +96,11 @@
     }
     const ctx = this.ctx;
     ctx.save();
-    ctx.font = Chart.helpers.fontString(this.options.fontSize, this.options.fontStyle, this.options.fontFamily);
+    ctx.font = Chart.helpers.fontString(
+      this.options.fontSize,
+      this.options.fontStyle,
+      this.options.fontFamily
+    );
     const renderInfo = this.getRenderInfo(element, label);
     if (!this.drawable(element, label, renderInfo)) {
       ctx.restore();
@@ -102,17 +113,25 @@
   };
 
   Label.prototype.renderLabel = function (label, renderInfo) {
-    return this.options.arc ? this.renderArcLabel(label, renderInfo) : this.renderBaseLabel(label, renderInfo);
+    return this.options.arc
+      ? this.renderArcLabel(label, renderInfo)
+      : this.renderBaseLabel(label, renderInfo);
   };
 
   Label.prototype.renderBaseLabel = function (label, position) {
     const ctx = this.ctx;
-    if (typeof label === 'object') {
-      ctx.drawImage(label, position.x - label.width / 2, position.y - label.height / 2, label.width, label.height);
+    if (typeof label === "object") {
+      ctx.drawImage(
+        label,
+        position.x - label.width / 2,
+        position.y - label.height / 2,
+        label.width,
+        label.height
+      );
     } else {
       ctx.save();
-      ctx.textBaseline = 'top';
-      ctx.textAlign = 'center';
+      ctx.textBaseline = "top";
+      ctx.textAlign = "center";
 
       if (this.options.textShadow) {
         ctx.shadowOffsetX = this.options.shadowOffsetX;
@@ -121,9 +140,12 @@
         ctx.shadowBlur = this.options.shadowBlur;
       }
 
-      const lines = label.split('\n');
+      const lines = label.split("\n");
       for (let i = 0; i < lines.length; i++) {
-        const y = position.y - this.options.fontSize / 2 * lines.length + this.options.fontSize * i;
+        const y =
+          position.y -
+          (this.options.fontSize / 2) * lines.length +
+          this.options.fontSize * i;
         ctx.fillText(lines[i], position.x, y);
       }
       ctx.restore();
@@ -131,19 +153,21 @@
   };
 
   Label.prototype.renderArcLabel = function (label, renderInfo) {
-    const ctx = this.ctx, radius = renderInfo.radius, view = renderInfo.view;
+    const ctx = this.ctx,
+      radius = renderInfo.radius,
+      view = renderInfo.view;
     ctx.save();
     ctx.translate(view.x, view.y);
-    if (typeof label === 'string') {
+    if (typeof label === "string") {
       ctx.rotate(renderInfo.startAngle);
-      ctx.textBaseline = 'middle';
-      ctx.textAlign = 'left';
-      const lines = label.split('\n');
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+      const lines = label.split("\n");
       let max = 0;
       const widths = [];
       let offset = 0;
-      if (this.options.position === 'border') {
-        offset = (lines.length - 1) * this.options.fontSize / 2;
+      if (this.options.position === "border") {
+        offset = ((lines.length - 1) * this.options.fontSize) / 2;
       }
       let mertrics;
       for (let j = 0; j < lines.length; ++j) {
@@ -179,40 +203,44 @@
   };
 
   Label.prototype.shouldRenderToElement = function (meta, element) {
-    return !meta.hidden && (
-      this.options.showZero ||
-        this.chart.config.type === 'polarArea' ? element.outerRadius !== 0 : element.circumference !== 0
+    return (
+      !meta.hidden &&
+      (this.options.showZero || this.chart.config.type === "polarArea"
+        ? element.outerRadius !== 0
+        : element.circumference !== 0)
     );
   };
 
   Label.prototype.getLabel = function (dataset, element, index) {
     let label;
-    if (typeof this.options.render === 'function') {
+    if (typeof this.options.render === "function") {
       label = this.options.render({
         label: this.chart.config.data.labels[index],
         value: dataset.data[index],
         percentage: this.getPercentage(dataset, element, index),
         dataset: dataset,
-        index: index
+        index: index,
       });
     } else {
       switch (this.options.render) {
-        case 'value':
+        case "value":
           label = dataset.data[index];
           break;
-        case 'label':
+        case "label":
           label = this.chart.config.data.labels[index];
           break;
-        case 'image':
-          label = this.options.images[index] ? this.loadImage(this.options.images[index]) : '';
+        case "image":
+          label = this.options.images[index]
+            ? this.loadImage(this.options.images[index])
+            : "";
           break;
-        case 'percentage':
+        case "percentage":
         default:
-          label = this.getPercentage(dataset, element, index) + '%';
+          label = this.getPercentage(dataset, element, index) + "%";
           break;
       }
     }
-    if (typeof label === 'object') {
+    if (typeof label === "object") {
       label = this.loadImage(label);
     } else if (label) {
       label = label.toString();
@@ -222,16 +250,16 @@
 
   Label.prototype.getFontColor = function (dataset, element, index) {
     let fontColor = this.options.fontColor;
-    if (typeof fontColor === 'function') {
+    if (typeof fontColor === "function") {
       fontColor = fontColor({
         label: this.chart.config.data.labels[index],
         value: dataset.data[index],
         percentage: this.getPercentage(dataset, element, index),
         backgroundColor: dataset.backgroundColor[index],
         dataset: dataset,
-        index: index
+        index: index,
       });
-    } else if (typeof fontColor !== 'string') {
+    } else if (typeof fontColor !== "string") {
       fontColor = fontColor[index] || this.chart.config.options.color;
     }
     return fontColor;
@@ -242,28 +270,33 @@
       return this.percentage;
     }
     let percentage;
-    if (this.chart.config.type === 'polarArea' || this.chart.config.type === 'doughnut' || this.chart.config.type === 'pie') {
+    if (
+      this.chart.config.type === "polarArea" ||
+      this.chart.config.type === "doughnut" ||
+      this.chart.config.type === "pie"
+    ) {
       if (!this.total) {
         this.total = 0;
         for (let i = 0; i < dataset.data.length; ++i) {
           this.total += dataset.data[i];
         }
       }
-      percentage = dataset.data[index] / this.total * 100;
-    } else if (this.chart.config.type === 'bar') {
+      percentage = (dataset.data[index] / this.total) * 100;
+    } else if (this.chart.config.type === "bar") {
       if (!this.barTotal[index]) {
         this.barTotal[index] = 0;
         for (let i = 0; i < this.chart.data.datasets.length; ++i) {
           this.barTotal[index] += this.chart.data.datasets[i].data[index];
         }
       }
-      percentage = dataset.data[index] / this.barTotal[index] * 100;
+      percentage = (dataset.data[index] / this.barTotal[index]) * 100;
     } else {
-      percentage = element.circumference / this.chart.config.options.circumference * 100;
+      percentage =
+        (element.circumference / this.chart.config.options.circumference) * 100;
     }
     percentage = parseFloat(percentage.toFixed(this.options.precision));
     if (!this.options.showActualPercentages) {
-      if (this.chart.config.type === 'bar') {
+      if (this.chart.config.type === "bar") {
         this.totalPercentage = this.barTotalPercentage[index] || 0;
       }
       this.totalPercentage += percentage;
@@ -271,7 +304,7 @@
         percentage -= this.totalPercentage - 100;
         percentage = parseFloat(percentage.toFixed(this.options.precision));
       }
-      if (this.chart.config.type === 'bar') {
+      if (this.chart.config.type === "bar") {
         this.barTotalPercentage[index] = this.totalPercentage;
       }
     }
@@ -280,31 +313,42 @@
   };
 
   Label.prototype.getRenderInfo = function (element, label) {
-    if (this.chart.config.type === 'bar') {
+    if (this.chart.config.type === "bar") {
       return this.getBarRenderInfo(element, label);
     } else {
-      return this.options.arc ? this.getArcRenderInfo(element, label) : this.getBaseRenderInfo(element, label);
+      return this.options.arc
+        ? this.getArcRenderInfo(element, label)
+        : this.getBaseRenderInfo(element, label);
     }
   };
 
   Label.prototype.getBaseRenderInfo = function (element, label) {
-    if (this.options.position === 'outside' || this.options.position === 'border') {
+    if (
+      this.options.position === "outside" ||
+      this.options.position === "border"
+    ) {
       let renderInfo = {};
       let rangeFromCentre;
       const view = element;
-      const centreAngle = view.startAngle + (view.endAngle - view.startAngle) / 2;
+      const centreAngle =
+        view.startAngle + (view.endAngle - view.startAngle) / 2;
       const innerRadius = view.outerRadius / 2;
-      if (this.options.position === 'border') {
+      if (this.options.position === "border") {
         rangeFromCentre = (view.outerRadius - innerRadius) / 2 + innerRadius;
-      } else if (this.options.position === 'outside') {
-        rangeFromCentre = (view.outerRadius - innerRadius) + innerRadius + this.options.textMargin;
+      } else if (this.options.position === "outside") {
+        rangeFromCentre =
+          view.outerRadius -
+          innerRadius +
+          innerRadius +
+          this.options.textMargin;
       }
       renderInfo = {
-        x: view.x + (Math.cos(centreAngle) * rangeFromCentre),
-        y: view.y + (Math.sin(centreAngle) * rangeFromCentre)
+        x: view.x + Math.cos(centreAngle) * rangeFromCentre,
+        y: view.y + Math.sin(centreAngle) * rangeFromCentre,
       };
-      if (this.options.position === 'outside') {
-        const offset = this.options.textMargin + this.measureLabel(label).width / 2;
+      if (this.options.position === "outside") {
+        const offset =
+          this.options.textMargin + this.measureLabel(label).width / 2;
         renderInfo.x += renderInfo.x < view.x ? -offset : offset;
       }
       return renderInfo;
@@ -316,14 +360,16 @@
   Label.prototype.getArcRenderInfo = function (element, label) {
     let radius;
     const view = element;
-    if (this.options.position === 'outside') {
-      radius = view.outerRadius + this.options.fontSize + this.options.textMargin;
-    } else if (this.options.position === 'border') {
+    if (this.options.position === "outside") {
+      radius =
+        view.outerRadius + this.options.fontSize + this.options.textMargin;
+    } else if (this.options.position === "border") {
       radius = (view.outerRadius / 2 + view.outerRadius) / 2;
     } else {
       radius = (view.innerRadius + view.outerRadius) / 2;
     }
-    let startAngle = view.startAngle, endAngle = view.endAngle;
+    let startAngle = view.startAngle,
+      endAngle = view.endAngle;
     const totalAngle = endAngle - startAngle;
     startAngle += Math.PI / 2;
     endAngle += Math.PI / 2;
@@ -334,13 +380,14 @@
       startAngle: startAngle,
       endAngle: endAngle,
       totalAngle: totalAngle,
-      view: view
+      view: view,
     };
   };
 
   Label.prototype.getBarRenderInfo = function (element, label) {
     const renderInfo = element.tooltipPosition();
-    renderInfo.y -= this.measureLabel(label).height / 2 + this.options.textMargin;
+    renderInfo.y -=
+      this.measureLabel(label).height / 2 + this.options.textMargin;
     return renderInfo;
   };
 
@@ -348,18 +395,24 @@
     if (this.options.overlap) {
       return true;
     } else if (this.options.arc) {
-      return renderInfo.endAngle - renderInfo.startAngle <= renderInfo.totalAngle;
+      return (
+        renderInfo.endAngle - renderInfo.startAngle <= renderInfo.totalAngle
+      );
     } else {
       const mertrics = this.measureLabel(label),
         left = renderInfo.x - mertrics.width / 2,
         right = renderInfo.x + mertrics.width / 2,
         top = renderInfo.y - mertrics.height / 2,
         bottom = renderInfo.y + mertrics.height / 2;
-      if (this.options.renderInfo === 'outside') {
+      if (this.options.renderInfo === "outside") {
         return this.outsideInRange(left, right, top, bottom);
       } else {
-        return element.inRange(left, top) && element.inRange(left, bottom) &&
-          element.inRange(right, top) && element.inRange(right, bottom);
+        return (
+          element.inRange(left, top) &&
+          element.inRange(left, bottom) &&
+          element.inRange(right, top) &&
+          element.inRange(right, bottom)
+        );
       }
     }
   };
@@ -372,12 +425,17 @@
         [left, top],
         [left, bottom],
         [right, top],
-        [right, bottom]
+        [right, bottom],
       ];
       for (let j = 0; j < potins.length; ++j) {
         const x = potins[j][0];
         const y = potins[j][1];
-        if (x >= bound.left && x <= bound.right && y >= bound.top && y <= bound.bottom) {
+        if (
+          x >= bound.left &&
+          x <= bound.right &&
+          y >= bound.top &&
+          y <= bound.bottom
+        ) {
           return false;
         }
       }
@@ -385,7 +443,7 @@
         [bound.left, bound.top],
         [bound.left, bound.bottom],
         [bound.right, bound.top],
-        [bound.right, bound.bottom]
+        [bound.right, bound.bottom],
       ];
       for (let j = 0; j < potins.length; ++j) {
         const x = potins[j][0];
@@ -399,17 +457,17 @@
       left: left,
       right: right,
       top: top,
-      bottom: bottom
+      bottom: bottom,
     });
     return true;
   };
 
   Label.prototype.measureLabel = function (label) {
-    if (typeof label === 'object') {
+    if (typeof label === "object") {
       return { width: label.width, height: label.height };
     } else {
       let width = 0;
-      const lines = label.split('\n');
+      const lines = label.split("\n");
       for (let i = 0; i < lines.length; ++i) {
         const result = this.ctx.measureText(lines[i]);
         if (result.width > width) {
@@ -429,7 +487,7 @@
   };
 
   Chart.register({
-    id: 'labels',
+    id: "labels",
     beforeDatasetsUpdate: function (chart, args, options) {
       if (!SUPPORTED_TYPES[chart.config.type]) {
         return;
@@ -443,13 +501,15 @@
           return new Label();
         });
       }
-      let someOutside = false, maxPadding = 0;
+      let someOutside = false,
+        maxPadding = 0;
       for (let i = 0; i < count; ++i) {
         const label = chart._labels[i];
         label.setup(chart, options[i]);
-        if (label.options.position === 'outside') {
+        if (label.options.position === "outside") {
           someOutside = true;
-          const padding = label.options.fontSize * 1.5 + label.options.outsidePadding;
+          const padding =
+            label.options.fontSize * 1.5 + label.options.outsidePadding;
           if (padding > maxPadding) {
             maxPadding = padding;
           }
@@ -483,6 +543,6 @@
       chart._labels.forEach(function (label) {
         label.render();
       });
-    }
+    },
   });
 })();

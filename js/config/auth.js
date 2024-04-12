@@ -85,10 +85,8 @@ const getErrorCode = (exCode) => {
 const setSession = async (user) => {
   localStorage.setItem("uid", user.uid);
   localStorage.setItem("name", user.displayName);
-  localStorage.setItem("contact", user.email);
-  localStorage.setItem("session", user.token);
-  // localStorage.setItem("level", obx.rol);
-  localStorage.setItem("sessionTime", user.lastLogin);
+  localStorage.setItem("user", user.email);
+  localStorage.setItem("auth", user.token);
   return;
 };
 
@@ -98,11 +96,7 @@ export const logInWithEmail = (em, pw) => {
       .signInWithEmailAndPassword(em, pw)
       .then(async (userCredential) => {
         const user = getUserData(userCredential.user);
-
-        // if (user === null) {
-        //   alert("No se encuentra usuario en la base de datos");
-        //   return;
-        // }
+ 
         storeAccesos
           .add({
             user: user.email,
@@ -119,8 +113,7 @@ export const logInWithEmail = (em, pw) => {
             //   isConnected: true,
             //   timestamp: timestamp,
             // });
-            // window.location.replace("./docs/main.html");
-            console.log();
+            window.location.replace("./docs/main.html"); 
           })
           .catch((error) => {
             console.log(error);
