@@ -51,7 +51,7 @@ const insertDataToTableBody = (i) => {
 
 const getAllVehicles = async () => {
   try {
-    const querySnapshot = await firestore.collection("VehiculosSLP").get();
+    const querySnapshot = await firestore.collection("vehiculos").get();
 
     if (!querySnapshot.empty) {
       const informationData = querySnapshot.docs.map(doc => {
@@ -72,9 +72,9 @@ const getAllVehicles = async () => {
 const getVehicleByID = async (uid) => {
   try {
     console.log(uid);
-    const response = await firestore.collection("VehiculosSLP").doc(uid).get();
+    const response = await firestore.collection("vehiculos").doc(uid).get();
 
-    const storageReference = storage.ref().child("VehiculosSLP/" + uid);
+    const storageReference = storage.ref().child("vehiculos/" + uid);
     const result = await storageReference.listAll();
 
     const urls = await Promise.all(result.items.map(async (item) => {
@@ -124,7 +124,7 @@ const updateVehicleByID = async () => {
     Object.assign(formObject, objectValues);
 
     const response = await firestore
-      .collection("VehiculosSLP")
+      .collection("vehiculos")
       .doc(uid)
       .update(formObject)
       .catch(error => false);
@@ -154,7 +154,7 @@ const updateVehicleByID = async () => {
 const deleteVehicleByID = async (uid) => {
   try {
     const response = await firestore
-      .collection("VehiculosSLP")
+      .collection("vehiculos")
       .doc(uid)
       .delete()
       .then(response => true)
@@ -185,7 +185,7 @@ const createNewVehicle = async () => {
     formObject.fechaAlta = todayDate;
     formObject.fechaActualizacion = todayDate;
 
-    const vehicleRef = await firestore.collection("VehiculosSLP").add(formObject);
+    const vehicleRef = await firestore.collection("vehiculos").add(formObject);
 
     if (vehicleRef) {
       console.log("Vehículo creado:", vehicleRef.id);
@@ -309,7 +309,7 @@ const uploadImages = async (uid) => {
       if (archivo === null || archivo === undefined) {
         return;
       }
-      const reference = await storage.ref().child(`VehiculosSLP/${uid}/` + input.name).put(archivo);
+      const reference = await storage.ref().child(`vehiculos/${uid}/` + input.name).put(archivo);
 
       const url = await reference.getDownloadURL();
       imageList.push(url);

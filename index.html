@@ -1,124 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="./assets/icons/favicon.ico" />
-    <title>Tu taxi</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="./css/index.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <div class="bg_logo"></div>
-      <div class="form_container">
-        <div class="sub_form">
-          <div class="loginForm">
-            <div class="floating-image-container">
-              <img
-                src="/assets/img/Barra-Busqueda-slp2.png"
-                alt="San Luis Potosi"
-              />
-            </div>
-            <h2>Tu taxi</h2>
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="./assets/icons/favicon.ico">
+  <title>Tu taxi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="bg_logo">
+    </div>
+    <div class="form_container">
+      <div class="sub_form">
+        <div class="loginForm">
+          <div class="floating-image-container">
+            <img src="/assets/img/Barra-Busqueda-slp2.png" alt="San Luis Potosi">
+          </div>
+          <h2>Tu taxi</h5>
             <p>Portal Administrativo</p>
             <form>
-              <input
-                class="form_input"
-                id="loginEmail"
-                type="email"
-                placeholder="Correo electronico"
-                required
-              />
-              <input
-                class="form_input"
-                id="loginPassword"
-                type="password"
-                placeholder="Contraseña"
-                required
-                minlength="8"
-              />
+              <input class="form_input" id="loginEmail" type="email" placeholder="Correo electronico" required>
+              <input class="form_input" id="loginPassword" type="password" placeholder="Contraseña" required
+                minlength="8">
               <a href="./reset_pwd.html">¿Olvidaste tu Contraseña?</a>
-              <input id="loginSubmit" type="submit" value="Ingresar" />
+              <input id="loginSubmit" type="submit" value="Ingresar">
               <p>Copyright &copy; <u>Tadi App.</u></p>
             </form>
-          </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
-<script type="module">
-  import { signIn } from "./api/auth/index.js";
 
-  const inputEmail = document.querySelector("#loginEmail");
-  const inputPass = document.querySelector("#loginPassword");
-  const submitButton = document.querySelector("#loginSubmit");
-
-  submitButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    // const isValid = verifyPreAccess();
-    const isEmailValid = validateEmail(inputEmail.value);
-    if (isEmailValid) {
-      signIn(inputEmail.value, inputPass.value);
-    }
-    return;
-  });
-
-  // document.addEventListener("keyup", (e) => {
-  //   if (e.which !== 13) return;
-  //   const isValid = verifyPreAccess();
-  //   if (isValid === false) return;
-  //   signIn(inputEmail.value, inputPass.value);
-  // });
-
-  // document.querySelectorAll("input.form_input").forEach((e) => {
-  //   e.addEventListener("keyup", (t) => {
-  //     toggleInputOutline(t.target, null);
-  //   });
-  //   e.addEventListener("click", (t) => {
-  //     toggleInputOutline(t.target, null);
-  //   });
-  // });
-
-  // const verifyPreAccess = () => {
-  //   const isEmail = validateEmail(inputEmail.value);
-
-  //   if (
-  //     (inputEmail.value === "" || isEmail === false) &&
-  //     inputPass.value === ""
-  //   ) {
-  //     alert("Favor de llenar los campos correctamente.");
-  //     toggleInputOutline(inputEmail, false);
-  //     toggleInputOutline(inputPass, false);
-  //     return false;
-  //   }
-  //   if (inputEmail.value === "" || isEmail === false) {
-  //     alert("Favor de introducir su correo correctamente.");
-  //     toggleInputOutline(inputEmail, false);
-  //     return false;
-  //   }
-  //   if (inputPass.value === "") {
-  //     alert("Favor de introducir su contraseña correctamente.");
-  //     toggleInputOutline(inputPass, false);
-  //     return false;
-  //   }
-  //   return true;
-  // };
-
-  // const toggleInputOutline = (itx, fx) => {
-  //   if (fx === false) itx.style.outline = "1px solid #dc3545";
-  //   if (fx === true || fx === null) itx.style.outline = "none";
-  //   return;
-  // };
-
-  const validateEmail = (email) => {
-    const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return pattern.test(email);
-  };
-</script>
+<script type="module" src="./js/functions/index.js"></script>

@@ -1138,7 +1138,7 @@
     .addEventListener("click", async function (e) {
       const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
       console.log(uid)
-      const storageReference = storage.ref().child("OperadoresSLP/" + uid);
+      const storageReference = storage.ref().child("conductores/" + uid);
       const result = await storageReference.listAll();
       if (result.items.length > 0) {
         const urls = await Promise.all(result.items.map(async (item) => {
@@ -1188,7 +1188,7 @@
       : "Estas seguro de habilitar el vehiculo al usuario";
     if (confirm(message)) {
       const documentUpdated = await firestore
-        .collection("OperadoresSLP")
+        .collection("conductores")
         .doc(userUID)
         .update({
           vehicles: updatedArrayField
@@ -1292,7 +1292,7 @@
 
       if (file === null || file === undefined) return;
 
-      const reference = storage.ref().child(`OperadoresSLP/${uid}/` + name);
+      const reference = storage.ref().child(`conductores/${uid}/` + name);
       await reference.put(file);
 
       const url = await reference.getDownloadURL();
@@ -1314,7 +1314,7 @@
       if (e.code === "Enter") {
         const searchString = e.target.value;
         const response = await firestore
-          .collection("VehiculosSLP")
+          .collection("vehiculos")
           .where("placa", "==", searchString)
           .get()
           .then(snapshot => {
@@ -1346,7 +1346,7 @@
               if (confirm("Estas seguro de asignar este vehiculo al conductor?")) {
                 console.log({ vehicles: objectArray })
                 const hasBeenAssigned = await firestore
-                  .collection("OperadoresSLP")
+                  .collection("conductores")
                   .doc(uid)
                   .update({ vehicles: firebase.firestore.FieldValue.arrayUnion(objectArray) })
                   .then(snapshot => {
