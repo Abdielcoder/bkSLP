@@ -1,7 +1,7 @@
 // tarifas.js
-import { get_tarifas } from '../config/config.js';
+import { get_tarifas, tarifasRef } from "../config/config.js";
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   let tarifas = await get_tarifas(); // Esto debería ser un objeto con las tarifas de SLP.
   let data_table;
 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       info: false,
       paging: false,
       searching: false,
-      buttons: false
+      buttons: false,
     });
   };
 
@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Suponiendo que tarifas sea un objeto con las tarifas directamente como propiedades
   const data_list = [
-    'SLP', // ID
-    'SLP', // Ciudad
+    "SLP", // ID
+    "SLP", // Ciudad
     formatCurrency(tarifas.banderaDiurna),
     formatCurrency(tarifas.banderaNocturna),
     formatCurrency(tarifas.kilometro),
@@ -35,5 +35,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   ];
 
   data_table.row.add(data_list).draw();
-  console.log("Tarifas desde tarifas.js"+data_list)
+  console.log("Tarifas desde tarifas.js" + data_list);
+});
+
+tarifasRef.once("value", (snapshot) => {
+  const tarifasData = snapshot.val();
+  const tableBody = document.querySelector("table#rates-list tbody")
+
+  tableBody.innerHTML = `<tr>
+        <td>SLP</td>
+        <td>SLP</td>
+        <td>$ ${tarifasData.banderaDiurna}</td>
+        <td>$ ${tarifasData.banderaNocturna}</td>
+        <td>$ ${tarifasData.kilometro}</td>
+        <td>$ ${tarifasData.min}</td>
+        <td>$ ${tarifasData.banderaDiurnaApp}</td>
+        <td>$ ${tarifasData.banderaNocturnaApp}</td>
+        <td>$ ${tarifasData.kilometroApp}</td>
+        <td>$ ${tarifasData.minApp}</td>
+      </tr>`;
 });

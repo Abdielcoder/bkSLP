@@ -1,498 +1,829 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="../assets/icons/favicon.ico" />
+    <title>Tu taxi - Taximetro Digital</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="../js/dom/local.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
+    <link rel="stylesheet" href="../css/docs/vehicles.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css"
+    />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <link rel="icon" href="../assets/icons/favicon.ico">
-  <title>Tu taxi - Taximetro Digital</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="../js/dom/local.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
-  <link rel="stylesheet" href="../css/docs/tadiDefaults.css">
-  <link rel="stylesheet" href="../css/docs/vehicles.css">
-  <link rel="stylesheet" type="text/css"
-    href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css" />
-</head>
+  <body>
+    <div id="root">
+      <!-- Aside -->
+      <aside>
+        <div id="aside-container">
+          <div class="logo">
+            <a class="home-link" href="./main.html">TADI | Taximetro Digital</a>
+          </div>
+          <hr />
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="./maps.html">
+                <span class="link-icons material-icons-sharp">map</span>
+                Mapa
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                Conductores
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./users.html">
+                <span class="link-icons material-icons-sharp">
+                  airline_seat_recline_extra</span
+                >
 
-<body>
-  <div id="root">
-    <!-- Aside -->
-    <aside>
-      <div id="aside-container">
-        <div class="logo">
-          <a class="home-link" href="./main.html">TADI | Taximetro Digital</a>
-        </div>
-        <hr />
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="./maps.html">
-              <span class="link-icons material-icons-sharp">map</span>
-              Mapa
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./users.html">
-              <span class="link-icons material-icons-sharp">person</span>
-              Conductores
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./users.html">
-              <span class="link-icons material-icons-sharp"> airline_seat_recline_extra</span>
-
-              Clientes
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./vehicles.html">
-              <span class="link-icons material-icons-sharp">directions_car</span>
-              Vehículos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./users.html">
-              <span class="link-icons material-icons-sharp">chat</span>
-              Chats
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./users.html">
-              <span class="link-icons material-icons-sharp">token</span>
-              Historico-Viajes
-            </a>
-          </li>
-          <li class="nav-item menu-button menu-closed">
-            <a class="nav-link" href="#">
-              <span class="link-icons material-icons-sharp">manage_accounts</span>
-              Administración
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="../admin/messages.html">
-              <span class="link-icons material-icons-sharp">chat</span>
-              Mensajes
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="../admin/users.html">
-              <span class="link-icons material-icons-sharp">person</span>
-              Administradores
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="../admin/roles.html">
-              <span class="link-icons material-icons-sharp">groups</span>
-              Roles
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="../admin/clients.html">
-              <span class="link-icons material-icons-sharp">person_pin</span>
-              Clientes
-            </a>
-          </li>
-          <!-- <li class="nav-item menu-linked hidden">
+                Clientes
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./vehicles.html">
+                <span class="link-icons material-icons-sharp"
+                  >directions_car</span
+                >
+                Vehículos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp">chat</span>
+                Chats
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp">token</span>
+                Historico-Viajes
+              </a>
+            </li>
+            <li class="nav-item menu-button menu-closed">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp"
+                  >manage_accounts</span
+                >
+                Administración
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="../admin/messages.html">
+                <span class="link-icons material-icons-sharp">chat</span>
+                Mensajes
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="../admin/users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                Administradores
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="../admin/roles.html">
+                <span class="link-icons material-icons-sharp">groups</span>
+                Roles
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="../admin/clients.html">
+                <span class="link-icons material-icons-sharp">person_pin</span>
+                Clientes
+              </a>
+            </li>
+            <!-- <li class="nav-item menu-linked hidden">
           <a class="nav-sublink" href="../admin/states.html">
             <span class="link-icons material-icons-sharp">place</span>
             Estado
           </a>
         </li> -->
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="../admin/rates.html">
-              <span class="link-icons material-icons-sharp">paid</span>
-              Tarifas
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="../admin/base_rates.html">
-              <span class="link-icons material-icons-sharp">attach_money</span>
-              Tarifas Base
-            </a>
-          </li>
-        </ul>
-      </div>
-    </aside>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="../admin/rates.html">
+                <span class="link-icons material-icons-sharp">paid</span>
+                Tarifas
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="../admin/base_rates.html">
+                <span class="link-icons material-icons-sharp"
+                  >attach_money</span
+                >
+                Tarifas Base
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
 
-    <!-- Header  -->
-    <header>
-      <nav>
-        <h1 class="app-title">Tu taxi - Portal Administrativo</h1>
-        <button class="close-app">
-          <span class="material-icons-sharp">logout</span>
-          Cerrar Sesión
-        </button>
-      </nav>
-      <div class="header-bg-image"></div>
-    </header>
+      <!-- Header  -->
+      <header>
+        <nav>
+          <h1 class="app-title">Tu taxi - Portal Administrativo</h1>
+          <button class="close-app">
+            <span class="material-icons-sharp">logout</span>
+            Cerrar Sesión
+          </button>
+        </nav>
+        <div class="header-bg-image"></div>
+      </header>
 
-    <main>
-      <div class="container">
-        <div class="tadi-card">
-          <div class="card-header">
-            <h1>Vehículos</h1>
-            <br>
-            <p>Listado de vehículos dentro del empadronamiento actual.</p>
-          </div>
-          <div class="card-tools">
-            <button type="button" title="Dar de alta un nuevo vehículo" id="button-add">
-              <span>Alta de vehículo</span>
-              <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                <g id="SVGRepo_iconCarrier">
-                  <path d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17" stroke="#ffffff" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round"></path>
-                </g>
-              </svg>
-            </button>
-          </div>
-          <div class="card-body">
-            <div class="table-container">
-              <table id="vehicle-list">
-                <thead>
-                  <tr>
-                    <th>Placa</th>
-                    <th>Número Económico</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Color</th>
-                    <th>Tipo</th>
-                    <th>Servicio</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+      <main>
+        <div class="container">
+          <div class="tadi-card">
+            <div class="card-header">
+              <h1>Vehículos</h1>
+              <br />
+              <p>Listado de vehículos dentro del empadronamiento actual.</p>
+            </div>
+            <div class="card-tools">
+              <button
+                type="button"
+                title="Dar de alta un nuevo vehículo"
+                id="button-add"
+              >
+                <span>Alta de vehículo</span>
+                <svg
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17"
+                      stroke="#ffffff"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </g>
+                </svg>
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table id="vehicle-list">
+                  <thead>
+                    <tr>
+                      <th>Placa</th>
+                      <th>Número Económico</th>
+                      <th>Marca</th>
+                      <th>Modelo</th>
+                      <th>Color</th>
+                      <th>Tipo</th>
+                      <th>Servicio</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- MODALS  -->
-      <div class="modal-dialog" aria-modal="true" data-visibility="hidden" data-reference="">
-        <div class="dialog-bg"></div>
-        <div class="dialog-container">
-          <div class="container-head">
-            <h2 id="modal-dialog-title" style="text-transform: uppercase;"></h2>
-          </div>
-          <div class="container-body">
-            <form id="form-vehiculo">
-              <div class="flexed">
-                <div class="formGroup inputForm">
-                  <label for="marca">Marca</label>
-                  <input type="text" name="marca" id="marca" list="marcas" placeholder="Marca">
-                  <datalist id="marcas" style="visibility: hidden; position: absolute;">
-                    <option value="Audi" />
-                    <option value="BMW" />
-                    <option value="Chevrolet" />
-                    <option value="Chrysler" />
-                    <option value="Dodge" />
-                    <option value="Fiat" />
-                    <option value="Ford" />
-                    <option value="Honda" />
-                    <option value="Hyundai" />
-                    <option value="Kia" />
-                    <option value="Lexus" />
-                    <option value="Lotus" />
-                    <option value="Mazda" />
-                    <option value="Mercedes-Benz" />
-                    <option value="MG" />
-                    <option value="Mini" />
-                    <option value="Mitsubishi" />
-                    <option value="Nissan" />
-                    <option value="Opel" />
-                    <option value="Peugeot" />
-                    <option value="Renault" />
-                    <option value="Seat" />
-                    <option value="Smart" />
-                    <option value="Subaru" />
-                    <option value="Suzuki" />
-                    <option value="Toyota" />
-                    <option value="Volkswagen" />
-                    <option value="Volvo" />
-                  </datalist>
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="modelo">Modelo</label>
-                  <input type="text" name="modelo" id="modelo" placeholder="Modelo">
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="tipoVehiculo">Tipo de vehículo</label>
-                  <input type="text" name="tipoVehiculo" id="tipoVehiculo" list="tipos" placeholder="Tipo de vehículo">
-                  <datalist id="tipos" style="visibility: hidden; position: absolute;">
-                    <option value="Hatchback" />
-                    <option value="Sedan" />
-                    <option value="SUV" />
-                    <option value="Crossover" />
-                    <option value="Coupe" />
-                  </datalist>
-                </div>
-              </div>
-              <div class="flexed">
-                <div class="formGroup inputForm">
-                  <label for="placa">Placa</label>
-                  <input type="text" name="placa" id="placa" placeholder="Placa">
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="color">Color</label>
-                  <input type="text" name="color" id="color" list="colores" placeholder="Color del vehículo">
-                  <datalist id="colores" style="visibility: hidden; position: absolute;">
-                    <option value="Blanco" />
-                    <option value="Negro" />
-                    <option value="Gris" />
-                    <option value="Dorado" />
-                    <option value="Plata" />
-                    <option value="Azul" />
-                    <option value="Rojo" />
-                    <option value="Marrón/Beige" />
-                    <option value="Verde" />
-                    <option value="Amarillo" />
-                    <option value="Naranja" />
-                  </datalist>
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="habilitado" style="text-align: center;">Habilitado</label>
-                  <input type="checkbox" name="habilitado" id="habilitado" style="margin-inline: auto; position: relative; top: 8px;">
-                </div>
-              </div>
-              <div class="flexed">
-                <div class="formGroup inputForm">
-                  <label for="numeroEconomico">Número Económico</label>
-                  <input type="text" name="numeroEconomico" id="numeroEconomico" placeholder="Número económico">
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="tarjetonCiudad">Tarjetón ciudad</label>
-                  <input type="text" name="tarjetonCiudad" id="tarjetonCiudad" placeholder="Tarjetón">
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="tipo">Tipo</label>
-                  <input type="text" name="tipo" id="tipo" placeholder="Tipo">
-                </div>
-              </div>
-              <div class="flexed">
-                <div class="formGroup inputForm">
-                  <label for="id">Identificador</label>
-                  <input type="text" name="id" id="id" placeholder="Identificador">
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="folio">Folio</label>
-                  <input type="text" name="folio" id="folio" placeholder="Folio">
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="delegacionID">ID Delegación</label>
-                  <input type="text" name="delegacionID" id="delegacionID" placeholder="ID Delegación">
-                </div>
-              </div>
-              <div class="flexed" data-display="none" id="form-dates">
-                <div class="formGroup inputForm">
-                  <label for="fechaAlta">Fecha de alta</label>
-                  <input type="text" name="fechaAlta" id="fechaAlta" disabled readonly>
-                </div>
-                <div class="formGroup inputForm">
-                  <label for="fechaActualizacion">Ultima actualización</label>
-                  <input type="text" name="fechaActualizacion" id="fechaActualizacion" disabled readonly>
-                </div>
-              </div>
-              <p style="font-size: 14px;">Fotografias</p>
-              <div class="flexed" style="justify-content: center; padding: 10px 0;">
-                <div class="file-box">
-                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                    <img src="../assets/img/nopic.png" alt="frontalPreview" id="frontalPreview" class="previewImage"
-                      style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                    <label for="frontal">
-                      <input type="file" name="frontal" id="frontal" style="display: none;" class="vehicleFiles">
-                      <div class="imageEdit">
-                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
-                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
-                          transform="matrix(1, 0, 0, 1, 0, 0)">
-                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
-                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
-                              strokewidth="0">
-                            </rect>
-                          </g>
-                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
-                            stroke-width="0.384"></g>
-                          <g id="SVGRepo_iconCarrier">
-                            <defs>
-                              <style>
-                                .cls-1 {
-                                  fill: none;
-                                  stroke: #000000;
-                                  stroke-miterlimit: 10;
-                                  stroke-width: 1.9200000000000004;
-                                }
-                              </style>
-                            </defs>
-                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
-                            </polyline>
-                            <path class="cls-1"
-                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
-                            </path>
-                          </g>
-                        </svg>
-                      </div>
-                    </label>
+        <!-- MODALS  -->
+        <div
+          class="modal-dialog"
+          aria-modal="true"
+          data-visibility="hidden"
+          data-reference=""
+        >
+          <div class="dialog-bg"></div>
+          <div class="dialog-container">
+            <div class="container-head">
+              <h2
+                id="modal-dialog-title"
+                style="text-transform: uppercase"
+              ></h2>
+            </div>
+            <div class="container-body">
+              <form id="form-vehiculo">
+                <div class="flexed">
+                  <div class="formGroup inputForm">
+                    <label for="marca">Marca</label>
+                    <input
+                      type="text"
+                      name="marca"
+                      id="marca"
+                      list="marcas"
+                      placeholder="Marca"
+                    />
+                    <datalist
+                      id="marcas"
+                      style="visibility: hidden; position: absolute"
+                    >
+                      <option value="Audi" />
+                      <option value="BMW" />
+                      <option value="Chevrolet" />
+                      <option value="Chrysler" />
+                      <option value="Dodge" />
+                      <option value="Fiat" />
+                      <option value="Ford" />
+                      <option value="Honda" />
+                      <option value="Hyundai" />
+                      <option value="Kia" />
+                      <option value="Lexus" />
+                      <option value="Lotus" />
+                      <option value="Mazda" />
+                      <option value="Mercedes-Benz" />
+                      <option value="MG" />
+                      <option value="Mini" />
+                      <option value="Mitsubishi" />
+                      <option value="Nissan" />
+                      <option value="Opel" />
+                      <option value="Peugeot" />
+                      <option value="Renault" />
+                      <option value="Seat" />
+                      <option value="Smart" />
+                      <option value="Subaru" />
+                      <option value="Suzuki" />
+                      <option value="Toyota" />
+                      <option value="Volkswagen" />
+                      <option value="Volvo" />
+                    </datalist>
                   </div>
-                  <p>Frontal</p>
-                </div>
-                <div class="file-box">
-                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                    <img src="../assets/img/nopic.png" alt="lateralDerechoPreview" id="lateralDerechoPreview"
-                      class="previewImage" style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                    <label for="lateralDerecho">
-                      <input type="file" name="lateralDerecho" id="lateralDerecho" style="display: none;" class="vehicleFiles">
-                      <div class="imageEdit">
-                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
-                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
-                          transform="matrix(1, 0, 0, 1, 0, 0)">
-                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
-                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
-                              strokewidth="0">
-                            </rect>
-                          </g>
-                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
-                            stroke-width="0.384"></g>
-                          <g id="SVGRepo_iconCarrier">
-                            <defs>
-                              <style>
-                                .cls-1 {
-                                  fill: none;
-                                  stroke: #000000;
-                                  stroke-miterlimit: 10;
-                                  stroke-width: 1.9200000000000004;
-                                }
-                              </style>
-                            </defs>
-                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
-                            </polyline>
-                            <path class="cls-1"
-                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
-                            </path>
-                          </g>
-                        </svg>
-                      </div>
-                    </label>
+                  <div class="formGroup inputForm">
+                    <label for="modelo">Modelo</label>
+                    <input
+                      type="text"
+                      name="modelo"
+                      id="modelo"
+                      placeholder="Modelo"
+                    />
                   </div>
-                  <p>Lateral Derecho</p>
-                </div>
-                <div class="file-box">
-                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                    <img src="../assets/img/nopic.png" alt="lateralIzquierdoPreview" id="lateralIzquierdoPreview"
-                      class="previewImage" style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                    <label for="lateralIzquierdo">
-                      <input type="file" name="lateralIzquierdo" id="lateralIzquierdo" style="display: none;" class="vehicleFiles">
-                      <div class="imageEdit">
-                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
-                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
-                          transform="matrix(1, 0, 0, 1, 0, 0)">
-                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
-                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
-                              strokewidth="0">
-                            </rect>
-                          </g>
-                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
-                            stroke-width="0.384"></g>
-                          <g id="SVGRepo_iconCarrier">
-                            <defs>
-                              <style>
-                                .cls-1 {
-                                  fill: none;
-                                  stroke: #000000;
-                                  stroke-miterlimit: 10;
-                                  stroke-width: 1.9200000000000004;
-                                }
-                              </style>
-                            </defs>
-                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
-                            </polyline>
-                            <path class="cls-1"
-                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
-                            </path>
-                          </g>
-                        </svg>
-                      </div>
-                    </label>
+                  <div class="formGroup inputForm">
+                    <label for="tipoVehiculo">Tipo de vehículo</label>
+                    <input
+                      type="text"
+                      name="tipoVehiculo"
+                      id="tipoVehiculo"
+                      list="tipos"
+                      placeholder="Tipo de vehículo"
+                    />
+                    <datalist
+                      id="tipos"
+                      style="visibility: hidden; position: absolute"
+                    >
+                      <option value="Hatchback" />
+                      <option value="Sedan" />
+                      <option value="SUV" />
+                      <option value="Crossover" />
+                      <option value="Coupe" />
+                    </datalist>
                   </div>
-                  <p>Lateral Izquierdo</p>
                 </div>
-                <div class="file-box">
-                  <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px;">
-                    <img src="../assets/img/nopic.png" alt="traseroPreview" id="traseroPreview" class="previewImage"
-                      style="display: block; width: 95px; height: 95px; object-fit: cover;">
-                    <label for="trasero">
-                      <input type="file" name="trasero" id="trasero" style="display: none;" class="vehicleFiles">
-                      <div class="imageEdit">
-                        <svg width="32px" height="32px" viewBox="-9.6 -9.6 43.20 43.20" id="Layer_1" data-name="Layer 1"
-                          xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"
-                          transform="matrix(1, 0, 0, 1, 0, 0)">
-                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
-                            <rect x="-9.6" y="-9.6" width="43.20" height="43.20" rx="21.6" fill="#e2e7e9"
-                              strokewidth="0">
-                            </rect>
-                          </g>
-                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
-                            stroke-width="0.384"></g>
-                          <g id="SVGRepo_iconCarrier">
-                            <defs>
-                              <style>
-                                .cls-1 {
-                                  fill: none;
-                                  stroke: #000000;
-                                  stroke-miterlimit: 10;
-                                  stroke-width: 1.9200000000000004;
-                                }
-                              </style>
-                            </defs>
-                            <polyline class="cls-1" points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41">
-                            </polyline>
-                            <path class="cls-1"
-                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z">
-                            </path>
-                          </g>
-                        </svg>
-                      </div>
-                    </label>
+                <div class="flexed">
+                  <div class="formGroup inputForm">
+                    <label for="placa">Placa</label>
+                    <input
+                      type="text"
+                      name="placa"
+                      id="placa"
+                      placeholder="Placa"
+                    />
                   </div>
-                  <p>Trasero</p>
+                  <div class="formGroup inputForm">
+                    <label for="color">Color</label>
+                    <input
+                      type="text"
+                      name="color"
+                      id="color"
+                      list="colores"
+                      placeholder="Color del vehículo"
+                    />
+                    <datalist
+                      id="colores"
+                      style="visibility: hidden; position: absolute"
+                    >
+                      <option value="Blanco" />
+                      <option value="Negro" />
+                      <option value="Gris" />
+                      <option value="Dorado" />
+                      <option value="Plata" />
+                      <option value="Azul" />
+                      <option value="Rojo" />
+                      <option value="Marrón/Beige" />
+                      <option value="Verde" />
+                      <option value="Amarillo" />
+                      <option value="Naranja" />
+                    </datalist>
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="habilitado" style="text-align: center"
+                      >Habilitado</label
+                    >
+                    <input
+                      type="checkbox"
+                      name="habilitado"
+                      id="habilitado"
+                      style="margin-inline: auto; position: relative; top: 8px"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="form-buttons-tools">
-                <button type="button" id="form-button-cancel">
-                  <span>Cancelar</span>
-                </button>
-                <button type="submit" id="form-button-submit" data-type="">
-                  <span id="button-submit-text"></span>
-                </button>
-              </div>
-            </form>
+                <div class="flexed">
+                  <div class="formGroup inputForm">
+                    <label for="numeroEconomico">Número Económico</label>
+                    <input
+                      type="text"
+                      name="numeroEconomico"
+                      id="numeroEconomico"
+                      placeholder="Número económico"
+                    />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="tarjetonCiudad">Tarjetón ciudad</label>
+                    <input
+                      type="text"
+                      name="tarjetonCiudad"
+                      id="tarjetonCiudad"
+                      placeholder="Tarjetón"
+                    />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="tipo">Tipo</label>
+                    <input
+                      type="text"
+                      name="tipo"
+                      id="tipo"
+                      placeholder="Tipo"
+                    />
+                  </div>
+                </div>
+                <div class="flexed">
+                  <div class="formGroup inputForm">
+                    <label for="id">Identificador</label>
+                    <input
+                      type="text"
+                      name="id"
+                      id="id"
+                      placeholder="Identificador"
+                    />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="folio">Folio</label>
+                    <input
+                      type="text"
+                      name="folio"
+                      id="folio"
+                      placeholder="Folio"
+                    />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="delegacionID">ID Delegación</label>
+                    <input
+                      type="text"
+                      name="delegacionID"
+                      id="delegacionID"
+                      placeholder="ID Delegación"
+                    />
+                  </div>
+                </div>
+                <div class="flexed" data-display="none" id="form-dates">
+                  <div class="formGroup inputForm">
+                    <label for="fechaAlta">Fecha de alta</label>
+                    <input
+                      type="text"
+                      name="fechaAlta"
+                      id="fechaAlta"
+                      disabled
+                      readonly
+                    />
+                  </div>
+                  <div class="formGroup inputForm">
+                    <label for="fechaActualizacion">Ultima actualización</label>
+                    <input
+                      type="text"
+                      name="fechaActualizacion"
+                      id="fechaActualizacion"
+                      disabled
+                      readonly
+                    />
+                  </div>
+                </div>
+                <p style="font-size: 14px">Fotografias</p>
+                <div
+                  class="flexed"
+                  style="justify-content: center; padding: 10px 0"
+                >
+                  <div class="file-box">
+                    <div
+                      style="
+                        padding: 4px;
+                        border: 1px solid lightslategray;
+                        border-radius: 2px;
+                      "
+                    >
+                      <img
+                        src="../assets/img/nopic.png"
+                        alt="frontalPreview"
+                        id="frontalPreview"
+                        class="previewImage"
+                        style="
+                          display: block;
+                          width: 95px;
+                          height: 95px;
+                          object-fit: cover;
+                        "
+                      />
+                      <label for="frontal">
+                        <input
+                          type="file"
+                          name="frontal"
+                          id="frontal"
+                          style="display: none"
+                          class="vehicleFiles"
+                        />
+                        <div class="imageEdit">
+                          <svg
+                            width="32px"
+                            height="32px"
+                            viewBox="-9.6 -9.6 43.20 43.20"
+                            id="Layer_1"
+                            data-name="Layer 1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="#ffffff"
+                            stroke="#ffffff"
+                            transform="matrix(1, 0, 0, 1, 0, 0)"
+                          >
+                            <g
+                              id="SVGRepo_bgCarrier"
+                              stroke-width="0"
+                              transform="translate(0,0), scale(1)"
+                            >
+                              <rect
+                                x="-9.6"
+                                y="-9.6"
+                                width="43.20"
+                                height="43.20"
+                                rx="21.6"
+                                fill="#e2e7e9"
+                                strokewidth="0"
+                              ></rect>
+                            </g>
+                            <g
+                              id="SVGRepo_tracerCarrier"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke="#CCCCCC"
+                              stroke-width="0.384"
+                            ></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: none;
+                                    stroke: #000000;
+                                    stroke-miterlimit: 10;
+                                    stroke-width: 1.9200000000000004;
+                                  }
+                                </style>
+                              </defs>
+                              <polyline
+                                class="cls-1"
+                                points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                              ></polyline>
+                              <path
+                                class="cls-1"
+                                d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </div>
+                      </label>
+                    </div>
+                    <p>Frontal</p>
+                  </div>
+                  <div class="file-box">
+                    <div
+                      style="
+                        padding: 4px;
+                        border: 1px solid lightslategray;
+                        border-radius: 2px;
+                      "
+                    >
+                      <img
+                        src="../assets/img/nopic.png"
+                        alt="lateralDerechoPreview"
+                        id="lateralDerechoPreview"
+                        class="previewImage"
+                        style="
+                          display: block;
+                          width: 95px;
+                          height: 95px;
+                          object-fit: cover;
+                        "
+                      />
+                      <label for="lateralDerecho">
+                        <input
+                          type="file"
+                          name="lateralDerecho"
+                          id="lateralDerecho"
+                          style="display: none"
+                          class="vehicleFiles"
+                        />
+                        <div class="imageEdit">
+                          <svg
+                            width="32px"
+                            height="32px"
+                            viewBox="-9.6 -9.6 43.20 43.20"
+                            id="Layer_1"
+                            data-name="Layer 1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="#ffffff"
+                            stroke="#ffffff"
+                            transform="matrix(1, 0, 0, 1, 0, 0)"
+                          >
+                            <g
+                              id="SVGRepo_bgCarrier"
+                              stroke-width="0"
+                              transform="translate(0,0), scale(1)"
+                            >
+                              <rect
+                                x="-9.6"
+                                y="-9.6"
+                                width="43.20"
+                                height="43.20"
+                                rx="21.6"
+                                fill="#e2e7e9"
+                                strokewidth="0"
+                              ></rect>
+                            </g>
+                            <g
+                              id="SVGRepo_tracerCarrier"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke="#CCCCCC"
+                              stroke-width="0.384"
+                            ></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: none;
+                                    stroke: #000000;
+                                    stroke-miterlimit: 10;
+                                    stroke-width: 1.9200000000000004;
+                                  }
+                                </style>
+                              </defs>
+                              <polyline
+                                class="cls-1"
+                                points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                              ></polyline>
+                              <path
+                                class="cls-1"
+                                d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </div>
+                      </label>
+                    </div>
+                    <p>Lateral Derecho</p>
+                  </div>
+                  <div class="file-box">
+                    <div
+                      style="
+                        padding: 4px;
+                        border: 1px solid lightslategray;
+                        border-radius: 2px;
+                      "
+                    >
+                      <img
+                        src="../assets/img/nopic.png"
+                        alt="lateralIzquierdoPreview"
+                        id="lateralIzquierdoPreview"
+                        class="previewImage"
+                        style="
+                          display: block;
+                          width: 95px;
+                          height: 95px;
+                          object-fit: cover;
+                        "
+                      />
+                      <label for="lateralIzquierdo">
+                        <input
+                          type="file"
+                          name="lateralIzquierdo"
+                          id="lateralIzquierdo"
+                          style="display: none"
+                          class="vehicleFiles"
+                        />
+                        <div class="imageEdit">
+                          <svg
+                            width="32px"
+                            height="32px"
+                            viewBox="-9.6 -9.6 43.20 43.20"
+                            id="Layer_1"
+                            data-name="Layer 1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="#ffffff"
+                            stroke="#ffffff"
+                            transform="matrix(1, 0, 0, 1, 0, 0)"
+                          >
+                            <g
+                              id="SVGRepo_bgCarrier"
+                              stroke-width="0"
+                              transform="translate(0,0), scale(1)"
+                            >
+                              <rect
+                                x="-9.6"
+                                y="-9.6"
+                                width="43.20"
+                                height="43.20"
+                                rx="21.6"
+                                fill="#e2e7e9"
+                                strokewidth="0"
+                              ></rect>
+                            </g>
+                            <g
+                              id="SVGRepo_tracerCarrier"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke="#CCCCCC"
+                              stroke-width="0.384"
+                            ></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: none;
+                                    stroke: #000000;
+                                    stroke-miterlimit: 10;
+                                    stroke-width: 1.9200000000000004;
+                                  }
+                                </style>
+                              </defs>
+                              <polyline
+                                class="cls-1"
+                                points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                              ></polyline>
+                              <path
+                                class="cls-1"
+                                d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </div>
+                      </label>
+                    </div>
+                    <p>Lateral Izquierdo</p>
+                  </div>
+                  <div class="file-box">
+                    <div
+                      style="
+                        padding: 4px;
+                        border: 1px solid lightslategray;
+                        border-radius: 2px;
+                      "
+                    >
+                      <img
+                        src="../assets/img/nopic.png"
+                        alt="traseroPreview"
+                        id="traseroPreview"
+                        class="previewImage"
+                        style="
+                          display: block;
+                          width: 95px;
+                          height: 95px;
+                          object-fit: cover;
+                        "
+                      />
+                      <label for="trasero">
+                        <input
+                          type="file"
+                          name="trasero"
+                          id="trasero"
+                          style="display: none"
+                          class="vehicleFiles"
+                        />
+                        <div class="imageEdit">
+                          <svg
+                            width="32px"
+                            height="32px"
+                            viewBox="-9.6 -9.6 43.20 43.20"
+                            id="Layer_1"
+                            data-name="Layer 1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="#ffffff"
+                            stroke="#ffffff"
+                            transform="matrix(1, 0, 0, 1, 0, 0)"
+                          >
+                            <g
+                              id="SVGRepo_bgCarrier"
+                              stroke-width="0"
+                              transform="translate(0,0), scale(1)"
+                            >
+                              <rect
+                                x="-9.6"
+                                y="-9.6"
+                                width="43.20"
+                                height="43.20"
+                                rx="21.6"
+                                fill="#e2e7e9"
+                                strokewidth="0"
+                              ></rect>
+                            </g>
+                            <g
+                              id="SVGRepo_tracerCarrier"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke="#CCCCCC"
+                              stroke-width="0.384"
+                            ></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <defs>
+                                <style>
+                                  .cls-1 {
+                                    fill: none;
+                                    stroke: #000000;
+                                    stroke-miterlimit: 10;
+                                    stroke-width: 1.9200000000000004;
+                                  }
+                                </style>
+                              </defs>
+                              <polyline
+                                class="cls-1"
+                                points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                              ></polyline>
+                              <path
+                                class="cls-1"
+                                d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </div>
+                      </label>
+                    </div>
+                    <p>Trasero</p>
+                  </div>
+                </div>
+                <div class="form-buttons-tools">
+                  <button type="button" id="form-button-cancel">
+                    <span>Cancelar</span>
+                  </button>
+                  <button type="submit" id="form-button-submit" data-type="">
+                    <span id="button-submit-text"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
 
-    <div class="modal-preview-image" data-visibility="hidden">
-      <div class="modal-bg"></div>
-      <div class="modal-container">
-        <img src="../assets/img/nopic.png" alt="previewImage" id="full-width-preview-Image">
+      <div class="modal-preview-image" data-visibility="hidden">
+        <div class="modal-bg"></div>
+        <div class="modal-container">
+          <img
+            src="../assets/img/nopic.png"
+            alt="previewImage"
+            id="full-width-preview-Image"
+          />
+        </div>
       </div>
+      <!-- Footer -->
+      <footer>&copy; 2024, Copyright IDG.</footer>
     </div>
-    <!-- Footer -->
-    <footer>
-      &copy; 2024, Copyright IDG.
-    </footer>
-  </div>
-</body>
+  </body>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
+  ></script>
+  <script type="module" src="../js/dom/defaults.js"></script>
+  <script type="module" src="../js/dashboard/vehicles.js" async></script>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript"
-  src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"></script>
-<script type="module" src="../js/dom/defaults.js"></script>
-<script type="module" src="../js/dashboard/vehicles.js" async></script>

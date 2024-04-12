@@ -1,213 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <link rel="icon" href="../assets/icons/favicon.ico" />
+    <title>TaDi IMOS - Taximetro Digital</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="../js/dom/local.js"></script>
+    <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
+    <link rel="stylesheet" href="../css/docs/rates.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css"
+    />
+  </head>
 
-<head>
-  <link rel="icon" href="../assets/icons/favicon.ico">
-  <title>TaDi IMOS - Taximetro Digital</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="../js/dom/local.js"></script>
-  <link rel="stylesheet" href="../css/docs/tadiDefaults.css">
-  <link rel="stylesheet" href="../css/docs/rates.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp">
-  <link rel="stylesheet" type="text/css"
-    href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css" />
-</head>
-
-<body>
-  <div id="root">
-    <!-- Aside -->
-    <aside>
-      <div id="aside-container">
-        <div class="logo">
-          <a class="home-link" hred="../docs/main.html">TADI | Taximetro Digital</a>
-        </div>
-        <hr />
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" hred="../docs/maps.html">
-              <span class="link-icons material-icons-sharp">map</span>
-              Mapa
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" hred="../docs/users.html">
-              <span class="link-icons material-icons-sharp">person</span>
-              Conductores
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" hred="../docs/users.html">
-              <span class="link-icons material-icons-sharp"> airline_seat_recline_extra</span>             
-              Clientes
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" hred="../docs/vehicles.html">
-              <span class="link-icons material-icons-sharp">directions_car</span>
-              Vehículos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" hred="../docs/users.html">
-              <span class="link-icons material-icons-sharp">chat</span>
-              Chats
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" hred="../docs/users.html">
-              <span class="link-icons material-icons-sharp">token</span>
-              Historico-Viajes
-            </a>
-          </li>
-          <li class="nav-item menu-button menu-closed">
-            <a class="nav-link" href="#">
-              <span class="link-icons material-icons-sharp">manage_accounts</span>
-              Administración
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="./messages.html">
-              <span class="link-icons material-icons-sharp">chat</span>
-              Mensajes
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="./users.html">
-              <span class="link-icons material-icons-sharp">person</span>
-              Administradores
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="./roles.html">
-              <span class="link-icons material-icons-sharp">groups</span>
-              Roles
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="./clients.html">
-              <span class="link-icons material-icons-sharp">person_pin</span>
-              Clientes
-            </a>
-          </li> 
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="./rates.html">
-              <span class="link-icons material-icons-sharp">paid</span>
-              Tarifas
-            </a>
-          </li>
-          <li class="nav-item menu-linked hidden">
-            <a class="nav-sublink" href="./base_rates.html">
-              <span class="link-icons material-icons-sharp">attach_money</span>
-              Tarifas Base
-            </a>
-          </li>
-        </ul>
-      </div>
-    </aside>
-    <!-- Header  -->
-    <header>
-      <nav>
-        <h1 class="app-title">Tu taxi- Portal de Administración</h1>
-        <button class="close-app">
-          <span class="material-icons-sharp">logout</span>
-          Cerrar Sesión
-        </button>
-      </nav>
-      <div class="header-bg-image"></div>
-    </header>
-
-    <main>
-      <div class="container">
-        <div class="tadi-card col-12">
-          <div class="card-header">
-            <h1>Tarifas de SLP</h1>
+  <body>
+    <div id="root">
+      <!-- Aside -->
+      <aside>
+        <div id="aside-container">
+          <div class="logo">
+            <a class="home-link" href="../docs/main.html"
+              >TADI | Taximetro Digital</a
+            >
           </div>
-          <div class="card-body">
-            <div class="list_container">
-              <label for="municipios-list">Municipio: </label>
-              <select name="municipios" id="municipios-list">
-                <option value="SLP">SLP</option>
-              </select>
+          <hr />
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/maps.html">
+                <span class="link-icons material-icons-sharp">map</span>
+                Mapa
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                Conductores
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/users.html">
+                <span class="link-icons material-icons-sharp">
+                  airline_seat_recline_extra</span
+                >
+                Clientes
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/vehicles.html">
+                <span class="link-icons material-icons-sharp"
+                  >directions_car</span
+                >
+                Vehículos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp">chat</span>
+                Chats
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp">token</span>
+                Historico-Viajes
+              </a>
+            </li>
+            <li class="nav-item menu-button menu-closed">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp"
+                  >manage_accounts</span
+                >
+                Administración
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./messages.html">
+                <span class="link-icons material-icons-sharp">chat</span>
+                Mensajes
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                Administradores
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./roles.html">
+                <span class="link-icons material-icons-sharp">groups</span>
+                Roles
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./clients.html">
+                <span class="link-icons material-icons-sharp">person_pin</span>
+                Clientes
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./rates.html">
+                <span class="link-icons material-icons-sharp">paid</span>
+                Tarifas
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./base_rates.html">
+                <span class="link-icons material-icons-sharp"
+                  >attach_money</span
+                >
+                Tarifas Base
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <!-- Header  -->
+      <header>
+        <nav>
+          <h1 class="app-title">Tu taxi- Portal de Administración</h1>
+          <button class="close-app">
+            <span class="material-icons-sharp">logout</span>
+            Cerrar Sesión
+          </button>
+        </nav>
+        <div class="header-bg-image"></div>
+      </header>
+
+      <main>
+        <div class="container">
+          <div class="tadi-card col-12">
+            <div class="card-header">
+              <h1>Tarifas de SLP</h1>
             </div>
-            <div class="table_container">
-              <table id="rates-list">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Ciudad</th>
-                    <th>Banderazo Diurno</th>
-                    <th>Banderazo Nocturno</th>
-                    <th>Kilómetro</th>
-                    <th>Minuto</th>
-                    <th>Banderazo Diurno App</th>
-                    <th>Banderazo Nocturno App</th>
-                    <th>Kilómetro App</th>
-                    <th>Minuto App</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Los datos de tarifas se insertarán aquí mediante JavaScript -->
-                </tbody>
-              </table>
+            <div class="card-body">
+              <div class="list_container">
+                <label for="municipios-list">Municipio: </label>
+                <select name="municipios" id="municipios-list">
+                  <option value="SLP">SLP</option>
+                </select>
+              </div>
+              <div class="table_container">
+                <table id="rates-list">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Ciudad</th>
+                      <th>Banderazo Diurno</th>
+                      <th>Banderazo Nocturno</th>
+                      <th>Kilómetro</th>
+                      <th>Minuto</th>
+                      <th>Banderazo Diurno App</th>
+                      <th>Banderazo Nocturno App</th>
+                      <th>Kilómetro App</th>
+                      <th>Minuto App</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Los datos de tarifas se insertarán aquí mediante JavaScript -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
 
-    <!-- Footer -->
-    <footer id="footer">
-      &copy; 2024, Copyright IDG.
-    </footer> 
-  </div>
-</body>
+      <!-- Footer -->
+      <footer id="footer">&copy; 2024, Copyright IDG.</footer>
+    </div>
+  </body>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
+  ></script>
+  <script type="module" src="../js/admin/tarifas.js" async></script>
+  <script type="module" src="../js/dom/defaults.js" async></script> 
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-<script type="text/javascript"
-  src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"></script>
-<script type="module" src="../js/admin/tarifas.js" async></script>
-<script type="module" src="../js/dom/defaults.js" async></script>
-<!-- Firebase y otros scripts aquí -->
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAE4SmPPbYlWa0UB3RJwMQ8ZBD3ooyGWBY",
-    authDomain: "tadi-bac4e.firebaseapp.com",
-    databaseURL: "https://tadi-bac4e-default-rtdb.firebaseio.com",
-    projectId: "tadi-bac4e",
-    storageBucket: "tadi-bac4e.appspot.com",
-    messagingSenderId: "22237047929",
-    appId: "1:22237047929:web:542330c6772d8f9d87b8a8",
-  };
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-
-  window.onload = function () {
-    const tarifasRef = database.ref('Info_Tarifas/SLP');
-    tarifasRef.once('value', (snapshot) => {
-      const tarifasData = snapshot.val();
-      const tableBody = document.getElementById('rates-list').getElementsByTagName('tbody')[0];
-      tableBody.innerHTML = `<tr>
-        <td>SLP</td>
-        <td>SLP</td>
-        <td>$ ${tarifasData.banderaDiurna}</td>
-        <td>$ ${tarifasData.banderaNocturna}</td>
-        <td>$ ${tarifasData.kilometro}</td>
-        <td>$ ${tarifasData.min}</td>
-        <td>$ ${tarifasData.banderaDiurnaApp}</td>
-        <td>$ ${tarifasData.banderaNocturnaApp}</td>
-        <td>$ ${tarifasData.kilometroApp}</td>
-        <td>$ ${tarifasData.minApp}</td>
-      </tr>`;
-    });
-  };
-</script>

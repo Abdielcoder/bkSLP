@@ -1,150 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="../../../../favicon.ico" />
+    <title>TaDi - Taximetro Digital</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="../js/dom/local.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/tadi/tadi_servicios2.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="../../../../favicon.ico">
-  <title>TaDi - Taximetro Digital</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="../js/dom/local.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./assets/css/tadi/tadi_servicios2.css">
-</head>
-
-<body onload="validaUsuario();">
-
-  <div class="container-fluid marco">
-    <div class="row">
-      <div class="col-sm-2">
-        <img id="imgLogoIMOS" src="./images/IMOS-logo-1.gif" alt="Logo" class="float-left">
-      </div>
-      <div class="col-sm-8 header">
-        <h4 class="text-center" style="color: white;"><small>Atencion de Solicitudes</small></h4>
-      </div>
-      <div class="col-sm-2 right padding10">
-        <img src="./images/person-male.png" alt="FotoUsuario" id="photoUser">
-        <strong><span id="usuario">Usuario</span></strong>
-      </div>
-    </div>
-  </div>
-
-  <br>
-
-  <div class="container-fluid center">
-    <div class="row center marco cuerpo" id="cuerpo">
-
-      <div class="col-sm-12">
-        <div class="row center" style="border-style: none none solid none; border-color: #6F272F;">
-          <h4 style="color: #6F272F;"><small>Autorizaci&oacute;n de Cambio de Tarifa</small></h4>
+  <body onload="validaUsuario();">
+    <div class="container-fluid marco">
+      <div class="row">
+        <div class="col-sm-2">
+          <img
+            id="imgLogoIMOS"
+            src="./images/IMOS-logo-1.gif"
+            alt="Logo"
+            class="float-left"
+          />
         </div>
-        <div class="row">
-          <div class="col-sm-6 center even-row-1"
-            style="border-style: none none ridge none; border-color: black; border-width: 1px">
-            <label>Fecha Solicitud&nbsp;:&nbsp;</label>
-            <label id="solicitudFecha"></label>
-          </div>
-          <div class="col-sm-6 center odd-row-2"
-            style="border-style: none none ridge none; border-color: black; border-width: 1px">
-            <label>Solicitado por&nbsp;:&nbsp;</label>
-            <label id="solicitudSolicitante"></label>
-          </div>
+        <div class="col-sm-8 header">
+          <h4 class="text-center" style="color: white">
+            <small>Atencion de Solicitudes</small>
+          </h4>
         </div>
-        <div class="row">
-          <div class="col-sm-6 center odd-row-1"
-            style="border-style: none none ridge none; border-color: black; border-width: 1px;">
-            <label>Estatus&nbsp;:&nbsp;</label>
-            <label id="solicitudEstatus" style="font-weight: bold;"></label>
-          </div>
-          <div class="col-sm-6 center even-row-2"
-            style="border-style: none none ridge none; border-color: black; border-width: 1px;">
-            <label>Autorizadores&nbsp;:&nbsp;</label>
-            <table id="table_autorizadores">
-              <tbody id="table_rows_autorizadores">
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12 center">
-            <h4 style="color: #6F272F;"><small>Cambios de Tarifa</small></h4><br>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12 center">
-            <table id="table-solicitud-cambios" style="border: ridge;">
-              <thead class="thead-light">
-                <tr>
-                  <th>Propiedad</th>
-                  <th>Val Original</th>
-                  <th>Val Nuevo</th>
-                </tr>
-              </thead>
-              <tbody id="table_rows_solicitud_cambios">
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="row">
-          <br>
-        </div>
-        <div class="row">
-          <div class="col-sm-12 center">
-            <button type="button" id="buttonAutorizar" class="btn btn-primary" onclick="autorizaSolCambioTarifa();"
-              disabled>Autorizar</button>
-            &nbsp;
-            <button type="button" id="buttonCancel" class="btn btn-danger" onclick="rechazaSolCambioTarifa();"
-              disabled>Rechazar</button>
-          </div>
-        </div>
-        <div class="row">
-          <br>
+        <div class="col-sm-2 right padding10">
+          <img
+            src="./images/person-male.png"
+            alt="FotoUsuario"
+            id="photoUser"
+          />
+          <strong><span id="usuario">Usuario</span></strong>
         </div>
       </div>
     </div>
-  </div>
-</body>
 
+    <br />
+
+    <div class="container-fluid center">
+      <div class="row center marco cuerpo" id="cuerpo">
+        <div class="col-sm-12">
+          <div
+            class="row center"
+            style="border-style: none none solid none; border-color: #6f272f"
+          >
+            <h4 style="color: #6f272f">
+              <small>Autorizaci&oacute;n de Cambio de Tarifa</small>
+            </h4>
+          </div>
+          <div class="row">
+            <div
+              class="col-sm-6 center even-row-1"
+              style="
+                border-style: none none ridge none;
+                border-color: black;
+                border-width: 1px;
+              "
+            >
+              <label>Fecha Solicitud&nbsp;:&nbsp;</label>
+              <label id="solicitudFecha"></label>
+            </div>
+            <div
+              class="col-sm-6 center odd-row-2"
+              style="
+                border-style: none none ridge none;
+                border-color: black;
+                border-width: 1px;
+              "
+            >
+              <label>Solicitado por&nbsp;:&nbsp;</label>
+              <label id="solicitudSolicitante"></label>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-sm-6 center odd-row-1"
+              style="
+                border-style: none none ridge none;
+                border-color: black;
+                border-width: 1px;
+              "
+            >
+              <label>Estatus&nbsp;:&nbsp;</label>
+              <label id="solicitudEstatus" style="font-weight: bold"></label>
+            </div>
+            <div
+              class="col-sm-6 center even-row-2"
+              style="
+                border-style: none none ridge none;
+                border-color: black;
+                border-width: 1px;
+              "
+            >
+              <label>Autorizadores&nbsp;:&nbsp;</label>
+              <table id="table_autorizadores">
+                <tbody id="table_rows_autorizadores"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 center">
+              <h4 style="color: #6f272f"><small>Cambios de Tarifa</small></h4>
+              <br />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 center">
+              <table id="table-solicitud-cambios" style="border: ridge">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Propiedad</th>
+                    <th>Val Original</th>
+                    <th>Val Nuevo</th>
+                  </tr>
+                </thead>
+                <tbody id="table_rows_solicitud_cambios"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <br />
+          </div>
+          <div class="row">
+            <div class="col-sm-12 center">
+              <button
+                type="button"
+                id="buttonAutorizar"
+                class="btn btn-primary"
+                onclick="autorizaSolCambioTarifa();"
+                disabled
+              >
+                Autorizar
+              </button>
+              &nbsp;
+              <button
+                type="button"
+                id="buttonCancel"
+                class="btn btn-danger"
+                onclick="rechazaSolCambioTarifa();"
+                disabled
+              >
+                Rechazar
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="module" src="../js/dom/defaults.js"></script>
+  <script type="text/javascript" src="js/firebase.js"></script>
+  <script type="text/javascript" src="js/tadi.js"></script>
+  <script type="text/javascript" src="js/tadi-servicios2.js"></script>
+  <script>
+    onloadPage = () => {
+      const uid = getUrlIdentity();
+      var currDate = new Date();
+
+      if (
+        localStorage.sessionTime === undefined ||
+        currDate - new Date(localStorage.sessionTime) > 900000 ||
+        uid === undefined
+      ) {
+        localStorage.clear();
+        firebase.auth().signOut();
+        top.location.replace("index.html");
+      } else {
+        localStorage.sessionTime = currDate;
+        document.querySelectorAll(".link-home").forEach((e) => {
+          e.setAttribute("href", "tadi_inicio.html?user=" + uid);
+        });
+      }
+    };
+
+    getUrlIdentity = () => {
+      const windowurl = window.location.href;
+      const id = windowurl.split("?")[1];
+      if (id === undefined) return undefined;
+      return id.split("=")[1];
+    };
+
+    onloadPage();
+  </script>
 </html>
-
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="module" src="../js/dom/defaults.js"></script>
-<script type="text/javascript" src="js/firebase.js"></script>
-<script type="text/javascript" src="js/tadi.js"></script>
-<script type="text/javascript" src="js/tadi-servicios2.js"></script>
-<script>
-
-  onloadPage = () => {
-
-    const uid = getUrlIdentity();
-    var currDate = new Date();
-
-    if (localStorage.sessionTime === undefined || (currDate - new Date(localStorage.sessionTime)) > 900000 || uid === undefined) {
-      localStorage.clear();
-      firebase.auth().signOut();
-      top.location.replace("index.html");
-    } else {
-      localStorage.sessionTime = currDate;
-      document.querySelectorAll(".link-home").forEach(e => {
-        e.setAttribute("href", "tadi_inicio.html?user=" + uid);
-      });
-    }
-  }
-
-  getUrlIdentity = () => {
-    const windowurl = window.location.href;
-    const id = windowurl.split("?")[1];
-    if (id === undefined) return undefined;
-    return id.split("=")[1];
-  }
-
-  onloadPage(); 
-</script>

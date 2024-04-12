@@ -36,6 +36,7 @@ export const snap_geographic_area = realtime.child("Geografico/Area");
 export const snap_geographic_country = realtime.child("Geografico/Pais");
 export const snap_geographic_state = realtime.child("Geografico/Estado");
 export const snap_flag_rates = realtime.child("Info_Tarifas/Banderas");
+export const tarifasRef = realtime.child("Info_Tarifas/SLP");
 
 const formatProp = (ex) => {
   if (ex === undefined || ex === "") return "-";

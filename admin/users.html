@@ -1,203 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <link rel="icon" href="../assets/icons/favicon.ico" />
+    <title>TADI IMOS - Taximetro Digital</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../js/dom/local.js"></script>
+    <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
+    <link rel="stylesheet" href="../css/docs/users_admins.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css"
+    />
+  </head>
 
-<head>
-  <link rel="icon" href="../assets/icons/favicon.ico">
-  <title>TADI IMOS - Taximetro Digital</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="../js/dom/local.js"></script>
-  <link rel="stylesheet" href="../css/docs/tadiDefaults.css">
-  <link rel="stylesheet" href="../css/docs/users_admins.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp">
-  <link rel="stylesheet" type="text/css"
-    href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css" />
-</head>
-
-<body>
-  <div id="root">
-   <!-- Aside -->
-   <aside>
-    <div id="aside-container">
-      <div class="logo">
-        <a class="home-link" hred="../docs/main.html">TADI | Taximetro Digital</a>
-      </div>
-      <hr />
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link" hred="../docs/maps.html">
-            <span class="link-icons material-icons-sharp">map</span>
-            Mapa
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" hred="../docs/users.html">
-            <span class="link-icons material-icons-sharp">person</span>
-            Conductores
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" hred="../docs/users.html">
-            <span class="link-icons material-icons-sharp"> airline_seat_recline_extra</span>             
-            Clientes
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" hred="../docs/vehicles.html">
-            <span class="link-icons material-icons-sharp">directions_car</span>
-            Vehículos
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" hred="../docs/users.html">
-            <span class="link-icons material-icons-sharp">chat</span>
-            Chats
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" hred="../docs/users.html">
-            <span class="link-icons material-icons-sharp">token</span>
-            Historico-Viajes
-          </a>
-        </li>
-        <li class="nav-item menu-button menu-closed">
-          <a class="nav-link" href="#">
-            <span class="link-icons material-icons-sharp">manage_accounts</span>
-            Administración
-          </a>
-        </li>
-        <li class="nav-item menu-linked hidden">
-          <a class="nav-sublink" href="./messages.html">
-            <span class="link-icons material-icons-sharp">chat</span>
-            Mensajes
-          </a>
-        </li>
-        <li class="nav-item menu-linked hidden">
-          <a class="nav-sublink" href="./users.html">
-            <span class="link-icons material-icons-sharp">person</span>
-            Administradores
-          </a>
-        </li>
-        <li class="nav-item menu-linked hidden">
-          <a class="nav-sublink" href="./roles.html">
-            <span class="link-icons material-icons-sharp">groups</span>
-            Roles
-          </a>
-        </li>
-        <li class="nav-item menu-linked hidden">
-          <a class="nav-sublink" href="./clients.html">
-            <span class="link-icons material-icons-sharp">person_pin</span>
-            Clientes
-          </a>
-        </li> 
-        <li class="nav-item menu-linked hidden">
-          <a class="nav-sublink" href="./rates.html">
-            <span class="link-icons material-icons-sharp">paid</span>
-            Tarifas
-          </a>
-        </li>
-        <li class="nav-item menu-linked hidden">
-          <a class="nav-sublink" href="./base_rates.html">
-            <span class="link-icons material-icons-sharp">attach_money</span>
-            Tarifas Base
-          </a>
-        </li>
-      </ul>
-    </div>
-  </aside>
-    <!-- Header  -->
-    <header>
-      <nav>
-        <h1 class="app-title">Tu taxi - Portal de Administración</h1>
-        <button class="close-app">
-          <span class="material-icons-sharp">logout</span>
-          Cerrar Sesión
-        </button>
-      </nav>
-      <div class="header-bg-image"></div>
-    </header>
-
-    <!-- Main -->
-    <main>
-      <div class="container">
-        <div class="tadi-card col-12">
-          <div class="card-header">
-            <h1>Administradores</h1>
-            <p>Listado de usuarios administradores de la plataforma TaDi - Backoffice.</p>
+  <body>
+    <div id="root">
+      <!-- Aside -->
+      <aside>
+        <div id="aside-container">
+          <div class="logo">
+            <a class="home-link" href="../docs/main.html"
+              >TADI | Taximetro Digital</a
+            >
           </div>
-          <div class="card-body">
-            <div class="datatable_operation_buttons">
-              <button id="add_button" class="cup-button">Agregar</button>
-              <button id="update_button" class="cup-button up-button" disabled="disabled">Actualizar</button>
-              <button id="del_button" class="cup-button up-button" disabled="disabled">Eliminar</button>
+          <hr />
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/maps.html">
+                <span class="link-icons material-icons-sharp">map</span>
+                Mapa
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                Conductores
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/users.html">
+                <span class="link-icons material-icons-sharp">
+                  airline_seat_recline_extra</span
+                >
+                Clientes
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/vehicles.html">
+                <span class="link-icons material-icons-sharp"
+                  >directions_car</span
+                >
+                Vehículos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp">chat</span>
+                Chats
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp">token</span>
+                Historico-Viajes
+              </a>
+            </li>
+            <li class="nav-item menu-button menu-closed">
+              <a class="nav-link" href="#">
+                <span class="link-icons material-icons-sharp"
+                  >manage_accounts</span
+                >
+                Administración
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./messages.html">
+                <span class="link-icons material-icons-sharp">chat</span>
+                Mensajes
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                Administradores
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./roles.html">
+                <span class="link-icons material-icons-sharp">groups</span>
+                Roles
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./clients.html">
+                <span class="link-icons material-icons-sharp">person_pin</span>
+                Clientes
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./rates.html">
+                <span class="link-icons material-icons-sharp">paid</span>
+                Tarifas
+              </a>
+            </li>
+            <li class="nav-item menu-linked hidden">
+              <a class="nav-sublink" href="./base_rates.html">
+                <span class="link-icons material-icons-sharp"
+                  >attach_money</span
+                >
+                Tarifas Base
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <!-- Header  -->
+      <header>
+        <nav>
+          <h1 class="app-title">Tu taxi - Portal de Administración</h1>
+          <button class="close-app">
+            <span class="material-icons-sharp">logout</span>
+            Cerrar Sesión
+          </button>
+        </nav>
+        <div class="header-bg-image"></div>
+      </header>
+
+      <!-- Main -->
+      <main>
+        <div class="container">
+          <div class="tadi-card col-12">
+            <div class="card-header">
+              <h1>Administradores</h1>
+              <p>
+                Listado de usuarios administradores de la plataforma TaDi -
+                Backoffice.
+              </p>
             </div>
-            <div class="table_container">
-              <table id="admin_users-list">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Nombre</th>
-                    <th>Correo Electrónico</th>
-                    <th>Rol</th>
-                    <th>Fecha de alta</th>
-                    <th>Estatus</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+            <div class="card-body">
+              <div class="datatable_operation_buttons">
+                <button id="add_button" class="cup-button">Agregar</button>
+                <button
+                  id="update_button"
+                  class="cup-button up-button"
+                  disabled="disabled"
+                >
+                  Actualizar
+                </button>
+                <button
+                  id="del_button"
+                  class="cup-button up-button"
+                  disabled="disabled"
+                >
+                  Eliminar
+                </button>
+              </div>
+              <div class="table_container">
+                <table id="admin_users-list">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Nombre</th>
+                      <th>Correo Electrónico</th>
+                      <th>Rol</th>
+                      <th>Fecha de alta</th>
+                      <th>Estatus</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
 
-    <!-- Footer -->
-    <footer id="footer">
-      &copy; 2024, Copyright IDG.
-    </footer> 
-  </div>
-
-  <div class="modal" style="display: none;">
-    <div class="modal_container">
-      <div class="close_modal">
-        <span>+</span>
-      </div>
-      <h1 class="form_header"></h1>
-      <form action="">
-        <label for="input_name">Nombre</label>
-        <input class="form_input" type="text" id="input_name" placeholder="Nombre" />
-        <label for="input_email">Corréo electrónico</label>
-        <input class="form_input" type="email" id="input_email" placeholder="Corréo electrónico" />
-        <label for="input_rol">Rol desempeñado</label>
-        <input class="form_input" type="text" id="input_rol" list="list_roles" placeholder="Seleccione un Rol..." />
-        <datalist id="list_roles">
-          <option value="Super"></option>
-          <option value="Operador"></option>
-          <option value="Admin"></option>
-        </datalist>
-        <label for="input_label">Fecha de ingreso</label>
-        <input class="form_input" type="date" id="input_date" />
-        <div class="radio_form">
-          <input class="form_input" type="checkbox" name="input_status" id="active_status">
-          <label id="span_active_status" for="active_status">Inactivo</label>
-        </div>
-        <button id="generate_new_user">Guardar</button>
-      </form>
+      <!-- Footer -->
+      <footer id="footer">&copy; 2024, Copyright IDG.</footer>
     </div>
-  </div>
+
+    <div class="modal" style="display: none">
+      <div class="modal_container">
+        <div class="close_modal">
+          <span>+</span>
+        </div>
+        <h1 class="form_header"></h1>
+        <form action="">
+          <label for="input_name">Nombre</label>
+          <input
+            class="form_input"
+            type="text"
+            id="input_name"
+            placeholder="Nombre"
+          />
+          <label for="input_email">Corréo electrónico</label>
+          <input
+            class="form_input"
+            type="email"
+            id="input_email"
+            placeholder="Corréo electrónico"
+          />
+          <label for="input_rol">Rol desempeñado</label>
+          <input
+            class="form_input"
+            type="text"
+            id="input_rol"
+            list="list_roles"
+            placeholder="Seleccione un Rol..."
+          />
+          <datalist id="list_roles">
+            <option value="Super"></option>
+            <option value="Operador"></option>
+            <option value="Admin"></option>
+          </datalist>
+          <label for="input_label">Fecha de ingreso</label>
+          <input class="form_input" type="date" id="input_date" />
+          <div class="radio_form">
+            <input
+              class="form_input"
+              type="checkbox"
+              name="input_status"
+              id="active_status"
+            />
+            <label id="span_active_status" for="active_status">Inactivo</label>
+          </div>
+          <button id="generate_new_user">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-  <script type="text/javascript"
-    src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
+  ></script>
   <script type="module" src="../js/admin/users_admins.js" async></script>
   <script type="module" src="../js/dom/defaults.js" async></script>
   <script type="module" src="../js/dom/admin.js"></script>
-</body>
-
 </html>
