@@ -111,6 +111,7 @@ div.dialog-container {
   flex-flow: row nowrap;
   gap: 1rem;
   justify-content: space-between;
+  align-items: center;
 }
 
 .formGroup {
@@ -278,4 +279,12 @@ button.cellButtonTool:hover {
   cursor: pointer;
   outline: 1px solid #a4a2a2;
   border-radius: 2px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 3rem;
 }

@@ -25,97 +25,116 @@
       <aside>
         <div id="aside-container">
           <div class="logo">
-            <a class="home-link" href="../docs/main.html"
-              >TADI | Taximetro Digital</a
-            >
+            <a class="home-link" href="../docs/main.html">TADI | Taximetro Digital</a>
           </div>
           <hr />
           <ul class="nav">
             <li class="nav-item">
               <a class="nav-link" href="../docs/maps.html">
                 <span class="link-icons material-icons-sharp">map</span>
-                Mapa
+                MAPA
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../docs/users.html">
+            <li class="nav-item"  id="consesionario-menu-li">
+              <a class="nav-link hasSubmenu" href="#" id="consesionario">
                 <span class="link-icons material-icons-sharp">person</span>
-                Conductores
+                CONSESIONARIO
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../docs/users.html">
-                <span class="link-icons material-icons-sharp">
-                  airline_seat_recline_extra</span
-                >
-
-                Clientes
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../docs/vehicles.html">
-                <span class="link-icons material-icons-sharp"
-                  >directions_car</span
-                >
-                Vehículos
-              </a>
+              <div id="consesionario-submenu" data-displayed="hidden">
+                <ul class="nav-link-submenu">
+                  <li class="nav-item-submenu">
+                    <a class="nav-link" href="../docs/vehicles.html">
+                      <span class="link-icons material-icons-sharp"
+                        >directions_car</span
+                      >
+                      VEHICULO
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../docs/users.html">
+                      <span class="link-icons material-icons-sharp"
+                        >person</span
+                      >
+                      CONDUCTORES
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">chat</span>
-                Chats
+                CHATS
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">token</span>
-                Historico-Viajes
+                HISTORICO DE VIAJES
               </a>
             </li>
-            <li class="nav-item menu-button menu-closed">
-              <a class="nav-link" href="#">
+            <li class="nav-item menu-button menu-closed" id="admin-menu-li">
+              <a class="nav-link" href="#" id="administracion">
                 <span class="link-icons material-icons-sharp"
                   >manage_accounts</span
                 >
-                Administración
+                ADMINISTRACIÓN
               </a>
-            </li>
-            <li class="nav-item menu-linked hidden">
-              <a class="nav-sublink" href="./messages.html">
-                <span class="link-icons material-icons-sharp">chat</span>
-                Mensajes
-              </a>
-            </li>
-            <li class="nav-item menu-linked hidden">
-              <a class="nav-sublink" href="./users.html">
-                <span class="link-icons material-icons-sharp">person</span>
-                Administradores
-              </a>
-            </li>
-            <li class="nav-item menu-linked hidden">
-              <a class="nav-sublink" href="#">
-                <span class="link-icons material-icons-sharp">groups</span>
-                Roles
-              </a>
-            </li>
-            <li class="nav-item menu-linked hidden">
-              <a class="nav-sublink" href="./clients.html">
-                <span class="link-icons material-icons-sharp">person_pin</span>
-                Clientes
-              </a>
-            </li>
-            <li class="nav-item menu-linked hidden">
-              <a class="nav-sublink" href="./rates.html">
-                <span class="link-icons material-icons-sharp">paid</span>
-                Tarifas
-              </a>
-            </li>
-            <li class="nav-item menu-linked hidden">
-              <a class="nav-sublink" href="./base_rates.html">
-                <span class="link-icons material-icons-sharp"
-                  >attach_money</span
+              <div id="administracion-submenu" data-displayed="hidden">
+                <ul>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./messages.html">
+                      <span class="link-icons material-icons-sharp">chat</span>
+                      MENSAJES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./users.html">
+                      <span class="link-icons material-icons-sharp"
+                        >person</span
+                      >
+                      ADMINISTRADORES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink selectedPage" href="./roles.html">
+                      <span class="link-icons material-icons-sharp"
+                        >groups</span
+                      >
+                      ROLES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./clients.html">
+                      <span class="link-icons material-icons-sharp"
+                        >person_pin</span
+                      >
+                      CLIENTES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./rates.html">
+                      <span class="link-icons material-icons-sharp">paid</span>
+                      TARIFAS
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./base_rates.html">
+                      <span class="link-icons material-icons-sharp"
+                        >attach_money</span
+                      >
+                      TARIFAS BASE
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="../docs/users.html">
+                <span class="link-icons material-icons-sharp">
+                  airline_seat_recline_extra</span
                 >
-                Tarifas Base
+                CLIENTES
               </a>
             </li>
           </ul>
@@ -372,6 +391,7 @@
       <footer>&copy; 2024, Copyright IDG.</footer>
     </div>
   </body>
+  <script src="../js/global-context.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>

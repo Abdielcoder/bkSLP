@@ -680,6 +680,8 @@ export const actualizaOperador = async (res, uid) => {
     Object.assign(data, item);
   });
   data = Object.assign(data, { fechaActualizacion: new Date().toISOString() });
+
+  console.log({ UpdatedData: data });
   const response = await firestore
     .collection("conductores")
     .doc(uid)
@@ -753,6 +755,12 @@ export const getVehicles = async (userUID) => {
       .then((snapshot) => {
         return snapshot.exists && snapshot.data();
       });
+    if (
+      userInformation?.vehicles === undefined ||
+      userInformation?.vehicles.length === 0
+    ) {
+      return null;
+    }
 
     const vehiclesUIDFromUser = [
       ...userInformation.vehicles.map((v) => v.vehicleUID),
