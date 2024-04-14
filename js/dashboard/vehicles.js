@@ -1,13 +1,15 @@
 import { firestore, storage } from "../config/config.js";
 
-var modalDialog = document.querySelector("div.modal-dialog[aria-modal='true'");
-var modalTitle = document.getElementById("modal-dialog-title");
-var submitText = document.getElementById("button-submit-text");
-var vehicleForm = document.getElementById("form-vehiculo");
-var vehiclesTable = null;
-var formEntries = Object.values(vehicleForm).filter(
+let modalDialog = document.querySelector("div.modal-dialog[aria-modal='true'");
+let modalTitle = document.getElementById("modal-dialog-title");
+let submitText = document.getElementById("button-submit-text");
+let vehicleForm = document.getElementById("form-vehiculo");
+let vehiclesTable = null;
+let formEntries = Object.values(vehicleForm).filter(
   (item) => item.type !== "button" && item.type !== "submit"
 );
+
+const VEHICULOS_REFERENCE = firestore.collection("vehiculos");
 
 const createActionButtons = (uid) => {
   const tableCell = document.createElement("td");
@@ -59,8 +61,7 @@ const insertDataToTableBody = (element, index) => {
     element.tipoVehiculo || "-",
     element.numeroEconomico || "-",
     element.color || "-",
-  ];
-  console.log({ CELL_LIST, index });
+  ]; 
   CELL_LIST.forEach((item) => {
     const rowCell = document.createElement("TD");
     rowCell.textContent = typeof item === "string" ? item.toLowerCase() : item;
@@ -78,15 +79,14 @@ const insertDataToTableBody = (element, index) => {
 
 const getAllVehicles = async () => {
   try {
-    const querySnapshot = await firestore.collection("vehiculos").get();
+    const querySnapshot = await VEHICULOS_REFERENCE.get();
 
     if (!querySnapshot.empty) {
       const informationData = querySnapshot.docs.map((doc) => {
         return { ...doc.data(), uid: doc.id };
       });
       return informationData;
-    } else {
-      console.log("No se encontraron vehículos.");
+    } else { 
       return [];
     }
   } catch (error) {
@@ -98,7 +98,7 @@ const getAllVehicles = async () => {
 
 const getVehicleByID = async (uid) => {
   try {
-    const response = await firestore.collection("vehiculos").doc(uid).get();
+    const response = await VEHICULOS_REFERENCE.doc(uid).get();
 
     const storageReference = storage.ref().child("vehiculos/" + uid);
     const result = await storageReference.listAll();
@@ -190,20 +190,12 @@ const updateVehicleByID = async () => {
     const objectValues = { uid, fechaActualizacion: new Date().toISOString() };
     Object.assign(formObject, objectValues);
 
-    const response = await firestore
-      .collection("vehiculos")
-      .doc(uid)
+    const response = await VEHICULOS_REFERENCE.doc(uid)
       .update(formObject)
       .catch((error) => false);
 
     const uploadSuccess = await uploadImages(uid);
-
-    if (uploadSuccess) {
-      console.log("La carga de imágenes ha sido satisfactoria.");
-    } else {
-      console.log("Se ha presentado un error al cargar las imágenes.");
-    }
-
+ 
     if (response !== false) {
       alert("Se ha actualizado el usuario de manera corrrecta.");
       await handleRefetch();
@@ -222,9 +214,7 @@ const updateVehicleByID = async () => {
 
 const deleteVehicleByID = async (uid) => {
   try {
-    const response = await firestore
-      .collection("vehiculos")
-      .doc(uid)
+    const response = await VEHICULOS_REFERENCE.doc(uid)
       .delete()
       .then((response) => true)
       .catch((error) => false);
@@ -257,20 +247,12 @@ const createNewVehicle = async () => {
 
     formObject.fechaAlta = todayDate;
     formObject.fechaActualizacion = todayDate;
-    formObject.placa = formObject.placa.toUpperCase(); 
-    const vehicleRef = await firestore.collection("vehiculos").add(formObject);
+    formObject.placa = formObject.placa.toUpperCase();
+    const vehicleRef = await VEHICULOS_REFERENCE.add(formObject);
 
-    if (vehicleRef) {
-      console.log("Vehículo creado:", vehicleRef.id);
-
+    if (vehicleRef) { 
       const uploadSuccess = await uploadImages(vehicleRef.id);
-
-      if (uploadSuccess) {
-        console.log("La carga de imágenes ha sido satisfactoria.");
-      } else {
-        console.log("Se ha presentado un error al cargar las imágenes.");
-      }
-
+ 
       alert("Se ha creado el vehículo correctamente.");
       await handleRefetch();
       hideDialog();
@@ -383,8 +365,7 @@ async function fetchingData() {
 }
 
 const uploadImages = async (uid) => {
-  try {
-    console.log("UPLOAD IMAGES");
+  try { 
     const inputFiles = document.querySelectorAll("input.vehicleFiles");
     const imageList = [];
 

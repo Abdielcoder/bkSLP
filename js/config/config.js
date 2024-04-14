@@ -559,10 +559,10 @@ export const adminArr = async () => {
 };
 
 /* Firestore Functions */
-export const guardaOperador = async (req) => {
+export const createUserAndSaveData = async (elements, collection) => {
   try {
     let firestoreData = {};
-    req?.forEach((i) => {
+    elements?.forEach((i) => {
       firestoreData = Object.assign(firestoreData, i);
     });
 
@@ -590,15 +590,15 @@ export const guardaOperador = async (req) => {
       });
     if (status === 200) {
       firestoreData = Object.assign(firestoreData, { uid: user.uid });
-      window.alert("Se ha guardado el operador con exito.");
-      await resetPassword(firestoreData.correoElectronico);
+      window.alert("Se ha guardado el registro con exito.");
+      await resetPasswordToUser(firestoreData.correoElectronico);
 
       const response = await firestore
-        .collection("conductores")
+        .collection(collection)
         .doc(user.uid)
         .set(firestoreData);
 
-      const uploadSuccess = await uploadImages(user.uid);
+      const uploadSuccess = await uploadFilesToStorage(user.uid, collection);
 
       return true;
     }
@@ -629,40 +629,40 @@ export const guardaOperador = async (req) => {
     }
   } catch (error) {
     console.error(
-      "Se ha presentado un error al crear el usuario conductor. ",
+      "Se ha presentado un error al crear el registro. ",
       error
     );
     return false;
   }
 };
 
-export const getOperatorsList = async () => {
+export const getDocumentsFromCollection = async (collection) => {
   return await firestore
-    .collection("conductores")
+    .collection(collection)
     .get()
     .catch((error) => false);
 };
 
-export const eliminaOperador = async (uid, email) => {
+export const deleteDocumentByUid = async (uid, collection) => {
   const result = await firestore
-    .collection("conductores")
+    .collection(collection)
     .doc(uid)
     .delete()
     .then((response) => response)
     .catch((error) => false);
 
   if (result !== false) {
-    window.alert("Se ha eliminado el operador con exito.");
+    window.alert("Se ha eliminado el registro con exito.");
     return true;
   }
   window.alert("Se ha presentado un error!");
   return false;
 };
 
-export const verOperador = async (res) => {
+export const getDocumentByUid = async (uid, collection) => {
   const result = await firestore
-    .collection("conductores")
-    .doc(res)
+    .collection(collection)
+    .doc(uid)
     .get()
     .then((response) => {
       if (response.exists) {
@@ -674,16 +674,16 @@ export const verOperador = async (res) => {
   return result;
 };
 
-export const actualizaOperador = async (res, uid) => {
+export const updateDocumentByUid = async (elements, uid, collection) => {
   let data = {};
-  res?.forEach((item) => {
+  elements?.forEach((item) => {
     Object.assign(data, item);
   });
   data = Object.assign(data, { fechaActualizacion: new Date().toISOString() });
 
   console.log({ UpdatedData: data });
   const response = await firestore
-    .collection("conductores")
+    .collection(collection)
     .doc(uid)
     .update(data)
     .catch((error) => false);
@@ -695,14 +695,14 @@ export const actualizaOperador = async (res, uid) => {
   return false;
 };
 
-export const resetPassword = async (email) => {
+export const resetPasswordToUser = async (email) => {
   const response = await firebase
     .auth()
     .sendPasswordResetEmail(email)
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      // console.log({ errorCode, errorMessage })
+      console.log({ errorCode, errorMessage })
       return false;
     });
 
@@ -716,9 +716,9 @@ export const resetPassword = async (email) => {
   return false;
 };
 
-export const getMessagesList = async () => {
+export const getDocumentsFromMessageCollection = async () => {
   const list = await firestore
-    .collection("Mensajes")
+    .collection("mensajes")
     .get()
     .catch((error) => false);
   if (list) {
@@ -733,7 +733,7 @@ export const getMessagesList = async () => {
   }
 };
 
-export const addNewMessage = async (e) => {
+export const addDocumentToMessageCollection = async (e) => {
   let firestoreData = {};
 
   firestoreData = Object.assign(e, { fechaAlta: new Date().toISOString() });
@@ -746,11 +746,11 @@ export const addNewMessage = async (e) => {
     .catch((error) => false);
 };
 
-export const getVehicles = async (userUID) => {
+export const getDocumentsFromVehicleCollection = async (cUid, collection, vehiculos) => {
   try {
     const userInformation = await firestore
-      .collection("conductores")
-      .doc(userUID)
+      .collection(collection)
+      .doc(cUid)
       .get()
       .then((snapshot) => {
         return snapshot.exists && snapshot.data();
@@ -768,28 +768,25 @@ export const getVehicles = async (userUID) => {
     const querySnapshot = await Promise.all(
       vehiclesUIDFromUser.map(async (vehicle) => {
         return await firestore
-          .collection("vehiculos")
+          .collection(vehiculos)
           .doc(vehicle)
           .get()
           .then((snapshot) => {
             return snapshot.exists && { ...snapshot.data(), uid: snapshot.id };
           });
       })
-    );
-    console.log(querySnapshot);
+    ); 
     if (querySnapshot.length > 0) {
       const requiredInformationFromVehicle = querySnapshot.map((req) => {
-        const { placa, modelo, marca, uid } = req;
-        const vehicles = userInformation.vehicles;
-        console.log({ uid });
-        const habilitado = vehicles.filter((i) => i.vehicleUID === uid);
-        console.log({ vehicles, habilitado });
+        const { placa, modelo, marca, uid: vUid } = req;
+        const vehicles = userInformation.vehicles; 
+        const habilitado = vehicles.filter((i) => i.vehicleUID === vUid); 
         return {
           placa,
           modelo,
           marca,
           habilitado: habilitado[0].habilitado,
-          uid,
+          vUid,
         };
       });
       return requiredInformationFromVehicle;
@@ -798,13 +795,12 @@ export const getVehicles = async (userUID) => {
       return [];
     }
   } catch (error) {
-    console.error("Error al obtener vehículos:", error);
-    // alert("Se ha presentado un error al obtener vehículo.");
+    console.error("Error al obtener vehículos:", error); 
     return false;
   }
 };
 
-export const uploadImages = async (uid) => {
+export const uploadFilesToStorage = async (uid, collection) => {
   try {
     const inputFiles = document.getElementById("operadorPic");
     const archivo = inputFiles.files[0];
@@ -813,7 +809,7 @@ export const uploadImages = async (uid) => {
       return;
     }
 
-    const reference = storage.ref().child(`conductores/${uid}/` + archivo.name);
+    const reference = storage.ref().child(`${collection}/${uid}/` + archivo.name);
     await reference.put(archivo);
 
     const url = await reference.getDownloadURL();

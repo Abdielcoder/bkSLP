@@ -246,13 +246,13 @@ main div.container {
 footer {
   grid-area: footer;
   background: transparent;
-  font-size: 12px;
   text-align: end;
-  margin-right: 1rem;
-  line-height: 38px;
+  padding-right: 1rem;
   border-top: 1px solid rgba(0, 0, 0, .125);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
-
 
 /******************************************************************************************/
 .lower {
@@ -560,4 +560,8 @@ li#admin-menu-li:hover::after,
 li#consesionario-menu-li:hover::after {
   transform: rotate(270deg);
   transition: transform 150ms linear;
+}
+
+#copyrightFooter {
+  font-size: 12px;
 }

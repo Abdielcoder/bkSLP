@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="../assets/icons/favicon.ico" />
-    <title>Tu Taxi | Conductores</title>
+    <title>Tu Taxi - Consesionarios</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="../js/dom/local.js"></script>
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
-    <link rel="stylesheet" href="../css/docs/users_drivers.css" />
+    <link rel="stylesheet" href="../css/docs/consesionarios.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
       rel="stylesheet"
@@ -36,11 +36,7 @@
               </a>
             </li>
             <li class="nav-item" id="consesionario-menu-li">
-              <a
-                class="nav-link hasSubmenu"
-                href="./consesionarios.html"
-                id="consesionario"
-              >
+              <a class="nav-link hasSubmenu selectedPage" href="#" id="consesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONSESIONARIO
               </a>
@@ -55,7 +51,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link selectedPage" href="./users.html">
+                    <a class="nav-link" href="./users.html">
                       <span class="link-icons material-icons-sharp"
                         >person</span
                       >
@@ -162,11 +158,10 @@
         <div class="container">
           <div class="tadi-card col-12">
             <div class="card-header">
-              <h1>Registro conductores</h1>
+              <h1>Registro consesionarios</h1>
               <br />
               <p>
-                Listado de conductores y recopilación de la información de sus
-                viajes dentro del empadronamiento actual.
+                Listado de consesionarios y recopilación de la información general dentro del empadronamiento actual.
               </p>
             </div>
             <div class="card-body">
@@ -202,7 +197,7 @@
                 </svg>
               </button>
               <div class="table-container">
-                <table id="operatorsTable">
+                <table id="consesionariosTable">
                   <thead>
                     <tr>
                       <th>Nombre completo</th>
@@ -228,7 +223,7 @@
           <div class="modalContent">
             <div class="containerHead">
               <h2 style="font-size: 20px; text-align: start">
-                Información general del conductor
+                Información general del consesionario
               </h2>
             </div>
             <div class="contentTabs">
@@ -526,7 +521,7 @@
                     <div class="group-right">
                       <div class="formParraf">
                         <p style="font-size: 14px">
-                          Capacitaciones tomadas por el operador:
+                          Capacitaciones tomadas por el consesionario:
                         </p>
                       </div>
                       <div class="checkboxGroup">
@@ -717,8 +712,8 @@
                     >
                       <img
                         src="../assets/img/nopic.png"
-                        alt="licenciaConductor"
-                        id="licenciaConductorPreview"
+                        alt="licenciaConsesionario"
+                        id="licenciaConsesionarioPreview"
                         class="imagePreview"
                         style="
                           display: block;
@@ -727,11 +722,11 @@
                           object-fit: cover;
                         "
                       />
-                      <label for="licenciaConductor">
+                      <label for="licenciaConsesionario">
                         <input
                           type="file"
-                          name="licenciaConductor"
-                          id="licenciaConductor"
+                          name="licenciaConsesionario"
+                          id="licenciaConsesionario"
                           style="display: none"
                           class="documentationFiles"
                         />
@@ -1162,8 +1157,8 @@
                     >
                       <img
                         src="../assets/img/nopic.png"
-                        alt="fotografiaConductor"
-                        id="fotografiaConductorPreview"
+                        alt="fotografiaConsesionario"
+                        id="fotografiaConsesionarioPreview"
                         class="imagePreview"
                         style="
                           display: block;
@@ -1172,11 +1167,11 @@
                           object-fit: cover;
                         "
                       />
-                      <label for="fotografiaConductor">
+                      <label for="fotografiaConsesionario">
                         <input
                           type="file"
-                          name="fotografiaConductor"
-                          id="fotografiaConductor"
+                          name="fotografiaConsesionario"
+                          id="fotografiaConsesionario"
                           style="display: none"
                           class="documentationFiles"
                         />
@@ -1238,7 +1233,7 @@
                         </div>
                       </label>
                     </div>
-                    <p>Conductor</p>
+                    <p>Consesionario</p>
                   </div>
 
                   <div class="file-box">
@@ -1346,7 +1341,7 @@
         <div id="usuariosBajaModal" class="modalForm">
           <div class="formContainer">
             <div class="containerBody">
-              <p>¿Estás seguro de dar de baja a este operador?</p>
+              <p>¿Estás seguro de dar de baja a este consesionario?</p>
               <form id="userBaja">
                 <input id="userDeleteIdentifier" type="hidden" value="" />
                 <input id="userDeleteEmailId" type="hidden" value="" />
@@ -1432,23 +1427,23 @@
       "Diciembre",
     ];
 
-    const CONDUCTORES_COLLECTION = "conductores";
+    const CONSESIONARIOS_COLLECTION = "consesionarios";
     const VEHICULOS_COLLECTION = "vehiculos";
     // Main Table
-    var usersTable = document.getElementById("operatorsTable");
+    var usersTable = document.querySelector("#consesionariosTable");
     var usersDataTableContext = null;
     // Modal Dialogs
-    const modalDialogAdd = document.getElementById("usuariosAltaModal");
-    const modalDialogEdit = document.getElementById("usuariosEditModal");
-    const modalDialogDelete = document.getElementById("usuariosBajaModal");
+    const modalDialogAdd = document.querySelector("#usuariosAltaModal");
+    const modalDialogEdit = document.querySelector("#usuariosEditModal");
+    const modalDialogDelete = document.querySelector("#usuariosBajaModal");
     // Modal Form (Add)
     const modalForm = document.querySelector("form#userAlta");
-    const deleteForm = document.getElementById("userBaja");
+    const deleteForm = document.querySelector("#userBaja");
     // Modal Buttons
     const userAddbutton = document.querySelector("button#userAdd");
-    const userAddSubmitButton = document.getElementById("modalFormSubmit");
-    const userUpdateButton = document.getElementById("modalFormUpdateSubmit");
-    const deleteCancelButton = document.getElementById("modalFormDeleteCancel");
+    const userAddSubmitButton = document.querySelector("#modalFormSubmit");
+    const userUpdateButton = document.querySelector("#modalFormUpdateSubmit");
+    const deleteCancelButton = document.querySelector("#modalFormDeleteCancel");
     let addCancelButton = document.querySelectorAll("button.modalFormCancel");
     let GLOBAL_USER_DATA = null;
 
@@ -1465,8 +1460,8 @@
     });
 
     userAddbutton.addEventListener("click", () => {
-      document.getElementById("modalFormSubmit").style.display = "block";
-      document.getElementById("modalFormUpdateSubmit").style.display = "none";
+      document.querySelector("#modalFormSubmit").style.display = "block";
+      document.querySelector("#modalFormUpdateSubmit").style.display = "none";
       document.querySelectorAll("button.tab-button").forEach((element) => {
         const attribute = element.getAttribute("data-tab");
         if (attribute === "files" || attribute === "accounts") {
@@ -1511,7 +1506,7 @@
       document.querySelector("div#vehiculos-searched").innerHTML = "";
       document.querySelector("input#placa").value = "";
       document
-        .getElementById("usuariosAltaModal")
+        .querySelector("#usuariosAltaModal")
         .setAttribute("data-reference", "");
       Object.entries(modalForm).forEach((item) => {
         const element = item[1];
@@ -1569,7 +1564,7 @@
 
     async function fetchingData() {
       const querySnapshots = await getDocumentsFromCollection(
-        CONDUCTORES_COLLECTION
+        CONSESIONARIOS_COLLECTION
       );
       querySnapshots.forEach((doc) => {
         const document = doc.data();
@@ -1644,7 +1639,7 @@
       });
       const isCreated = await createUserAndSaveData(
         values,
-        CONDUCTORES_COLLECTION
+        CONSESIONARIOS_COLLECTION
       );
       if (isCreated === false) return;
       await handleRefetchingData();
@@ -1653,7 +1648,7 @@
 
     async function handleUpdateUserInformation(e) {
       const targets = modalForm.elements;
-      const uid = document.getElementById("userAltaIdentifier").value;
+      const uid = document.querySelector("#userAltaIdentifier").value;
       const values = Object.entries(targets)
         .filter((i) => isNaN(i[0]))
         .map((i, index) => {
@@ -1666,7 +1661,7 @@
       const isUpdated = await updateDocumentByUid(
         values,
         uid,
-        CONDUCTORES_COLLECTION
+        CONSESIONARIOS_COLLECTION
       );
       if (isUpdated === false) return;
       await handleRefetchingData();
@@ -1676,11 +1671,11 @@
     async function handleDeleteSubmit(e) {
       e.preventDefault();
 
-      const uid = document.getElementById("userDeleteIdentifier").value;
-      const email = document.getElementById("userDeleteEmailId").value;
+      const uid = document.querySelector("#userDeleteIdentifier").value;
+      const email = document.querySelector("#userDeleteEmailId").value;
       const hasBeenDeleted = await deleteDocumentByUid(
         uid,
-        CONDUCTORES_COLLECTION
+        CONSESIONARIOS_COLLECTION
       );
 
       if (hasBeenDeleted === false) return;
@@ -1700,7 +1695,7 @@
       const tools = createActionButtons(list.uid);
       tableRow.appendChild(tools);
       document
-        .querySelector("table#operatorsTable tbody")
+        .querySelector("table#consesionariosTable tbody")
         .insertAdjacentElement("beforeend", tableRow);
     }
 
@@ -1785,11 +1780,11 @@
     async function handleUpdateUser(e) {
       const uid = e.currentTarget.getAttribute("data-id");
       document
-        .getElementById("usuariosAltaModal")
+        .querySelector("#usuariosAltaModal")
         .setAttribute("data-reference", uid);
-      document.getElementById("userAltaIdentifier").value = uid;
-      document.getElementById("modalFormSubmit").style.display = "none";
-      document.getElementById("modalFormUpdateSubmit").style.display = "block";
+      document.querySelector("#userAltaIdentifier").value = uid;
+      document.querySelector("#modalFormSubmit").style.display = "none";
+      document.querySelector("#modalFormUpdateSubmit").style.display = "block";
       document.querySelectorAll("button.tab-button").forEach((element) => {
         element.style.display = "block";
       });
@@ -1802,15 +1797,15 @@
 
       const tableRow = node.parentNode;
       const email = tableRow.childNodes[2].innerText;
-      const input = document.getElementById("userDeleteIdentifier");
-      const emailInput = document.getElementById("userDeleteEmailId");
+      const input = document.querySelector("#userDeleteIdentifier");
+      const emailInput = document.querySelector("#userDeleteEmailId");
       input.value = uid;
       emailInput.value = email;
       handleViewDeleteModal(true);
     }
 
     async function getOperatorByUid(uid) {
-      let data = await getDocumentByUid(uid, CONDUCTORES_COLLECTION);
+      let data = await getDocumentByUid(uid, CONSESIONARIOS_COLLECTION);
       GLOBAL_USER_DATA = data;
       let formEntries = Object.values(modalForm).filter(
         (item) => item.type !== "button" && item.type !== "submit"
@@ -1862,12 +1857,12 @@
       .querySelector(`button.tab-button[data-tab="files"]`)
       .addEventListener("click", async function (e) {
         const uid = document
-          .getElementById("usuariosAltaModal")
+          .querySelector("#usuariosAltaModal")
           .getAttribute("data-reference");
         console.log(uid);
         const storageReference = storage
           .ref()
-          .child(`${CONDUCTORES_COLLECTION}/${uid}`);
+          .child(`${CONSESIONARIOS_COLLECTION}/${uid}`);
         const result = await storageReference.listAll();
         if (result.items.length > 0) {
           const urls = await Promise.all(
@@ -1895,7 +1890,7 @@
             element.addEventListener("click", function (e) {
               const modal = document.querySelector("div.modal-preview-image");
               modal.setAttribute("data-visibility", "visible");
-              document.getElementById("full-width-preview-Image").src =
+              document.querySelector("#full-width-preview-Image").src =
                 currentFile[0].url;
             });
           });
@@ -1917,14 +1912,14 @@
         return { vehicleUID: item.uid, habilitado: item.habilitado };
       });
       const userUID = document
-        .getElementById("usuariosAltaModal")
+        .querySelector("#usuariosAltaModal")
         .getAttribute("data-reference");
       const message = e.habilitado
         ? "Estas seguro de deshabilitar el vehiculo al usuario?"
         : "Estas seguro de habilitar el vehiculo al usuario";
       if (confirm(message)) {
         const documentUpdated = await firestore
-          .collection(CONDUCTORES_COLLECTION)
+          .collection(CONSESIONARIOS_COLLECTION)
           .doc(userUID)
           .update({
             vehicles: updatedArrayField,
@@ -1978,16 +1973,16 @@
     async function getAndRenderVehiclesFromUser() {
       document.querySelector("#placa").value = "";
       const uid = document
-        .getElementById("usuariosAltaModal")
+        .querySelector("#usuariosAltaModal")
         .getAttribute("data-reference");
       const vehiclesFromUser = await getDocumentsFromVehicleCollection(
         uid,
-        CONDUCTORES_COLLECTION,
+        CONSESIONARIOS_COLLECTION,
         VEHICULOS_COLLECTION
       );
       if (vehiclesFromUser === null) return;
       document.querySelector("table#vehicles-list tbody").innerHTML = "";
-      document.getElementById("vehiculos-searched").innerHTML = "";
+      document.querySelector("#vehiculos-searched").innerHTML = "";
       const table = document.createElement("table");
       const tableBody = document.createElement("tbody");
 
@@ -2004,7 +1999,7 @@
     });
 
     window.addEventListener("DOMContentLoaded", async () => {
-      await fetchingData();
+      await fetchingData(); 
     });
 
     document
@@ -2037,14 +2032,14 @@
     const uploadImages = async (file, name) => {
       try {
         const uid = document
-          .getElementById("usuariosAltaModal")
+          .querySelector("#usuariosAltaModal")
           .getAttribute("data-reference");
 
         if (file === null || file === undefined) return;
 
         const reference = storage
           .ref()
-          .child(`${CONDUCTORES_COLLECTION}/${uid}/` + name);
+          .child(`${CONSESIONARIOS_COLLECTION}/${uid}/` + name);
         await reference.put(file);
 
         const url = await reference.getDownloadURL();
@@ -2082,7 +2077,7 @@
               console.log(err);
             });
           if (response) {
-            const box = document.getElementById("vehiculos-searched");
+            const box = document.querySelector("#vehiculos-searched");
 
             response.map((item, index, array) => {
               const { id } = item;
@@ -2101,17 +2096,17 @@
               button.addEventListener("click", async function (e) {
                 if (GLOBAL_USER_DATA.vehicles.length < 4) {
                   const uid = document
-                    .getElementById("usuariosAltaModal")
+                    .querySelector("#usuariosAltaModal")
                     .getAttribute("data-reference");
                   const objectArray = { vehicleUID: id, habilitado: true };
                   if (
                     confirm(
-                      "Estas seguro de asignar este vehiculo al conductor?"
+                      "Estas seguro de asignar este vehiculo al consesionario?"
                     )
                   ) {
                     console.log({ vehicles: objectArray });
                     const hasBeenAssigned = await firestore
-                      .collection(CONDUCTORES_COLLECTION)
+                      .collection(CONSESIONARIOS_COLLECTION)
                       .doc(uid)
                       .update({
                         vehicles:

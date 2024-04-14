@@ -34,3 +34,9 @@ adminSubmenu.onmouseleave = function (e) {
 adminSubmenu.onmouseenter = function (e) {
   e.currentTarget.setAttribute("data-displayed", "visible");
 };
+
+window.addEventListener("DOMContentLoaded", () => {
+  const year = new Date().getFullYear();
+  document.querySelector("#copyrightFooter").textContent =
+    "\u00A9 " + year + " Copyright, Tu Taxi.";
+});

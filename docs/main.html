@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="../assets/icons/favicon.ico" />
-    <title>Tu taxi - Taximetro Digital</title>
+    <title>Tu Taxi | Portal Administrativo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="../js/dom/local.js"></script>
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
@@ -25,7 +25,7 @@
       <aside>
         <div id="aside-container">
           <div class="logo">
-            <a class="home-link" href="./main.html">TADI | Taximetro Digital</a>
+            <a class="home-link" href="./main.html">Tu Taxi | Backoffice</a>
           </div>
           <hr />
           <ul class="nav">
@@ -35,8 +35,12 @@
                 MAPA
               </a>
             </li>
-            <li class="nav-item"  id="consesionario-menu-li">
-              <a class="nav-link hasSubmenu" href="#" id="consesionario">
+            <li class="nav-item" id="consesionario-menu-li">
+              <a
+                class="nav-link hasSubmenu"
+                href="./consesionarios.html"
+                id="consesionario"
+              >
                 <span class="link-icons material-icons-sharp">person</span>
                 CONSESIONARIO
               </a>
@@ -128,7 +132,7 @@
                   </li>
                 </ul>
               </div>
-            </li> 
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="./users.html">
                 <span class="link-icons material-icons-sharp">
@@ -253,12 +257,14 @@
           </div>
         </div>
       </main>
-
       <!-- Footer -->
-      <footer id="footer">&copy; 2024, Copyright IDG.</footer>
+      <footer>
+        <p id="copyrightFooter"></p>
+      </footer>
     </div>
   </body>
 </html>
+<script src="../js/global-context.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
@@ -282,4 +288,3 @@
 <script src="../js/charts/chartsjs-plugin-label.js"></script>
 <script type="module" src="../js/dashboard/main.js" async></script>
 <script type="module" src="../js/dom/defaults.js"></script>
-<script src="../js/global-context.js"></script>
