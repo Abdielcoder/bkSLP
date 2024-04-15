@@ -519,7 +519,7 @@ button[type=submit]>span {
   font-weight: 500;
 }
 
-#consesionario-submenu,
+#concesionario-submenu,
 #administracion-submenu {
   position: absolute;
   left: 258px;
@@ -530,23 +530,23 @@ button[type=submit]>span {
   width: 256px;
 }
 
-#consesionario-submenu ul,
+#concesionario-submenu ul,
 #administracion-submenu ul {
   list-style: none;
 }
 
-#consesionario-submenu[data-displayed="hidden"],
+#concesionario-submenu[data-displayed="hidden"],
 #administracion-submenu[data-displayed="hidden"] {
   display: none;
 }
 
-#consesionario-submenu[data-displayed="visible"],
+#concesionario-submenu[data-displayed="visible"],
 #administracion-submenu[data-displayed="visible"] {
   display: block;
 }
 
 li#admin-menu-li::after,
-li#consesionario-menu-li::after {
+li#concesionario-menu-li::after {
   content: url(../../assets/svg/arrow_menu_closed.svg);
   position: absolute;
   right: 1rem;
@@ -557,7 +557,7 @@ li#consesionario-menu-li::after {
 }
 
 li#admin-menu-li:hover::after,
-li#consesionario-menu-li:hover::after {
+li#concesionario-menu-li:hover::after {
   transform: rotate(270deg);
   transition: transform 150ms linear;
 }

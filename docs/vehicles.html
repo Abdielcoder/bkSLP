@@ -35,12 +35,16 @@
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="consesionario-menu-li">
-              <a class="nav-link hasSubmenu" href="./consesionarios.html" id="consesionario">
+            <li class="nav-item" id="concesionario-menu-li">
+              <a
+                class="nav-link hasSubmenu"
+                href="./concesionarios.html"
+                id="concesionario"
+              >
                 <span class="link-icons material-icons-sharp">person</span>
-                CONSESIONARIO
+                CONCESIONARIO
               </a>
-              <div id="consesionario-submenu" data-displayed="hidden">
+              <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
                   <li class="nav-item-submenu">
                     <a class="nav-link selectedPage" href="./vehicles.html">
@@ -247,34 +251,22 @@
                       id="marcas"
                       style="visibility: hidden; position: absolute"
                     >
-                      <option value="Audi" />
-                      <option value="BMW" />
+                      <option value="Nissan" />
                       <option value="Chevrolet" />
-                      <option value="Chrysler" />
-                      <option value="Dodge" />
-                      <option value="Fiat" />
+                      <option value="Volkswagen" />
+                      <option value="Toyota" />
                       <option value="Ford" />
                       <option value="Honda" />
                       <option value="Hyundai" />
                       <option value="Kia" />
-                      <option value="Lexus" />
-                      <option value="Lotus" />
-                      <option value="Mazda" />
-                      <option value="Mercedes-Benz" />
                       <option value="MG" />
-                      <option value="Mini" />
-                      <option value="Mitsubishi" />
-                      <option value="Nissan" />
-                      <option value="Opel" />
-                      <option value="Peugeot" />
-                      <option value="Renault" />
+                      <option value="Chrysler" />
+                      <option value="Dodge" />
+                      <option value="Fiat" />
                       <option value="Seat" />
-                      <option value="Smart" />
-                      <option value="Subaru" />
+                      <option value="Peugeot" />
                       <option value="Suzuki" />
-                      <option value="Toyota" />
-                      <option value="Volkswagen" />
-                      <option value="Volvo" />
+                      <option value="Renault" />
                     </datalist>
                   </div>
                   <div class="formGroup inputForm">
@@ -317,9 +309,13 @@
                       placeholder="Placa"
                     />
                   </div>
-                  <div class="formGroup inputForm">
+                  <div class="formGroup selectForm" style="max-width: 160px">
                     <label for="color">Color</label>
-                    <input
+                    <select name="color" id="color">
+                      <option value="blanco" selected>Blanco</option>
+                      <option value="verde">Verde</option>
+                    </select>
+                    <!-- <input
                       type="text"
                       name="color"
                       id="color"
@@ -341,7 +337,7 @@
                       <option value="Verde" />
                       <option value="Amarillo" />
                       <option value="Naranja" />
-                    </datalist>
+                    </datalist> -->
                   </div>
                   <div
                     class="formGroup inputForm"
@@ -390,6 +386,7 @@
                       type="text"
                       name="yearVehiculo"
                       id="yearVehiculo"
+                      maxlength="4"
                       placeholder="Tipo"
                     />
                   </div>
@@ -824,6 +821,7 @@
             src="../assets/img/nopic.png"
             alt="previewImage"
             id="full-width-preview-Image"
+            style="max-width: 540px; display: block; object-fit: contain;"
           />
         </div>
       </div>
@@ -833,6 +831,23 @@
       </footer>
     </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var input = document.querySelector("#placa");
+
+      input.addEventListener("input", function () {
+        this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var input = document.querySelector("#yearVehiculo");
+
+      input.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+      });
+    });
+  </script>
   <script src="../js/global-context.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>

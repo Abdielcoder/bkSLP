@@ -3,46 +3,46 @@ main {
   overflow-x: hidden;
 }
 
-table#consesionariosTable {
+table#concesionariosTable {
   width: 100%;
   display: table;
   position: relative;
   border-top: 1px solid rgba(0, 0, 0, .05);
 }
 
-table#consesionariosTable tbody tr.even {
+table#concesionariosTable tbody tr.even {
   background-color: #fff;
 }
 
-table#consesionariosTable tbody tr.odd {
+table#concesionariosTable tbody tr.odd {
   background-color: rgba(0, 0, 0, .05);
 }
 
-table#consesionariosTable tbody tr:hover {
+table#concesionariosTable tbody tr:hover {
   background-color: #0c435a60;
   cursor: pointer;
 }
 
-table#consesionariosTable thead tr th {
+table#concesionariosTable thead tr th {
   color: #2d6e3d;
   text-align: start;
   font-size: 14px;
 }
 
-table#consesionariosTable tbody tr td {
+table#concesionariosTable tbody tr td {
   font-size: 12px;
   padding: 6px 8px;
 }
 
-table#consesionariosTable tbody tr td:nth-child(2) {
+table#concesionariosTable tbody tr td:nth-child(2) {
   text-align: center !important;
 }
 
-table#consesionariosTable tbody tr td:nth-child(1) {
+table#concesionariosTable tbody tr td:nth-child(1) {
   text-transform: capitalize;
 }
 
-div#consesionariosTable_filter>label {
+div#concesionariosTable_filter>label {
   background-color: #2d6e3d;
   padding-left: 8px;
   border-radius: 3px;
@@ -52,7 +52,7 @@ div#consesionariosTable_filter>label {
   margin-bottom: 5px;
 }
 
-input[aria-controls="consesionariosTable"] {
+input[aria-controls="concesionariosTable"] {
   width: 400px;
   background-color: whitesmoke !important;
   border-top-right-radius: 3px;
@@ -128,7 +128,7 @@ button#dateSearch:hover {
 }
 
 /* Tabla Operadores */
-table#consesionariosTable tbody tr td[data-type="tools"] {
+table#concesionariosTable tbody tr td[data-type="tools"] {
   display: flex;
   flex-flow: row nowrap;
   gap: 4px;
@@ -194,7 +194,7 @@ table#consesionariosTable tbody tr td[data-type="tools"] {
   color: white;
 }
 
-#consesionariosTable_filter {
+#concesionariosTable_filter {
   float: left !important;
   margin-bottom: 10px;
 }

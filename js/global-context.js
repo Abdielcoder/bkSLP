@@ -1,21 +1,21 @@
-const consesionarioMenu = document.querySelector("#consesionario");
-const consesionarioSubmenu = document.querySelector("#consesionario-submenu");
+const concesionarioMenu = document.querySelector("#concesionario");
+const concesionarioSubmenu = document.querySelector("#concesionario-submenu");
 const adminMenu = document.querySelector("#administracion");
 const adminSubmenu = document.querySelector("#administracion-submenu");
 
-consesionarioMenu.onmouseenter = function (e) {
-  consesionarioSubmenu.setAttribute("data-displayed", "visible");
+concesionarioMenu.onmouseenter = function (e) {
+  concesionarioSubmenu.setAttribute("data-displayed", "visible");
 };
 
-consesionarioMenu.onmouseleave = function (e) {
-  consesionarioSubmenu.setAttribute("data-displayed", "hidden");
+concesionarioMenu.onmouseleave = function (e) {
+  concesionarioSubmenu.setAttribute("data-displayed", "hidden");
 };
 
-consesionarioSubmenu.onmouseleave = function (e) {
+concesionarioSubmenu.onmouseleave = function (e) {
   e.currentTarget.setAttribute("data-displayed", "hidden");
 };
 
-consesionarioSubmenu.onmouseenter = function (e) {
+concesionarioSubmenu.onmouseenter = function (e) {
   e.currentTarget.setAttribute("data-displayed", "visible");
 };
 

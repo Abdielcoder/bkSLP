@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="../assets/icons/favicon.ico" />
-    <title>Tu Taxi - Consesionarios</title>
+    <title>Tu Taxi - Concesionarios</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="../js/dom/local.js"></script>
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
-    <link rel="stylesheet" href="../css/docs/consesionarios.css" />
+    <link rel="stylesheet" href="../css/docs/concesionarios.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
       rel="stylesheet"
@@ -35,12 +35,16 @@
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="consesionario-menu-li">
-              <a class="nav-link hasSubmenu selectedPage" href="#" id="consesionario">
+            <li class="nav-item" id="concesionario-menu-li">
+              <a
+                class="nav-link hasSubmenu selectedPage"
+                href="#"
+                id="concesionario"
+              >
                 <span class="link-icons material-icons-sharp">person</span>
-                CONSESIONARIO
+                CONCESIONARIO
               </a>
-              <div id="consesionario-submenu" data-displayed="hidden">
+              <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
                   <li class="nav-item-submenu">
                     <a class="nav-link" href="./vehicles.html">
@@ -158,10 +162,11 @@
         <div class="container">
           <div class="tadi-card col-12">
             <div class="card-header">
-              <h1>Registro consesionarios</h1>
+              <h1>Registro concesionarios</h1>
               <br />
               <p>
-                Listado de consesionarios y recopilación de la información general dentro del empadronamiento actual.
+                Listado de concesionarios y recopilación de la información
+                general dentro del empadronamiento actual.
               </p>
             </div>
             <div class="card-body">
@@ -197,7 +202,7 @@
                 </svg>
               </button>
               <div class="table-container">
-                <table id="consesionariosTable">
+                <table id="concesionariosTable">
                   <thead>
                     <tr>
                       <th>Nombre completo</th>
@@ -223,7 +228,7 @@
           <div class="modalContent">
             <div class="containerHead">
               <h2 style="font-size: 20px; text-align: start">
-                Información general del consesionario
+                Información general del concesionario
               </h2>
             </div>
             <div class="contentTabs">
@@ -279,7 +284,8 @@
                   >
                     Datos Personales
                   </h2>
-                  <div class="form-columns">
+
+                  <div class="form-columns" style="flex-wrap: nowrap">
                     <div
                       class="formGroup inputForm"
                       style="max-width: 280px; width: 100%"
@@ -322,6 +328,17 @@
                         maxlength="18"
                       />
                     </div>
+                    <div class="formGroup inputForm">
+                      <label for="rfc">RFC</label>
+                      <input
+                        type="rfc"
+                        placeholder="RFC..."
+                        name="rfc"
+                        id="rfc"
+                        required
+                        maxlength="16"
+                      />
+                    </div>
                   </div>
                   <div class="form-columns" style="flex-wrap: nowrap">
                     <div class="formGroup inputForm" style="max-width: 120px">
@@ -335,23 +352,27 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="telefono">Telefono</label>
+                      <label for="telefono">Teléfono</label>
                       <input
                         type="tel"
                         placeholder="Teléfono..."
                         name="telefono"
                         id="telefono"
                         required
+                        maxlength="10"
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="telefono">Telefono de Emergencia</label>
+                      <label for="telefonoEmergencia"
+                        >Teléfono de Emergencia</label
+                      >
                       <input
                         type="tel"
                         placeholder="Teléfono de emergencia..."
                         name="telefonoEmergencia"
                         id="telefonoEmergencia"
                         required
+                        maxlength="10"
                       />
                     </div>
                     <div class="formGroup inputForm">
@@ -381,16 +402,6 @@
                     style="flex-wrap: nowrap"
                   >
                     <div class="formGroup inputForm">
-                      <label for="domicilio">Dirección</label>
-                      <input
-                        type="text"
-                        placeholder="Domicilio..."
-                        name="domicilio"
-                        id="domicilio"
-                        required
-                      />
-                    </div>
-                    <div class="formGroup inputForm">
                       <label for="calle">Calle</label>
                       <input
                         type="text"
@@ -413,16 +424,13 @@
                         required
                       />
                     </div>
-                    <div
-                      class="formGroup inputForm"
-                      style="max-width: 140px; width: 100%"
-                    >
-                      <label for="municipio">Municipio</label>
+                    <div class="formGroup inputForm">
+                      <label for="colonia">Colonia o Fraccionamiento</label>
                       <input
-                        type="municipio"
-                        placeholder="Municipio..."
-                        name="municipio"
-                        id="municipio"
+                        type="text"
+                        placeholder="Colonia..."
+                        name="colonia"
+                        id="colonia"
                         required
                       />
                     </div>
@@ -436,6 +444,19 @@
                         placeholder="Código postal..."
                         name="cp"
                         id="cp"
+                        required
+                      />
+                    </div>
+                    <div
+                      class="formGroup inputForm"
+                      style="max-width: 140px; width: 100%"
+                    >
+                      <label for="municipio">Municipio</label>
+                      <input
+                        type="municipio"
+                        placeholder="Municipio..."
+                        name="municipio"
+                        id="municipio"
                         required
                       />
                     </div>
@@ -521,7 +542,7 @@
                     <div class="group-right">
                       <div class="formParraf">
                         <p style="font-size: 14px">
-                          Capacitaciones tomadas por el consesionario:
+                          Capacitaciones tomadas por el concesionario:
                         </p>
                       </div>
                       <div class="checkboxGroup">
@@ -712,8 +733,8 @@
                     >
                       <img
                         src="../assets/img/nopic.png"
-                        alt="licenciaConsesionario"
-                        id="licenciaConsesionarioPreview"
+                        alt="licenciaConcesionario"
+                        id="licenciaConcesionarioPreview"
                         class="imagePreview"
                         style="
                           display: block;
@@ -722,11 +743,11 @@
                           object-fit: cover;
                         "
                       />
-                      <label for="licenciaConsesionario">
+                      <label for="licenciaConcesionario">
                         <input
                           type="file"
-                          name="licenciaConsesionario"
-                          id="licenciaConsesionario"
+                          name="licenciaConcesionario"
+                          id="licenciaConcesionario"
                           style="display: none"
                           class="documentationFiles"
                         />
@@ -1157,8 +1178,8 @@
                     >
                       <img
                         src="../assets/img/nopic.png"
-                        alt="fotografiaConsesionario"
-                        id="fotografiaConsesionarioPreview"
+                        alt="fotografiaConcesionario"
+                        id="fotografiaConcesionarioPreview"
                         class="imagePreview"
                         style="
                           display: block;
@@ -1167,11 +1188,11 @@
                           object-fit: cover;
                         "
                       />
-                      <label for="fotografiaConsesionario">
+                      <label for="fotografiaConcesionario">
                         <input
                           type="file"
-                          name="fotografiaConsesionario"
-                          id="fotografiaConsesionario"
+                          name="fotografiaConcesionario"
+                          id="fotografiaConcesionario"
                           style="display: none"
                           class="documentationFiles"
                         />
@@ -1233,7 +1254,7 @@
                         </div>
                       </label>
                     </div>
-                    <p>Consesionario</p>
+                    <p>Concesionario</p>
                   </div>
 
                   <div class="file-box">
@@ -1341,7 +1362,7 @@
         <div id="usuariosBajaModal" class="modalForm">
           <div class="formContainer">
             <div class="containerBody">
-              <p>¿Estás seguro de dar de baja a este consesionario?</p>
+              <p>¿Estás seguro de dar de baja a este concesionario?</p>
               <form id="userBaja">
                 <input id="userDeleteIdentifier" type="hidden" value="" />
                 <input id="userDeleteEmailId" type="hidden" value="" />
@@ -1376,6 +1397,23 @@
       </footer>
     </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var input = document.querySelector("#telefono");
+
+      input.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var input = document.querySelector("#telefonoEmergencia");
+
+      input.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+      });
+    });
+  </script>
   <script src="../js/global-context.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -1427,10 +1465,10 @@
       "Diciembre",
     ];
 
-    const CONSESIONARIOS_COLLECTION = "consesionarios";
+    const CONCESIONARIOS_COLLECTION = "concesionarios";
     const VEHICULOS_COLLECTION = "vehiculos";
     // Main Table
-    var usersTable = document.querySelector("#consesionariosTable");
+    var usersTable = document.querySelector("#concesionariosTable");
     var usersDataTableContext = null;
     // Modal Dialogs
     const modalDialogAdd = document.querySelector("#usuariosAltaModal");
@@ -1564,7 +1602,7 @@
 
     async function fetchingData() {
       const querySnapshots = await getDocumentsFromCollection(
-        CONSESIONARIOS_COLLECTION
+        CONCESIONARIOS_COLLECTION
       );
       querySnapshots.forEach((doc) => {
         const document = doc.data();
@@ -1639,7 +1677,7 @@
       });
       const isCreated = await createUserAndSaveData(
         values,
-        CONSESIONARIOS_COLLECTION
+        CONCESIONARIOS_COLLECTION
       );
       if (isCreated === false) return;
       await handleRefetchingData();
@@ -1661,7 +1699,7 @@
       const isUpdated = await updateDocumentByUid(
         values,
         uid,
-        CONSESIONARIOS_COLLECTION
+        CONCESIONARIOS_COLLECTION
       );
       if (isUpdated === false) return;
       await handleRefetchingData();
@@ -1675,7 +1713,7 @@
       const email = document.querySelector("#userDeleteEmailId").value;
       const hasBeenDeleted = await deleteDocumentByUid(
         uid,
-        CONSESIONARIOS_COLLECTION
+        CONCESIONARIOS_COLLECTION
       );
 
       if (hasBeenDeleted === false) return;
@@ -1695,7 +1733,7 @@
       const tools = createActionButtons(list.uid);
       tableRow.appendChild(tools);
       document
-        .querySelector("table#consesionariosTable tbody")
+        .querySelector("table#concesionariosTable tbody")
         .insertAdjacentElement("beforeend", tableRow);
     }
 
@@ -1805,7 +1843,7 @@
     }
 
     async function getOperatorByUid(uid) {
-      let data = await getDocumentByUid(uid, CONSESIONARIOS_COLLECTION);
+      let data = await getDocumentByUid(uid, CONCESIONARIOS_COLLECTION);
       GLOBAL_USER_DATA = data;
       let formEntries = Object.values(modalForm).filter(
         (item) => item.type !== "button" && item.type !== "submit"
@@ -1862,7 +1900,7 @@
         console.log(uid);
         const storageReference = storage
           .ref()
-          .child(`${CONSESIONARIOS_COLLECTION}/${uid}`);
+          .child(`${CONCESIONARIOS_COLLECTION}/${uid}`);
         const result = await storageReference.listAll();
         if (result.items.length > 0) {
           const urls = await Promise.all(
@@ -1919,7 +1957,7 @@
         : "Estas seguro de habilitar el vehiculo al usuario";
       if (confirm(message)) {
         const documentUpdated = await firestore
-          .collection(CONSESIONARIOS_COLLECTION)
+          .collection(CONCESIONARIOS_COLLECTION)
           .doc(userUID)
           .update({
             vehicles: updatedArrayField,
@@ -1977,7 +2015,7 @@
         .getAttribute("data-reference");
       const vehiclesFromUser = await getDocumentsFromVehicleCollection(
         uid,
-        CONSESIONARIOS_COLLECTION,
+        CONCESIONARIOS_COLLECTION,
         VEHICULOS_COLLECTION
       );
       if (vehiclesFromUser === null) return;
@@ -1999,7 +2037,7 @@
     });
 
     window.addEventListener("DOMContentLoaded", async () => {
-      await fetchingData(); 
+      await fetchingData();
     });
 
     document
@@ -2039,7 +2077,7 @@
 
         const reference = storage
           .ref()
-          .child(`${CONSESIONARIOS_COLLECTION}/${uid}/` + name);
+          .child(`${CONCESIONARIOS_COLLECTION}/${uid}/` + name);
         await reference.put(file);
 
         const url = await reference.getDownloadURL();
@@ -2101,12 +2139,12 @@
                   const objectArray = { vehicleUID: id, habilitado: true };
                   if (
                     confirm(
-                      "Estas seguro de asignar este vehiculo al consesionario?"
+                      "Estas seguro de asignar este vehiculo al concesionario?"
                     )
                   ) {
                     console.log({ vehicles: objectArray });
                     const hasBeenAssigned = await firestore
-                      .collection(CONSESIONARIOS_COLLECTION)
+                      .collection(CONCESIONARIOS_COLLECTION)
                       .doc(uid)
                       .update({
                         vehicles:

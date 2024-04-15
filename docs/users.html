@@ -35,16 +35,16 @@
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="consesionario-menu-li">
+            <li class="nav-item" id="concesionario-menu-li">
               <a
                 class="nav-link hasSubmenu"
-                href="./consesionarios.html"
-                id="consesionario"
+                href="./concesionarios.html"
+                id="concesionario"
               >
                 <span class="link-icons material-icons-sharp">person</span>
-                CONSESIONARIO
+                CONCESIONARIO
               </a>
-              <div id="consesionario-submenu" data-displayed="hidden">
+              <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
                   <li class="nav-item-submenu">
                     <a class="nav-link" href="./vehicles.html">
@@ -269,7 +269,7 @@
               class="formContainer"
               data-tabcontainer="data"
               data-visibility="true"
-              style="max-width: 960px"
+              style="max-width: 1080px"
             >
               <div class="containerBody">
                 <form id="userAlta">
@@ -284,7 +284,7 @@
                   >
                     Datos Personales
                   </h2>
-                  <div class="form-columns">
+                  <div class="form-columns" style="flex-wrap: nowrap">
                     <div
                       class="formGroup inputForm"
                       style="max-width: 280px; width: 100%"
@@ -327,6 +327,17 @@
                         maxlength="18"
                       />
                     </div>
+                    <div class="formGroup inputForm">
+                      <label for="rfc">RFC</label>
+                      <input
+                        type="rfc"
+                        placeholder="RFC..."
+                        name="rfc"
+                        id="rfc"
+                        required
+                        maxlength="16"
+                      />
+                    </div>
                   </div>
                   <div class="form-columns" style="flex-wrap: nowrap">
                     <div class="formGroup inputForm" style="max-width: 120px">
@@ -347,16 +358,20 @@
                         name="telefono"
                         id="telefono"
                         required
+                        maxlength="10"
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="telefono">Telefono de Emergencia</label>
+                      <label for="telefonoEmergencia"
+                        >Telefono de Emergencia</label
+                      >
                       <input
                         type="tel"
                         placeholder="Teléfono de emergencia..."
                         name="telefonoEmergencia"
                         id="telefonoEmergencia"
                         required
+                        maxlength="10"
                       />
                     </div>
                     <div class="formGroup inputForm">
@@ -386,16 +401,6 @@
                     style="flex-wrap: nowrap"
                   >
                     <div class="formGroup inputForm">
-                      <label for="domicilio">Dirección</label>
-                      <input
-                        type="text"
-                        placeholder="Domicilio..."
-                        name="domicilio"
-                        id="domicilio"
-                        required
-                      />
-                    </div>
-                    <div class="formGroup inputForm">
                       <label for="calle">Calle</label>
                       <input
                         type="text"
@@ -418,16 +423,13 @@
                         required
                       />
                     </div>
-                    <div
-                      class="formGroup inputForm"
-                      style="max-width: 140px; width: 100%"
-                    >
-                      <label for="municipio">Municipio</label>
+                    <div class="formGroup inputForm">
+                      <label for="colonia">Colonia o Fraccionamiento</label>
                       <input
-                        type="municipio"
-                        placeholder="Municipio..."
-                        name="municipio"
-                        id="municipio"
+                        type="text"
+                        placeholder="Colonia..."
+                        name="colonia"
+                        id="colonia"
                         required
                       />
                     </div>
@@ -441,6 +443,19 @@
                         placeholder="Código postal..."
                         name="cp"
                         id="cp"
+                        required
+                      />
+                    </div>
+                    <div
+                      class="formGroup inputForm"
+                      style="max-width: 140px; width: 100%"
+                    >
+                      <label for="municipio">Municipio</label>
+                      <input
+                        type="municipio"
+                        placeholder="Municipio..."
+                        name="municipio"
+                        id="municipio"
                         required
                       />
                     </div>
@@ -1371,6 +1386,7 @@
             src="../assets/img/nopic.png"
             alt="previewImage"
             id="full-width-preview-Image"
+            style="max-width: 540px; display: block; object-fit: contain"
           />
         </div>
       </div>
@@ -1381,6 +1397,23 @@
       </footer>
     </div>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var input = document.querySelector("#telefono");
+
+      input.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var input = document.querySelector("#telefonoEmergencia");
+
+      input.addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+      });
+    });
+  </script>
   <script src="../js/global-context.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -1872,7 +1905,7 @@
         if (result.items.length > 0) {
           const urls = await Promise.all(
             result.items.map(async (item) => {
-              try {
+              try { 
                 return await item.getDownloadURL();
               } catch (error) {
                 console.log("error obteniendo url: ", error);
@@ -1880,6 +1913,7 @@
               }
             })
           );
+          console.log({ FILELIST: urls });
           const files = urls.map((item) => {
             return {
               url: item,
@@ -2012,12 +2046,16 @@
       .forEach((element, index) => {
         element.addEventListener("change", async function (e) {
           try {
-            console.log({ e });
             const file = e.target.files[0];
             const reader = new FileReader();
-            const { name } = e.target;
+            const { name, type } = e.target;
+            console.log(e.target.files[0]);
 
-            const responseUpload = await uploadImages(file, name);
+            const responseUpload = await uploadImages(
+              file,
+              name,
+              file.name.split(".")[1]
+            );
             if (responseUpload) {
               reader.onload = function (event) {
                 const url = event.target.result;
@@ -2034,7 +2072,7 @@
         });
       });
 
-    const uploadImages = async (file, name) => {
+    const uploadImages = async (file, name, type) => {
       try {
         const uid = document
           .getElementById("usuariosAltaModal")
@@ -2044,7 +2082,7 @@
 
         const reference = storage
           .ref()
-          .child(`${CONDUCTORES_COLLECTION}/${uid}/` + name);
+          .child(`${CONDUCTORES_COLLECTION}/${uid}/` + ("__" + name + "." + type));
         await reference.put(file);
 
         const url = await reference.getDownloadURL();

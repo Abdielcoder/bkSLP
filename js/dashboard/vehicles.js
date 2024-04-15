@@ -61,7 +61,7 @@ const insertDataToTableBody = (element, index) => {
     element.tipoVehiculo || "-",
     element.numeroEconomico || "-",
     element.color || "-",
-  ]; 
+  ];
   CELL_LIST.forEach((item) => {
     const rowCell = document.createElement("TD");
     rowCell.textContent = typeof item === "string" ? item.toLowerCase() : item;
@@ -86,7 +86,7 @@ const getAllVehicles = async () => {
         return { ...doc.data(), uid: doc.id };
       });
       return informationData;
-    } else { 
+    } else {
       return [];
     }
   } catch (error) {
@@ -189,13 +189,13 @@ const updateVehicleByID = async () => {
     formObject.placa = formObject.placa.toUpperCase();
     const objectValues = { uid, fechaActualizacion: new Date().toISOString() };
     Object.assign(formObject, objectValues);
-
+    delete formObject.fechaAlta;
     const response = await VEHICULOS_REFERENCE.doc(uid)
       .update(formObject)
       .catch((error) => false);
 
     const uploadSuccess = await uploadImages(uid);
- 
+
     if (response !== false) {
       alert("Se ha actualizado el usuario de manera corrrecta.");
       await handleRefetch();
@@ -250,9 +250,9 @@ const createNewVehicle = async () => {
     formObject.placa = formObject.placa.toUpperCase();
     const vehicleRef = await VEHICULOS_REFERENCE.add(formObject);
 
-    if (vehicleRef) { 
+    if (vehicleRef) {
       const uploadSuccess = await uploadImages(vehicleRef.id);
- 
+
       alert("Se ha creado el vehículo correctamente.");
       await handleRefetch();
       hideDialog();
@@ -365,7 +365,7 @@ async function fetchingData() {
 }
 
 const uploadImages = async (uid) => {
-  try { 
+  try {
     const inputFiles = document.querySelectorAll("input.vehicleFiles");
     const imageList = [];
 
