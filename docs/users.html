@@ -2172,7 +2172,10 @@
               button.setAttribute("class", "botonAsignar");
               console.log({ GLOBAL_USER_DATA });
               button.addEventListener("click", async function (e) {
-                if (GLOBAL_USER_DATA.vehicles.length < 4) {
+                if (
+                  GLOBAL_USER_DATA?.vehicles === undefined ||
+                  GLOBAL_USER_DATA?.vehicles.length < 4
+                ) {
                   const uid = document
                     .getElementById("usuariosAltaModal")
                     .getAttribute("data-reference");
