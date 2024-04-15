@@ -1396,6 +1396,8 @@
           <iframe
             id="full-width-preview-Document"
             src="#"
+            width="600"
+            height="700"
             frameborder="0"
           ></iframe>
         </div>
@@ -1951,27 +1953,25 @@
               );
               if (currentFile[0].type !== "pdf") {
                 modal.setAttribute("data-visibility", "visible");
-              } else {
-                modalDoc.setAttribute("data-visibility", "visible");
-              }
-              if (currentFile[0].type !== "pdf") {
                 document.getElementById("full-width-preview-Image").src =
                   currentFile[0].url;
-              } else {
-                document.getElementById("full-width-preview-Document").src =
-                  currentFile[0].url;
+                return;
               }
+
+              modalDoc.setAttribute("data-visibility", "visible");
+              document.getElementById("full-width-preview-Document").src =
+                currentFile[0].url;
             });
           });
         }
       });
 
-    document
-      .querySelector("div.modal-bg")
-      .addEventListener("click", function (e) {
+    document.querySelectorAll("div.modal-bg").forEach((element) =>
+      element.addEventListener("click", function (e) {
         const modal = e.target.parentNode;
         modal.setAttribute("data-visibility", "hidden");
-      });
+      })
+    );
 
     async function statusFunction(e, a) {
       const updatedArrayField = a.map((item) => {
@@ -2091,7 +2091,10 @@
                 const url = event.target.result;
                 const dom = name + "Preview";
                 const imageDom = document.getElementById(dom);
-                imageDom.src = url;
+                imageDom.src =
+                  file.name.split(".")[1] === "pdf"
+                    ? "https://www.svgrepo.com/show/255818/pdf.svg"
+                    : url;
               };
               console.log(file);
               reader.readAsDataURL(file);

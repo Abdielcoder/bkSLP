@@ -347,7 +347,8 @@ table#vehicles-list th {
   z-index: 2002;
 }
 
-.modal-container {
+.modal-preview-image .modal-container,
+.modal-preview-document .modal-container {
   display: block;
   width: max-content;
   height: auto;
@@ -359,6 +360,11 @@ table#vehicles-list th {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.modal-preview-document .modal-container {
+  width: calc(600px + 2rem);
+  height: calc(700px + 2rem);
 }
 
 .file-box label {
