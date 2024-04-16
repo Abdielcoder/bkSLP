@@ -1,245 +1,257 @@
-main { 
-    overflow-y: auto;
-    overflow-x: hidden; 
-} 
-
-div#admin_users-list_filter {
-    margin-bottom: 1rem;
-  }
-  
-table#admin_users-list {
-    width: 100%;
-    display: table;
-    position: relative;
-    border-top: 1px solid rgba(0,0,0,.05);
+main {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-table#admin_users-list tbody tr.even {
-    background-color: #fff; 
+div#table-administradores-list_filter {
+  margin-bottom: 1rem;
 }
 
-table#admin_users-list tbody tr.odd {
-background-color: rgba(0,0,0,.05);
+table#table-administradores-list {
+  width: 100%;
+  display: table;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-table#admin_users-list tbody tr:hover {
-    background-color: #2d6e3d45; 
-} 
-table#admin_users-list thead th {
-    color: #2d6e3d;
-    text-align: start
+table#table-administradores-list tbody tr.even {
+  background-color: #fff;
 }
 
-table#admin_users-list tbody tr td {
-    font-size: 14px;
-    padding: 6px 8px;
+table#table-administradores-list tbody tr.odd {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-table#admin_users-list tbody td:not(:nth-child(-n+2)) {
-    text-transform: capitalize;
+table#table-administradores-list tbody tr:hover {
+  background-color: #2d6e3d45;
+}
+table#table-administradores-list thead th {
+  color: #2d6e3d;
+  text-align: start;
 }
 
-div#admin_users-list > label {
-    background-color: #2d6e3d;
-    padding-left: 8px;
-    border-radius: 3px;
-    color: whitesmoke;
-    display: inline-block;
-    font-size: 0.8571em;
-    margin-bottom: 5px;
+table#table-administradores-list tbody tr td {
+  font-size: 14px;
+  padding: 6px 8px;
 }
 
-input[aria-controls="admin_users-list"] {
-    width: 400px;
-    background-color: whitesmoke !important;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-left: none !important;
-    border-bottom-left-radius: 0px !important;
-    border-top-left-radius: 0px !important;
-    outline: 1px solid transparent;
-} 
+table#table-administradores-list tbody td:not(:nth-child(-n + 2)) {
+  text-transform: capitalize;
+}
+
+div#table-administradores-list > label {
+  background-color: #2d6e3d;
+  padding-left: 8px;
+  border-radius: 3px;
+  color: whitesmoke;
+  display: inline-block;
+  font-size: 0.8571em;
+  margin-bottom: 5px;
+}
+
+input[aria-controls="table-administradores-list"] {
+  width: 400px;
+  background-color: whitesmoke !important;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-left: none !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+  outline: 1px solid transparent;
+}
 
 div.datatable_operation_buttons {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-end;
-    align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
 }
- 
-div#admin_users-list_filter > label  {
-    display: inline-block;
-    background-color: #2d6e3d;
-    font-size: 1rem;
-    margin-bottom: 5px;
-    padding-left: 8px;
-    border-radius: 3px; 
-    color: whitesmoke;
+
+div#table-administradores-list_filter > label {
+  display: inline-block;
+  background-color: #2d6e3d;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  padding-left: 8px;
+  border-radius: 3px;
+  color: whitesmoke;
 }
-input[aria-controls="admin_users-list"]  {
-    width: 400px;
-    background-color: whitesmoke!important;;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-left: none!important;;
-    border-bottom-left-radius: 0px!important;;
-    border-top-left-radius: 0px!important;;
-    outline: 1px solid transparent;
+input[aria-controls="table-administradores-list"] {
+  width: 400px;
+  background-color: whitesmoke !important;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-left: none !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+  outline: 1px solid transparent;
 }
 
 .cup-button {
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box; 
-    margin-right: .167em;
-    margin-bottom: .333em;
-    padding: 0.20em 1em;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 2px;
-    cursor: pointer;
-    font-size: .88em;
-    line-height: 1.6em;
-    color: black;
-    white-space: nowrap;
-    overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.1); 
-    background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
-    user-select: none;
-    text-decoration: none;
-    outline: none;
-    text-overflow: ellipsis;
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  margin-right: 0.167em;
+  margin-bottom: 0.333em;
+  padding: 0.2em 1em;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.88em;
+  line-height: 1.6em;
+  color: black;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    to bottom,
+    rgba(230, 230, 230, 0.1) 0%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  user-select: none;
+  text-decoration: none;
+  outline: none;
+  text-overflow: ellipsis;
 }
 .cup-button:hover:not(:disabled) {
-    background: linear-gradient(to bottom, rgba(153, 153, 153, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
-    border: 1px solid #666;
-} 
+  background: linear-gradient(
+    to bottom,
+    rgba(153, 153, 153, 0.1) 0%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border: 1px solid #666;
+}
 
 .cup-button:disabled {
-    background-color: #d3d3d3;
-    cursor: default;
-    color: #9a9a9a;
-} 
+  background-color: #d3d3d3;
+  cursor: default;
+  color: #9a9a9a;
+}
 
 /* Modal */
 div.modal {
-    position: absolute;
-    z-index: 15;  
-    background-color: rgba(30, 29, 29, 0.43);
-    top: 58px;
-    left: 258px;
-    bottom: 38px;
-    right: 0px;
-    display: none;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  z-index: 15;
+  background-color: rgba(30, 29, 29, 0.43);
+  top: 58px;
+  left: 258px;
+  bottom: 38px;
+  right: 0px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+div.modal.expanded {
+  display: block;
 }
 
 div.modal_container {
-    position: relative;
-    height: auto;
-    width: 30%;
-    border-radius: 5px;
-    background-color: rgb(252, 252, 252);
-    box-shadow: 0px 0px 8px 4px #80808094;
-    padding: 0.5rem;
+  position: relative;
+  height: auto;
+  width: 30%;
+  border-radius: 5px;
+  background-color: rgb(252, 252, 252);
+  box-shadow: 0px 0px 8px 4px #80808094;
+  padding: 0.5rem;
 }
 div.close_modal {
-    position: absolute;
-    display: block;
-    top: 0.5rem;
-    right: 1rem; 
-    color: #3d3838; 
+  position: absolute;
+  display: block;
+  top: 0.5rem;
+  right: 1rem;
+  color: #3d3838;
 }
 div.close_modal:hover {
-    cursor: pointer;
-    color: #2d6e3d; 
+  cursor: pointer;
+  color: #2d6e3d;
 }
 
 div.close_modal span {
-    display: block;
-    transform: rotate(45deg);
-    font-size: 2rem;
-    font-family: monospace;
-    font-weight: 700;
-}  
- 
+  display: block;
+  transform: rotate(45deg);
+  font-size: 2rem;
+  font-family: monospace;
+  font-weight: 700;
+}
+
 form {
-    padding: 1rem;
-    display: flex;
-    flex-flow: column;
-    position: relative;
-  }
-  form > label {
-    font-size: 14px;
-    position: relative;
-    top: 8px;
-    font-weight: bold;
-    left: 8px;
-    display: block;
-    background-color: white;
-    width: fit-content;
-    color: #2d6e3d;
-    padding: 0px 4px;
-  }
-  form input[type="text"], form input[type="phone"], form input[type="email"], form input[type="date"] {
-    padding: 8px 12px;
-    outline: none;
-    border-radius: 4px;
-    border: 1px solid #808080b5;
-    font-size: 14px;
-  }
-  .form_header {
-    font-size: 2rem;
-    margin: 1rem 1rem 0 1rem;
-    font-weight: lighter;
-  }
-  input[type=radio] {
-    cursor: pointer;
-  }
-  div.radio_form {
-    display: flex;
-    flex-flow: row nowrap;
-    position: relative;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 1rem 0px;
-  }
-  div.radio_form label {
-    margin-left: 6px;
-    margin-right: 1rem;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    display: block;
-    color: #2d6e3d;
-  }
-  button#generate_new_user {
-    background-color: #2d6e3d;
-    color: white;
-    font-weight: lighter;
-    padding: 0.5rem 0;
-    border: none;
-    border-radius: 3px;
-  }
-  button#generate_new_user:hover {
-    background-color: #2d6e3de6;
-    cursor: pointer;
-  }
-
-
+  padding: 1rem;
+  display: flex;
+  flex-flow: column;
+  position: relative;
+}
+form > label {
+  font-size: 14px;
+  position: relative;
+  top: 8px;
+  font-weight: bold;
+  left: 8px;
+  display: block;
+  background-color: white;
+  width: fit-content;
+  color: #2d6e3d;
+  padding: 0px 4px;
+}
+form input[type="text"],
+form input[type="phone"],
+form input[type="email"],
+form input[type="date"] {
+  padding: 8px 12px;
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid #808080b5;
+  font-size: 14px;
+}
+.form_header {
+  font-size: 2rem;
+  margin: 1rem 1rem 0 1rem;
+  font-weight: lighter;
+}
+input[type="radio"] {
+  cursor: pointer;
+}
+div.radio_form {
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem 0px;
+}
+div.radio_form label {
+  margin-left: 6px;
+  margin-right: 1rem;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  color: #2d6e3d;
+}
+button#generate_new_user {
+  background-color: #2d6e3d;
+  color: white;
+  font-weight: lighter;
+  padding: 0.5rem 0;
+  border: none;
+  border-radius: 3px;
+}
+button#generate_new_user:hover {
+  background-color: #2d6e3de6;
+  cursor: pointer;
+}
 
 tr.isSelected {
-    background-color: #2d6e3d45!important;
+  background-color: #2d6e3d45 !important;
 }
-tr.isSelected td { 
-    color: white;
-}
-
-
-table#admin_users-list tbody tr:hover {
-    background-color: #2d6e3d45;
+tr.isSelected td {
+  color: white;
 }
 
-input[type=checkbox].check_button {
-    cursor: pointer;
+table#table-administradores-list tbody tr:hover {
+  background-color: #2d6e3d45;
+}
+
+input[type="checkbox"].check_button {
+  cursor: pointer;
 }

@@ -681,8 +681,7 @@ export const updateDocumentByUid = async (elements, uid, collection) => {
   });
   data = Object.assign(data, { fechaActualizacion: new Date().toISOString() });
   delete data.fechaAlta;
-
-  console.log({ UpdatedData: data });
+ 
   const response = await firestore
     .collection(collection)
     .doc(uid)

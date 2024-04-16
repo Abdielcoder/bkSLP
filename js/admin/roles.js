@@ -56,7 +56,7 @@ const createAndRenderDataTable = async () => {
         ["vehiculos", data.vehiculos],
         ["mapa", data.mapa],
         ["admin", data.admin],
-        ["fechaAlta", data.fechaAlta],
+        ["fechaAlta", formatDateFromIsoString(data.fechaAlta)],
       ];
       const rowElementHTML = createRowElement(array, document.id);
       ROLES_TABLE.lastElementChild.insertAdjacentElement(
@@ -139,7 +139,7 @@ const hideModalDialog = async (reset = false) => {
     element.value = "";
   });
   if (reset) {
-    await createAndRenderDataTable()
+    await createAndRenderDataTable();
   }
 };
 
@@ -229,6 +229,28 @@ const updateDocumentData = async (data, uid) => {
     console.error("Se ha presentado un error al actualizar, ", error);
     alert("Se ha presentado un error al actualizar");
   }
+};
+
+const formatDateFromIsoString = (value) => {
+  const dateValue = new Date(value);
+  const [day, month, year] = dateValue.toLocaleDateString("es-MX").split("/");
+  const time = dateValue.toLocaleTimeString("es-MX", { hour12: true });
+  // const [hours, min, seg] = time.split(".")[0].split(":");
+  const monthsString = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+  return `${day}/${monthsString[parseInt(month) - 1]}/${year} ${time}`;
 };
 
 document

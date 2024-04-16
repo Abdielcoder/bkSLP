@@ -11,7 +11,7 @@ table#roles {
   width: 100%;
   display: table;
   position: relative;
-  border-top: 1px solid rgba(0, 0, 0, .05);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 table#roles tbody tr.even {
@@ -19,7 +19,7 @@ table#roles tbody tr.even {
 }
 
 table#roles tbody tr.odd {
-  background-color: rgba(0, 0, 0, .05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 table#roles tbody tr:hover {
@@ -29,7 +29,7 @@ table#roles tbody tr:hover {
 
 table#roles thead th {
   color: #2d6e3d;
-  text-align: start
+  text-align: start;
 }
 
 table#roles tbody tr td {
@@ -47,8 +47,6 @@ table#roles tbody tr td {
   font-size: 14px;
   margin-bottom: 1rem;
 }
-
-
 
 .modalDialog {
   position: fixed;
@@ -153,12 +151,12 @@ div.formGroup.checkboxForm {
   border: none;
 }
 
-.button-tools button[type=button] {
+.button-tools button[type="button"] {
   background: white;
   border: 1px solid gray;
 }
 
-.button-tools button[type=submit] {
+.button-tools button[type="submit"] {
   background: #2d6e3d;
   border: 1px solid #2d6e3d;
 }
@@ -168,18 +166,26 @@ div.formGroup.checkboxForm {
 }
 
 .body-button-tools {
-  display: block;
+  display: block; 
   height: 32px;
   margin-bottom: 1rem;
 }
+
 #button-add {
+  display: flex;
+  gap: 0.5rem;
+  height: 32px;
+  align-items: center;
   float: right;
   padding: 4px 2rem;
   border: none;
   background: #2d6e3d;
   border-radius: 3px;
-  color: white;
   transition: all 100ms linear;
+}
+
+#button-add span {
+  color: white;
 }
 
 #button-add:hover {

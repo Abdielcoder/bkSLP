@@ -151,7 +151,6 @@ const formatDateFromIsoString = (value) => {
   const dateValue = new Date(value);
   const [day, month, year] = dateValue.toLocaleDateString("es-MX").split("/");
   const time = dateValue.toLocaleTimeString("es-MX", { hour12: true });
-  // const [hours, min, seg] = time.split(".")[0].split(":");
   const monthsString = [
     "Enero",
     "Febrero",
@@ -166,10 +165,7 @@ const formatDateFromIsoString = (value) => {
     "Noviembre",
     "Diciembre",
   ];
-  return `${day}/${monthsString[parseInt(month) - 1]}/${year} ${time}`;
-  // return `${day}/${
-  //   monthsString[parseInt(month) - 1]
-  // }/${year} ${hours}:${min}:${seg}`;
+  return `${day}/${monthsString[parseInt(month) - 1]}/${year} ${time}`; 
 };
 
 const updateVehicleByID = async () => {
