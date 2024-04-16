@@ -25,7 +25,9 @@
       <aside>
         <div id="aside-container">
           <div class="logo">
-            <a class="home-link" href="../docs/main.html">Tu Taxi | Backoffice</a>
+            <a class="home-link" href="../docs/main.html"
+              >Tu Taxi | Backoffice</a
+            >
           </div>
           <hr />
           <ul class="nav">
@@ -35,8 +37,12 @@
                 MAPA
               </a>
             </li>
-            <li class="nav-item"  id="concesionario-menu-li">
-              <a class="nav-link hasSubmenu" href="../docs/concesionarios.html" id="concesionario">
+            <li class="nav-item" id="concesionario-menu-li">
+              <a
+                class="nav-link hasSubmenu"
+                href="../docs/concesionarios.html"
+                id="concesionario"
+              >
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIO
               </a>
@@ -128,7 +134,7 @@
                   </li>
                 </ul>
               </div>
-            </li> 
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="../docs/users.html">
                 <span class="link-icons material-icons-sharp">
@@ -159,27 +165,29 @@
           <div class="tadi-card">
             <div class="card-header">
               <h1>Roles</h1>
-              <p>Jerarquía de roles entre los usuarios.</p>
+              <p>
+                Jerarquía de roles entre los usuarios de plataforma Backoffice.
+              </p>
             </div>
             <div class="card-body">
               <div class="body-button-tools">
-                <button type="button" id="button-edit-role">
-                  <span>Editar</span>
+                <button type="button" id="button-add">
+                  <span>Nuevo</span>
                 </button>
               </div>
               <div class="table_container">
-                <table id="roles-list">
+                <table id="roles">
                   <thead>
                     <tr>
-                      <th></th>
-                      <th>Rol</th>
-                      <th>Descripción</th>
-                      <th>Estadisticas</th>
-                      <th>Mapa</th>
+                      <th>Nombre</th>
+                      <th>Clave</th>
+                      <th>Concesionarios</th>
                       <th>Conductores</th>
-                      <th>Vehículos</th>
-                      <th>Roles</th>
-                      <th>Tarifas</th>
+                      <th>Vehiculos</th>
+                      <th>Mapa</th>
+                      <th>Admin</th>
+                      <th>Fecha de alta</th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -193,6 +201,7 @@
           class="modalDialog"
           data-visibility="hidden"
           data-reference="null"
+          data-type="null"
         >
           <div class="dialogBackground"></div>
           <div class="dialogContent">
@@ -201,183 +210,81 @@
             </div>
             <div class="dialogContainer">
               <div class="formContainer" id="form-container-json-data">
-                <form action="" class="form-content" id="form-roles">
+                <form action="" class="form-content" id="roles">
                   <div class="flexed fullwidth">
-                    <div class="formGroup inputForm" style="width: 100%">
-                      <label for="role">Rol</label>
-                      <input type="text" name="role" id="role" />
+                    <div class="formGroup inputForm">
+                      <label for="nombre">Nombre del rol</label>
+                      <input
+                        type="text"
+                        name="nombre"
+                        id="nombre"
+                        placeholder="Nombre del rol"
+                      />
                     </div>
-                    <div class="formGroup inputForm" style="width: 100%">
-                      <label for="description">Descripción </label>
-                      <input type="text" name="description" id="description" />
+                    <div class="formGroup inputForm">
+                      <label for="clave">Clave</label>
+                      <input
+                        type="text"
+                        name="clave"
+                        id="clave"
+                        placeholder="Clave"
+                      />
+                    </div>
+                    <div class="formGroup inputForm">
+                      <label for="descripcion">Descripción </label>
+                      <input
+                        type="text"
+                        name="descripcion"
+                        id="descripcion"
+                        placeholder="descripcion"
+                      />
                     </div>
                   </div>
 
                   <div class="flexed">
-                    <h2>Permisos: Mapa</h2>
                     <div class="formGroup checkboxForm">
-                      <input type="checkbox" name="maps-view" id="maps-view" />
-                      <label for="maps-view">Visualizar</label>
+                      <input
+                        type="checkbox"
+                        name="concesionarios"
+                        id="concesionarios"
+                      />
+                      <label for="concesionarios">Concesionarios</label>
                     </div>
                     <div class="formGroup checkboxForm">
                       <input
                         type="checkbox"
-                        name="maps-alarms"
-                        id="maps-alarms"
+                        name="conductores"
+                        id="conductores"
                       />
-                      <label for="maps-alarms">Alarmas</label>
+                      <label for="conductores">Conductores</label>
                     </div>
                     <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="maps-contact"
-                        id="maps-contact"
-                      />
-                      <label for="maps-contact">Contacto</label>
-                    </div>
-                  </div>
-
-                  <div class="flexed">
-                    <h2>Permiso: Estadísticas</h2>
-                    <div class="formGroup checkboxForm">
-                      <input type="checkbox" name="stats" id="stats" />
-                      <label for="stats">Visualizar</label>
-                    </div>
-                  </div>
-
-                  <div class="flexed">
-                    <h2>Permisos: Roles</h2>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="roles-create"
-                        id="roles-create"
-                      />
-                      <label for="roles-create">Crear</label>
+                      <input type="checkbox" name="vehiculos" id="vehiculos" />
+                      <label for="vehiculos">Vehículos</label>
                     </div>
                     <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="roles-update"
-                        id="roles-update"
-                      />
-                      <label for="roles-update">Actualizar</label>
+                      <input type="checkbox" name="mapa" id="mapa" />
+                      <label for="mapa">Mapa</label>
                     </div>
                     <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="roles-delete"
-                        id="roles-delete"
-                      />
-                      <label for="roles-delete">Eliminar</label>
-                    </div>
-                  </div>
-
-                  <div class="flexed">
-                    <h2>Permisos: Tarifas</h2>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="tarifas-create"
-                        id="tarifas-create"
-                      />
-                      <label for="tarifas-create">Crear</label>
-                    </div>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="tarifas-update"
-                        id="tarifas-update"
-                      />
-                      <label for="tarifas-update">Actualizar</label>
-                    </div>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="tarifas-read"
-                        id="tarifas-read"
-                      />
-                      <label for="tarifas-read">Visualizar</label>
-                    </div>
-                  </div>
-
-                  <div class="flexed">
-                    <h2>Permisos: Conductores</h2>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="users-create"
-                        id="users-create"
-                      />
-                      <label for="users-create">Crear</label>
-                    </div>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="users-update"
-                        id="users-update"
-                      />
-                      <label for="users-update">Actualizar</label>
-                    </div>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="users-read"
-                        id="users-read"
-                      />
-                      <label for="users-read">Visualizar</label>
-                    </div>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="users-delete"
-                        id="users-delete"
-                      />
-                      <label for="users-delete">Eliminar</label>
-                    </div>
-                  </div>
-
-                  <div class="flexed">
-                    <h2>Permisos: Vehículos</h2>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="vehicles-create"
-                        id="vehicles-create"
-                      />
-                      <label for="vehicles-create">Crear</label>
-                    </div>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="vehicles-update"
-                        id="vehicles-update"
-                      />
-                      <label for="vehicles-update">Actualizar</label>
-                    </div>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="vehicles-read"
-                        id="vehicles-read"
-                      />
-                      <label for="vehicles-read">Visualizar</label>
-                    </div>
-                    <div class="formGroup checkboxForm">
-                      <input
-                        type="checkbox"
-                        name="vehicles-delete"
-                        id="vehicles-delete"
-                      />
-                      <label for="vehicles-delete">Eliminar</label>
+                      <input type="checkbox" name="admin" id="admin" />
+                      <label for="admin">Administración</label>
                     </div>
                   </div>
                   <div class="button-tools">
-                    <button type="button" class="modal-back-button">
-                      <span>Regresar</span>
+                    <button
+                      type="button"
+                      class="modal-back-button"
+                      id="modal-dialog-close"
+                    >
+                      <span>Cancelar</span>
                     </button>
-                    <button type="submit" class="modal-back-button">
-                      <span>Actualizar</span>
+                    <button
+                      type="submit"
+                      class="modal-back-button"
+                      id="modal-dialog-submit"
+                    >
+                      <span>Aceptar</span>
                     </button>
                   </div>
                 </form>
@@ -387,10 +294,10 @@
         </div>
       </main>
 
-    <!-- Footer --> 
-    <footer>
-      <p id="copyrightFooter"></p>
-    </footer>
+      <!-- Footer -->
+      <footer>
+        <p id="copyrightFooter"></p>
+      </footer>
     </div>
   </body>
   <script src="../js/global-context.js"></script>

@@ -1,6 +1,14 @@
-import { all_roles, firestore } from "../config/config.js";
+import { firestore, getDocumentsFromCollection } from "../config/config.js";
 
-const roles_list = await all_roles();
+const ROLES_COLLECTION = "roles";
+const ROLES_TABLE = document.querySelector("table#roles");
+const FORM_ROLES = document.querySelector("form#roles");
+const BUTTON_ADD = document.querySelector("#button-add");
+const MODAL_DIALOG = document.querySelector("div#modalDialog");
+const MODAL_DIALOG_SUBMIT_BUTTOM = document.querySelector(
+  "button#modal-dialog-submit"
+);
+let GLOBAL_DATA = [];
 
 const checkSuccessIcon = `
   <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,344 +38,208 @@ const checkNullIcon = `
     </g>
   </svg>
   `;
+const updateIcon = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
 
-const getAllData = async () => {
-  try {
-    await roles_list.forEach(dataX => {
-      const items = [
-        dataX.id,
-        dataX.desc,
-        dataX.canCreate,
-        dataX.canUpdate,
-        dataX.canDelete,
-        dataX.isAdmin
+const createAndRenderDataTable = async () => {
+  const snapshot = await getDocumentsFromCollection(ROLES_COLLECTION);
+  GLOBAL_DATA = [];
+  ROLES_TABLE.lastElementChild.innerHTML = "";
+  if (snapshot !== false) {
+    snapshot.forEach((document) => {
+      const data = document.data();
+      GLOBAL_DATA.push({ ...data, uid: document.id });
+      const array = [
+        ["nombre", data.nombre],
+        ["short", data.short],
+        ["concesionarios", data.concesionarios],
+        ["conductores", data.conductores],
+        ["vehiculos", data.vehiculos],
+        ["mapa", data.mapa],
+        ["admin", data.admin],
+        ["fechaAlta", data.fechaAlta],
       ];
-      const TR = document.createElement("TR");
-
-      items.forEach(item => {
-        const TD = document.createElement("TD");
-        if (typeof item === "boolean") {
-          const CHECKBOX = document.createElement("input");
-          CHECKBOX.setAttribute("type", "checkbox");
-          CHECKBOX.disabled = true;
-          CHECKBOX.checked = item;
-
-          TD.append(CHECKBOX);
-          TR.append(TD);
-          return;
-        }
-        TD.textContent = item;
-        TR.append(TD);
-      });
-      table_list.insertAdjacentElement("beforeend", TR);
+      const rowElementHTML = createRowElement(array, document.id);
+      ROLES_TABLE.lastElementChild.insertAdjacentElement(
+        "beforeend",
+        rowElementHTML
+      );
     });
-    return true;
-  } catch (err) {
-    console.log(err.code);
-    console.log(err.message);
-    alert("Se ha presentado un error, favor de verificarlo con el Administrador.")
-    return false;
   }
-}
+  console.log({ GLOBAL_DATA });
+  new DataTable(ROLES_TABLE);
+};
 
-const generateDataTable = async () => {
-  const table = document.getElementById("roles-list");
-  const tableBody = document.querySelector("table#roles-list tbody");
-
-  // Clear existing table
-  tableBody.innerHTML = '';
-
-  const tableData = await getRolesList();
-  if (tableData) {
-    tableData.forEach(item => {
-      const TR = document.createElement("TR");
-      Object.values(item).forEach((i, index) => {
-        const TD = document.createElement("TD");
-        if (index === 0) {
-          const CHECKBOX = document.createElement("input");
-          CHECKBOX.setAttribute("type", "checkbox");
-          CHECKBOX.setAttribute("data-reference", i);
-          CHECKBOX.setAttribute("data-index", "indexed")
-          CHECKBOX.disabled = false;
-          CHECKBOX.checked = false;
-          CHECKBOX.addEventListener("change", function (e) {
-
-            const allIndexedInputs = [];
-            document
-              .querySelectorAll("input[type='checkbox'][data-index='indexed']")
-              .forEach(element => allIndexedInputs.push(element));
-            allIndexedInputs.forEach((item) => {
-              const reference = item.getAttribute("data-reference");
-              if (reference === i) {
-                item.checked = true;
-                return;
-              };
-              item.checked = false;
-            });
-          })
-
-          TD.append(CHECKBOX);
-          TR.append(TD);
-          return;
-        }
-
-        if (typeof i === "boolean" || i === null) {
-          const ICON = i === true
-            ? checkSuccessIcon
-            : i === false
-              ? checkFailureIcon
-              : checkNullIcon;
-
-          TD.insertAdjacentHTML("afterbegin", ICON);
-          TD.setAttribute("style", "text-align: center;")
-          TR.append(TD);
-          return;
-        }
-        TD.textContent = i;
-        TR.append(TD);
-      })
-
-      tableBody.insertAdjacentElement("beforeend", TR);
-    });
-
-    // Initialize DataTable after generating the table
-    const dataTable = new DataTable(table);
-  }
-  // const table = document.getElementById("roles-list");
-  // const tableBody = document.querySelector("table#roles-list tbody");
-
-  // const tableData = await getRolesList();
-  // if (tableData) {
-
-  //   tableData.forEach(item => {
-  //     const TR = document.createElement("TR");
-  //     Object.values(item).forEach((i, index) => {
-  //       const TD = document.createElement("TD");
-  //       if (index === 0) {
-  //         const CHECKBOX = document.createElement("input");
-  //         CHECKBOX.setAttribute("type", "checkbox");
-  //         CHECKBOX.setAttribute("data-reference", i);
-  //         CHECKBOX.setAttribute("data-index", "indexed")
-  //         CHECKBOX.disabled = false;
-  //         CHECKBOX.checked = false;
-  //         CHECKBOX.addEventListener("change", function (e) {
-
-  //           const allIndexedInputs = [];
-  //           document
-  //             .querySelectorAll("input[type='checkbox'][data-index='indexed']")
-  //             .forEach(element => allIndexedInputs.push(element));
-  //           allIndexedInputs.forEach((item) => {
-  //             const reference = item.getAttribute("data-reference");
-  //             if (reference === i) {
-  //               item.checked = true;
-  //               return;
-  //             };
-  //             item.checked = false;
-  //           });
-  //         })
-
-  //         TD.append(CHECKBOX);
-  //         TR.append(TD);
-  //         return;
-  //       }
-
-  //       if (typeof i === "boolean" || i === null) {
-  //         const ICON = i === true
-  //           ? checkSuccessIcon
-  //           : i === false
-  //             ? checkFailureIcon
-  //             : checkNullIcon;
-
-  //         TD.insertAdjacentHTML("afterbegin", ICON);
-  //         TD.setAttribute("style", "text-align: center;")
-  //         TR.append(TD);
-  //         return;
-  //       }
-  //       TD.textContent = i;
-  //       TR.append(TD);
-  //     })
-
-  //     tableBody.insertAdjacentElement("beforeend", TR);
-  //   });
-
-  //   const dataTable = new DataTable(table);
-  // }
-}
-
-const getRolesList = async () => {
+const createRowElement = (data, uid) => {
   try {
-    const data = await firestore.collection("Roles").get().catch(error => false);
-    if (data) {
-      let rolesList = [];
-      data.forEach((document) => {
-        const { description, maps, role, roles, tarifas, users, vehicles, stats } = document.data();
-        const permisosMapa = Object.values(maps);
-        const permisosRoles = Object.values(roles);
-        const permisosTarifas = Object.values(tarifas);
-        const permisosVehiculos = Object.values(vehicles);
-        const permisosConductores = Object.values(users);
-        rolesList.push({
-          uid: document.id,
-          role,
-          description,
-          stats,
-          permisosMapa: permisosMapa.every(i => i === true) ? true : permisosMapa.every(i => i === false) ? false : null,
-          permisosConductores: permisosConductores.every(i => i === true) ? true : permisosConductores.every(i => i === false) ? false : null,
-          permisosVehiculos: permisosVehiculos.every(i => i === true) ? true : permisosVehiculos.every(i => i === false) ? false : null,
-          permisosRoles: permisosRoles.every(i => i === true) ? true : permisosRoles.every(i => i === false) ? false : null,
-          permisosTarifas: permisosTarifas.every(i => i === true) ? true : permisosTarifas.every(i => i === false) ? false : null,
-        });
-      });
-
-      return Object.values(rolesList);
-    }
+    const rowElement = document.createElement("TR");
+    data.forEach((cell) => {
+      const cellElement = document.createElement("TD");
+      if (typeof cell[1] === "boolean") {
+        cellElement.insertAdjacentHTML(
+          "beforeend",
+          cell[1] ? checkSuccessIcon : checkFailureIcon
+        );
+      }
+      if (typeof cell[1] === "string") {
+        cellElement.innerText = cell[1];
+      }
+      cellElement.setAttribute("name", cell[0]);
+      rowElement.insertAdjacentElement("beforeend", cellElement);
+    });
+    const toolsElement = createActionToolsToRow(uid);
+    rowElement.insertAdjacentElement("beforeend", toolsElement);
+    return rowElement;
   } catch (error) {
-    console.error("Se presentó un error al obtener la lista de roles, ", error);
-    return false;
+    console.error("Se ha presentado un error al crear elemento, ", error);
   }
 };
 
+const createActionToolsToRow = (uid) => {
+  const cellElement = document.createElement("TD");
+  const boxElement = document.createElement("DIV");
+  const updateButtonElement = document.createElement("BUTTON");
 
-generateDataTable();
-const editButton = document.getElementById("button-edit-role");
+  updateButtonElement.innerHTML = updateIcon;
+  updateButtonElement.setAttribute("type", "button");
+  updateButtonElement.addEventListener("click", () =>
+    showModalDialog(uid, "update")
+  );
+  boxElement.insertAdjacentElement("beforeend", updateButtonElement);
+  boxElement.setAttribute("class", "tool-actions");
+  boxElement.setAttribute("data-reference", uid);
+  cellElement.insertAdjacentElement("beforeend", boxElement);
 
-editButton.addEventListener("click", function (e) {
-  const allIndexedInputs = [];
-  document.querySelectorAll("input[type='checkbox'][data-index='indexed']").forEach(element => allIndexedInputs.push(element));
+  return cellElement;
+};
 
-  if (allIndexedInputs.every(item => item.checked === false)) {
-    alert("Seleccione un ROL dentro de la tabla para poder continuar.");
-    return
+const showModalDialog = (uid, type) => {
+  MODAL_DIALOG.setAttribute("data-visibility", "visible");
+  if (type === "update") {
+    MODAL_DIALOG.setAttribute("data-reference", uid);
+    MODAL_DIALOG.setAttribute("data-type", "update");
+    MODAL_DIALOG_SUBMIT_BUTTOM.children[0].textContent = "ACTUALIZAR";
+    getDataAndRenderIntoModal(uid);
+    return;
   }
-  const [reference] = allIndexedInputs.map(item => {
-    if (item.checked) {
-      return item.getAttribute("data-reference");
-    }
-    return null;
-  }).filter(i => i !== null);
+  MODAL_DIALOG.setAttribute("data-type", "add");
+  MODAL_DIALOG_SUBMIT_BUTTOM.children[0].textContent = "AGREGAR";
+};
 
-  openModal(reference);
-});
+const hideModalDialog = async (reset = false) => {
+  MODAL_DIALOG.setAttribute("data-visibility", "hidden");
+  MODAL_DIALOG.setAttribute("data-reference", null);
+  MODAL_DIALOG.setAttribute("data-type", null);
 
-const closeModal = () => {
-  const MODAL = document.getElementById("modalDialog");
-  MODAL.setAttribute("data-visibility", "hidden");
-  MODAL.setAttribute("data-reference", "null");
-}
-
-const openModal = async (reference) => {
-  const MODAL = document.getElementById("modalDialog");
-  MODAL.setAttribute("data-visibility", "visible");
-  MODAL.setAttribute("data-reference", reference);
-
-  const data = await getIndividualRoleData(reference);
-
-  const formData = document.querySelector("form#form-roles");
-
-  let dataObject = {};
-
-  Object.entries(data).forEach(([name, value]) => {
-    if (typeof value === "string" || typeof value === "boolean") {
-      Object.assign(dataObject, { [name]: value });
-    }
-    if (typeof value === "object") {
-      Object.entries(value).forEach(subItem => {
-        Object.assign(dataObject, { [name + "-" + subItem[0]]: subItem[1] });
-      });
-    }
-  });
-
-  Object.values(formData).forEach(input => {
-    if (input.type === "text") {
-      input.value = dataObject[input.name];
-    }
-    if (input.type === "checkbox") {
-      input.checked = dataObject[input.name];
-    }
-  })
-  console.log({ dataObject, formData: Object.values(formData) });
-}
-
-document
-  .querySelector("div.dialogBackground")
-  .addEventListener("click", closeModal);
-
-document
-  .querySelector("button.modal-back-button")
-  .addEventListener("click", closeModal);
-
-const getIndividualRoleData = async (reference) => {
-  return await firestore
-    .collection("Roles")
-    .doc(reference)
-    .get()
-    .then(response => {
-      if (response.exists) {
-        return response.data();
-      }
-    }).catch(error => false);
-}
-
-const updateRoles = async (e, ref) => {
-  let firestoreObject = {};
-  const roles = {};
-  const tarifas = {};
-  const users = {};
-  const vehicles = {};
-  const maps = {};
-  e.forEach(item => {
-    const { name, value, checked, type } = item;
-    if (type === "checkbox") {
-      if (name.includes("maps")) {
-        Object.assign(maps, ({ [name.split("-")[1]]: checked }));
-        return;
-      }
-      if (name.includes("roles")) {
-        Object.assign(roles, ({ [name.split("-")[1]]: checked }));
-        return;
-      }
-      if (name.includes("tarifas")) {
-        Object.assign(tarifas, { [name.split("-")[1]]: checked });
-        return;
-      }
-      if (name.includes("users")) {
-        Object.assign(users, { [name.split("-")[1]]: checked });
-        return;
-      }
-      if (name.includes("vehicles")) {
-        Object.assign(vehicles, { [name.split("-")[1]]: checked });
-        return;
-      }
-      Object.assign(firestoreObject, { [name]: checked });
+  Object.values(FORM_ROLES).forEach((element) => {
+    if (element.type === "button" || element.type === "submit") return;
+    if (element.type == "checkbox") {
+      element.checked = false;
       return;
     }
-    const _object = { [name]: value };
-    Object.assign(firestoreObject, _object);
-    return;
+    element.value = "";
   });
-  Object.assign(firestoreObject, { roles, tarifas, users, vehicles, maps })
+  if (reset) {
+    await createAndRenderDataTable()
+  }
+};
 
-  const response = await firestore
-    .collection("Roles")
-    .doc(ref)
-    .update(firestoreObject)
-    .then(snapshot => { return true; })
-    .catch(error => { return false; });
+createAndRenderDataTable();
 
-  if (response) {
-    alert("Se ha actualizado el rol de manera correcta");
-    closeModal();
-    generateDataTable();
+BUTTON_ADD.addEventListener("click", function () {
+  showModalDialog(null, "create");
+});
+
+const getDataAndRenderIntoModal = async (uid) => {
+  const selectedData = GLOBAL_DATA.filter((item) => item.uid === uid)[0];
+  let formEntries = Object.values(FORM_ROLES).filter(
+    (item) => item.type !== "button" && item.type !== "submit"
+  );
+
+  formEntries.forEach((element) => {
+    const { name, type } = element;
+    if (type === "text") {
+      element.value = selectedData[name] || "";
+      return;
+    }
+    element.checked = selectedData[name];
+  });
+};
+
+FORM_ROLES.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = getEstructuredDataFromForm(e.target);
+  const type = MODAL_DIALOG.getAttribute("data-type");
+  const uid = MODAL_DIALOG.getAttribute("data-reference");
+  if (type === "add") {
+    addDocumentToCollection(data);
     return;
   }
-  alert("Se ha presentado un error al actualizar.");
-}
-
-const formContent = document.querySelector("form#form-roles");
-formContent.addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const arrayForm = Object.values(e.target).filter(item => (item.type !== "button" && item.type !== "submit"));
-
-  const MODAL = document.getElementById("modalDialog").getAttribute("data-reference");
-  await updateRoles(arrayForm, MODAL);
+  updateDocumentData(data, uid);
 });
+
+const addDocumentToCollection = async (data) => {
+  try {
+    const objectData = {};
+    Object.values(data).forEach((element) => {
+      const { name, checked, value, type } = element;
+      if (type === "text") {
+        objectData[name] = value;
+        return;
+      }
+      objectData[name] = checked;
+    });
+    objectData.fechaAlta = new Date().toISOString();
+
+    const response = await firestore
+      .collection(ROLES_COLLECTION)
+      .add(objectData)
+      .catch(() => false);
+    if (response !== false) {
+      alert("Se ha generado un registro nuevo.");
+      await hideModalDialog(true);
+    }
+  } catch (error) {
+    console.error("Se ha presentado un error al crear registro, ", error);
+    alert("Se ha presentado un error al crear registro, ");
+  }
+};
+
+const updateDocumentData = async (data, uid) => {
+  try {
+    const objectData = {};
+    Object.values(data).forEach((element) => {
+      const { name, checked, value, type } = element;
+      if (type === "text") {
+        objectData[name] = value;
+        return;
+      }
+      objectData[name] = checked;
+    });
+
+    const response = await firestore
+      .collection(ROLES_COLLECTION)
+      .doc(uid)
+      .update(objectData)
+      .catch(() => false);
+    if (response !== false) {
+      alert("Se ha actualizado de manera correcta.");
+      await hideModalDialog(true);
+    }
+  } catch (error) {
+    console.error("Se ha presentado un error al actualizar, ", error);
+    alert("Se ha presentado un error al actualizar");
+  }
+};
+
+document
+  .querySelector("button#modal-dialog-close")
+  .addEventListener("click", hideModalDialog);
+
+const getEstructuredDataFromForm = (data) => {
+  let ObjectData = {};
+  Object.entries(data).forEach((element) => {
+    if (element[1].type === "submit" || element[1].type === "button") return;
+    ObjectData[element[0]] = element[1];
+  });
+  return ObjectData;
+};

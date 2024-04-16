@@ -25,7 +25,7 @@ export const snap_warning = realtime.child("warning");
 export const eiby_panic = realtime.child("eiby_panics");
 export const eiby_warning = realtime.child("eiby_warnings");
 export const snap_vehicles = realtime.child("Vehiculos");
-export const snap_roles = realtime.child("Roles");
+// export const snap_roles = realtime.child("Roles");
 export const snap_trips = realtime.child("DriverTrip");
 export const tokens = realtime.child("TokenSession");
 
@@ -221,24 +221,24 @@ export const all_admins = () => {
   });
 };
 
-export const all_roles = () => {
-  return snap_roles.once("value").then((snap) => {
-    let roles_array = [];
-    snap.forEach((item) => {
-      const i = item.val();
-      const __item = {
-        id: i.id,
-        desc: i.desc,
-        canCreate: i.crear,
-        canUpdate: i.actualizar,
-        canDelete: i.borrar,
-        isAdmin: i.visible,
-      };
-      roles_array.push(__item);
-    });
-    return roles_array;
-  });
-};
+// export const all_roles = () => {
+//   return snap_roles.once("value").then((snap) => {
+//     let roles_array = [];
+//     snap.forEach((item) => {
+//       const i = item.val();
+//       const __item = {
+//         id: i.id,
+//         desc: i.desc,
+//         canCreate: i.crear,
+//         canUpdate: i.actualizar,
+//         canDelete: i.borrar,
+//         isAdmin: i.visible,
+//       };
+//       roles_array.push(__item);
+//     });
+//     return roles_array;
+//   });
+// };
 
 export const all_clients = () => {
   return snap_clients.once("value").then((snap) => {

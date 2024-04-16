@@ -7,32 +7,32 @@ div#roles-list_filter {
   margin-bottom: 1rem;
 }
 
-table#roles-list {
+table#roles {
   width: 100%;
   display: table;
   position: relative;
   border-top: 1px solid rgba(0, 0, 0, .05);
 }
 
-table#roles-list tbody tr.even {
+table#roles tbody tr.even {
   background-color: #fff;
 }
 
-table#roles-list tbody tr.odd {
+table#roles tbody tr.odd {
   background-color: rgba(0, 0, 0, .05);
 }
 
-table#roles-list tbody tr:hover {
+table#roles tbody tr:hover {
   background-color: #2d6e3d45;
   cursor: pointer;
 }
 
-table#roles-list thead th {
+table#roles thead th {
   color: #2d6e3d;
   text-align: start
 }
 
-table#roles-list tbody tr td {
+table#roles tbody tr td {
   font-size: 14px;
   padding: 6px 8px;
 }
@@ -172,18 +172,18 @@ div.formGroup.checkboxForm {
   height: 32px;
   margin-bottom: 1rem;
 }
-#button-edit-role {
+#button-add {
   float: right;
   padding: 4px 2rem;
   border: none;
-  background: #ffa500;
+  background: #2d6e3d;
   border-radius: 3px;
   color: white;
   transition: all 100ms linear;
 }
 
-#button-edit-role:hover {
+#button-add:hover {
   cursor: pointer;
-  background: #dc9003;
+  background: #1e5a2d;
   transition: all 100ms linear;
 }

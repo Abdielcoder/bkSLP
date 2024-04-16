@@ -1,4 +1,4 @@
-const concesionarioMenu = document.querySelector("#concesionario");
+const concesionarioMenu = document.querySelector("a#concesionario");
 const concesionarioSubmenu = document.querySelector("#concesionario-submenu");
 const adminMenu = document.querySelector("#administracion");
 const adminSubmenu = document.querySelector("#administracion-submenu");
