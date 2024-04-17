@@ -36,13 +36,13 @@
   box-shadow: 0px 0px 6px 0px #2b2b2b38;
 }
 
-.modal-dialog.expanded>.modal-container {
+.modal-dialog.expanded > .modal-container {
   opacity: 0;
   top: 0;
   animation: showInUp 250ms linear forwards;
 }
 
-.modal-dialog.expanded>.modal-background {
+.modal-dialog.expanded > .modal-background {
   opacity: 1;
   transform: opacity 3s linear;
 }
@@ -73,14 +73,14 @@
   display: flex;
   column-gap: 8px;
 
-  &>h4 {
+  & > h4 {
     margin: 0;
     font-size: 20px;
     font-weight: 400;
     color: white;
   }
 
-  &>.close-icon {
+  & > .close-icon {
     position: absolute;
     right: 16px;
     top: 16px;
@@ -88,22 +88,44 @@
     height: 20px;
   }
 
-  &>.close-icon:hover {
+  & > .close-icon:hover {
     cursor: pointer;
   }
 
-  &>.close-icon:hover svg {
+  & > .close-icon:hover svg {
     fill: #000000;
     color: #000000;
   }
 }
 
+.modal-dialog[data-submit="add"] .modal-header,
+.modal-dialog[data-submit="add"] .submit-button {
+  background: rgb(45, 110, 61);
+  transition: background-color 150ms linear;
+}
+.modal-dialog[data-submit="add"] .submit-button:hover {
+  background: rgb(45, 90, 61);
+  transition: background-color 150ms linear;
+}
+.modal-dialog[data-submit="update"] .modal-header,
+.modal-dialog[data-submit="update"] .submit-button {
+  background: rgb(253, 126, 20);
+  transition: background-color 150ms linear;
+}
+.modal-dialog[data-submit="update"] .submit-button:hover {
+  background: rgb(253, 106, 20);
+  transition: background-color 150ms linear;
+}
 .modal-body {
-  padding: 1rem;
+  padding: 1.5rem 1.5rem 0 1.5rem;
   display: block;
   width: 540px;
   overflow-y: auto;
   max-height: 400px;
+}
+
+.modal-footer {
+  padding: 1.5rem;
 }
 
 .button-tray {
@@ -111,45 +133,188 @@
   flex-flow: row nowrap;
   gap: 16px;
 
-  &>button {
+  & > button {
     padding: 8px 2rem;
+    border: 1px solid rgba(128, 128, 128, 0.913);
+    border-radius: 4px;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
   }
 
-  &>button:hover {
+  & > button:hover {
     cursor: pointer;
   }
 }
 
-.modal-footer {
-  padding: 0 1rem 1rem;
+button[type="button"].close-button {
+  background-color: white;
+  transition: background-color 150ms linear;
+  &:hover {
+    background-color: #f5f5f5;
+    transition: background-color 150ms linear;
+  }
 }
 
-/* FORM INPUT  */
+.submit-button {
+  color: white;
+}
+
+/* FORM   */
+
+form {
+  display: block;
+  width: 100%;
+}
+
 .row-title {
   display: block;
   margin-bottom: 16px;
   font-size: 16px;
 }
 
+form > .row {
+  display: flex;
+  flex-flow: row nowrap;
+  column-gap: 1rem;
+  width: 100%;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+}
+
+form > .row:last-child {
+  padding-bottom: 0;
+}
+
+.box {
+  width: 100%;
+  width: -webkit-fill-available;
+}
+
+.box > p.box-title {
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
 .form-group {
   display: block;
-  padding-bottom: 16px;
+  flex-grow: 1;
+  position: relative;
+}
+
+.form-group.checkbox {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 8px;
+  padding: 0;
+  max-height: 20px;
 }
 
 .form-group label {
-  font-size: 16px;
+  font-size: 12px;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  color: #000000c9;
+  position: relative;
+  transition: color 150ms linear;
 }
 
-.form-group input:not([type=checkbox]) {
+.form-group:hover label {
+  color: black;
+  transition: color 150ms linear;
+}
+
+.options-group {
+  padding-left: 1rem;
+}
+
+label.checkbox-text {
+  font-size: 12px;
+  left: 1.5rem;
+  margin-bottom: unset;
+  top: -2.5px;
+  line-height: 1;
+}
+
+.form-group input:not([type="checkbox"]),
+.form-group select {
   padding: 8px 0 8px 8px;
   font-size: 16px;
   color: #333;
   border: none;
-  box-shadow: inset 0px 0px 0px 1px #33333325;
+  box-shadow: inset 0px 0px 0px 1px #33333340;
   border-radius: 4px;
   width: 100%;
-  height: 40px;
-  max-height: 40px;
+  height: 32px;
+  max-height: 32px;
+}
+
+.form-group.error-input input:not([type="checkbox"]) {
+  box-shadow: inset 0px 0px 0px 1px rgb(213, 42, 42);
+}
+
+.error-message {
+  display: none;
+  color: #d52a2a;
+  font-size: 10px;
+  position: absolute;
+  bottom: -14px;
+  left: 0;
+}
+
+.form-group.error-input .error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Switch buttons */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(182, 182, 182);
+  transition: 0.4s;
+  border-radius: 2px;
+  height: 14px;
+  width: 28px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 10px;
+  width: 10px;
+  border-radius: 2px;
+  left: 2px;
+  bottom: 2px;
+  transform: rotate(270deg);
+  background-color: rgb(255, 255, 255);
+  transition: 0.4s;
+}
+
+.switch input:checked + .slider {
+  background-color: #21cc4c;
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(14px);
 }

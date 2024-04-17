@@ -166,7 +166,7 @@ div.formGroup.checkboxForm {
 }
 
 .body-button-tools {
-  display: block; 
+  display: block;
   height: 32px;
   margin-bottom: 1rem;
 }
@@ -177,19 +177,23 @@ div.formGroup.checkboxForm {
   height: 32px;
   align-items: center;
   float: right;
-  padding: 4px 2rem;
+  padding: 0 2rem;
   border: none;
-  background: #2d6e3d;
-  border-radius: 3px;
+  font-size: 12px;
+  background: rgb(45, 110, 61);
+  border-radius: 4px;
   transition: all 100ms linear;
-}
-
-#button-add span {
   color: white;
 }
 
 #button-add:hover {
   cursor: pointer;
-  background: #1e5a2d;
+  background: rgb(45, 90, 61);
   transition: all 100ms linear;
+}
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+  padding: 4px 8px !important;
+  font-size: 14px;
 }

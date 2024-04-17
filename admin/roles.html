@@ -212,8 +212,9 @@
                       <th>Concesionarios</th>
                       <th>Conductores</th>
                       <th>Vehiculos</th>
-                      <th>Mapa</th>
                       <th>Admin</th>
+                      <th>Roles</th>
+                      <th>Mapa</th>
                       <th>Fecha de alta</th>
                       <th>Acciones</th>
                     </tr>
@@ -292,92 +293,506 @@
         </div>
         <div class="modal-body">
           <div class="body-content">
-            <div class="content-row">
-              <form action="" class="form-content" id="roles">
-                <div class="flexed fullwidth">
-                  <div class="form-group">
-                    <label for="nombre">Nombre del rol</label>
-                    <input
-                      type="text"
-                      name="nombre"
-                      id="nombre"
-                      placeholder="Nombre del rol"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="clave">Clave</label>
-                    <input
-                      type="text"
-                      name="clave"
-                      id="clave"
-                      placeholder="Clave"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="descripcion">Descripción </label>
-                    <input
-                      type="text"
-                      name="descripcion"
-                      id="descripcion"
-                      placeholder="descripcion"
-                    />
-                  </div>
+            <form action="" class="form-content" id="roles">
+              <h4 class="row-title">Información requerida</h4>
+              <div class="row">
+                <div class="form-group">
+                  <label for="nombre">Nombre del rol</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    id="nombre"
+                    placeholder="Nombre del rol"
+                    required
+                  />
+                  <span class="error-message">
+                    <svg
+                      width="12px"
+                      height="12px"
+                      viewBox="0 0 512 512"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      fill="#000000"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <title>warning-filled</title>
+                        <g
+                          id="Page-1"
+                          stroke="none"
+                          stroke-width="1"
+                          fill="none"
+                          fill-rule="evenodd"
+                        >
+                          <g
+                            id="add"
+                            fill="#d52a2a"
+                            transform="translate(32.000000, 42.666667)"
+                          >
+                            <path
+                              d="M246.312928,5.62892705 C252.927596,9.40873724 258.409564,14.8907053 262.189374,21.5053731 L444.667042,340.84129 C456.358134,361.300701 449.250007,387.363834 428.790595,399.054926 C422.34376,402.738832 415.04715,404.676552 407.622001,404.676552 L42.6666667,404.676552 C19.1025173,404.676552 7.10542736e-15,385.574034 7.10542736e-15,362.009885 C7.10542736e-15,354.584736 1.93772021,347.288125 5.62162594,340.84129 L188.099293,21.5053731 C199.790385,1.04596203 225.853517,-6.06216498 246.312928,5.62892705 Z M224,272 C208.761905,272 197.333333,283.264 197.333333,298.282667 C197.333333,313.984 208.415584,325.248 224,325.248 C239.238095,325.248 250.666667,313.984 250.666667,298.624 C250.666667,283.264 239.238095,272 224,272 Z M245.333333,106.666667 L202.666667,106.666667 L202.666667,234.666667 L245.333333,234.666667 L245.333333,106.666667 Z"
+                              id="Combined-Shape"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </span>
                 </div>
+                <div class="form-group">
+                  <label for="clave">Clave</label>
+                  <input
+                    type="text"
+                    name="clave"
+                    id="clave"
+                    placeholder="Clave"
+                    required
+                  />
+                  <span class="error-message">
+                    <svg
+                      width="12px"
+                      height="12px"
+                      viewBox="0 0 512 512"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      fill="#000000"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <title>warning-filled</title>
+                        <g
+                          id="Page-1"
+                          stroke="none"
+                          stroke-width="1"
+                          fill="none"
+                          fill-rule="evenodd"
+                        >
+                          <g
+                            id="add"
+                            fill="#d52a2a"
+                            transform="translate(32.000000, 42.666667)"
+                          >
+                            <path
+                              d="M246.312928,5.62892705 C252.927596,9.40873724 258.409564,14.8907053 262.189374,21.5053731 L444.667042,340.84129 C456.358134,361.300701 449.250007,387.363834 428.790595,399.054926 C422.34376,402.738832 415.04715,404.676552 407.622001,404.676552 L42.6666667,404.676552 C19.1025173,404.676552 7.10542736e-15,385.574034 7.10542736e-15,362.009885 C7.10542736e-15,354.584736 1.93772021,347.288125 5.62162594,340.84129 L188.099293,21.5053731 C199.790385,1.04596203 225.853517,-6.06216498 246.312928,5.62892705 Z M224,272 C208.761905,272 197.333333,283.264 197.333333,298.282667 C197.333333,313.984 208.415584,325.248 224,325.248 C239.238095,325.248 250.666667,313.984 250.666667,298.624 C250.666667,283.264 239.238095,272 224,272 Z M245.333333,106.666667 L202.666667,106.666667 L202.666667,234.666667 L245.333333,234.666667 L245.333333,106.666667 Z"
+                              id="Combined-Shape"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <label for="descripcion">Descripción </label>
+                  <input
+                    type="text"
+                    name="descripcion"
+                    id="descripcion"
+                    placeholder="Descripción"
+                    required
+                  />
 
-                <div class="flexed">
-                  <div class="form-group checkbox-group">
-                    <input
-                      type="checkbox"
-                      name="concesionarios"
-                      id="concesionarios"
-                    />
-                    <label for="concesionarios">Concesionarios</label>
-                  </div>
-                  <div class="form-group checkbox-group">
-                    <input
-                      type="checkbox"
-                      name="conductores"
-                      id="conductores"
-                    />
-                    <label for="conductores">Conductores</label>
-                  </div>
-                  <div class="form-group checkbox-group">
-                    <input type="checkbox" name="vehiculos" id="vehiculos" />
-                    <label for="vehiculos">Vehículos</label>
-                  </div>
-                  <div class="form-group checkbox-group">
-                    <input type="checkbox" name="mapa" id="mapa" />
-                    <label for="mapa">Mapa</label>
-                  </div>
-                  <div class="form-group checkbox-group">
-                    <input type="checkbox" name="admin" id="admin" />
-                    <label for="admin">Administración</label>
+                  <span class="error-message">
+                    <svg
+                      width="12px"
+                      height="12px"
+                      viewBox="0 0 512 512"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      fill="#000000"
+                    >
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                      <g
+                        id="SVGRepo_tracerCarrier"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></g>
+                      <g id="SVGRepo_iconCarrier">
+                        <title>warning-filled</title>
+                        <g
+                          id="Page-1"
+                          stroke="none"
+                          stroke-width="1"
+                          fill="none"
+                          fill-rule="evenodd"
+                        >
+                          <g
+                            id="add"
+                            fill="#d52a2a"
+                            transform="translate(32.000000, 42.666667)"
+                          >
+                            <path
+                              d="M246.312928,5.62892705 C252.927596,9.40873724 258.409564,14.8907053 262.189374,21.5053731 L444.667042,340.84129 C456.358134,361.300701 449.250007,387.363834 428.790595,399.054926 C422.34376,402.738832 415.04715,404.676552 407.622001,404.676552 L42.6666667,404.676552 C19.1025173,404.676552 7.10542736e-15,385.574034 7.10542736e-15,362.009885 C7.10542736e-15,354.584736 1.93772021,347.288125 5.62162594,340.84129 L188.099293,21.5053731 C199.790385,1.04596203 225.853517,-6.06216498 246.312928,5.62892705 Z M224,272 C208.761905,272 197.333333,283.264 197.333333,298.282667 C197.333333,313.984 208.415584,325.248 224,325.248 C239.238095,325.248 250.666667,313.984 250.666667,298.624 C250.666667,283.264 239.238095,272 224,272 Z M245.333333,106.666667 L202.666667,106.666667 L202.666667,234.666667 L245.333333,234.666667 L245.333333,106.666667 Z"
+                              id="Combined-Shape"
+                            ></path>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+              <h4 class="row-title">Permisos</h4>
+              <div class="row">
+                <div class="box">
+                  <p class="box-title">Concesionario</p>
+                  <div class="options-group">
+                    <div class="form-group checkbox">
+                      <label class="switch" for="concesionarios-create">
+                        <input
+                          type="checkbox"
+                          name="concesionarios-create"
+                          id="concesionarios-create"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="concesionarios-create" class="checkbox-text"
+                        >Dar de alta</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="concesionarios-read">
+                        <input
+                          type="checkbox"
+                          name="concesionarios-read"
+                          id="concesionarios-read"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="concesionarios-read" class="checkbox-text"
+                        >Visualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="concesionarios-update">
+                        <input
+                          type="checkbox"
+                          name="concesionarios-update"
+                          id="concesionarios-update"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="concesionarios-update" class="checkbox-text"
+                        >Actualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="concesionarios-assign">
+                        <input
+                          type="checkbox"
+                          name="concesionarios-assign"
+                          id="concesionarios-assign"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="concesionarios-assign" class="checkbox-text"
+                        >Asignar vehículo</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="concesionarios-delete">
+                        <input
+                          type="checkbox"
+                          name="concesionarios-delete"
+                          id="concesionarios-delete"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="concesionarios-delete" class="checkbox-text"
+                        >Dar de baja</label
+                      >
+                    </div>
                   </div>
                 </div>
-                <!--<div class="button-tools">
-                  <button
-                    type="button"
-                    class="modal-back-button"
-                    id="modal-dialog-close"
-                  >
-                    <span>Cancelar</span>
-                  </button>
-                  <button
-                    type="submit"
-                    class="modal-back-button"
-                    id="modal-dialog-submit"
-                  >
-                    <span>Aceptar</span>
-                  </button>
-                </div> -->
-              </form>
-            </div>
+                <div class="box">
+                  <p class="box-title">Conductores</p>
+                  <div class="options-group">
+                    <div class="form-group checkbox">
+                      <label class="switch" for="conductores-create">
+                        <input
+                          type="checkbox"
+                          name="conductores-create"
+                          id="conductores-create"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="conductores-create" class="checkbox-text"
+                        >Dar de alta</label
+                      >
+                    </div>
+
+                    <div class="form-group checkbox">
+                      <label class="switch" for="conductores-read">
+                        <input
+                          type="checkbox"
+                          name="conductores-read"
+                          id="conductores-read"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="conductores-read" class="checkbox-text"
+                        >Visualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="conductores-update">
+                        <input
+                          type="checkbox"
+                          name="conductores-update"
+                          id="conductores-update"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="conductores-update" class="checkbox-text"
+                        >Actualizar datos</label
+                      >
+                    </div>
+
+                    <div class="form-group checkbox">
+                      <label class="switch" for="conductores-assign">
+                        <input
+                          type="checkbox"
+                          name="conductores-assign"
+                          id="conductores-assign"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="conductores-assign" class="checkbox-text"
+                        >Asignar vehículo</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="conductores-delete">
+                        <input
+                          type="checkbox"
+                          name="conductores-delete"
+                          id="conductores-delete"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="conductores-delete" class="checkbox-text"
+                        >Dar de baja</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="box">
+                  <p class="box-title">Vehículos</p>
+                  <div class="options-group">
+                    <div class="form-group checkbox">
+                      <label class="switch" for="vehiculos-create">
+                        <input
+                          type="checkbox"
+                          name="vehiculos-create"
+                          id="vehiculos-create"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="vehiculos-create" class="checkbox-text"
+                        >Dar de alta</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="vehiculos-read">
+                        <input
+                          type="checkbox"
+                          name="vehiculos-read"
+                          id="vehiculos-read"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="vehiculos-read" class="checkbox-text"
+                        >Visualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="vehiculos-update">
+                        <input
+                          type="checkbox"
+                          name="vehiculos-update"
+                          id="vehiculos-update"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="vehiculos-update" class="checkbox-text"
+                        >Actualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="vehiculos-delete">
+                        <input
+                          type="checkbox"
+                          name="vehiculos-delete"
+                          id="vehiculos-delete"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="vehiculos-delete" class="checkbox-text"
+                        >Dar de baja</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="box">
+                  <p class="box-title">Administradores</p>
+                  <div class="options-group">
+                    <div class="form-group checkbox">
+                      <label class="switch" for="admins-create">
+                        <input
+                          type="checkbox"
+                          name="admins-create"
+                          id="admins-create"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="admins-create" class="checkbox-text"
+                        >Dar de alta</label
+                      >
+                    </div>
+
+                    <div class="form-group checkbox">
+                      <label class="switch" for="admins-read">
+                        <input
+                          type="checkbox"
+                          name="admins-read"
+                          id="admins-read"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="admins-read" class="checkbox-text"
+                        >Visualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="admins-update">
+                        <input
+                          type="checkbox"
+                          name="admins-update"
+                          id="admins-update"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="admins-update" class="checkbox-text"
+                        >Actualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="admins-delete">
+                        <input
+                          type="checkbox"
+                          name="admins-delete"
+                          id="admins-delete"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="admins-delete" class="checkbox-text"
+                        >Dar de baja</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="box">
+                  <p class="box-title">Roles</p>
+                  <div class="options-group">
+                    <div class="form-group checkbox">
+                      <label class="switch" for="roles-create">
+                        <input
+                          type="checkbox"
+                          name="roles-create"
+                          id="roles-create"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="roles-create" class="checkbox-text"
+                        >Dar de alta</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="roles-update">
+                        <input
+                          type="checkbox"
+                          name="roles-update"
+                          id="roles-update"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="roles-update" class="checkbox-text"
+                        >Actualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="roles-read">
+                        <input
+                          type="checkbox"
+                          name="roles-read"
+                          id="roles-read"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="roles-read" class="checkbox-text"
+                        >Visualizar datos</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="roles-delete">
+                        <input
+                          type="checkbox"
+                          name="roles-delete"
+                          id="roles-delete"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="roles-delete" class="checkbox-text"
+                        >Dar de baja</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="box">
+                  <p class="box-title">Mapa</p>
+                  <div class="options-group">
+                    <div class="form-group checkbox">
+                      <label class="switch" for="mapa-read">
+                        <input
+                          type="checkbox"
+                          name="mapa-read"
+                          id="mapa-read"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="mapa-read" class="checkbox-text"
+                        >Visualizar datos</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
         <div class="modal-footer">
           <div class="button-tray">
-            <button type="button" class="close-modal">Cancel</button>
-            <button type="submit">Create</button>
+            <button type="button" class="close-button close-modal">
+              Cancel
+            </button>
+            <button type="button" class="submit-button">Create</button>
           </div>
         </div>
       </div>

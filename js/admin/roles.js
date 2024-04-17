@@ -1,13 +1,17 @@
-import { firestore, getDocumentsFromCollection } from "../config/config.js";
+import {
+  firestore,
+  getDocumentsFromCollection,
+  deleteDocumentByUid,
+} from "../config/config.js";
 
 const ROLES_COLLECTION = "roles";
 const ROLES_TABLE = document.querySelector("table#roles");
 const FORM_ROLES = document.querySelector("form#roles");
 const BUTTON_ADD = document.querySelector("#button-add");
 const MODAL_DIALOG = document.querySelector("div.modal-dialog");
-const MODAL_DIALOG_SUBMIT_BUTTOM = document.querySelector(
-  "button#modal-dialog-submit"
-);
+let ROLES_TABLE_CONTEXT = null;
+const MODAL_SUBMIT_BUTTON = document.querySelector("button.submit-button");
+
 let GLOBAL_DATA = [];
 
 const checkSuccessIcon = `
@@ -39,23 +43,24 @@ const checkNullIcon = `
   </svg>
   `;
 const updateIcon = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
-
+const deleteIcon = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>`;
 const createAndRenderDataTable = async () => {
   const snapshot = await getDocumentsFromCollection(ROLES_COLLECTION);
   GLOBAL_DATA = [];
   ROLES_TABLE.lastElementChild.innerHTML = "";
   if (snapshot !== false) {
     snapshot.forEach((document) => {
-      const data = document.data();
+      const data = destructuringRoleList(document.data());
       GLOBAL_DATA.push({ ...data, uid: document.id });
       const array = [
         ["nombre", data.nombre],
-        ["short", data.short],
-        ["concesionarios", data.concesionarios],
-        ["conductores", data.conductores],
-        ["vehiculos", data.vehiculos],
-        ["mapa", data.mapa],
-        ["admin", data.admin],
+        ["clave", data.clave],
+        ["concesionarios", data.concesionariosStatus],
+        ["conductores", data.conductoresStatus],
+        ["vehiculos", data.vehiculosStatus],
+        ["admins", data.adminsStatus],
+        ["roles", data.rolesStatus],
+        ["mapa", data.mapaStatus],
         ["fechaAlta", formatDateFromIsoString(data.fechaAlta)],
       ];
       const rowElementHTML = createRowElement(array, document.id);
@@ -65,8 +70,31 @@ const createAndRenderDataTable = async () => {
       );
     });
   }
-  console.log({ GLOBAL_DATA });
-  new DataTable(ROLES_TABLE);
+  ROLES_TABLE_CONTEXT = new DataTable(ROLES_TABLE, {
+    dom: "Bfrtip",
+    buttons: [
+      {
+        extend: "collection",
+        text: "Exportar",
+        buttons: ["excelHtml5", "pdfHtml5", "print"],
+      },
+    ],
+    oLanguage: {
+      sSearch: "Busqueda:",
+      oPaginate: {
+        sFirst: "Primera", // This is the link to the first page
+        sPrevious: "Anterior", // This is the link to the previous page
+        sNext: "Siguiente", // This is the link to the next page
+        sLast: "Ultima", // This is the link to the last page
+      },
+    },
+    language: {
+      info: "Se muestran los registros _START_ al _END_ de _TOTAL_. ",
+      infoEmpty: "No se muestran registros.",
+      emptyTable: "No se registran datos en la tabla.",
+      infoFiltered: "(Filtrado de _MAX_ registros).",
+    },
+  });
 };
 
 const createRowElement = (data, uid) => {
@@ -74,10 +102,14 @@ const createRowElement = (data, uid) => {
     const rowElement = document.createElement("TR");
     data.forEach((cell) => {
       const cellElement = document.createElement("TD");
-      if (typeof cell[1] === "boolean") {
+      if (typeof cell[1] === "number") {
         cellElement.insertAdjacentHTML(
           "beforeend",
-          cell[1] ? checkSuccessIcon : checkFailureIcon
+          cell[1] === 2
+            ? checkSuccessIcon
+            : cell[1] === 3
+            ? checkFailureIcon
+            : checkNullIcon
         );
       }
       if (typeof cell[1] === "string") {
@@ -94,17 +126,48 @@ const createRowElement = (data, uid) => {
   }
 };
 
+function elementSetAttributes(el, attrs) {
+  for (var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
+}
+
 const createActionToolsToRow = (uid) => {
+  const updateAttrs = {
+    type: "button",
+    class: "cellButtonTool",
+    "data-type": "update",
+    "data-id": uid,
+    title: "Editar",
+  };
+  const deleteAttrs = {
+    type: "button",
+    class: "cellButtonTool",
+    "data-type": "delete",
+    "data-id": uid,
+    title: "Eliminar",
+  };
+
   const cellElement = document.createElement("TD");
   const boxElement = document.createElement("DIV");
   const updateButtonElement = document.createElement("BUTTON");
+  const deleteButtonElement = document.createElement("BUTTON");
+
+  elementSetAttributes(updateButtonElement, updateAttrs);
+  elementSetAttributes(deleteButtonElement, deleteAttrs);
 
   updateButtonElement.innerHTML = updateIcon;
-  updateButtonElement.setAttribute("type", "button");
+  deleteButtonElement.innerHTML = deleteIcon;
+
   updateButtonElement.addEventListener("click", () =>
     showModalDialog(uid, "update")
   );
+  deleteButtonElement.addEventListener(
+    "click",
+    async () => await handleDeleteRole(uid)
+  );
   boxElement.insertAdjacentElement("beforeend", updateButtonElement);
+  boxElement.insertAdjacentElement("beforeend", deleteButtonElement);
   boxElement.setAttribute("class", "tool-actions");
   boxElement.setAttribute("data-document", uid);
   cellElement.insertAdjacentElement("beforeend", boxElement);
@@ -114,15 +177,18 @@ const createActionToolsToRow = (uid) => {
 
 const showModalDialog = (uid, type) => {
   MODAL_DIALOG.classList.add("expanded");
+  MODAL_DIALOG.setAttribute("data-submit", type);
   if (type === "update") {
     MODAL_DIALOG.setAttribute("data-document", uid);
-    MODAL_DIALOG.setAttribute("data-submit", "update");
-    MODAL_DIALOG_SUBMIT_BUTTOM.children[0].textContent = "ACTUALIZAR";
+    MODAL_SUBMIT_BUTTON.textContent = "ACTUALIZAR";
+    document.querySelector("div.modal-header>h4.header-title").innerHTML =
+      "Actualizar Rol";
     getDataAndRenderIntoModal(uid);
     return;
   }
-  MODAL_DIALOG.setAttribute("data-submit", "add");
-  MODAL_DIALOG_SUBMIT_BUTTOM.children[0].textContent = "AGREGAR";
+  document.querySelector("div.modal-header>h4.header-title").innerHTML =
+    "Crear Rol Nuevo";
+  MODAL_SUBMIT_BUTTON.textContent = "AGREGAR";
 };
 
 const hideModalDialog = async (reset = false) => {
@@ -139,35 +205,51 @@ const hideModalDialog = async (reset = false) => {
     element.value = "";
   });
   if (reset) {
-    await createAndRenderDataTable();
+    await handleRefetch();
   }
 };
 
-createAndRenderDataTable();
-
 BUTTON_ADD.addEventListener("click", function () {
-  showModalDialog(null, "create");
+  showModalDialog(null, "add");
 });
 
 const getDataAndRenderIntoModal = async (uid) => {
   const selectedData = GLOBAL_DATA.filter((item) => item.uid === uid)[0];
-  let formEntries = Object.values(FORM_ROLES).filter(
-    (item) => item.type !== "button" && item.type !== "submit"
-  );
+  const keys = Object.keys(selectedData);
 
-  formEntries.forEach((element) => {
-    const { name, type } = element;
-    if (type === "text") {
-      element.value = selectedData[name] || "";
+  keys.forEach((property) => {
+    if (Array.isArray(selectedData[property])) {
+      const taskValues = Object.values(selectedData[property]).map((task) => {
+        return Object.entries(task);
+      });
+
+      taskValues.forEach(([arr, value]) => {
+        const inputName = property + "-" + arr[0];
+        const element = document.querySelector("#" + inputName);
+        element.checked = arr[1];
+      });
       return;
     }
-    element.checked = selectedData[name];
+    const textElement = document.querySelector("#" + property);
+    if (textElement !== null) {
+      textElement.value = selectedData[property];
+    }
   });
 };
 
-FORM_ROLES.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const data = getEstructuredDataFromForm(e.target);
+MODAL_SUBMIT_BUTTON.addEventListener("click", async (e) => {
+  const hasEmptyValues = verifyFormBeforeSubmit();
+  hasEmptyValues.forEach(({ value, index }) => {
+    if (value === "") {
+      const parentElement = Object.values(FORM_ROLES)[index].parentElement;
+      parentElement.classList.add("error-input");
+      parentElement.children[2].insertAdjacentHTML(
+        "beforeend",
+        "No dejar campo vacio"
+      );
+    }
+  });
+  const data = getEstructuredDataFromForm(Object.values(FORM_ROLES));
   const type = MODAL_DIALOG.getAttribute("data-submit");
   const uid = MODAL_DIALOG.getAttribute("data-document");
   if (type === "add") {
@@ -231,11 +313,13 @@ const updateDocumentData = async (data, uid) => {
   }
 };
 
+function cleanDataFromTable() {
+  ROLES_TABLE_CONTEXT.clear().destroy();
+}
 const formatDateFromIsoString = (value) => {
   const dateValue = new Date(value);
   const [day, month, year] = dateValue.toLocaleDateString("es-MX").split("/");
   const time = dateValue.toLocaleTimeString("es-MX", { hour12: true });
-  // const [hours, min, seg] = time.split(".")[0].split(":");
   const monthsString = [
     "Enero",
     "Febrero",
@@ -265,3 +349,80 @@ const getEstructuredDataFromForm = (data) => {
   });
   return ObjectData;
 };
+
+const verifyFormBeforeSubmit = () => {
+  return Object.values(FORM_ROLES)
+    .map(({ type, value }, index) => {
+      return type === "text" ? { value, index } : null;
+    })
+    .filter((element) => element !== null);
+};
+
+const destructuringRoleList = (data) => {
+  const entries = Object.entries(data);
+
+  let objectData = {
+    conductores: [],
+    admins: [],
+    roles: [],
+    mapa: [],
+    concesionarios: [],
+    vehiculos: [],
+  };
+
+  entries.forEach((element, index) => {
+    const name = element[0];
+    const value = element[1];
+    if (name.includes("-")) {
+      const split = name.split("-");
+      const propertyName = split[0];
+      const propertyAction = split[1];
+      const objectProperty = objectData[propertyName] || [];
+      objectProperty.push({ [propertyAction]: value });
+    } else {
+      objectData[name] = value;
+    }
+  });
+
+  /*
+   ** Status [1 = null, 2 = true, 3= false]
+   */
+  objectData["concesionariosStatus"] = checkStatus(objectData.concesionarios);
+  objectData["conductoresStatus"] = checkStatus(objectData.conductores);
+  objectData["adminsStatus"] = checkStatus(objectData.admins);
+  objectData["rolesStatus"] = checkStatus(objectData.roles);
+  objectData["mapaStatus"] = checkStatus(objectData.mapa);
+  objectData["vehiculosStatus"] = checkStatus(objectData.vehiculos);
+
+  return objectData;
+};
+
+const checkStatus = (array) => {
+  if (array.every((item) => Object.values(item)[0] === true)) {
+    return 2;
+  }
+  if (array.some((item) => Object.values(item)[0] === false)) {
+    return 1;
+  }
+  if (array.every((item) => Object.values(item)[0] === false)) {
+    return 3;
+  }
+  return null;
+};
+
+async function handleDeleteRole(uid) {
+  const message = "Estás seguro de eliminar el registro?";
+  if (confirm(message)) {
+    const response = await deleteDocumentByUid(uid, "roles");
+    if (response) {
+      await handleRefetch();
+    }
+  }
+}
+
+const handleRefetch = async () => {
+  cleanDataFromTable();
+  await createAndRenderDataTable();
+};
+
+createAndRenderDataTable();

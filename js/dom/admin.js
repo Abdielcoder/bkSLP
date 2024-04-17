@@ -6,22 +6,15 @@ import {
   getDocumentsFromCollection,
 } from "../config/config.js";
 
-const MODAL_DIALOG = document.querySelector("div.modal");
-const BUTTON_ADD = document.querySelector("button#add-button");
+const MODAL_DIALOG = document.querySelector("div.modal-dialog");
+const BUTTON_ADD = document.querySelector("button#button-add");
 const BUTTON_CLOSE_MODAL = document.querySelectorAll(".close-modal");
-const FORM_ADMINISTRADORES = document.querySelector(
-  "form#form-administradores"
-);
+const FORM_ADMINISTRADORES = document.querySelector("form#administradores");
 const TABLE_ADMINISTRADORES = document.querySelector(
   "table#table-administradores"
 );
 let usersDataTableContext = null;
-let formEntries = Object.values(FORM_ADMINISTRADORES).filter(
-  (item) => item.type !== "button" && item.type !== "submit"
-);
-
-let GENERAL_CONTEXT_DATA = null;
-
+let rolesList = [];
 const fetchData = async () => {
   TABLE_ADMINISTRADORES.children[1].innerHTML = "";
   const data = await getDocumentsFromCollection("administradores");
@@ -65,10 +58,13 @@ const destructureDataFromCollection = (data) => {
 
 const createAdminUser = async () => {
   try {
-    const formObject = formEntries.reduce((acc, item) => {
-      acc[item.name] = item.value;
-      return acc;
-    }, {});
+    const formObject = Object.values(FORM_ADMINISTRADORES).reduce(
+      (acc, item) => {
+        acc[item.name] = item.value;
+        return acc;
+      },
+      {}
+    );
 
     if (Object.values(formObject).some((item) => item === "")) {
       alert("No dejar espacios vacios");
@@ -96,6 +92,7 @@ const createAdminUser = async () => {
 };
 
 function getDataFromAdminList(list) {
+  console.log({ rolesList, uid: rolesList[0].uid });
   const cell_list = {
     uid: list.uid,
     cells: [
@@ -103,7 +100,7 @@ function getDataFromAdminList(list) {
       list.email,
       list.usuario,
       list.departamento,
-      list.rolClave,
+      rolesList.filter((item) => item.uid === list.rolClave)[0]?.nombre || "",
       formatDateFromIsoString(list.fechaAlta),
     ],
   };
@@ -135,19 +132,34 @@ const handleRefetch = async () => {
   cleanDataFromTable();
   await fetchData();
 };
+
 function cleanDataFromTable() {
   usersDataTableContext.clear().destroy();
 }
+
 function showModal(type) {
   MODAL_DIALOG.classList.add("expanded");
-  document
-    .querySelector("button#modal-submit-button")
-    .setAttribute("data-type", type);
+  MODAL_DIALOG.setAttribute("data-submit", type);
+
+  if (type === "add") {
+    document.querySelector("div.modal-dialog h4.header-title").innerHTML =
+      "Alta Administrador";
+    document.querySelector("button.submit-button").innerHTML = "CREAR";
+    document.querySelector("form#administradores>h4.row-title").innerHTML =
+      "Da de alta un administrador Backoffice";
+    return;
+  }
+  document.querySelector("div.modal-dialog h4.header-title").innerHTML =
+    "Actualizar Administrador";
+  document.querySelector("button.submit-button").innerHTML = "ACTUALIZAR";
+  document.querySelector("form#administradores>h4.row-title").innerHTML =
+    "Actualiza la informacion del administrador Backoffice";
 }
 
 async function hideModal(refetch = false) {
   MODAL_DIALOG.classList.remove("expanded");
-  MODAL_DIALOG.setAttribute("data-reference", null);
+  MODAL_DIALOG.setAttribute("data-submit", null);
+  MODAL_DIALOG.setAttribute("data-document", null);
   if (refetch === true) {
     await handleRefetch();
   }
@@ -159,29 +171,29 @@ BUTTON_CLOSE_MODAL.forEach((element) => {
   element.addEventListener("click", async () => hideModal(false));
 });
 
-FORM_ADMINISTRADORES.addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const type = document
-    .querySelector("button#modal-submit-button")
-    .getAttribute("data-type");
-  if (type === "add") {
-    const response = await createAdminUser(Object.entries(e.target));
+document
+  .querySelector("button.submit-button")
+  .addEventListener("click", async function (e) {
+    const type = document
+      .querySelector("div.modal-dialog")
+      .getAttribute("data-submit");
+    if (type === "add") {
+      const response = await createAdminUser(Object.entries(e.target));
+      if (response) {
+        hideModal(true);
+      }
+      return;
+    }
+    const uid = MODAL_DIALOG.getAttribute("data-document");
+    const targets = Object.values(FORM_ADMINISTRADORES);
+    const values = targets.map((i) => {
+      return { [i.name]: i.value };
+    });
+    const response = await updateDocumentByUid(values, uid, "administradores");
     if (response) {
       hideModal(true);
     }
-    return;
-  }
-  const uid = MODAL_DIALOG.getAttribute("data-reference");
-  const targets = Object.values(FORM_ADMINISTRADORES).slice(0, -2);
-  console.log(targets);
-  const values = targets.map((i) => {
-    return { [i.name]: i.value };
   });
-  const response = await updateDocumentByUid(values, uid, "administradores");
-  if (response) {
-    hideModal(true);
-  }
-});
 
 function createRowToTable(list) {
   const tableRow = document.createElement("tr");
@@ -259,9 +271,10 @@ function createActionButtons(uid) {
 
 async function handleUpdateUser(uid) {
   showModal("update");
-  MODAL_DIALOG.setAttribute("data-reference", uid);
+  MODAL_DIALOG.setAttribute("data-document", uid);
   let data = await getDocumentByUid(uid, "administradores");
-
+  const rolClave = data.rolClave;
+  document.querySelector("select#rolClave").value = rolClave;
   let formEntries = Object.values(FORM_ADMINISTRADORES).filter(
     (item) => item.type !== "button" && item.type !== "submit"
   );
@@ -274,7 +287,7 @@ async function handleUpdateUser(uid) {
 async function handleDeleteUser(uid) {
   const response = await deleteDocumentByUid(uid, "administradores");
   if (response) {
-    await handleRefetch();
+    await hideModal(false);
   }
 }
 
@@ -284,5 +297,24 @@ function elementSetAttributes(el, attrs) {
   }
 }
 
+const getRolesList = async () => {
+  try {
+    const selectElement = document.querySelector("select#rolClave");
+    const roles = await getDocumentsFromCollection("roles");
+    roles.forEach((document) => {
+      const optionElement =
+        "<option value='" +
+        document.id +
+        "'>" +
+        document.data().nombre +
+        "</option>";
+      selectElement.insertAdjacentHTML("beforeend", optionElement);
+      rolesList.push({ uid: document.id, ...document.data() });
+    });
+  } catch (error) {
+    console.error("No se pudo obtener datos de roles", error);
+  }
+};
 
+getRolesList();
 fetchData();
