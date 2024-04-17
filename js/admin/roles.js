@@ -4,7 +4,7 @@ const ROLES_COLLECTION = "roles";
 const ROLES_TABLE = document.querySelector("table#roles");
 const FORM_ROLES = document.querySelector("form#roles");
 const BUTTON_ADD = document.querySelector("#button-add");
-const MODAL_DIALOG = document.querySelector("div#modalDialog");
+const MODAL_DIALOG = document.querySelector("div.modal-dialog");
 const MODAL_DIALOG_SUBMIT_BUTTOM = document.querySelector(
   "button#modal-dialog-submit"
 );
@@ -106,29 +106,29 @@ const createActionToolsToRow = (uid) => {
   );
   boxElement.insertAdjacentElement("beforeend", updateButtonElement);
   boxElement.setAttribute("class", "tool-actions");
-  boxElement.setAttribute("data-reference", uid);
+  boxElement.setAttribute("data-document", uid);
   cellElement.insertAdjacentElement("beforeend", boxElement);
 
   return cellElement;
 };
 
 const showModalDialog = (uid, type) => {
-  MODAL_DIALOG.setAttribute("data-visibility", "visible");
+  MODAL_DIALOG.classList.add("expanded");
   if (type === "update") {
-    MODAL_DIALOG.setAttribute("data-reference", uid);
-    MODAL_DIALOG.setAttribute("data-type", "update");
+    MODAL_DIALOG.setAttribute("data-document", uid);
+    MODAL_DIALOG.setAttribute("data-submit", "update");
     MODAL_DIALOG_SUBMIT_BUTTOM.children[0].textContent = "ACTUALIZAR";
     getDataAndRenderIntoModal(uid);
     return;
   }
-  MODAL_DIALOG.setAttribute("data-type", "add");
+  MODAL_DIALOG.setAttribute("data-submit", "add");
   MODAL_DIALOG_SUBMIT_BUTTOM.children[0].textContent = "AGREGAR";
 };
 
 const hideModalDialog = async (reset = false) => {
-  MODAL_DIALOG.setAttribute("data-visibility", "hidden");
-  MODAL_DIALOG.setAttribute("data-reference", null);
-  MODAL_DIALOG.setAttribute("data-type", null);
+  MODAL_DIALOG.classList.remove("expanded");
+  MODAL_DIALOG.setAttribute("data-document", null);
+  MODAL_DIALOG.setAttribute("data-submit", null);
 
   Object.values(FORM_ROLES).forEach((element) => {
     if (element.type === "button" || element.type === "submit") return;
@@ -168,8 +168,8 @@ const getDataAndRenderIntoModal = async (uid) => {
 FORM_ROLES.addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = getEstructuredDataFromForm(e.target);
-  const type = MODAL_DIALOG.getAttribute("data-type");
-  const uid = MODAL_DIALOG.getAttribute("data-reference");
+  const type = MODAL_DIALOG.getAttribute("data-submit");
+  const uid = MODAL_DIALOG.getAttribute("data-document");
   if (type === "add") {
     addDocumentToCollection(data);
     return;
@@ -253,9 +253,9 @@ const formatDateFromIsoString = (value) => {
   return `${day}/${monthsString[parseInt(month) - 1]}/${year} ${time}`;
 };
 
-document
-  .querySelector("button#modal-dialog-close")
-  .addEventListener("click", hideModalDialog);
+document.querySelectorAll(".close-modal").forEach((element) => {
+  element.addEventListener("click", () => hideModalDialog(false));
+});
 
 const getEstructuredDataFromForm = (data) => {
   let ObjectData = {};
