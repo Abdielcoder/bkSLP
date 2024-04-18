@@ -272,6 +272,7 @@ const addDocumentToCollection = async (data) => {
     });
     objectData.fechaAlta = new Date().toISOString();
 
+    console.log(objectData)
     const response = await firestore
       .collection(ROLES_COLLECTION)
       .add(objectData)
@@ -297,7 +298,7 @@ const updateDocumentData = async (data, uid) => {
       }
       objectData[name] = checked;
     });
-
+    console.log(objectData)
     const response = await firestore
       .collection(ROLES_COLLECTION)
       .doc(uid)
