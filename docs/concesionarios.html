@@ -5,7 +5,6 @@
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <title>Tu Taxi - Concesionarios</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="../js/dom/local.js"></script>
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/concesionarios.css" />
     <link
@@ -20,7 +19,7 @@
   </head>
 
   <body>
-    <div id="root">
+    <div id="root" class="preload">
       <!-- Aside -->
       <aside>
         <div id="aside-container">
@@ -149,7 +148,7 @@
       <header>
         <nav>
           <h1 class="app-title">Tu taxi - Portal Administrativo</h1>
-          <button class="close-app">
+          <button class="close-app" id="signout-button">
             <span class="material-icons-sharp">logout</span>
             Cerrar Sesión
           </button>
@@ -1425,13 +1424,14 @@
       });
     });
   </script>
-  <script src="../js/global-context.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+  <script type="module" src="../js/config/auth-config.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+  <script src="../js/global-context.js"></script>
   <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
@@ -1975,11 +1975,19 @@
 
     async function statusFunction(e, a) {
       const updatedArrayField = a.map((item) => {
-        if (item.uid === e.uid) {
-          return { vehicleUID: item.uid, habilitado: !item.habilitado };
+        if (item.vUid === e.vUid) {
+          return { vehicleUID: item.vUid, habilitado: !item.habilitado };
         }
-        return { vehicleUID: item.uid, habilitado: item.habilitado };
+        return { vehicleUID: item.vUid, habilitado: item.habilitado };
       });
+
+      if (
+        updatedArrayField?.filter((item) => item.habilitado === true).length > 2
+      ) {
+        alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
+        return;
+      }
+
       const userUID = document
         .querySelector("#usuariosAltaModal")
         .getAttribute("data-reference");
@@ -1987,6 +1995,7 @@
         ? "Estas seguro de deshabilitar el vehiculo al usuario?"
         : "Estas seguro de habilitar el vehiculo al usuario";
       if (confirm(message)) {
+        console.log({ userUID, updatedArrayField });
         const documentUpdated = await firestore
           .collection(CONCESIONARIOS_COLLECTION)
           .doc(userUID)
@@ -2105,7 +2114,7 @@
         });
       });
 
-      const uploadImages = async (file, name, type) => {
+    const uploadImages = async (file, name, type) => {
       try {
         const uid = document
           .getElementById("usuariosAltaModal")
@@ -2170,43 +2179,36 @@
               const button = document.createElement("button");
               button.setAttribute("type", "button");
               button.setAttribute("class", "botonAsignar");
-              console.log({ GLOBAL_USER_DATA });
               button.addEventListener("click", async function (e) {
-                if (GLOBAL_USER_DATA?.vehicles === undefined || GLOBAL_USER_DATA?.vehicles.length < 4) {
-                  const uid = document
-                    .querySelector("#usuariosAltaModal")
-                    .getAttribute("data-reference");
-                  const objectArray = { vehicleUID: id, habilitado: true };
-                  if (
-                    confirm(
-                      "Estas seguro de asignar este vehiculo al concesionario?"
-                    )
-                  ) {
-                    console.log({ vehicles: objectArray });
-                    const hasBeenAssigned = await firestore
-                      .collection(CONCESIONARIOS_COLLECTION)
-                      .doc(uid)
-                      .update({
-                        vehicles:
-                          firebase.firestore.FieldValue.arrayUnion(objectArray),
-                      })
-                      .then((snapshot) => {
-                        alert("Se ha asignado el vehiculo al usuario.");
-                        return true;
-                      })
-                      .catch((error) => {
-                        alert(
-                          "Se ha presentado un error, favor de verificar con un administrador."
-                        );
-                        console.error(error);
-                        return false;
-                      });
-                    if (hasBeenAssigned === true) {
-                      await getAndRenderVehiclesFromUser();
-                    }
+                const uid = document
+                  .querySelector("#usuariosAltaModal")
+                  .getAttribute("data-reference");
+                const objectArray = { vehicleUID: id, habilitado: false };
+                const message =
+                  "Estas seguro de asignar este vehiculo al concesionario?";
+                if (confirm(message)) {
+                  console.log({ uid, objectArray });
+                  const hasBeenAssigned = await firestore
+                    .collection(CONCESIONARIOS_COLLECTION)
+                    .doc(uid)
+                    .update({
+                      vehicles:
+                        firebase.firestore.FieldValue.arrayUnion(objectArray),
+                    })
+                    .then((snapshot) => {
+                      alert("Se ha asignado el vehiculo al usuario.");
+                      return true;
+                    })
+                    .catch((error) => {
+                      alert(
+                        "Se ha presentado un error, favor de verificar con un administrador."
+                      );
+                      console.error(error);
+                      return false;
+                    });
+                  if (hasBeenAssigned === true) {
+                    await getAndRenderVehiclesFromUser();
                   }
-                } else {
-                  alert("El usuario no puede asignar mas de 4 vehiculos.");
                 }
               });
 

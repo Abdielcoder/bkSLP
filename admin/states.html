@@ -4,8 +4,7 @@
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <title>Tu Taxi | Estados</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="../js/dom/local.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/states.css" />
     <link
@@ -20,7 +19,7 @@
   </head>
 
   <body>
-    <div id="root">
+    <div id="root" class="preload">
       <!-- Aside -->
       <aside>
         <div id="aside-container">
@@ -145,7 +144,7 @@
       <header>
         <nav>
           <h1 class="app-title">Tu taxi - Portal de Administración</h1>
-          <button class="close-app">
+          <button class="close-app" id="signout-button">
             <span class="material-icons-sharp">logout</span>
             Cerrar Sesión
           </button>
@@ -437,8 +436,7 @@
     type="text/javascript"
     src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
   ></script>
-  <script type="module" src="../js/admin/states.js"></script>
-  <script type="module" src="../js/dom/defaults.js" async></script>
+  <script type="module" src="../js/admin/states.js"></script> 
   <script>
     const a_tag = document.querySelectorAll("ul.tables-navigator a");
     const tables = document.querySelectorAll("table.table_list");

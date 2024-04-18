@@ -32,7 +32,6 @@ const formatDateString = fx => {
 export const warning_logs = firestore.collection("WarningLogs");
 export const panic_logs = firestore.collection("PanicLogs");
 export const rates_change_logs = firestore.collection("LogsCambioTarifa");
-export const logs_accesos = firestore.collection("loginAccesos");
 
 export const addEventLogListener = async (uid, event, dataX) => {
   const timestamp = await getActualDate();

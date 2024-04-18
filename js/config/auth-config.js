@@ -1,31 +1,37 @@
-import { tokens } from './config.js';
+const config = {
+  apiKey: "AIzaSyDrMy0R5emmKYAKwzrAwXtmBrj5hh67xkc",
+  authDomain: "sct-slp-a23af.firebaseapp.com",
+  databaseURL: "https://sct-slp-a23af-default-rtdb.firebaseio.com",
+  projectId: "sct-slp-a23af",
+  storageBucket: "sct-slp-a23af.appspot.com",
+  messagingSenderId: "845689188477",
+  appId: "1:845689188477:web:54051a45d70d0f1b8a4114",
+  measurementId: "G-KQYZZY31RZ",
+};
 
-const auth = firebase.auth();
+firebase.initializeApp(config);
 
-const redirectToIndex = () => {
-  window.location.replace('../index.html');
-}
+const redirectToIndex = () => window.location.replace("../index.html");
+const isAuthenticated = () => sessionStorage.getItem("user");
+const navigateTo = (page) => window.location.replace(page);
+ 
+window.onload = async function () {
+  if (window.location.pathname === "/index.html") return;
 
-const revokeToken = uid => {
-  tokens.child(uid).update({ isConnected: false, token: null });
-}
+  const session = isAuthenticated();
+  if (session === null) { 
+    navigateTo("../index.html");
+  }
 
-export const logOut = async () => {
-  const uid = localStorage.uid;
-  revokeToken(uid);
-  auth.signOut();
-  localStorage.clear();
-  redirectToIndex();
-}
+  const reference = firebase.firestore().collection("administradores"); 
+  const user = await reference.where("uuid", "==", session).limit(1).get();
+  if (user.empty) { 
+    redirectToIndex();
+    return;
+  }
 
-export const isSessionExpired = () => {
-  const uid = localStorage.uid;
-
-  if (uid === undefined || uid === null) { redirectToIndex(); }
-
-  tokens.child(uid).once('value').then(snap => {
-    const i = snap.val();
-    if (i.isConnected === true && (i.token !== undefined || i.token !== null)) return;
-    window.location.replace('../index.html');
-  });
-}
+  const signOutButton = document.querySelector("div#root");
+  if (signOutButton !== null) {
+    signOutButton.classList.remove("preload");
+  } 
+};

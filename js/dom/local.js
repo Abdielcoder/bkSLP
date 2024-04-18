@@ -1,5 +1,5 @@
-const uid = localStorage.getItem('uid');
+const authUser = sessionStorage.getItem("user");
 
-if (uid === undefined || uid === null || uid === "" || localStorage.length === 0) {
-  window.location.replace('../index.html');
-} 
+if (authUser === undefined || authUser === null || authUser === "") {
+  window.location.replace("../index.html");
+}

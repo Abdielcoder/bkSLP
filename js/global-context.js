@@ -40,3 +40,9 @@ window.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#copyrightFooter").textContent =
     "\u00A9 " + year + " Copyright, Tu Taxi.";
 });
+
+document.querySelector("button#signout-button").addEventListener("click", function(){
+  firebase.auth().signOut();
+  sessionStorage.clear();
+  window.location.replace("../index.html");
+})

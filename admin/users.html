@@ -4,8 +4,7 @@
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <title>Tu Taxi | Usuarios</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="../js/dom/local.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
@@ -21,7 +20,7 @@
   </head>
 
   <body>
-    <div id="root">
+    <div id="root" class="preload">
       <!-- Aside -->
       <aside>
         <div id="aside-container">
@@ -151,7 +150,7 @@
       <header>
         <nav>
           <h1 class="app-title">Tu taxi - Portal de Administración</h1>
-          <button class="close-app">
+          <button class="close-app" id="signout-button">
             <span class="material-icons-sharp">logout</span>
             Cerrar Sesión
           </button>
@@ -364,6 +363,7 @@
                     id="email"
                     name="email"
                     placeholder="Corréo electrónico"
+                    required
                   />
                 </div>
                 <div class="form-group">
@@ -372,7 +372,7 @@
                     type="text"
                     id="usuario"
                     name="usuario"
-                    placeholder="Usuario"
+                    placeholder="Usuario" 
                   />
                 </div>
               </div>
@@ -384,11 +384,12 @@
                     id="departamento"
                     name="departamento"
                     placeholder="Departamento"
+                    required
                   />
                 </div>
                 <div class="form-group input-select">
                   <label for="rolClave">Rol desempeñado</label>
-                  <select name="rolClave" id="rolClave">
+                  <select name="rolClave" id="rolClave" required>
                     <option value="0">Seleccione una opción</option>
                   </select>
                 </div>
@@ -407,13 +408,14 @@
       </div>
     </div>
   </body>
-  <script src="../js/global-context.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+  <script type="module" src="../js/config/auth-config.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+  <script src="../js/global-context.js"></script> 
   <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
@@ -425,7 +427,6 @@
   <script
     type="text/javascript"
     src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
-  ></script>
-  <script type="module" src="../js/dom/defaults.js" async></script>
+  ></script> 
   <script type="module" src="../js/dom/admin.js"></script>
 </html>

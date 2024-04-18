@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <title>Tu Taxi | Vehículos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="../js/dom/local.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
       rel="stylesheet"
@@ -20,7 +19,7 @@
   </head>
 
   <body>
-    <div id="root">
+    <div id="root" class="preload">
       <!-- Aside -->
       <aside>
         <div id="aside-container">
@@ -149,7 +148,7 @@
       <header>
         <nav>
           <h1 class="app-title">Tu taxi - Portal Administrativo</h1>
-          <button class="close-app">
+          <button class="close-app" id="signout-button">
             <span class="material-icons-sharp">logout</span>
             Cerrar Sesión
           </button>
@@ -868,13 +867,14 @@
       });
     });
   </script>
-  <script src="../js/global-context.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+    <script type="module" src="../js/config/auth-config.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+    <script src="../js/global-context.js"></script> 
   <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"

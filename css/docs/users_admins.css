@@ -3,43 +3,56 @@ main {
   overflow-x: hidden;
 }
 
-div#table-administradores-list_filter {
+div#table-administradores_filter {
   margin-bottom: 1rem;
 }
 
-table#table-administradores-list {
+table#table-administradores {
   width: 100%;
   display: table;
   position: relative;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-table#table-administradores-list tbody tr.even {
+table#table-administradores tbody tr.even {
   background-color: #fff;
 }
 
-table#table-administradores-list tbody tr.odd {
+table#table-administradores tbody tr.odd {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-table#table-administradores-list tbody tr:hover {
+table#table-administradores tbody tr:hover {
   background-color: #2d6e3d45;
 }
-table#table-administradores-list thead th {
+table#table-administradores thead th {
   color: #2d6e3d;
   text-align: start;
 }
 
-table#table-administradores-list tbody tr td {
+table#table-administradores tbody tr td {
   font-size: 14px;
   padding: 6px 8px;
 }
+table#table-administradores tbody tr td:nth-child(1),
+table#table-administradores tbody tr td:nth-child(6) {
+  white-space: nowrap;
+}
 
-table#table-administradores-list tbody td:not(:nth-child(-n + 2)) {
+table#table-administradores tbody tr td:nth-child(3),
+table#table-administradores tbody tr td:nth-child(4),
+table#table-administradores tbody tr td:nth-child(5),
+table#table-administradores tbody tr td:nth-child(6),
+table#table-administradores tbody tr td:nth-child(7),
+table#table-administradores tbody tr td:nth-child(8) {
+  text-align: center;
+}
+
+table#table-administradores tbody td:not(:nth-child(-n + 2)) {
   text-transform: capitalize;
 }
 
-div#table-administradores-list > label {
+div#table-administradores > label {
   background-color: #2d6e3d;
   padding-left: 8px;
   border-radius: 3px;
@@ -49,7 +62,7 @@ div#table-administradores-list > label {
   margin-bottom: 5px;
 }
 
-input[aria-controls="table-administradores-list"] {
+input[aria-controls="table-administradores"] {
   width: 400px;
   background-color: whitesmoke !important;
   border-top-right-radius: 3px;
@@ -67,7 +80,7 @@ div.datatable_operation_buttons {
   align-items: center;
 }
 
-div#table-administradores-list_filter > label {
+div#table-administradores_filter > label {
   display: inline-block;
   background-color: #2d6e3d;
   font-size: 1rem;
@@ -76,7 +89,7 @@ div#table-administradores-list_filter > label {
   border-radius: 3px;
   color: whitesmoke;
 }
-input[aria-controls="table-administradores-list"] {
+input[aria-controls="table-administradores"] {
   width: 400px;
   background-color: whitesmoke !important;
   border-top-right-radius: 3px;
@@ -214,7 +227,7 @@ tr.isSelected td {
   color: white;
 }
 
-table#table-administradores-list tbody tr:hover {
+table#table-administradores tbody tr:hover {
   background-color: #2d6e3d45;
 }
 

@@ -1,9 +1,11 @@
 import {
   firestore,
+  auth,
   getDocumentByUid,
   deleteDocumentByUid,
   updateDocumentByUid,
   getDocumentsFromCollection,
+  resetPasswordToUser,
 } from "../config/config.js";
 
 const MODAL_DIALOG = document.querySelector("div.modal-dialog");
@@ -15,12 +17,13 @@ const TABLE_ADMINISTRADORES = document.querySelector(
 );
 let usersDataTableContext = null;
 let rolesList = [];
+let CONTEXT = [];
+
 const fetchData = async () => {
   TABLE_ADMINISTRADORES.children[1].innerHTML = "";
   const data = await getDocumentsFromCollection("administradores");
   const objectData = destructureDataFromCollection(data);
 
-  console.log({ objectData });
   usersDataTableContext = new DataTable(TABLE_ADMINISTRADORES, {
     dom: "Bfrtip",
     buttons: [
@@ -52,7 +55,11 @@ const destructureDataFromCollection = (data) => {
   const arrayElements = [];
   data.forEach((document) => {
     getDataFromAdminList({ ...document.data(), uid: document.id });
+    arrayElements.push({ ...document.data(), uid: document.id });
   });
+
+  CONTEXT = arrayElements;
+
   return arrayElements;
 };
 
@@ -66,6 +73,17 @@ const createAdminUser = async () => {
       {}
     );
 
+    const usernameExists = CONTEXT?.some(
+      (item) => item.usuario === formObject.usuario
+    );
+    if (usernameExists) {
+      alert(
+        "El usuario [" +
+          formObject.usuario +
+          "] ya existe, favor de seleccionar otro nombre de usuario"
+      );
+      return;
+    }
     if (Object.values(formObject).some((item) => item === "")) {
       alert("No dejar espacios vacios");
       return;
@@ -75,24 +93,70 @@ const createAdminUser = async () => {
 
     formObject.fechaAlta = todayDate;
     formObject.fechaActualizacion = todayDate;
-    const userReference = await firestore
-      .collection("administradores")
-      .add(formObject);
 
-    if (userReference) {
-      alert("Se ha creado el usuario correctamente.");
-      await handleRefetch();
-    } else {
-      throw new Error("No se pudo obtener referencia al vehículo creado.");
+    const { status, code, user } = await auth
+      .createUserWithEmailAndPassword(formObject.email, "1234abcd")
+      .then((userCredentials) => {
+        Object.assign(formObject, { uuid: userCredentials.user.uid });
+        return {
+          status: 200,
+          user: userCredentials.user,
+        };
+      })
+      .catch((error) => {
+        return {
+          status: 500,
+          code: error.code,
+        };
+      });
+    if (status === 200) {
+      console.log(formObject);
+      const userReference = await firestore
+        .collection("administradores")
+        .add(formObject);
+
+      if (userReference) {
+        alert("Se ha creado el usuario correctamente.");
+        await resetPasswordToUser(formObject.email);
+        await hideModal(true);
+      } else {
+        throw new Error("No se pudo obtener referencia al vehículo creado.");
+      }
+
+      if (status === 500) {
+        switch (code) {
+          case "auth/email-already-in-use":
+            window.alert(
+              "El correo '" +
+                formObject.email +
+                "' ya se encuentra registrado en el sistema, favor de introducir un correo distinto."
+            );
+            break;
+          case "auth/invalid-email":
+            window.alert("Corréo invalido, pruebe con otro.");
+            break;
+          case "auth/operation-not-allowed":
+            window.alert(
+              "Se ha presentado un error en el registro, favor de verificar con un administrador."
+            );
+            break;
+          default:
+            window.alert(
+              "Se ha presentado un error, favor de verificar los datos introducidos."
+            );
+            break;
+        }
+        return false;
+      }
     }
   } catch (error) {
     console.error("Error al crear usuario:", error);
     alert("Se ha presentado un error al crear el vehículo.");
+    await hideModal(false);
   }
 };
 
 function getDataFromAdminList(list) {
-  console.log({ rolesList, uid: rolesList[0].uid });
   const cell_list = {
     uid: list.uid,
     cells: [
@@ -285,9 +349,12 @@ async function handleUpdateUser(uid) {
 }
 
 async function handleDeleteUser(uid) {
-  const response = await deleteDocumentByUid(uid, "administradores");
-  if (response) {
-    await hideModal(false);
+  const message = "Estas seguro de eliminar a este usuario?";
+  if (confirm(message)) {
+    const response = await deleteDocumentByUid(uid, "administradores");
+    if (response) {
+      await hideModal(true);
+    }
   }
 }
 
@@ -315,6 +382,19 @@ const getRolesList = async () => {
     console.error("No se pudo obtener datos de roles", error);
   }
 };
+
+// document
+//   .querySelector("input#nombre")
+//   .addEventListener("input", userNameGenerator);
+
+// function userNameGenerator(e) {
+//   let value = e.target.value;
+//   e.target.value = value.replace(/[^a-zA-Z ]/g, "");
+//   let username = value.replaceAll(/[ .]+/g, ".");
+//   const split = username.split(".");
+//   username = split[0].slice(0, 1) + (split[2] || "user") + ".admin";
+//   document.querySelector("#usuario").value = username;
+// }
 
 getRolesList();
 fetchData();

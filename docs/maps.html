@@ -5,7 +5,6 @@
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="../js/dom/local.js"></script>
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/maps.css" />
     <link
@@ -53,7 +52,7 @@
       <header>
         <nav>
           <h1 class="app-title">Tu taxi - Portal Administrativo</h1>
-          <button class="close-app">
+          <button class="close-app" id="signout-button">
             <span class="material-icons-sharp">logout</span>
             Cerrar Sesión
           </button>
@@ -213,13 +212,15 @@
       <source src="../assets/audio/warning.mp3" type="audio/mpeg" />
     </audio>
   </body>
-</html> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</html>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script type="module" src="../js/config/auth-config.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+<script src="../js/global-context.js"></script>
 <script type="module" src="../js/dashboard/map/functionality.js" async></script>
 <script type="module" src="../js/dashboard/map/dom.js"></script>
 <script type="module" src="../js/dashboard/map/play_audio.js"></script>

@@ -1,17 +1,5 @@
-const config = {
-  apiKey: "AIzaSyDrMy0R5emmKYAKwzrAwXtmBrj5hh67xkc",
-  authDomain: "sct-slp-a23af.firebaseapp.com",
-  databaseURL: "https://sct-slp-a23af-default-rtdb.firebaseio.com",
-  projectId: "sct-slp-a23af",
-  storageBucket: "sct-slp-a23af.appspot.com",
-  messagingSenderId: "845689188477",
-  appId: "1:845689188477:web:54051a45d70d0f1b8a4114",
-  measurementId: "G-KQYZZY31RZ",
-};
-
-const app = firebase.initializeApp(config);
 const realtime = firebase.database().ref();
-const auth = firebase.auth();
+export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
 
@@ -628,10 +616,7 @@ export const createUserAndSaveData = async (elements, collection) => {
       return false;
     }
   } catch (error) {
-    console.error(
-      "Se ha presentado un error al crear el registro. ",
-      error
-    );
+    console.error("Se ha presentado un error al crear el registro. ", error);
     return false;
   }
 };
@@ -681,7 +666,7 @@ export const updateDocumentByUid = async (elements, uid, collection) => {
   });
   data = Object.assign(data, { fechaActualizacion: new Date().toISOString() });
   delete data.fechaAlta;
- 
+
   const response = await firestore
     .collection(collection)
     .doc(uid)
@@ -702,7 +687,7 @@ export const resetPasswordToUser = async (email) => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log({ errorCode, errorMessage })
+      console.log({ errorCode, errorMessage });
       return false;
     });
 
@@ -746,7 +731,11 @@ export const addDocumentToMessageCollection = async (e) => {
     .catch((error) => false);
 };
 
-export const getDocumentsFromVehicleCollection = async (cUid, collection, vehiculos) => {
+export const getDocumentsFromVehicleCollection = async (
+  cUid,
+  collection,
+  vehiculos
+) => {
   try {
     const userInformation = await firestore
       .collection(collection)
@@ -775,17 +764,17 @@ export const getDocumentsFromVehicleCollection = async (cUid, collection, vehicu
             return snapshot.exists && { ...snapshot.data(), uid: snapshot.id };
           });
       })
-    ); 
+    );
     if (querySnapshot.length > 0) {
       const requiredInformationFromVehicle = querySnapshot.map((req) => {
         const { placa, modelo, marca, uid: vUid } = req;
-        const vehicles = userInformation.vehicles; 
-        const habilitado = vehicles.filter((i) => i.vehicleUID === vUid); 
+        const vehicles = userInformation.vehicles;
+        const habilitado = vehicles?.filter((i) => i.vehicleUID === vUid);
         return {
           placa,
           modelo,
           marca,
-          habilitado: habilitado[0].habilitado,
+          habilitado: habilitado[0]?.habilitado || false,
           vUid,
         };
       });
@@ -795,7 +784,7 @@ export const getDocumentsFromVehicleCollection = async (cUid, collection, vehicu
       return [];
     }
   } catch (error) {
-    console.error("Error al obtener vehículos:", error); 
+    console.error("Error al obtener vehículos:", error);
     return false;
   }
 };
@@ -809,7 +798,9 @@ export const uploadFilesToStorage = async (uid, collection) => {
       return;
     }
 
-    const reference = storage.ref().child(`${collection}/${uid}/` + archivo.name);
+    const reference = storage
+      .ref()
+      .child(`${collection}/${uid}/` + archivo.name);
     await reference.put(archivo);
 
     const url = await reference.getDownloadURL();
@@ -820,5 +811,3 @@ export const uploadFilesToStorage = async (uid, collection) => {
     return false;
   }
 };
-
-export default app;
