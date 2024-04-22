@@ -25,20 +25,30 @@
       <aside>
         <div id="aside-container">
           <div class="logo">
-            <a class="home-link" href="../docs/main.html">Tu Taxi | Backoffice</a>
+            <a class="home-link" href="../docs/main.html"
+              >Tu Taxi | Backoffice</a
+            >
           </div>
           <hr />
           <ul class="nav">
-            <li class="nav-item">
+            <li class="nav-item" id="mapa-menu-li" style="display: none">
               <a class="nav-link" href="../docs/maps.html">
                 <span class="link-icons material-icons-sharp">map</span>
                 MAPA
               </a>
             </li>
-            <li class="nav-item"  id="concesionario-menu-li">
-              <a class="nav-link hasSubmenu" href="../docs/concesionarios.html" id="concesionario">
+            <li
+              class="nav-item"
+              id="concesionario-menu-li"
+              style="display: none"
+            >
+              <a
+                class="nav-link hasSubmenu"
+                href="../docs/concesionarios.html"
+                id="concesionario"
+              >
                 <span class="link-icons material-icons-sharp">person</span>
-                CONCESIONARIO
+                CONCESIONARIOS
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
@@ -47,7 +57,7 @@
                       <span class="link-icons material-icons-sharp"
                         >directions_car</span
                       >
-                      VEHICULO
+                      VEHICULOS
                     </a>
                   </li>
                   <li class="nav-item">
@@ -61,19 +71,37 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
+              <a class="nav-link" href="../docs/vehicles.html">
+                <span class="link-icons material-icons-sharp"
+                  >directions_car</span
+                >
+                VEHICULOS
+              </a>
+            </li>
+            <li class="nav-item" id="conductores-menu-li" style="display: none">
+              <a class="nav-link" href="../docs/users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                CONDUCTORES
+              </a>
+            </li>
+            <li class="nav-item" id="chats-menu-li">
               <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">chat</span>
                 CHATS
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="historico-menu-li">
               <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
             </li>
-            <li class="nav-item menu-button menu-closed" id="admin-menu-li">
+            <li
+              class="nav-item menu-button menu-closed"
+              id="admin-menu-li"
+              style="display: none"
+            >
               <a class="nav-link" href="#" id="administracion">
                 <span class="link-icons material-icons-sharp"
                   >manage_accounts</span
@@ -89,15 +117,19 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="./users.html">
+                    <a class="nav-sublink" href="./administradores/">
                       <span class="link-icons material-icons-sharp"
                         >person</span
                       >
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="./roles.html">
+                  <li
+                    class="nav-item menu-linked hidden"
+                    id="roles-menu-li"
+                    style="display: none"
+                  >
+                    <a class="nav-sublink" href="./roles/index.html">
                       <span class="link-icons material-icons-sharp"
                         >groups</span
                       >
@@ -105,7 +137,7 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink selectedPage" href="./clients.html">
+                    <a class="nav-sublink" href="#">
                       <span class="link-icons material-icons-sharp"
                         >person_pin</span
                       >
@@ -119,7 +151,7 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="./base_rates.html">
+                    <a class="nav-sublink" href="#">
                       <span class="link-icons material-icons-sharp"
                         >attach_money</span
                       >
@@ -128,9 +160,9 @@
                   </li>
                 </ul>
               </div>
-            </li> 
-            <li class="nav-item">
-              <a class="nav-link" href="../docs/users.html">
+            </li>
+            <li class="nav-item" id="clientes-menu-li">
+              <a class="nav-link selectedPage" href="#">
                 <span class="link-icons material-icons-sharp">
                   airline_seat_recline_extra</span
                 >

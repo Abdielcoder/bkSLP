@@ -6,15 +6,13 @@ import {
   updateDocumentByUid,
   getDocumentsFromCollection,
   resetPasswordToUser,
-} from "../config/config.js";
+} from "../../js/config/config.js";
 
 const MODAL_DIALOG = document.querySelector("div.modal-dialog");
 const BUTTON_ADD = document.querySelector("button#button-add");
 const BUTTON_CLOSE_MODAL = document.querySelectorAll(".close-modal");
 const FORM_ADMINISTRADORES = document.querySelector("form#administradores");
-const TABLE_ADMINISTRADORES = document.querySelector(
-  "table#table-administradores"
-);
+const TABLE_ADMINISTRADORES = document.querySelector("#table-administradores");
 let usersDataTableContext = null;
 let rolesList = [];
 let CONTEXT = [];
@@ -64,97 +62,71 @@ const destructureDataFromCollection = (data) => {
 };
 
 const createAdminUser = async () => {
-  try {
-    const formObject = Object.values(FORM_ADMINISTRADORES).reduce(
-      (acc, item) => {
-        acc[item.name] = item.value;
-        return acc;
-      },
-      {}
-    );
+  const formObject = await userReducerFormData();
+  const userExists = CONTEXT?.some(
+    (item) => item.usuario === formObject.usuario
+  );
+  if (userExists) return errorHandler("userExists", { user: formObject.email });
+  const hasEmptySpaces = Object.values(formObject).some((item) => item === "");
+  if (hasEmptySpaces) return errorHandler("emptySpaces");
 
-    const usernameExists = CONTEXT?.some(
-      (item) => item.usuario === formObject.usuario
-    );
-    if (usernameExists) {
-      alert(
-        "El usuario [" +
-          formObject.usuario +
-          "] ya existe, favor de seleccionar otro nombre de usuario"
-      );
-      return;
-    }
-    if (Object.values(formObject).some((item) => item === "")) {
-      alert("No dejar espacios vacios");
-      return;
-    }
+  const todayDate = new Date().toISOString();
 
-    const todayDate = new Date().toISOString();
+  formObject.fechaAlta = todayDate;
+  formObject.fechaActualizacion = todayDate;
 
-    formObject.fechaAlta = todayDate;
-    formObject.fechaActualizacion = todayDate;
+  const { data, response } = await createAuthUser(formObject);
+  if (response.status === 200) {
+    const userReference = await createFirestoreUser({
+      data,
+      uid: response.user.uid,
+    });
+    if (userReference === false) return;
 
-    const { status, code, user } = await auth
-      .createUserWithEmailAndPassword(formObject.email, "1234abcd")
-      .then((userCredentials) => {
-        Object.assign(formObject, { uuid: userCredentials.user.uid });
-        return {
-          status: 200,
-          user: userCredentials.user,
-        };
-      })
-      .catch((error) => {
-        return {
-          status: 500,
-          code: error.code,
-        };
-      });
-    if (status === 200) {
-      console.log(formObject);
-      const userReference = await firestore
-        .collection("administradores")
-        .add(formObject);
-
-      if (userReference) {
-        alert("Se ha creado el usuario correctamente.");
-        await resetPasswordToUser(formObject.email);
-        await hideModal(true);
-      } else {
-        throw new Error("No se pudo obtener referencia al vehículo creado.");
-      }
-
-      if (status === 500) {
-        switch (code) {
-          case "auth/email-already-in-use":
-            window.alert(
-              "El correo '" +
-                formObject.email +
-                "' ya se encuentra registrado en el sistema, favor de introducir un correo distinto."
-            );
-            break;
-          case "auth/invalid-email":
-            window.alert("Corréo invalido, pruebe con otro.");
-            break;
-          case "auth/operation-not-allowed":
-            window.alert(
-              "Se ha presentado un error en el registro, favor de verificar con un administrador."
-            );
-            break;
-          default:
-            window.alert(
-              "Se ha presentado un error, favor de verificar los datos introducidos."
-            );
-            break;
-        }
-        return false;
-      }
-    }
-  } catch (error) {
-    console.error("Error al crear usuario:", error);
-    alert("Se ha presentado un error al crear el vehículo.");
-    await hideModal(false);
+    alert("Se ha creado el usuario correctamente.");
+    await resetPasswordToUser(formObject.email);
+    await hideModal(true);
   }
 };
+
+function userReducerFormData() {
+  return Object.values(FORM_ADMINISTRADORES).reduce((acc, item) => {
+    acc[item.name] = item.value;
+    return acc;
+  }, {});
+}
+
+async function createFirestoreUser(args) {
+  return await firestore
+    .collection("administradores")
+    .doc(args.uid)
+    .set(args.data)
+    .catch((error) => {
+      return false;
+    });
+}
+
+async function createAuthUser(args) {
+  const data = args;
+  const response = await auth
+    .createUserWithEmailAndPassword(args.email, "1234abcd")
+    .then((userCredentials) => {
+      Object.assign(data);
+      return {
+        status: 200,
+        user: userCredentials.user,
+      };
+    })
+    .catch((error) => {
+      errorHandler(error.code, { email: args.email });
+      return {
+        status: 400,
+        user: null,
+      };
+    });
+
+  return { data, response };
+}
 
 function getDataFromAdminList(list) {
   const cell_list = {
@@ -377,10 +349,45 @@ const getRolesList = async () => {
         "</option>";
       selectElement.insertAdjacentHTML("beforeend", optionElement);
       rolesList.push({ uid: document.id, ...document.data() });
-    });
+    }); 
   } catch (error) {
     console.error("No se pudo obtener datos de roles", error);
   }
+};
+
+const errorHandler = (code, args) => {
+  switch (code) {
+    case "auth/email-already-in-use":
+      window.alert(
+        "El correo '" +
+          args.email +
+          "' ya se encuentra registrado en el sistema, favor de introducir un correo distinto."
+      );
+      break;
+    case "auth/invalid-email":
+      window.alert("Corréo invalido, pruebe con otro.");
+      break;
+    case "auth/operation-not-allowed":
+      window.alert(
+        "Se ha presentado un error en el registro, favor de verificar con un administrador."
+      );
+      break;
+    case "userExists":
+      window.alert(
+        "El usuario [" +
+          args.user +
+          "] ya existe, favor de seleccionar otro nombre de usuario"
+      );
+      break;
+    case "emptySpaces":
+      break;
+    default:
+      window.alert(
+        "Se ha presentado un error, favor de verificar los datos introducidos."
+      );
+      break;
+  }
+  return null;
 };
 
 // document

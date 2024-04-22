@@ -28,13 +28,17 @@
           </div>
           <hr />
           <ul class="nav">
-            <li class="nav-item">
+            <li class="nav-item" id="mapa-menu-li" style="display: none">
               <a class="nav-link" href="./maps.html">
                 <span class="link-icons material-icons-sharp">map</span>
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="concesionario-menu-li">
+            <li
+              class="nav-item"
+              id="concesionario-menu-li"
+              style="display: none"
+            >
               <a
                 class="nav-link hasSubmenu"
                 href="./concesionarios.html"
@@ -50,7 +54,7 @@
                       <span class="link-icons material-icons-sharp"
                         >directions_car</span
                       >
-                      VEHICULO
+                      VEHICULOS
                     </a>
                   </li>
                   <li class="nav-item">
@@ -64,19 +68,37 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="vehiculos-menu-li" style="display: none;">
+              <a class="nav-link" href="./vehicles.html">
+                <span class="link-icons material-icons-sharp"
+                  >directions_car</span
+                >
+                VEHICULO
+              </a>
+            </li>
+            <li class="nav-item" id="conductores-menu-li" style="display: none;">
+              <a class="nav-link selectedPage" href="./users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                CONDUCTORES
+              </a>
+            </li>
+            <li class="nav-item" id="chats-menu-li">
               <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">chat</span>
                 CHATS
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="historico-menu-li">
               <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
             </li>
-            <li class="nav-item menu-button menu-closed" id="admin-menu-li">
+            <li
+              class="nav-item menu-button menu-closed"
+              id="admin-menu-li"
+              style="display: none"
+            >
               <a class="nav-link" href="#" id="administracion">
                 <span class="link-icons material-icons-sharp"
                   >manage_accounts</span
@@ -92,15 +114,15 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/users.html">
+                    <a class="nav-sublink" href="../admin/administradores/">
                       <span class="link-icons material-icons-sharp"
                         >person</span
                       >
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/roles.html">
+                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none;">
+                    <a class="nav-sublink" href="../admin/roles/">
                       <span class="link-icons material-icons-sharp"
                         >groups</span
                       >
@@ -132,8 +154,8 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./users.html">
+            <li class="nav-item" id="clientes-menu-li">
+              <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">
                   airline_seat_recline_extra</span
                 >

@@ -2,7 +2,7 @@ import {
   firestore,
   getDocumentsFromCollection,
   deleteDocumentByUid,
-} from "../config/config.js";
+} from "../../js/config/config.js";
 
 const ROLES_COLLECTION = "roles";
 const ROLES_TABLE = document.querySelector("table#roles");
@@ -44,8 +44,10 @@ const checkNullIcon = `
   `;
 const updateIcon = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
 const deleteIcon = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>`;
+
 const createAndRenderDataTable = async () => {
   const snapshot = await getDocumentsFromCollection(ROLES_COLLECTION);
+
   GLOBAL_DATA = [];
   ROLES_TABLE.lastElementChild.innerHTML = "";
   if (snapshot !== false) {
@@ -273,7 +275,6 @@ const addDocumentToCollection = async (data) => {
     });
     objectData.fechaAlta = new Date().toISOString();
 
-    console.log(objectData);
     const response = await firestore
       .collection(ROLES_COLLECTION)
       .add(objectData)
@@ -299,7 +300,6 @@ const updateDocumentData = async (data, uid) => {
       }
       objectData[name] = checked;
     });
-    console.log(objectData);
     const response = await firestore
       .collection(ROLES_COLLECTION)
       .doc(uid)
@@ -403,11 +403,11 @@ const checkStatus = (array) => {
   if (array.every((item) => Object.values(item)[0] === true)) {
     return 2;
   }
-  if (array.every((item) => Object.values(item)[0] === false)) {
-    return 3;
-  }
   if (array.some((item) => Object.values(item)[0] === false)) {
     return 1;
+  }
+  if (array.every((item) => Object.values(item)[0] === false)) {
+    return 3;
   }
   return null;
 };

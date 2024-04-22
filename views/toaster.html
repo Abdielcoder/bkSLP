@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      *,
+      *::before,
+      ::after {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        box-sizing: border-box;
+      }
+      #root {
+        position: relative;
+      }
+      .toast {
+        position: fixed;
+        top: 1rem;
+        right: calc(1rem - 100vw);
+        border-radius: 2px;
+        box-shadow: 2px 2px 0px 0px rgb(0 0 0 / 36%);
+        transition: all 300ms ease-out;
+        background-color: white;
+      }
+
+      .toast.expanded {
+        right: 1rem;
+        transition: all 300ms ease-out;
+      }
+
+      .toast.closing {
+        right: 1rem;
+        transition: all 300ms ease-in;
+      }
+
+      .toast-container {
+        padding-left: 16px;
+        padding-right: 32px;
+        height: 48px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: 0.5rem;
+      }
+
+      .toast-container::before {
+        content: "";
+        width: 8px;
+        height: 48px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: block;
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+      }
+
+      .toast[data-alert="success"] > .toast-container::before {
+        background-color: #28a745;
+      }
+      .toast[data-alert="danger"] > .toast-container::before {
+        background-color: #dc3545;
+      }
+      .toast[data-alert="warning"] > .toast-container::before {
+        background-color: #ffc113;
+      }
+      .toast[data-alert="info"] > .toast-container::before {
+        background-color: #007bff;
+      }
+
+      .toast-message {
+        & > h6 {
+          font-weight: 700;
+          font-size: 16px;
+        }
+
+        & > p {
+          font-size: 12px;
+          font-weight: 400;
+          white-space: nowrap;
+        }
+      }
+
+      .toast-cancel {
+        position: absolute;
+        right: 8px;
+        top: 2px;
+      }
+
+      .toast-cancel:hover {
+        cursor: pointer;
+      }
+
+      .toast[data-alert="success"] {
+        border: 1px solid #28a745;
+      }
+
+      .toast[data-alert="danger"] {
+        border: 1px solid #dc3545;
+      }
+
+      .toast[data-alert="warning"] {
+        border: 1px solid #ffc113;
+      }
+
+      .toast[data-alert="info"] {
+        border: 1px solid #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="toast" data-alert="danger">
+        <div class="toast-container">
+          <svg
+            fill="#dc3545"
+            width="24px"
+            height="24px"
+            viewBox="0 0 32 32"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="#dc3545"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <title>cancel</title>
+              <path
+                d="M16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.961 12.209c0.244-0.244 0.244-0.641 0-0.885l-1.328-1.327c-0.244-0.244-0.641-0.244-0.885 0l-3.761 3.761-3.761-3.761c-0.244-0.244-0.641-0.244-0.885 0l-1.328 1.327c-0.244 0.244-0.244 0.641 0 0.885l3.762 3.762-3.762 3.76c-0.244 0.244-0.244 0.641 0 0.885l1.328 1.328c0.244 0.244 0.641 0.244 0.885 0l3.761-3.762 3.761 3.762c0.244 0.244 0.641 0.244 0.885 0l1.328-1.328c0.244-0.244 0.244-0.641 0-0.885l-3.762-3.76 3.762-3.762z"
+              ></path>
+            </g>
+          </svg>
+          <div class="toast-message">
+            <h6>Error</h6>
+            <p>Se ha presentado un error, favor de verificar.</p>
+          </div>
+          <span class="toast-cancel">&times;</span>
+        </div>
+      </div>
+      <div class="toast" data-alert="warning">
+        <div class="toast-container">
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 512 512"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            fill="#ffc113"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <title>warning-filled</title>
+              <g
+                id="Page-1"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+              >
+                <g
+                  id="add"
+                  fill="#ffc113"
+                  transform="translate(32.000000, 42.666667)"
+                >
+                  <path
+                    d="M246.312928,5.62892705 C252.927596,9.40873724 258.409564,14.8907053 262.189374,21.5053731 L444.667042,340.84129 C456.358134,361.300701 449.250007,387.363834 428.790595,399.054926 C422.34376,402.738832 415.04715,404.676552 407.622001,404.676552 L42.6666667,404.676552 C19.1025173,404.676552 7.10542736e-15,385.574034 7.10542736e-15,362.009885 C7.10542736e-15,354.584736 1.93772021,347.288125 5.62162594,340.84129 L188.099293,21.5053731 C199.790385,1.04596203 225.853517,-6.06216498 246.312928,5.62892705 Z M224,272 C208.761905,272 197.333333,283.264 197.333333,298.282667 C197.333333,313.984 208.415584,325.248 224,325.248 C239.238095,325.248 250.666667,313.984 250.666667,298.624 C250.666667,283.264 239.238095,272 224,272 Z M245.333333,106.666667 L202.666667,106.666667 L202.666667,234.666667 L245.333333,234.666667 L245.333333,106.666667 Z"
+                    id="Combined-Shape"
+                  ></path>
+                </g>
+              </g>
+            </g>
+          </svg>
+          <div class="toast-message">
+            <h6>Advertencia</h6>
+            <p>Se ha presentado un error, favor de verificar.</p>
+          </div>
+          <span class="toast-cancel">&times;</span>
+        </div>
+      </div>
+      <div class="toast" data-alert="success">
+        <div class="toast-container">
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 1024 1024"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#000000"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                fill="#28a745"
+                d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.808 536.384-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.272 38.272 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336L456.192 600.384z"
+              ></path>
+            </g>
+          </svg>
+          <div class="toast-message">
+            <h6>Éxito</h6>
+            <p>Se ha presentado un error, favor de verificar.</p>
+          </div>
+          <span class="toast-cancel">&times;</span>
+        </div>
+      </div>
+      <div class="toast" data-alert="info">
+        <div class="toast-container">
+          <svg
+            fill="#007bff"
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm1,15a1,1,0,0,1-2,0V11a1,1,0,0,1,2,0ZM12,8a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,12,8Z"
+              ></path>
+            </g>
+          </svg>
+          <div class="toast-message">
+            <h6>Info</h6>
+            <p>Se ha presentado un error, favor de verificar.</p>
+          </div>
+          <span class="toast-cancel">&times;</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

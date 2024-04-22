@@ -28,13 +28,13 @@
           </div>
           <hr />
           <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="../docs/maps.html">
+            <li class="nav-item" id="mapa-menu-li" style="display: none;">
+              <a class="nav-link" href="../docs/maps.html" style="display: none;">
                 <span class="link-icons material-icons-sharp">map</span>
                 MAPA
               </a>
             </li>
-            <li class="nav-item"  id="concesionario-menu-li">
+            <li class="nav-item"  id="concesionario-menu-li" style="display: none;">
               <a class="nav-link hasSubmenu" href="../docs/concesionarios.html" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIO
@@ -60,6 +60,20 @@
                 </ul>
               </div>
             </li>
+            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
+              <a class="nav-link" href="../docs/vehicles.html">
+                <span class="link-icons material-icons-sharp"
+                  >directions_car</span
+                >
+                VEHICULOS
+              </a>
+            </li>
+            <li class="nav-item" id="conductores-menu-li" style="display: none">
+              <a class="nav-link" href="../docs/users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                CONDUCTORES
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">chat</span>
@@ -72,7 +86,7 @@
                 HISTORICO DE VIAJES
               </a>
             </li>
-            <li class="nav-item menu-button menu-closed" id="admin-menu-li">
+            <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none;">
               <a class="nav-link" href="#" id="administracion">
                 <span class="link-icons material-icons-sharp"
                   >manage_accounts</span
@@ -95,7 +109,7 @@
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden">
+                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none;">
                     <a class="nav-sublink" href="./roles.html">
                       <span class="link-icons material-icons-sharp"
                         >groups</span
@@ -458,6 +472,8 @@
         });
       });
     });
+
+    
   </script>
 </html>
 

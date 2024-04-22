@@ -6,12 +6,20 @@ const logAccesos = firestore.collection("loginAccesos");
 const getUserData = async (uid) => {
   try {
     const reference = firestore.collection("administradores");
-    const user = await reference.where("uuid", "==", uid).limit(1).get();
+    const user = await reference.doc(uid).get();
     if (user.empty) {
       console.error("Usuario no existe");
+      window.alert("Usuario no existe");
       return null;
     }
-    const data = user.docs[0].data();
+    const data = user.data();
+    const roles = await getUserRoles(data.rolClave);
+    if (roles === false) {
+      window.alert(
+        "Se ha presentado un error, favor de solicitar a un administrador que asigne un rol a tu cuenta de acceso."
+      );
+      window.location.reload();
+    }
     return {
       uid,
       name: data.nombre,
@@ -19,12 +27,69 @@ const getUserData = async (uid) => {
       departamento: data.departamento,
       email: data.email,
       rol: data.rolClave,
-      id: user.docs[0].id,
+      roles,
     };
   } catch (error) {
     console.error("Error obteniendo el registro, ", error);
     return null;
   }
+};
+
+const getUserRoles = async (uid) => {
+  try {
+    const rol = await firestore.collection("roles").doc(uid).get();
+    return destructuringRoleList(rol.data());
+  } catch (error) {
+    return false;
+  }
+};
+
+const destructuringRoleList = (data) => {
+  const entries = Object.entries(data);
+
+  let objectData = {
+    conductores: [],
+    admins: [],
+    roles: [],
+    mapa: [],
+    concesionarios: [],
+    vehiculos: [],
+  };
+
+  entries.forEach((element, index) => {
+    const name = element[0];
+    const value = element[1];
+    if (name.includes("-")) {
+      const split = name.split("-");
+      const propertyName = split[0];
+      const propertyAction = split[1];
+      const objectProperty = objectData[propertyName] || [];
+      objectProperty.push({ [propertyAction]: value });
+    } else {
+      objectData[name] = value;
+    }
+  });
+  objectData["concesionariosStatus"] = checkStatus(objectData.concesionarios);
+  objectData["conductoresStatus"] = checkStatus(objectData.conductores);
+  objectData["adminsStatus"] = checkStatus(objectData.admins);
+  objectData["rolesStatus"] = checkStatus(objectData.roles);
+  objectData["mapaStatus"] = checkStatus(objectData.mapa);
+  objectData["vehiculosStatus"] = checkStatus(objectData.vehiculos);
+
+  return objectData;
+};
+
+const checkStatus = (array) => {
+  if (array.every((item) => Object.values(item)[0] === true)) {
+    return 2;
+  }
+  if (array.every((item) => Object.values(item)[0] === false)) {
+    return 3;
+  }
+  if (array.some((item) => Object.values(item)[0] === false)) {
+    return 1;
+  }
+  return null;
 };
 
 const getErrorCode = (code) => {
@@ -64,6 +129,15 @@ const setSession = async (user, timestamp) => {
   sessionStorage.setItem("auth", user.token);
   sessionStorage.setItem("rol", user.rol);
   sessionStorage.setItem("lastLogin", timestamp);
+  sessionStorage.setItem(
+    "render-concesionarios",
+    user.roles.concesionariosStatus
+  );
+  sessionStorage.setItem("render-conductores", user.roles.conductoresStatus);
+  sessionStorage.setItem("render-admins", user.roles.adminsStatus);
+  sessionStorage.setItem("render-roles", user.roles.rolesStatus);
+  sessionStorage.setItem("render-mapa", user.roles.mapaStatus);
+  sessionStorage.setItem("render-vehiculos", user.roles.vehiculosStatus);
   return;
 };
 
@@ -94,14 +168,8 @@ const setSessionToken = async (credentials) => {
   try {
     const { email, user, rol, uid } = credentials;
     const timestamp = new Date().toISOString();
-    const documentData = {
-      email,
-      username: user,
-      rol,
-      uid,
-      timestamp,
-    };
-    await logAccesos.add(documentData).then(async () => { 
+    const documentData = { email, username: user, rol, uid, timestamp };
+    await logAccesos.add(documentData).then(async () => {
       await setSession(credentials, timestamp);
       window.location.replace("./docs/main.html");
     });

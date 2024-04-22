@@ -1,4 +1,4 @@
-import { logOut, isSessionExpired } from "../config/auth-config.js";
+import { logOut } from "../config/auth-config.js";
 
 const admin_menu = document.querySelector("li.nav-item.menu-button a.nav-link");
 const sub_menu = document.querySelectorAll("li.nav-item.menu-linked");
@@ -28,5 +28,3 @@ const log_out = document.querySelector("button.close-app");
 log_out.addEventListener("click", (e) => {
   logOut();
 });
-
-isSessionExpired();

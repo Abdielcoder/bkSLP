@@ -1,0 +1,208 @@
+main {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+div#roles-list_filter {
+  margin-bottom: 1rem;
+}
+
+table#roles {
+  width: 100%;
+  display: table;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+table#roles tbody tr.even {
+  background-color: #fff;
+}
+
+table#roles tbody tr.odd {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+table#roles tbody tr:hover {
+  background-color: #2d6e3d45;
+  cursor: pointer;
+}
+
+table#roles thead th {
+  color: #2d6e3d;
+  text-align: start;
+}
+
+table#roles tbody tr td {
+  font-size: 14px;
+  padding: 6px 8px;
+}
+
+table#roles tbody tr td:nth-child(3),
+table#roles tbody tr td:nth-child(4),
+table#roles tbody tr td:nth-child(5),
+table#roles tbody tr td:nth-child(6),
+table#roles tbody tr td:nth-child(7),
+table#roles tbody tr td:nth-child(8) {
+  text-align: center;
+}
+
+.container-header h1 {
+  font-weight: lighter;
+  font-size: 2rem;
+}
+
+.container-header p {
+  font-weight: lighter;
+  font-size: 14px;
+  margin-bottom: 1rem;
+}
+
+.modalDialog {
+  position: fixed;
+  inset: 0 0 0 0;
+  z-index: 1080;
+}
+
+.dialogBackground {
+  position: absolute;
+  background: #00000020;
+  z-index: 1010;
+  width: 100%;
+  height: 100vh;
+}
+
+.dialogContent {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 4px;
+  z-index: 1080;
+}
+
+.modalDialog[data-visibility="hidden"] {
+  display: none;
+  visibility: hidden;
+}
+
+.modalDialog[data-visibility="visible"] {
+  display: block;
+  visibility: visible;
+}
+
+.dialogTitle {
+  padding: 20px;
+  text-align: center;
+}
+
+.dialogContainer {
+  padding: 0px 20px 20px;
+}
+
+#modalFormCancel {
+  background: white;
+  outline: none;
+  border: 1px solid gray;
+}
+
+#modalFormSubmit {
+  background: #2d6e3d;
+  border: 1px solid #2d6e3d;
+  outline: none;
+}
+
+#modalFormSubmit span {
+  color: white;
+}
+
+form.form-content {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.fullwidth {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.flexed {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  flex-grow: 1;
+}
+
+div.formGroup.checkboxForm {
+  display: flex;
+  align-items: baseline;
+  font-size: 12px;
+  gap: 4px;
+}
+
+.button-tools {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  width: 100%;
+  flex-grow: 1;
+  padding: 10px 0 0 0;
+}
+
+.button-tools button {
+  flex-grow: 1;
+  padding: 6px;
+  border-radius: 2px;
+  border: none;
+}
+
+.button-tools button[type="button"] {
+  background: white;
+  border: 1px solid gray;
+}
+
+.button-tools button[type="submit"] {
+  background: #2d6e3d;
+  border: 1px solid #2d6e3d;
+}
+
+.button-tools button:hover {
+  cursor: pointer;
+}
+
+.body-button-tools {
+  display: block;
+  height: 32px;
+  margin-bottom: 1rem;
+}
+
+#button-add {
+  display: flex;
+  gap: 0.5rem;
+  height: 32px;
+  align-items: center;
+  float: right;
+  padding: 0 2rem;
+  border: none;
+  font-size: 12px;
+  background: rgb(45, 110, 61);
+  border-radius: 4px;
+  transition: all 100ms linear;
+  color: white;
+}
+
+#button-add:hover {
+  cursor: pointer;
+  background: rgb(45, 90, 61);
+  transition: all 100ms linear;
+}
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+  padding: 4px 8px !important;
+  font-size: 14px;
+}
