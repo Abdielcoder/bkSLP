@@ -11,7 +11,7 @@ const config = {
 
 firebase.initializeApp(config);
 
-const redirectToIndex = () => window.location.replace("../index.html");
+const redirectToIndex = () => window.location.replace("https://tutaxislp.com.mx");
 const isAuthenticated = () => sessionStorage.getItem("user");
 const navigateTo = (page) => window.location.replace(page);
 
@@ -40,7 +40,7 @@ window.onload = async function () {
     const rolesMenu = document.querySelector("#roles-menu-li");
 
     console.log(sessionStorage);
-
+ 
     if (sessionStorage.getItem("render-mapa") == "3") {
       mapaMenu.remove();
     } else {
@@ -59,7 +59,7 @@ window.onload = async function () {
       rolesMenu.style.display = "block";
     }
 
-    if (sessionStorage.getItem("render-concesionarios") != 3) {
+    if(sessionStorage.getItem("render-concesionarios") != 3){
       concesionarioMenu.style.display = "block";
       conductoresMenu.remove();
       vehiculosMenu.remove();
@@ -67,18 +67,18 @@ window.onload = async function () {
     }
     concesionarioMenu.remove();
 
-    if (sessionStorage.getItem("render-conductores") == 3) {
-      conductoresMenu.remove();
+    if(sessionStorage.getItem("render-conductores") == 3){
+      conductoresMenu.remove();      
     } else {
-      conductoresMenu.style.display = "block";
+      conductoresMenu.style.display = "block"
     }
 
-    if (sessionStorage.getItem("render-vehiculos") == 3) {
+    if(sessionStorage.getItem("render-vehiculos") == 3){
       vehiculosMenu.remove();
-    } else {
-      vehiculosMenu.style.display = "block";
+    }  else {
+      vehiculosMenu.style.display ="block"
     }
-  };
+  }; 
 
   const signOutButton = document.querySelector("div#root");
   if (signOutButton !== null) {

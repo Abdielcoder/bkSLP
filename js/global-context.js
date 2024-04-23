@@ -44,5 +44,5 @@ window.addEventListener("DOMContentLoaded", () => {
 document.querySelector("button#signout-button").addEventListener("click", function(){
   firebase.auth().signOut();
   sessionStorage.clear();
-  window.location.replace("../index.html");
+  window.location.replace("https://tutaxislp.com.mx");
 })
