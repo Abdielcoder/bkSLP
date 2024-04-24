@@ -49,15 +49,23 @@
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
-                  <li class="nav-item-submenu">
+                  <li
+                    class="nav-item-submenu"
+                    id="vehiculos-submenu-li"
+                    style="display: none"
+                  >
                     <a class="nav-link" href="./vehicles.html">
                       <span class="link-icons material-icons-sharp"
                         >directions_car</span
                       >
-                      VEHICULO
+                      VEHICULOS
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li
+                    class="nav-item"
+                    id="conductores-submenu-li"
+                    style="display: none"
+                  >
                     <a class="nav-link" href="./users.html">
                       <span class="link-icons material-icons-sharp"
                         >person</span
@@ -68,7 +76,7 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item" id="vehiculos-menu-li" style="display: none;">
+            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
               <a class="nav-link" href="./vehicles.html">
                 <span class="link-icons material-icons-sharp"
                   >directions_car</span
@@ -76,7 +84,7 @@
                 VEHICULO
               </a>
             </li>
-            <li class="nav-item" id="conductores-menu-li" style="display: none;">
+            <li class="nav-item" id="conductores-menu-li" style="display: none">
               <a class="nav-link" href="./users.html">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONDUCTORES
@@ -108,21 +116,25 @@
               <div id="administracion-submenu" data-displayed="hidden">
                 <ul>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/messages.html">
+                    <a class="nav-sublink" href="../admin/mensajes/index.html">
                       <span class="link-icons material-icons-sharp">chat</span>
                       MENSAJES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/administradores/">
+                    <a class="nav-sublink" href="../admin/administradores/index.html">
                       <span class="link-icons material-icons-sharp"
                         >person</span
                       >
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none;">
-                    <a class="nav-sublink" href="../admin/roles/">
+                  <li
+                    class="nav-item menu-linked hidden"
+                    id="roles-menu-li"
+                    style="display: none"
+                  >
+                    <a class="nav-sublink" href="../admin/roles/index.html">
                       <span class="link-icons material-icons-sharp"
                         >groups</span
                       >
@@ -130,7 +142,7 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/clients.html">
+                    <a class="nav-sublink" href="#">
                       <span class="link-icons material-icons-sharp"
                         >person_pin</span
                       >
@@ -307,16 +319,33 @@
                   </h2>
 
                   <div class="form-columns" style="flex-wrap: nowrap">
-                    <div
-                      class="formGroup inputForm"
-                      style="max-width: 280px; width: 100%"
-                    >
-                      <label for="nombreCompleto">Nombre completo</label>
+                    <div class="formGroup inputForm">
+                      <label for="nombre">Nombre(s)</label>
                       <input
                         type="text"
-                        placeholder="Nombre completo..."
-                        name="nombreCompleto"
-                        id="nombreCompleto"
+                        placeholder="Nombre(s)"
+                        name="nombre"
+                        id="nombre"
+                        required
+                      />
+                    </div>
+                    <div class="formGroup inputForm">
+                      <label for="apellidoPaterno">Apellido Paterno</label>
+                      <input
+                        type="text"
+                        placeholder="Apellido Paterno"
+                        name="apellidoPaterno"
+                        id="apellidoPaterno"
+                        required
+                      />
+                    </div>
+                    <div class="formGroup inputForm">
+                      <label for="apellidoMaterno">Apellido Materno</label>
+                      <input
+                        type="text"
+                        placeholder="Apellido Materno"
+                        name="apellidoMaterno"
+                        id="apellidoMaterno"
                         required
                       />
                     </div>
@@ -330,6 +359,9 @@
                         required
                       />
                     </div>
+                  </div>
+
+                  <div class="form-columns" style="flex-wrap: nowrap">
                     <div class="formGroup selectForm" style="max-width: 120px">
                       <label for="sexo">Genero</label>
                       <select name="sexo" id="sexo">
@@ -1498,6 +1530,7 @@
       "Diciembre",
     ];
 
+    let permissions = {};
     const CONCESIONARIOS_COLLECTION = "concesionarios";
     const VEHICULOS_COLLECTION = "vehiculos";
     // Main Table
@@ -1531,6 +1564,10 @@
     });
 
     userAddbutton.addEventListener("click", () => {
+      if (permissions.create == "0") {
+        negateAccess();
+        return;
+      }
       document.querySelector("#modalFormSubmit").style.display = "block";
       document.querySelector("#modalFormUpdateSubmit").style.display = "none";
       document.querySelectorAll("button.tab-button").forEach((element) => {
@@ -1673,7 +1710,9 @@
       const cell_list = {
         uid: list.uid,
         cells: [
-          list.nombreCompleto,
+          list.nombre + " " + list.apellidoPaterno ||
+            "" + " " + list.apellidoMaterno ||
+            "",
           list.sexo,
           list.correoElectronico,
           list.telefono,
@@ -1701,7 +1740,7 @@
     async function handleSubmit(e) {
       e.preventDefault();
       const targets = Object.entries(e.target).slice(0, -3);
-      console.log({ elements: Object.entries(e.target) });
+      // console.log({ elements: Object.entries(e.target) });
       const values = targets.map((i, index) => {
         const name = i[1].name;
         let val = i[1].type === "checkbox" ? i[1].checked : i[1].value;
@@ -1829,6 +1868,10 @@
     }
 
     const handleResetPassword = async (e) => {
+      if (permissions.reset == "0") {
+        negateAccess();
+        return;
+      }
       if (
         confirm(
           "Se le enviará al usuario un correo de reestablecimiento de contraseña, ¿Estas seguro de proceder con la acción?"
@@ -1849,6 +1892,10 @@
     }
 
     async function handleUpdateUser(e) {
+      if (permissions.update == "0") {
+        negateAccess();
+        return;
+      }
       const uid = e.currentTarget.getAttribute("data-id");
       document
         .querySelector("#usuariosAltaModal")
@@ -1864,6 +1911,10 @@
     }
 
     function handleDeleteUser(e, node) {
+      if (permissions.delete == "0") {
+        negateAccess();
+        return;
+      }
       const uid = e.currentTarget.getAttribute("data-id");
 
       const tableRow = node.parentNode;
@@ -1930,7 +1981,7 @@
         const uid = document
           .querySelector("#usuariosAltaModal")
           .getAttribute("data-reference");
-        console.log(uid);
+        // console.log(uid);
         const storageReference = storage
           .ref()
           .child(`${CONCESIONARIOS_COLLECTION}/${uid}`);
@@ -1941,12 +1992,12 @@
               try {
                 return await item.getDownloadURL();
               } catch (error) {
-                console.log("error obteniendo url: ", error);
+                console.error("Error obteniendo url: ", error);
                 return null;
               }
             })
           );
-          console.log({ FILELIST: urls });
+          // console.log({ FILELIST: urls });
           const files = urls.map((item) => {
             return {
               url: item,
@@ -1962,7 +2013,7 @@
           document.querySelectorAll("img.imagePreview").forEach((element) => {
             const { name, alt } = element;
             const currentFile = files.filter((item) => item.name === alt);
-            console.log({ currentFile });
+            // console.log({ currentFile });
             element.src =
               currentFile[0].type !== "pdf"
                 ? currentFile[0].url
@@ -2017,7 +2068,7 @@
         ? "Estas seguro de deshabilitar el vehiculo al usuario?"
         : "Estas seguro de habilitar el vehiculo al usuario";
       if (confirm(message)) {
-        console.log({ userUID, updatedArrayField });
+        // console.log({ userUID, updatedArrayField });
         const documentUpdated = await firestore
           .collection(CONCESIONARIOS_COLLECTION)
           .doc(userUID)
@@ -2038,7 +2089,7 @@
 
     function createVehicleRow(element, index, array) {
       const { marca, modelo, placa, habilitado, uid } = element;
-      console.log({ element });
+      // console.log({ element });
       const tableRow = document.createElement("tr");
       const rowCellIndex = document.createElement("td");
       const rowCellBrandModel = document.createElement("td");
@@ -2110,7 +2161,7 @@
             const file = e.target.files[0];
             const reader = new FileReader();
             const { name, type } = e.target;
-            console.log(e.target.files[0]);
+            // console.log(e.target.files[0]);
 
             const responseUpload = await uploadImages(
               file,
@@ -2127,7 +2178,7 @@
                     ? "https://www.svgrepo.com/show/255818/pdf.svg"
                     : url;
               };
-              console.log(file);
+              // console.log(file);
               reader.readAsDataURL(file);
             }
           } catch (error) {
@@ -2154,7 +2205,7 @@
         const url = await reference.getDownloadURL();
 
         if (url) {
-          console.log("Se ha cargado el archivo de manera correcta");
+          // console.log("Se ha cargado el archivo de manera correcta");
           return true;
         } else {
           throw new Error();
@@ -2183,7 +2234,7 @@
               return res;
             })
             .catch((err) => {
-              console.log(err);
+              console.error(err);
             });
           if (response) {
             const box = document.querySelector("#vehiculos-searched");
@@ -2202,6 +2253,10 @@
               button.setAttribute("type", "button");
               button.setAttribute("class", "botonAsignar");
               button.addEventListener("click", async function (e) {
+                if (permissions.assign == "0") {
+                  negateAccess();
+                  return;
+                }
                 const uid = document
                   .querySelector("#usuariosAltaModal")
                   .getAttribute("data-reference");
@@ -2209,7 +2264,7 @@
                 const message =
                   "Estas seguro de asignar este vehiculo al concesionario?";
                 if (confirm(message)) {
-                  console.log({ uid, objectArray });
+                  // console.log({ uid, objectArray });
                   const hasBeenAssigned = await firestore
                     .collection(CONCESIONARIOS_COLLECTION)
                     .doc(uid)
@@ -2241,8 +2296,28 @@
             });
           }
         } catch (error) {
-          console.log("Se ha presentado un error, ", error);
+          console.error("Se ha presentado un error, ", error);
         }
       });
+
+    const rolesPermission = async () => {
+      const permission = sessionStorage.getItem("concesionariosPermission");
+      if (permission === null || permission === undefined) {
+        window.location.replace("../index.html");
+      }
+
+      permission.split("$").forEach((permit) => {
+        const name = permit.split(",")[0];
+        const value = permit.split(",")[1];
+        // console.log({ name, value });
+        permissions[name] = value;
+      });
+    };
+
+    const negateAccess = () => {
+      window.alert(
+        "No cuentas con los permisos necesarios para realizar esta operación."
+      );
+    };
   </script>
 </html>

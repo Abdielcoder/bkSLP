@@ -25,6 +25,19 @@ export const snap_tarifas = realtime.child("Info_Tarifas");
 // export const snap_geographic_state = realtime.child("Geografico/Estado");
 export const snap_flag_rates = realtime.child("Info_Tarifas/Banderas");
 export const tarifasRef = realtime.child("Info_Tarifas/SLP");
+export const getAllRoles = async () => {
+  return await firestore
+    .collection("roles")
+    .get()
+    .then((snapshot) => {
+      const array = [];
+      snapshot.forEach((document) => {
+        array.push({ uid: document.id, ...document.data() });
+      });
+      console.log(array);
+      return array;
+    });
+};
 
 // const formatProp = (ex) => {
 //   if (ex === undefined || ex === "") return "-";

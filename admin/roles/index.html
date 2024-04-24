@@ -25,7 +25,7 @@
       <aside>
         <div id="aside-container">
           <div class="logo">
-            <a class="home-link" href="../docs/main.html">Tu Taxi | Backoffice</a>
+            <a class="home-link" href="../../docs/main.html">Tu Taxi | Backoffice</a>
           </div>
           <hr />
           <ul class="nav">
@@ -50,16 +50,24 @@
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
-                  <li class="nav-item-submenu">
-                    <a class="nav-link" href="../docs/vehicles.html">
+                  <li
+                    class="nav-item-submenu"
+                    id="vehiculos-submenu-li"
+                    style="display: none"
+                  >
+                    <a class="nav-link" href="../../docs/vehicles.html">
                       <span class="link-icons material-icons-sharp"
                         >directions_car</span
                       >
                       VEHICULOS
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="../docs/users.html">
+                  <li
+                    class="nav-item"
+                    id="conductores-submenu-li"
+                    style="display: none"
+                  >
+                    <a class="nav-link" href="../../docs/users.html">
                       <span class="link-icons material-icons-sharp"
                         >person</span
                       >
@@ -70,7 +78,7 @@
               </div>
             </li>
             <li class="nav-item" id="vehiculos-menu-li" style="display: none;">
-              <a class="nav-link" href="../docs/vehicles.html">
+              <a class="nav-link" href="../../docs/vehicles.html">
                 <span class="link-icons material-icons-sharp"
                   >directions_car</span
                 >
@@ -78,7 +86,7 @@
               </a>
             </li>
             <li class="nav-item" id="conductores-menu-li" style="display: none;">
-              <a class="nav-link" href="../docs/users.html">
+              <a class="nav-link" href="../../docs/users.html">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONDUCTORES
               </a>
@@ -109,7 +117,7 @@
               <div id="administracion-submenu" data-displayed="hidden">
                 <ul>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../messages.html">
+                    <a class="nav-sublink" href="../mensajes/index.html">
                       <span class="link-icons material-icons-sharp">chat</span>
                       MENSAJES
                     </a>
@@ -524,6 +532,19 @@
                       >
                     </div>
                     <div class="form-group checkbox">
+                      <label class="switch" for="concesionarios-reset">
+                        <input
+                          type="checkbox"
+                          name="concesionarios-reset"
+                          id="concesionarios-reset"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="concesionarios-reset" class="checkbox-text"
+                        >Reestablecer contraseña</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
                       <label class="switch" for="concesionarios-delete">
                         <input
                           type="checkbox"
@@ -593,6 +614,19 @@
                       </label>
                       <label for="conductores-assign" class="checkbox-text"
                         >Asignar vehículo</label
+                      >
+                    </div>
+                    <div class="form-group checkbox">
+                      <label class="switch" for="conductores-reset">
+                        <input
+                          type="checkbox"
+                          name="conductores-reset"
+                          id="conductores-reset"
+                        />
+                        <span class="slider"></span>
+                      </label>
+                      <label for="conductores-reset" class="checkbox-text"
+                        >Reestablecer contraseña</label
                       >
                     </div>
                     <div class="form-group checkbox">

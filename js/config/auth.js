@@ -19,7 +19,9 @@ const getUserData = async (uid) => {
         "Se ha presentado un error, favor de solicitar a un administrador que asigne un rol a tu cuenta de acceso."
       );
       window.location.reload();
+      return;
     }
+
     return {
       uid,
       name: data.nombre,
@@ -27,7 +29,8 @@ const getUserData = async (uid) => {
       departamento: data.departamento,
       email: data.email,
       rol: data.rolClave,
-      roles,
+      roles: roles.data,
+      array: roles.array,
     };
   } catch (error) {
     console.error("Error obteniendo el registro, ", error);
@@ -38,15 +41,14 @@ const getUserData = async (uid) => {
 const getUserRoles = async (uid) => {
   try {
     const rol = await firestore.collection("roles").doc(uid).get();
-    return destructuringRoleList(rol.data());
+    return destructuringRoleList(rol);
   } catch (error) {
     return false;
   }
 };
 
 const destructuringRoleList = (data) => {
-  const entries = Object.entries(data);
-
+  const entries = Object.entries(data.data());
   let objectData = {
     conductores: [],
     admins: [],
@@ -55,8 +57,9 @@ const destructuringRoleList = (data) => {
     concesionarios: [],
     vehiculos: [],
   };
+  console.log({ ...data.data(), uid: data.id });
 
-  entries.forEach((element, index) => {
+  entries.forEach((element) => {
     const name = element[0];
     const value = element[1];
     if (name.includes("-")) {
@@ -69,6 +72,7 @@ const destructuringRoleList = (data) => {
       objectData[name] = value;
     }
   });
+
   objectData["concesionariosStatus"] = checkStatus(objectData.concesionarios);
   objectData["conductoresStatus"] = checkStatus(objectData.conductores);
   objectData["adminsStatus"] = checkStatus(objectData.admins);
@@ -76,7 +80,29 @@ const destructuringRoleList = (data) => {
   objectData["mapaStatus"] = checkStatus(objectData.mapa);
   objectData["vehiculosStatus"] = checkStatus(objectData.vehiculos);
 
-  return objectData;
+  const array = [
+    ["concesionariosPermission", objectData.concesionarios],
+    ["conductoresPermission", objectData.conductores],
+    ["adminsPermission", objectData.admins],
+    ["rolesPermission", objectData.roles],
+    ["mapaPermission", objectData.mapa],
+    ["vehiculosPermission", objectData.vehiculos],
+  ];
+
+  return { data: objectData, array };
+};
+
+const setPermissionsToStorage = (array) => {
+  array?.forEach((element) => {
+    const arr = element[1]
+      .map((item) => {
+        const name = Object.keys(item)[0];
+        const value = Object.values(item) == "true" ? 1 : 0;
+        return name + "," + value;
+      })
+      .join("$");
+    sessionStorage.setItem(element[0], arr); 
+  });
 };
 
 const checkStatus = (array) => {
@@ -126,18 +152,8 @@ const setSession = async (user, timestamp) => {
   sessionStorage.setItem("user", user.uid);
   sessionStorage.setItem("username", user.name);
   sessionStorage.setItem("email", user.email);
-  sessionStorage.setItem("auth", user.token);
-  sessionStorage.setItem("rol", user.rol);
-  sessionStorage.setItem("lastLogin", timestamp);
-  sessionStorage.setItem(
-    "render-concesionarios",
-    user.roles.concesionariosStatus
-  );
-  sessionStorage.setItem("render-conductores", user.roles.conductoresStatus);
-  sessionStorage.setItem("render-admins", user.roles.adminsStatus);
-  sessionStorage.setItem("render-roles", user.roles.rolesStatus);
-  sessionStorage.setItem("render-mapa", user.roles.mapaStatus);
-  sessionStorage.setItem("render-vehiculos", user.roles.vehiculosStatus);
+  sessionStorage.setItem("auth", user.token); 
+  sessionStorage.setItem("lastLogin", timestamp); 
   return;
 };
 
@@ -166,11 +182,13 @@ export const logInWithEmail = (email, password) => {
 
 const setSessionToken = async (credentials) => {
   try {
-    const { email, user, rol, uid } = credentials;
+    const { email, user, rol, uid, array } = credentials;
+    console.log({ array });
     const timestamp = new Date().toISOString();
     const documentData = { email, username: user, rol, uid, timestamp };
     await logAccesos.add(documentData).then(async () => {
       await setSession(credentials, timestamp);
+      await setPermissionsToStorage(array);
       window.location.replace("./docs/main.html");
     });
   } catch (error) {

@@ -49,7 +49,11 @@
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
-                  <li class="nav-item-submenu">
+                  <li
+                    class="nav-item-submenu"
+                    id="vehiculos-submenu-li"
+                    style="display: none"
+                  >
                     <a class="nav-link" href="./vehicles.html">
                       <span class="link-icons material-icons-sharp"
                         >directions_car</span
@@ -57,8 +61,12 @@
                       VEHICULOS
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link selectedPage" href="./users.html">
+                  <li
+                    class="nav-item"
+                    id="conductores-submenu-li"
+                    style="display: none"
+                  >
+                    <a class="nav-link" href="./users.html">
                       <span class="link-icons material-icons-sharp"
                         >person</span
                       >
@@ -68,7 +76,7 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item" id="vehiculos-menu-li" style="display: none;">
+            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
               <a class="nav-link" href="./vehicles.html">
                 <span class="link-icons material-icons-sharp"
                   >directions_car</span
@@ -76,8 +84,8 @@
                 VEHICULO
               </a>
             </li>
-            <li class="nav-item" id="conductores-menu-li" style="display: none;">
-              <a class="nav-link selectedPage" href="./users.html">
+            <li class="nav-item" id="conductores-menu-li" style="display: none">
+              <a class="nav-link selectedPage" href="#">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONDUCTORES
               </a>
@@ -108,21 +116,25 @@
               <div id="administracion-submenu" data-displayed="hidden">
                 <ul>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/messages.html">
+                    <a class="nav-sublink" href="../admin/mensajes/index.html">
                       <span class="link-icons material-icons-sharp">chat</span>
                       MENSAJES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/administradores/">
+                    <a class="nav-sublink" href="../admin/administradores/index.html">
                       <span class="link-icons material-icons-sharp"
                         >person</span
                       >
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none;">
-                    <a class="nav-sublink" href="../admin/roles/">
+                  <li
+                    class="nav-item menu-linked hidden"
+                    id="roles-menu-li"
+                    style="display: none"
+                  >
+                    <a class="nav-sublink" href="../admin/roles/index.html">
                       <span class="link-icons material-icons-sharp"
                         >groups</span
                       >
@@ -130,7 +142,7 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/clients.html">
+                    <a class="nav-sublink" href="#">
                       <span class="link-icons material-icons-sharp"
                         >person_pin</span
                       >
@@ -306,16 +318,33 @@
                     Datos Personales
                   </h2>
                   <div class="form-columns" style="flex-wrap: nowrap">
-                    <div
-                      class="formGroup inputForm"
-                      style="max-width: 280px; width: 100%"
-                    >
-                      <label for="nombreCompleto">Nombre completo</label>
+                    <div class="formGroup inputForm">
+                      <label for="nombre">Nombre(s)</label>
                       <input
                         type="text"
-                        placeholder="Nombre completo..."
-                        name="nombreCompleto"
-                        id="nombreCompleto"
+                        placeholder="Nombre(s)"
+                        name="nombre"
+                        id="nombre"
+                        required
+                      />
+                    </div>
+                    <div class="formGroup inputForm">
+                      <label for="apellidoPaterno">Apellido Paterno</label>
+                      <input
+                        type="text"
+                        placeholder="Apellido Paterno"
+                        name="apellidoPaterno"
+                        id="apellidoPaterno"
+                        required
+                      />
+                    </div>
+                    <div class="formGroup inputForm">
+                      <label for="apellidoMaterno">Apellido Materno</label>
+                      <input
+                        type="text"
+                        placeholder="Apellido Materno"
+                        name="apellidoMaterno"
+                        id="apellidoMaterno"
                         required
                       />
                     </div>
@@ -329,6 +358,8 @@
                         required
                       />
                     </div>
+                  </div>
+                  <div class="form-columns" style="flex-wrap: nowrap">
                     <div class="formGroup selectForm" style="max-width: 120px">
                       <label for="sexo">Genero</label>
                       <select name="sexo" id="sexo">
@@ -1498,6 +1529,7 @@
       "Diciembre",
     ];
 
+    let permissions = {};
     const CONDUCTORES_COLLECTION = "conductores";
     const VEHICULOS_COLLECTION = "vehiculos";
     // Main Table
@@ -1526,11 +1558,15 @@
     addCancelButton.forEach((element) => {
       element.addEventListener("click", async () => {
         handleViewAltaModal(false);
-        // await handleRefetchingData();
       });
     });
 
     userAddbutton.addEventListener("click", () => {
+      // console.log(permissions);
+      if (permissions.create == "0") {
+        negateAccess();
+        return;
+      }
       document.getElementById("modalFormSubmit").style.display = "block";
       document.getElementById("modalFormUpdateSubmit").style.display = "none";
       document.querySelectorAll("button.tab-button").forEach((element) => {
@@ -1544,7 +1580,6 @@
 
     deleteCancelButton.addEventListener("click", async () => {
       handleViewDeleteModal(false);
-      // await handleRefetchingData();
     });
 
     userUpdateButton.addEventListener("click", async (e) => {
@@ -1562,10 +1597,13 @@
 
     // Modal Add Form Submit Event
     modalForm.addEventListener("submit", async (e) => await handleSubmit(e));
-    deleteForm.addEventListener(
-      "submit",
-      async (e) => await handleDeleteSubmit(e)
-    );
+    deleteForm.addEventListener("submit", async (e) => {
+      if (permissions.delete == "0") {
+        negateAccess();
+        return;
+      }
+      await handleDeleteSubmit(e);
+    });
 
     function handleViewAltaModal(e) {
       if (e === true) {
@@ -1654,10 +1692,10 @@
         oLanguage: {
           sSearch: "Busqueda:",
           oPaginate: {
-            sFirst: "Primera", // This is the link to the first page
-            sPrevious: "Anterior", // This is the link to the previous page
-            sNext: "Siguiente", // This is the link to the next page
-            sLast: "Ultima", // This is the link to the last page
+            sFirst: "Primera",
+            sPrevious: "Anterior",
+            sNext: "Siguiente",
+            sLast: "Ultima",
           },
         },
         language: {
@@ -1673,7 +1711,9 @@
       const cell_list = {
         uid: list.uid,
         cells: [
-          list.nombreCompleto,
+          list.nombre + " " + list.apellidoPaterno ||
+            "" + " " + list.apellidoMaterno ||
+            "",
           list.sexo,
           list.correoElectronico,
           list.telefono,
@@ -1689,19 +1729,13 @@
     const formatDate = (datetime) => {
       const [date, time] = datetime.slice(0, -5).split("T");
       const [year, month, day] = date.split("-");
-      return (
-        day +
-        " de " +
-        monthStrings[parseInt(month) - 1] +
-        " del " +
-        year /* + " " + time.slice(0, -3)*/
-      );
+      return day + " de " + monthStrings[parseInt(month) - 1] + " del " + year;
     };
 
     async function handleSubmit(e) {
       e.preventDefault();
       const targets = Object.entries(e.target).slice(0, -3);
-      console.log({ elements: Object.entries(e.target) });
+      // console.log({ elements: Object.entries(e.target) });
       const values = targets.map((i, index) => {
         const name = i[1].name;
         let val = i[1].type === "checkbox" ? i[1].checked : i[1].value;
@@ -1772,12 +1806,10 @@
 
     function createActionButtons(u) {
       const tableCell = document.createElement("td");
-      // const viewButton = document.createElement("button");
       const resetPasswordButton = document.createElement("button");
       const updateButton = document.createElement("button");
       const deleteButton = document.createElement("button");
 
-      // const viewAttrs = { type: "button", class: "cellButtonTool", "data-type": "view", "data-id": u };
       const updateAttrs = {
         type: "button",
         class: "cellButtonTool",
@@ -1800,18 +1832,15 @@
         title: "Eliminar",
       };
 
-      // elementSetAttributes(viewButton, viewAttrs);
       elementSetAttributes(updateButton, updateAttrs);
       elementSetAttributes(resetPasswordButton, resetPasswordAttrs);
       elementSetAttributes(deleteButton, deleteAttrs);
       elementSetAttributes(tableCell, { "data-type": "tools" });
 
-      // viewButton.innerHTML = "Ver";
       updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
       resetPasswordButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#287bc8" fill-rule="evenodd"></path> </g></svg>`;
       deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>`;
 
-      // viewButton.addEventListener("click", (e) => handleUpdateUser(e));
       updateButton.addEventListener("click", (e) => handleUpdateUser(e));
       resetPasswordButton.addEventListener("click", (e) =>
         handleResetPassword(e.currentTarget.parentNode)
@@ -1820,7 +1849,6 @@
         handleDeleteUser(e, e.currentTarget.parentNode)
       );
 
-      // tableCell.insertAdjacentElement("beforeend", viewButton);
       tableCell.insertAdjacentElement("beforeend", updateButton);
       tableCell.insertAdjacentElement("beforeend", resetPasswordButton);
       tableCell.insertAdjacentElement("beforeend", deleteButton);
@@ -1829,16 +1857,16 @@
     }
 
     const handleResetPassword = async (e) => {
-      if (
-        confirm(
-          "Se le enviará al usuario un correo de reestablecimiento de contraseña, ¿Estas seguro de proceder con la acción?"
-        )
-      ) {
-        {
-          const tableRow = e.parentNode;
-          const email = tableRow.childNodes[2].innerText;
-          const hasBeenReseted = await resetPasswordToUser(email);
-        }
+      if (permissions.reset == "0") {
+        negateAccess();
+        return;
+      }
+      const message =
+        "Se le enviará al usuario un correo de reestablecimiento de contraseña, ¿Estas seguro de proceder con la acción?";
+      if (confirm(message)) {
+        const tableRow = e.parentNode;
+        const email = tableRow.childNodes[2].innerText;
+        const hasBeenReseted = await resetPasswordToUser(email);
       }
     };
 
@@ -1849,6 +1877,10 @@
     }
 
     async function handleUpdateUser(e) {
+      if (permissions.update == "0") {
+        negateAccess();
+        return;
+      }
       const uid = e.currentTarget.getAttribute("data-id");
       document
         .getElementById("usuariosAltaModal")
@@ -1864,6 +1896,12 @@
     }
 
     function handleDeleteUser(e, node) {
+      if (permissions.delete == "0") {
+        alert(
+          "No tienes los permisos necesarios para realizar esta operación."
+        );
+        return;
+      }
       const uid = e.currentTarget.getAttribute("data-id");
 
       const tableRow = node.parentNode;
@@ -1912,8 +1950,6 @@
           }
           element.setAttribute("aria-selected", "true");
         });
-        // currentTarget.setAttribute("aria-selected", "true");
-        // <div class="formContainer" data-tabcontainer="data" data-visibility="true">
         const tabContents = document.querySelectorAll("div.formContainer");
         tabContents.forEach((element) => {
           element.setAttribute("data-visibility", "false");
@@ -1930,7 +1966,7 @@
         const uid = document
           .getElementById("usuariosAltaModal")
           .getAttribute("data-reference");
-        console.log(uid);
+        // console.log(uid);
         const storageReference = storage
           .ref()
           .child(`${CONDUCTORES_COLLECTION}/${uid}`);
@@ -1941,12 +1977,12 @@
               try {
                 return await item.getDownloadURL();
               } catch (error) {
-                console.log("error obteniendo url: ", error);
+                console.error("error obteniendo url: ", error);
                 return null;
               }
             })
           );
-          console.log({ FILELIST: urls });
+          // console.log({ FILELIST: urls });
           const files = urls.map((item) => {
             return {
               url: item,
@@ -1962,7 +1998,7 @@
           document.querySelectorAll("img.imagePreview").forEach((element) => {
             const { name, alt } = element;
             const currentFile = files.filter((item) => item.name === alt);
-            console.log({ currentFile });
+            // console.log({ currentFile });
             element.src =
               currentFile[0].type !== "pdf"
                 ? currentFile[0].url
@@ -2037,7 +2073,7 @@
 
     function createVehicleRow(element, index, array) {
       const { marca, modelo, placa, habilitado, uid } = element;
-      console.log({ element });
+      // console.log({ element });
       const tableRow = document.createElement("tr");
       const rowCellIndex = document.createElement("td");
       const rowCellBrandModel = document.createElement("td");
@@ -2098,6 +2134,7 @@
     });
 
     window.addEventListener("DOMContentLoaded", async () => {
+      await rolesPermission();
       await fetchingData();
     });
 
@@ -2109,7 +2146,7 @@
             const file = e.target.files[0];
             const reader = new FileReader();
             const { name, type } = e.target;
-            console.log(e.target.files[0]);
+            // console.log(e.target.files[0]);
 
             const responseUpload = await uploadImages(
               file,
@@ -2126,7 +2163,7 @@
                     ? "https://www.svgrepo.com/show/255818/pdf.svg"
                     : url;
               };
-              console.log(file);
+              // console.log(file);
               reader.readAsDataURL(file);
             }
           } catch (error) {
@@ -2153,7 +2190,7 @@
         const url = await reference.getDownloadURL();
 
         if (url) {
-          console.log("Se ha cargado el archivo de manera correcta");
+          // console.log("Se ha cargado el archivo de manera correcta");
           return true;
         } else {
           throw new Error();
@@ -2167,8 +2204,8 @@
     document
       .querySelector("#userVehicleSearch")
       .addEventListener("submit", async function (e) {
-        e.preventDefault();
         try {
+          e.preventDefault();
           const searchString = e.target[0].value;
           const response = await firestore
             .collection(VEHICULOS_COLLECTION)
@@ -2182,7 +2219,7 @@
               return res;
             })
             .catch((err) => {
-              console.log(err);
+              console.error(err);
             });
           if (response) {
             const box = document.getElementById("vehiculos-searched");
@@ -2199,8 +2236,12 @@
 
               const button = document.createElement("button");
               button.setAttribute("type", "button");
-              button.setAttribute("class", "botonAsignar"); 
+              button.setAttribute("class", "botonAsignar");
               button.addEventListener("click", async function (e) {
+                if (permissions.assign == "0") {
+                  negateAccess();
+                  return;
+                }
                 const uid = document
                   .getElementById("usuariosAltaModal")
                   .getAttribute("data-reference");
@@ -2208,7 +2249,7 @@
                 if (
                   confirm("Estas seguro de asignar este vehiculo al conductor?")
                 ) {
-                  console.log({ vehicles: objectArray });
+                  // console.log({ vehicles: objectArray });
                   const hasBeenAssigned = await firestore
                     .collection(CONDUCTORES_COLLECTION)
                     .doc(uid)
@@ -2240,8 +2281,28 @@
             });
           }
         } catch (error) {
-          console.log("Se ha presentado un error, ", error);
+          console.error("Se ha presentado un error, ", error);
         }
       });
+
+    const rolesPermission = async () => {
+      const permission = sessionStorage.getItem("conductoresPermission");
+      if (permission === null || permission === undefined) {
+        window.location.replace("../index.html");
+      }
+
+      permission.split("$").forEach((permit) => {
+        const name = permit.split(",")[0];
+        const value = permit.split(",")[1];
+        // console.log({ name, value });
+        permissions[name] = value;
+      });
+    };
+
+    const negateAccess = () => {
+      window.alert(
+        "No cuentas con los permisos necesarios para realizar esta operación."
+      );
+    };
   </script>
 </html>

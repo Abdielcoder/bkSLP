@@ -4,6 +4,7 @@ import {
   deleteDocumentByUid,
 } from "../../js/config/config.js";
 
+const permissions = {};
 const ROLES_COLLECTION = "roles";
 const ROLES_TABLE = document.querySelector("table#roles");
 const FORM_ROLES = document.querySelector("form#roles");
@@ -97,7 +98,7 @@ const createAndRenderDataTable = async () => {
       infoFiltered: "(Filtrado de _MAX_ registros).",
     },
   });
-  console.log(GLOBAL_DATA);
+  console.log({ permissions });
 };
 
 const createRowElement = (data, uid) => {
@@ -162,13 +163,20 @@ const createActionToolsToRow = (uid) => {
   updateButtonElement.innerHTML = updateIcon;
   deleteButtonElement.innerHTML = deleteIcon;
 
-  updateButtonElement.addEventListener("click", () =>
-    showModalDialog(uid, "update")
-  );
-  deleteButtonElement.addEventListener(
-    "click",
-    async () => await handleDeleteRole(uid)
-  );
+  updateButtonElement.addEventListener("click", () => {
+    if (permissions.update == "0") {
+      negateAccess();
+      return;
+    }
+    showModalDialog(uid, "update");
+  });
+  deleteButtonElement.addEventListener("click", async () => {
+    if (permissions.delete == "0") {
+      negateAccess();
+      return;
+    }
+    await handleDeleteRole(uid);
+  });
   boxElement.insertAdjacentElement("beforeend", updateButtonElement);
   boxElement.insertAdjacentElement("beforeend", deleteButtonElement);
   boxElement.setAttribute("class", "tool-actions");
@@ -213,6 +221,10 @@ const hideModalDialog = async (reset = false) => {
 };
 
 BUTTON_ADD.addEventListener("click", function () {
+  if (permissions.create == "0") {
+    negateAccess();
+    return;
+  }
   showModalDialog(null, "add");
 });
 
@@ -400,14 +412,14 @@ const destructuringRoleList = (data) => {
 };
 
 const checkStatus = (array) => {
-  if (array.every((item) => Object.values(item)[0] === true)) {
+  if (array.every((item) => Object.values(item)[0] == true)) {
     return 2;
   }
-  if (array.some((item) => Object.values(item)[0] === false)) {
-    return 1;
-  }
-  if (array.every((item) => Object.values(item)[0] === false)) {
+  if (array.every((item) => Object.values(item)[0] == false)) {
     return 3;
+  }
+  if (array.some((item) => Object.values(item)[0] == false)) {
+    return 1;
   }
   return null;
 };
@@ -427,4 +439,24 @@ const handleRefetch = async () => {
   await createAndRenderDataTable();
 };
 
-createAndRenderDataTable();
+const rolesPermission = async () => {
+  const permission = sessionStorage.getItem("rolesPermission");
+  if (permission === null || permission === undefined) {
+    window.location.replace("../index.html");
+  }
+
+  permission.split("$").forEach((permit) => {
+    const name = permit.split(",")[0];
+    const value = permit.split(",")[1];
+    permissions[name] = value;
+  });
+};
+
+const negateAccess = () => {
+  window.alert(
+    "No cuentas con los permisos necesarios para realizar esta operación."
+  );
+};
+
+await rolesPermission();
+await createAndRenderDataTable();
