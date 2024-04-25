@@ -52,16 +52,7 @@ const renderMenus = () => {
   const vehiculosPermission = checkStatus(renderVehiculos);
   const adminsPermission = checkStatus(renderAdmis);
   const rolesPermission = checkStatus(renderRoles);
-
-  // console.log(g({
-  //   renderMap,
-  //   concesionariosPermission,
-  //   conductoresPermission,
-  //   vehiculosPermission,
-  //   adminsPermission,
-  //   rolesPermission,
-  // });
-
+ 
   if (adminsPermission == 0) {
     adminMenu.remove();
   } else {
@@ -115,8 +106,7 @@ const renderMenus = () => {
 const checkStatus = (array) => {
   const destructuringArray = array
     .split("$")
-    .map((item) => parseInt(item.split(",")[1]));
-  // console.log(g({ destructuringArray });
+    .map((item) => parseInt(item.split(",")[1])); 
 
   if (destructuringArray.every((item) => item === 1)) return 1;
   if (destructuringArray.every((item) => item === 0)) return 0;

@@ -202,7 +202,8 @@ table#concesionariosTable tbody tr td[data-type="tools"] {
   margin-bottom: 10px;
 }
 
-#userVehicleSearch {
+#userVehicleSearch,
+#userEmailSearch {
   display: flex;
   width: 100%;
 }
@@ -290,17 +291,22 @@ div#vehicles-container-list {
   padding: 10px;
 }
 
-table#vehicles-list {
+table#vehicles-list,
+table#usuarios-list {
   width: 100%;
   border-collapse: collapse;
 }
 
 table#vehicles-list td,
-table#vehicles-list th {
-  padding: 4px 6px;
+table#vehicles-list th,
+table#usuarios-list td,
+table#usuarios-list th
+ {
+  padding: 16px 8px;
   text-align: start;
   border-bottom: 1px solid #808080b3;
   font-size: 14px;
+  text-transform: uppercase;
 }
 
 .file-box {

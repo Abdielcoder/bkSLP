@@ -122,7 +122,10 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/administradores/index.html">
+                    <a
+                      class="nav-sublink"
+                      href="../admin/administradores/index.html"
+                    >
                       <span class="link-icons material-icons-sharp"
                         >person</span
                       >
@@ -244,7 +247,7 @@
                       <th>Teléfono</th>
                       <th>Curp</th>
                       <th>Num. Económico</th>
-                      <th>Tarjetón</th>
+                      <th>Gafete SCT</th>
                       <th>Fecha de registro</th>
                       <th>Acciones</th>
                     </tr>
@@ -296,6 +299,16 @@
                     <span>Archivos</span>
                   </button>
                 </li>
+                <li>
+                  <button
+                    type="button"
+                    class="tab-button"
+                    aria-selected="false"
+                    data-tab="drivers"
+                  >
+                    <span>Conductores</span>
+                  </button>
+                </li>
               </ul>
             </div>
             <div
@@ -326,6 +339,7 @@
                         placeholder="Nombre(s)"
                         name="nombre"
                         id="nombre"
+                        style="text-transform: uppercase"
                         required
                       />
                     </div>
@@ -336,6 +350,7 @@
                         placeholder="Apellido Paterno"
                         name="apellidoPaterno"
                         id="apellidoPaterno"
+                        style="text-transform: uppercase"
                         required
                       />
                     </div>
@@ -346,6 +361,7 @@
                         placeholder="Apellido Materno"
                         name="apellidoMaterno"
                         id="apellidoMaterno"
+                        style="text-transform: uppercase"
                         required
                       />
                     </div>
@@ -353,7 +369,7 @@
                       <label for="correoElectronico">Correo electrónico</label>
                       <input
                         type="email"
-                        placeholder="Correo electrónico..."
+                        placeholder="Correo electrónico"
                         name="correoElectronico"
                         id="correoElectronico"
                         required
@@ -373,42 +389,47 @@
                     <div class="formGroup inputForm">
                       <label for="curp">Curp</label>
                       <input
-                        type="curp"
-                        placeholder="Curp..."
+                        type="text"
+                        placeholder="Curp"
                         name="curp"
                         id="curp"
                         required
                         maxlength="18"
+                        style="text-transform: uppercase"
                       />
                     </div>
                     <div class="formGroup inputForm">
                       <label for="rfc">RFC</label>
                       <input
-                        type="rfc"
-                        placeholder="RFC..."
+                        type="text"
+                        placeholder="RFC"
                         name="rfc"
                         id="rfc"
                         required
+                        style="text-transform: uppercase"
                         maxlength="16"
                       />
                     </div>
                   </div>
                   <div class="form-columns" style="flex-wrap: nowrap">
-                    <div class="formGroup inputForm" style="max-width: 120px">
+                    <div class="formGroup selectForm" style="max-width: 120px">
                       <label for="tipoSangre">Tipo de sangre</label>
-                      <input
-                        type="text"
-                        placeholder="Tipo de sangre..."
-                        name="tipoSangre"
-                        id="tipoSangre"
-                        required
-                      />
+                      <select name="tipoSangre" id="tipoSangre" required>
+                        <option value="A-">A-</option>
+                        <option value="A+">A+</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                      </select>
                     </div>
                     <div class="formGroup inputForm">
                       <label for="telefono">Teléfono</label>
                       <input
                         type="tel"
-                        placeholder="Teléfono..."
+                        placeholder="Teléfono"
                         name="telefono"
                         id="telefono"
                         required
@@ -421,7 +442,7 @@
                       >
                       <input
                         type="tel"
-                        placeholder="Teléfono de emergencia..."
+                        placeholder="Teléfono de emergencia"
                         name="telefonoEmergencia"
                         id="telefonoEmergencia"
                         required
@@ -432,19 +453,22 @@
                       <label for="numeroEconomico">Numero Económico</label>
                       <input
                         type="text"
-                        placeholder="Número económico..."
+                        placeholder="Número económico"
                         name="numeroEconomico"
                         id="numeroEconomico"
+                        maxlength="4"
                         required
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="idTarjeton">ID Tarjeton</label>
+                      <label for="numGafeteSCT">Gafete SCT</label>
                       <input
                         type="text"
-                        placeholder="ID de tarjeton..."
-                        name="idTarjeton"
-                        id="idTarjeton"
+                        placeholder="Gafete SCT"
+                        name="numGafeteSCT"
+                        maxlength="5"
+                        style="text-transform: uppercase"
+                        id="numGafeteSCT"
                         required
                       />
                     </div>
@@ -458,7 +482,7 @@
                       <label for="calle">Calle</label>
                       <input
                         type="text"
-                        placeholder="Calle..."
+                        placeholder="Calle"
                         name="calle"
                         id="calle"
                         required
@@ -471,9 +495,10 @@
                       <label for="numeroCasa">Número</label>
                       <input
                         type="text"
-                        placeholder="Número..."
+                        placeholder="Número"
                         name="numeroCasa"
                         id="numeroCasa"
+                        maxlength="10"
                         required
                       />
                     </div>
@@ -481,7 +506,7 @@
                       <label for="colonia">Colonia o Fraccionamiento</label>
                       <input
                         type="text"
-                        placeholder="Colonia..."
+                        placeholder="Colonia"
                         name="colonia"
                         id="colonia"
                         required
@@ -494,7 +519,7 @@
                       <label for="cp">Código Postal</label>
                       <input
                         type="text"
-                        placeholder="Código postal..."
+                        placeholder="Código postal"
                         name="cp"
                         id="cp"
                         required
@@ -507,7 +532,7 @@
                       <label for="municipio">Municipio</label>
                       <input
                         type="municipio"
-                        placeholder="Municipio..."
+                        placeholder="Municipio"
                         name="municipio"
                         id="municipio"
                         required
@@ -676,7 +701,7 @@
               class="formContainer"
               data-tabcontainer="accounts"
               data-visibility="false"
-              style="padding-top: 20px"
+              style="padding-top: 20px; width: 800px"
             >
               <div class="containerBody">
                 <p style="font-size: 12px; font-weight: bold; margin-left: 4px">
@@ -1320,8 +1345,8 @@
                     >
                       <img
                         src="../assets/img/nopic.png"
-                        alt="antidoping"
-                        id="antidopingPreview"
+                        alt="datosAdicionales"
+                        id="datosAdicionalesPreview"
                         class="imagePreview"
                         style="
                           display: block;
@@ -1330,11 +1355,11 @@
                           object-fit: cover;
                         "
                       />
-                      <label for="antidoping">
+                      <label for="datosAdicionales">
                         <input
                           type="file"
-                          name="antidoping"
-                          id="antidoping"
+                          name="datosAdicionales"
+                          id="datosAdicionales"
                           style="display: none"
                           class="documentationFiles"
                         />
@@ -1396,8 +1421,103 @@
                         </div>
                       </label>
                     </div>
-                    <p>Antidoping</p>
+                    <p>Datos Adicionales</p>
                   </div>
+                </div>
+                <div class="containerFooter">
+                  <div class="buttonsTools">
+                    <button type="button" class="modalFormCancel">
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="formContainer"
+              data-tabcontainer="drivers"
+              data-visibility="false"
+              style="padding-top: 20px; width: 800px"
+            >
+              <div class="containerBody">
+                <p
+                  style="
+                    font-size: 12px;
+                    font-weight: bold;
+                    margin-left: 4px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  Buscar conductor mediante su correo electrónico:
+                </p>
+                <div class="placa-search">
+                  <form id="userEmailSearch">
+                    <input
+                      type="text"
+                      placeholder="Introducir correo del conductor"
+                      name="searchEmail"
+                      id="searchEmail"
+                      class="search-placa"
+                      style="flex-grow: 1; outline: none"
+                    />
+                    <button type="submit" class="placa-button-icon">
+                      <svg
+                        width="20px"
+                        height="20px"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path
+                            d="M15 15L21 21"
+                            stroke="#323232"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                            stroke="#323232"
+                            stroke-width="2"
+                          ></path>
+                        </g>
+                      </svg>
+                    </button>
+                  </form>
+                </div>
+                <div
+                  id="usuarios-searched"
+                  style="
+                    width: 100%;
+                    display: block;
+                    min-height: 40px;
+                    padding: 0.5rem;
+                    border: 1px solid gray;
+                    margin-top: 1rem;
+                  "
+                ></div>
+                <div id="usuarios-container-list" data-reference="">
+                  <table id="usuarios-list">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Nombre Completo</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Gafete SCT</th>
+                        <th>Habilitado</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
                 </div>
                 <div class="containerFooter">
                   <div class="buttonsTools">
@@ -1462,20 +1582,20 @@
     </div>
   </body>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var input = document.querySelector("#telefono");
-
-      input.addEventListener("input", function () {
-        this.value = this.value.replace(/[^0-9]/g, "");
-      });
-    });
+    function allowOnlyNumbers() {
+      this.value = this.value.replace(/[^0-9]/g, "");
+    }
 
     document.addEventListener("DOMContentLoaded", function () {
-      var input = document.querySelector("#telefonoEmergencia");
-
-      input.addEventListener("input", function () {
-        this.value = this.value.replace(/[^0-9]/g, "");
-      });
+      document
+        .querySelector("#telefono")
+        .addEventListener("input", allowOnlyNumbers);
+      document
+        .querySelector("#telefonoEmergencia")
+        .addEventListener("input", allowOnlyNumbers);
+      document
+        .querySelector("#numeroEconomico")
+        .addEventListener("input", allowOnlyNumbers);
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -1508,8 +1628,9 @@
       createUserAndSaveData,
       deleteDocumentByUid,
       getDocumentByUid,
-      updateDocumentByUid,
-      getDocumentsFromVehicleCollection,
+      updateDocumentByUid, 
+      getVehiclesFromInnerDocumentCollection,
+      getConductoresromInnerDocumentCollection,
       resetPasswordToUser,
       firestore,
       storage,
@@ -1559,7 +1680,6 @@
     addCancelButton.forEach((element) => {
       element.addEventListener("click", async () => {
         handleViewAltaModal(false);
-        // await handleRefetchingData();
       });
     });
 
@@ -1581,7 +1701,6 @@
 
     deleteCancelButton.addEventListener("click", async () => {
       handleViewDeleteModal(false);
-      // await handleRefetchingData();
     });
 
     userUpdateButton.addEventListener("click", async (e) => {
@@ -1691,10 +1810,10 @@
         oLanguage: {
           sSearch: "Busqueda:",
           oPaginate: {
-            sFirst: "Primera", // This is the link to the first page
-            sPrevious: "Anterior", // This is the link to the previous page
-            sNext: "Siguiente", // This is the link to the next page
-            sLast: "Ultima", // This is the link to the last page
+            sFirst: "Primera",
+            sPrevious: "Anterior",
+            sNext: "Siguiente",
+            sLast: "Ultima",
           },
         },
         language: {
@@ -1718,7 +1837,7 @@
           list.telefono,
           list.curp || "",
           list.numeroEconomico,
-          list.idTarjeton,
+          list.numGafeteSCT || "",
           formatDate(list.fechaAlta),
         ],
       };
@@ -1728,25 +1847,30 @@
     const formatDate = (datetime) => {
       const [date, time] = datetime.slice(0, -5).split("T");
       const [year, month, day] = date.split("-");
-      return (
-        day +
-        " de " +
-        monthStrings[parseInt(month) - 1] +
-        " del " +
-        year /* + " " + time.slice(0, -3)*/
-      );
+      return day + " de " + monthStrings[parseInt(month) - 1] + " del " + year;
+    };
+
+    const validateEmail = (email) => {
+      const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      return pattern.test(email);
     };
 
     async function handleSubmit(e) {
       e.preventDefault();
       const targets = Object.entries(e.target).slice(0, -3);
-      // console.log({ elements: Object.entries(e.target) });
-      const values = targets.map((i, index) => {
-        const name = i[1].name;
-        let val = i[1].type === "checkbox" ? i[1].checked : i[1].value;
+      const emailInput = targets.find((item) => item[1].type === "email");
+      if (!validateEmail(validateEmail[1].value)) {
+        window.alert("Favor de verificar correo, debe ser un correo válido.");
+        return;
+      }
 
+      const values = targets.map((input, index) => {
+        const name = input[1].name;
+        let val =
+          i[nput1].type === "checkbox" ? input[1].checked : input[1].value;
         return { [name]: val };
       });
+
       const isCreated = await createUserAndSaveData(
         values,
         CONCESIONARIOS_COLLECTION
@@ -1767,6 +1891,12 @@
           return { [name]: val };
         })
         .slice(0, -2);
+
+      const emailValue = values.find((item) => item.correoElectronico);
+      if (!validateEmail(emailValue.correoElectronico)) {
+        window.alert("Favor de verificar correo, debe ser un correo válido.");
+        return;
+      }
 
       const isUpdated = await updateDocumentByUid(
         values,
@@ -1811,12 +1941,10 @@
 
     function createActionButtons(u) {
       const tableCell = document.createElement("td");
-      // const viewButton = document.createElement("button");
       const resetPasswordButton = document.createElement("button");
       const updateButton = document.createElement("button");
       const deleteButton = document.createElement("button");
 
-      // const viewAttrs = { type: "button", class: "cellButtonTool", "data-type": "view", "data-id": u };
       const updateAttrs = {
         type: "button",
         class: "cellButtonTool",
@@ -1839,18 +1967,15 @@
         title: "Eliminar",
       };
 
-      // elementSetAttributes(viewButton, viewAttrs);
       elementSetAttributes(updateButton, updateAttrs);
       elementSetAttributes(resetPasswordButton, resetPasswordAttrs);
       elementSetAttributes(deleteButton, deleteAttrs);
       elementSetAttributes(tableCell, { "data-type": "tools" });
 
-      // viewButton.innerHTML = "Ver";
       updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
       resetPasswordButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#287bc8" fill-rule="evenodd"></path> </g></svg>`;
       deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>`;
 
-      // viewButton.addEventListener("click", (e) => handleUpdateUser(e));
       updateButton.addEventListener("click", (e) => handleUpdateUser(e));
       resetPasswordButton.addEventListener("click", (e) =>
         handleResetPassword(e.currentTarget.parentNode)
@@ -1859,7 +1984,6 @@
         handleDeleteUser(e, e.currentTarget.parentNode)
       );
 
-      // tableCell.insertAdjacentElement("beforeend", viewButton);
       tableCell.insertAdjacentElement("beforeend", updateButton);
       tableCell.insertAdjacentElement("beforeend", resetPasswordButton);
       tableCell.insertAdjacentElement("beforeend", deleteButton);
@@ -1872,16 +1996,12 @@
         negateAccess();
         return;
       }
-      if (
-        confirm(
-          "Se le enviará al usuario un correo de reestablecimiento de contraseña, ¿Estas seguro de proceder con la acción?"
-        )
-      ) {
-        {
-          const tableRow = e.parentNode;
-          const email = tableRow.childNodes[2].innerText;
-          const hasBeenReseted = await resetPasswordToUser(email);
-        }
+      const confirmMessage =
+        "Se le enviará al usuario un correo de reestablecimiento de contraseña, ¿Estas seguro de proceder con la acción?";
+      if (confirm(confirmMessage)) {
+        const tableRow = e.parentNode;
+        const email = tableRow.childNodes[2].innerText;
+        const hasBeenReseted = await resetPasswordToUser(email);
       }
     };
 
@@ -1911,6 +2031,8 @@
     }
 
     function handleDeleteUser(e, node) {
+      console.log(permissions);
+      console.log({ permissions: permissions.delete });
       if (permissions.delete == "0") {
         negateAccess();
         return;
@@ -1963,8 +2085,6 @@
           }
           element.setAttribute("aria-selected", "true");
         });
-        // currentTarget.setAttribute("aria-selected", "true");
-        // <div class="formContainer" data-tabcontainer="data" data-visibility="true">
         const tabContents = document.querySelectorAll("div.formContainer");
         tabContents.forEach((element) => {
           element.setAttribute("data-visibility", "false");
@@ -1981,7 +2101,6 @@
         const uid = document
           .querySelector("#usuariosAltaModal")
           .getAttribute("data-reference");
-        // console.log(uid);
         const storageReference = storage
           .ref()
           .child(`${CONCESIONARIOS_COLLECTION}/${uid}`);
@@ -1997,7 +2116,7 @@
               }
             })
           );
-          // console.log({ FILELIST: urls });
+
           const files = urls.map((item) => {
             return {
               url: item,
@@ -2013,7 +2132,6 @@
           document.querySelectorAll("img.imagePreview").forEach((element) => {
             const { name, alt } = element;
             const currentFile = files.filter((item) => item.name === alt);
-            // console.log({ currentFile });
             element.src =
               currentFile[0].type !== "pdf"
                 ? currentFile[0].url
@@ -2039,24 +2157,16 @@
         }
       });
 
-    document.querySelectorAll("div.modal-bg").forEach((element) =>
+    document.querySelectorAll("div.modal-bg").forEach((element, array) =>
       element.addEventListener("click", function (e) {
         const modal = e.target.parentNode;
         modal.setAttribute("data-visibility", "hidden");
       })
     );
 
-    async function statusFunction(e, a) {
-      const updatedArrayField = a.map((item) => {
-        if (item.vUid === e.vUid) {
-          return { vehicleUID: item.vUid, habilitado: !item.habilitado };
-        }
-        return { vehicleUID: item.vUid, habilitado: item.habilitado };
-      });
-
-      if (
-        updatedArrayField?.filter((item) => item.habilitado === true).length > 2
-      ) {
+    async function statusFunction(element, array) {
+      const { uid, habilitado } = element;
+      if (array?.filter((item) => item.habilitado === true).length > 2) {
         alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
         return;
       }
@@ -2064,16 +2174,17 @@
       const userUID = document
         .querySelector("#usuariosAltaModal")
         .getAttribute("data-reference");
-      const message = e.habilitado
+      const message = habilitado
         ? "Estas seguro de deshabilitar el vehiculo al usuario?"
         : "Estas seguro de habilitar el vehiculo al usuario";
       if (confirm(message)) {
-        // console.log({ userUID, updatedArrayField });
         const documentUpdated = await firestore
           .collection(CONCESIONARIOS_COLLECTION)
           .doc(userUID)
+          .collection("vehiculos")
+          .doc(uid)
           .update({
-            vehicles: updatedArrayField,
+            habilitado: !habilitado,
           })
           .then(() => true)
           .catch(() => false);
@@ -2087,9 +2198,42 @@
       }
     }
 
+    async function statusFunctionConductores(element, array) {
+      const { uid, habilitado } = element;
+      if (array?.filter((item) => item.habilitado === true).length > 2) {
+        alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
+        return;
+      }
+
+      const userUID = document
+        .querySelector("#usuariosAltaModal")
+        .getAttribute("data-reference");
+      const message = habilitado
+        ? "Estas seguro de deshabilitar el vehiculo al usuario?"
+        : "Estas seguro de habilitar el vehiculo al usuario";
+      if (confirm(message)) {
+        const documentUpdated = await firestore
+          .collection(CONCESIONARIOS_COLLECTION)
+          .doc(userUID)
+          .collection("conductores")
+          .doc(uid)
+          .update({
+            habilitado: !habilitado,
+          })
+          .then(() => true)
+          .catch(() => false);
+
+        if (documentUpdated) {
+          alert("Se ha actualizado de manera correcta.");
+          await getAndRenderDriversFromUser();
+          return;
+        }
+        alert("No se pudo actualizar, favor de verificar.");
+      }
+    }
+
     function createVehicleRow(element, index, array) {
       const { marca, modelo, placa, habilitado, uid } = element;
-      // console.log({ element });
       const tableRow = document.createElement("tr");
       const rowCellIndex = document.createElement("td");
       const rowCellBrandModel = document.createElement("td");
@@ -2121,17 +2265,68 @@
       return tableRow;
     }
 
+    function createConductorRow(element, index, array) {
+      const {
+        nombre,
+        apellidoMaterno,
+        apellidoPaterno,
+        telefono,
+        numGafeteSCT,
+        correoElectronico,
+        habilitado,
+        uid,
+      } = element;
+      const tableRow = document.createElement("tr");
+      const rowCellIndex = document.createElement("td");
+      const rowCellNombreCompleto = document.createElement("td");
+      const rowCellTelefono = document.createElement("td");
+      const rowCellGafete = document.createElement("td");
+      const rowCellCorreo = document.createElement("td");
+      const rowCellStatus = document.createElement("td");
+
+      rowCellIndex.insertAdjacentText("afterbegin", index + 1);
+      rowCellNombreCompleto.insertAdjacentText(
+        "afterbegin",
+        nombre + " " + apellidoPaterno + " " + apellidoMaterno
+      );
+      rowCellTelefono.insertAdjacentText("afterbegin", telefono);
+      rowCellCorreo.insertAdjacentText("afterbegin", correoElectronico);
+      rowCellGafete.insertAdjacentText("afterbegin", numGafeteSCT);
+
+      const checkboxStatus = document.createElement("button");
+      checkboxStatus.setAttribute("type", "button");
+      checkboxStatus.setAttribute("data-status", habilitado);
+      checkboxStatus.insertAdjacentHTML(
+        "afterbegin",
+        habilitado ? statusTrueIcon : statusFalseIcon
+      );
+      checkboxStatus.addEventListener("click", async function (e) {
+        await statusFunctionConductores(element, array);
+      });
+      checkboxStatus.setAttribute("class", "statusButtonVehicle");
+      rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
+
+      tableRow.insertAdjacentElement("beforeend", rowCellIndex);
+      tableRow.insertAdjacentElement("beforeend", rowCellNombreCompleto);
+      tableRow.insertAdjacentElement("beforeend", rowCellTelefono);
+      tableRow.insertAdjacentElement("beforeend", rowCellCorreo);
+      tableRow.insertAdjacentElement("beforeend", rowCellGafete);
+      tableRow.insertAdjacentElement("beforeend", rowCellStatus);
+
+      return tableRow;
+    }
+
     async function getAndRenderVehiclesFromUser() {
       document.querySelector("#placa").value = "";
       const uid = document
         .querySelector("#usuariosAltaModal")
         .getAttribute("data-reference");
-      const vehiclesFromUser = await getDocumentsFromVehicleCollection(
+
+      const vehiclesFromUser = await getVehiclesFromInnerDocumentCollection(
         uid,
-        CONCESIONARIOS_COLLECTION,
-        VEHICULOS_COLLECTION
+        CONCESIONARIOS_COLLECTION
       );
-      if (vehiclesFromUser === null) return;
+      if (vehiclesFromUser.length === 0) return;
       document.querySelector("table#vehicles-list tbody").innerHTML = "";
       document.querySelector("#vehiculos-searched").innerHTML = "";
       const table = document.createElement("table");
@@ -2145,12 +2340,42 @@
       });
     }
 
+    async function getAndRenderDriversFromUser() {
+      document.querySelector("#searchEmail").value = "";
+      const uid = document
+        .querySelector("#usuariosAltaModal")
+        .getAttribute("data-reference");
+      const conductoresFromUser =
+        await getConductoresromInnerDocumentCollection(
+          uid,
+          CONCESIONARIOS_COLLECTION
+        );
+      console.log(conductoresFromUser);
+      if (conductoresFromUser.length === 0) return;
+      document.querySelector("table#usuarios-list tbody").innerHTML = "";
+      document.querySelector("#usuarios-searched").innerHTML = "";
+      const table = document.createElement("table");
+      const tableBody = document.createElement("tbody");
+
+      conductoresFromUser.forEach((element, index, array) => {
+        const tableRow = createConductorRow(element, index, array);
+        document
+          .querySelector("table#usuarios-list tbody")
+          .insertAdjacentElement("beforeend", tableRow);
+      });
+    }
+
     $(`button.tab-button[data-tab="accounts"]`).on("click", async function (e) {
       await getAndRenderVehiclesFromUser();
     });
 
+    $(`button.tab-button[data-tab="drivers"]`).on("click", async function (e) {
+      await getAndRenderDriversFromUser();
+    });
+
     window.addEventListener("DOMContentLoaded", async () => {
       await fetchingData();
+      await rolesPermission();
     });
 
     document
@@ -2161,8 +2386,6 @@
             const file = e.target.files[0];
             const reader = new FileReader();
             const { name, type } = e.target;
-            // console.log(e.target.files[0]);
-
             const responseUpload = await uploadImages(
               file,
               name,
@@ -2178,7 +2401,6 @@
                     ? "https://www.svgrepo.com/show/255818/pdf.svg"
                     : url;
               };
-              // console.log(file);
               reader.readAsDataURL(file);
             }
           } catch (error) {
@@ -2205,7 +2427,6 @@
         const url = await reference.getDownloadURL();
 
         if (url) {
-          // console.log("Se ha cargado el archivo de manera correcta");
           return true;
         } else {
           throw new Error();
@@ -2216,6 +2437,7 @@
       }
     };
 
+    /* Buscar y asignar Vehiculo*/
     document
       .querySelector("#userVehicleSearch")
       .addEventListener("submit", async function (e) {
@@ -2260,26 +2482,23 @@
                 const uid = document
                   .querySelector("#usuariosAltaModal")
                   .getAttribute("data-reference");
-                const objectArray = { vehicleUID: id, habilitado: false };
                 const message =
                   "Estas seguro de asignar este vehiculo al concesionario?";
                 if (confirm(message)) {
-                  // console.log({ uid, objectArray });
                   const hasBeenAssigned = await firestore
                     .collection(CONCESIONARIOS_COLLECTION)
                     .doc(uid)
-                    .update({
-                      vehicles:
-                        firebase.firestore.FieldValue.arrayUnion(objectArray),
-                    })
+                    .collection("vehiculos")
+                    .doc(id)
+                    .set({ ...item.data, habilitado: false })
                     .then((snapshot) => {
                       alert("Se ha asignado el vehiculo al usuario.");
                       return true;
                     })
                     .catch((error) => {
-                      alert(
-                        "Se ha presentado un error, favor de verificar con un administrador."
-                      );
+                      const errorMessage =
+                        "Se ha presentado un error, favor de verificar con un administrador.";
+                      alert(errorMessage);
                       console.error(error);
                       return false;
                     });
@@ -2300,16 +2519,103 @@
         }
       });
 
+    /* Buscar y asignar Conductor*/
+
+    document
+      .querySelector("#userEmailSearch")
+      .addEventListener("submit", async function (e) {
+        e.preventDefault();
+        try {
+          const searchString = e.target[0].value;
+          const response = await firestore
+            .collection("conductores")
+            .where("correoElectronico", "==", searchString)
+            .get()
+            .then((snapshot) => {
+              const res = [];
+              snapshot.forEach((doc) => {
+                res.push({ id: doc.id, data: doc.data() });
+              });
+              return res;
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+          if (response) {
+            const box = document.querySelector("#usuarios-searched");
+
+            response.map((item, index, array) => {
+              const { id } = item;
+              const {
+                nombre,
+                apellidoPaterno,
+                apellidoMaterno,
+                telefono,
+                numGafeteSCT,
+              } = item.data;
+
+              const list = document.createElement("div");
+              list.setAttribute("class", "optionVehicle");
+              const span = document.createElement("span");
+              span.innerText = `${nombre} ${apellidoPaterno} ${apellidoMaterno} - ${telefono} - Gafete: ${numGafeteSCT}`;
+              list.insertAdjacentElement("beforeend", span);
+
+              const button = document.createElement("button");
+              button.setAttribute("type", "button");
+              button.setAttribute("class", "botonAsignar");
+              button.addEventListener("click", async function (e) {
+                if (permissions.assign == "0") {
+                  negateAccess();
+                  return;
+                }
+                const uid = document
+                  .querySelector("#usuariosAltaModal")
+                  .getAttribute("data-reference");
+                const message =
+                  "Estas seguro de asignar este conductor al concesionario?";
+                if (confirm(message)) {
+                  const hasBeenAssigned = await firestore
+                    .collection(CONCESIONARIOS_COLLECTION)
+                    .doc(uid)
+                    .collection("conductores")
+                    .doc(id)
+                    .set({ ...item.data, habilitado: false })
+                    .then((snapshot) => {
+                      alert("Se ha asignado el conductor al concesionario.");
+                      return true;
+                    })
+                    .catch((error) => {
+                      alert(
+                        "Se ha presentado un error, favor de verificar con un administrador."
+                      );
+                      console.error(error);
+                      return false;
+                    });
+                  if (hasBeenAssigned === true) {
+                    await getAndRenderDriversFromUser();
+                  }
+                }
+              });
+
+              button.innerText = "Asignar";
+
+              list.insertAdjacentElement("beforeend", button);
+              box.insertAdjacentElement("beforeend", list);
+            });
+          }
+        } catch (error) {
+          console.error("Se ha presentado un error, ", error);
+        }
+      });
+
     const rolesPermission = async () => {
       const permission = sessionStorage.getItem("concesionariosPermission");
       if (permission === null || permission === undefined) {
         window.location.replace("../index.html");
       }
-
       permission.split("$").forEach((permit) => {
         const name = permit.split(",")[0];
         const value = permit.split(",")[1];
-        // console.log({ name, value });
         permissions[name] = value;
       });
     };

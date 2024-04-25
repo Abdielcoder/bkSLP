@@ -7,7 +7,7 @@ table#operatorsTable {
   width: 100%;
   display: table;
   position: relative;
-  border-top: 1px solid rgba(0, 0, 0, .05);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 table#operatorsTable tbody tr.even {
@@ -15,7 +15,7 @@ table#operatorsTable tbody tr.even {
 }
 
 table#operatorsTable tbody tr.odd {
-  background-color: rgba(0, 0, 0, .05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 table#operatorsTable tbody tr:hover {
@@ -38,7 +38,6 @@ table#operatorsTable tbody tr td:nth-child(8) {
   white-space: nowrap;
 }
 
-
 table#operatorsTable tbody tr td:nth-child(2) {
   text-align: center !important;
 }
@@ -47,7 +46,7 @@ table#operatorsTable tbody tr td:nth-child(1) {
   text-transform: capitalize;
 }
 
-div#operatorsTable_filter>label {
+div#operatorsTable_filter > label {
   background-color: #2d6e3d;
   padding-left: 8px;
   border-radius: 3px;
@@ -172,19 +171,18 @@ table#operatorsTable tbody tr td[data-type="tools"] {
   outline: none;
 }
 
-#usuariosBajaModal button[type=button] {
+#usuariosBajaModal button[type="button"] {
   border: 1px solid gray;
   background-color: white;
 }
 
-#usuariosBajaModal button[type=submit] {
+#usuariosBajaModal button[type="submit"] {
   background: #dc3545;
 }
 
 #usuariosBajaModal form#userBaja {
   margin-top: 20px;
 }
-
 
 #modalFormUpdateSubmit {
   background: #fd7e14;
@@ -204,7 +202,8 @@ table#operatorsTable tbody tr td[data-type="tools"] {
   margin-bottom: 10px;
 }
 
-#userVehicleSearch {
+#userVehicleSearch,
+#userEmailSearch {
   display: flex;
   width: 100%;
 }
@@ -283,7 +282,7 @@ ul.tab-list li:first-child {
   border-top: 1px solid gray;
   border-right: 1px solid gray;
 
-  &>span {
+  & > span {
     color: #d3660e;
   }
 }
@@ -320,7 +319,7 @@ table#vehicles-list th {
   column-gap: 1rem;
 }
 
-.file-box>p {
+.file-box > p {
   font-size: 11px;
   text-align: center;
   padding: 0.25rem 0 1rem 0;
@@ -389,7 +388,6 @@ table#vehicles-list th {
   height: 32px;
   width: 32px;
 } */
-
 
 .placa-search {
   display: flex;

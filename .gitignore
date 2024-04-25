@@ -1,2 +1,3 @@
 firebase.rules
 local.env
+/logs

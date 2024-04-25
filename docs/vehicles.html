@@ -274,36 +274,26 @@
             <div class="container-body">
               <form id="form-vehiculo">
                 <div class="flexed">
-                  <div class="formGroup inputForm">
+                  <div class="formGroup selectForm" style="max-width: 120px">
                     <label for="marca">Marca</label>
-                    <input
-                      type="text"
-                      name="marca"
-                      id="marca"
-                      list="marcas"
-                      placeholder="Marca"
-                    />
-                    <datalist
-                      id="marcas"
-                      style="visibility: hidden; position: absolute"
-                    >
-                      <option value="Nissan" />
-                      <option value="Chevrolet" />
-                      <option value="Volkswagen" />
-                      <option value="Toyota" />
-                      <option value="Ford" />
-                      <option value="Honda" />
-                      <option value="Hyundai" />
-                      <option value="Kia" />
-                      <option value="MG" />
-                      <option value="Chrysler" />
-                      <option value="Dodge" />
-                      <option value="Fiat" />
-                      <option value="Seat" />
-                      <option value="Peugeot" />
-                      <option value="Suzuki" />
-                      <option value="Renault" />
-                    </datalist>
+                    <select name="marca" id="marca" style="padding: 8px">
+                      <option value="Nissan">Nissan</option>
+                      <option value="Chevrolet">Chevrolet</option>
+                      <option value="Volkswagen">Volkswagen</option>
+                      <option value="Toyota">Toyota</option>
+                      <option value="Ford">Ford</option>
+                      <option value="Honda">Honda</option>
+                      <option value="Hyundai">Hyundai</option>
+                      <option value="Kia">Kia</option>
+                      <option value="MG">MG</option>
+                      <option value="Chrysler">Chrysler</option>
+                      <option value="Dodge">Dodge</option>
+                      <option value="Fiat">Fiat</option>
+                      <option value="Seat">Seat</option>
+                      <option value="Peugeot">Peugeot</option>
+                      <option value="Suzuki">Suzuki</option>
+                      <option value="Renault">Renault</option>
+                    </select>
                   </div>
                   <div class="formGroup inputForm">
                     <label for="modelo">Modelo</label>
@@ -312,88 +302,77 @@
                       name="modelo"
                       id="modelo"
                       placeholder="Modelo"
+                      style="padding: 8px"
                     />
                   </div>
-                  <div class="formGroup inputForm">
+                  <div class="formGroup selectForm" style="max-width: 120px">
                     <label for="tipoVehiculo">Tipo de vehículo</label>
-                    <input
-                      type="text"
+                    <select
                       name="tipoVehiculo"
                       id="tipoVehiculo"
-                      list="tipos"
-                      placeholder="Tipo de vehículo"
-                    />
-                    <datalist
-                      id="tipos"
-                      style="visibility: hidden; position: absolute"
+                      style="padding: 8px"
                     >
-                      <option value="Hatchback" />
-                      <option value="Sedan" />
-                      <option value="SUV" />
-                      <option value="Crossover" />
-                      <option value="Coupe" />
-                    </datalist>
+                      <option value="Hatchback">Hatchback</option>
+                      <option value="Sedan">Sedan</option>
+                      <option value="SUV">SUV</option>
+                      <option value="Crossover">Crossover</option>
+                      <option value="Coupe">Coupe</option>
+                    </select>
                   </div>
                   <div class="formGroup inputForm">
                     <label for="tipoCombustible">Tipo Combustible</label>
-                    <input
-                      type="text"
-                      name="tipoCombustible"
+                    <select
                       id="tipoCombustible"
-                      list="tiposCombustible"
-                      placeholder="Tipo combustible"
-                    />
-                    <datalist
-                      id="tiposCombustible"
-                      style="visibility: hidden; position: absolute"
+                      name="tipoCombustible"
+                      style="padding: 8px"
                     >
-                      <option value="Gasolina" />
-                      <option value="Diésel" />
-                      <option value="Gas LP" />
-                      <option value="Eléctrico" />
-                      <option value="Híbrido" />
-                    </datalist>
+                      <option value="gasolina">Gasolina</option>
+                      <option value="diesel">Diésel</option>
+                      <option value="gaslp">Gas LP</option>
+                      <option value="electrico">Eléctrico</option>
+                      <option value="hibrido">Híbrido</option>
+                    </select>
                   </div>
                 </div>
                 <div class="flexed">
-                  <div class="formGroup inputForm">
-                    <label for="placa">Placa</label>
-                    <input
-                      type="text"
-                      name="placa"
-                      id="placa"
-                      placeholder="Placa"
-                    />
+                  <div
+                    class="formGroup inputForm"
+                    style="display: flex; flex-direction: row"
+                  >
+                    <label
+                      for="placaNumero"
+                      style="display: flex; flex-direction: column"
+                      >Placa Número
+                      <input
+                        type="text"
+                        name="placaNumero"
+                        id="placaNumero"
+                        placeholder="Placa número"
+                        maxlength="4"
+                        style="padding: 8px"
+                      />
+                    </label>
+                    <label
+                      for="placaTipo"
+                      style="display: flex; flex-direction: column"
+                      >Placa Tipo
+                      <select
+                        name="placaTipo"
+                        id="placaTipo"
+                        style="padding: 8px"
+                      >
+                        <option value="TSE">TSE</option>
+                        <option value="TST">TST</option>
+                        <option value="TSG">TSG</option>
+                      </select>
+                    </label>
                   </div>
                   <div class="formGroup selectForm" style="max-width: 160px">
                     <label for="color">Color</label>
-                    <select name="color" id="color">
+                    <select name="color" id="color" style="padding: 8px">
                       <option value="blanco" selected>Blanco</option>
                       <option value="verde">Verde</option>
                     </select>
-                    <!-- <input
-                      type="text"
-                      name="color"
-                      id="color"
-                      list="colores"
-                      placeholder="Color del vehículo"
-                    />
-                    <datalist
-                      id="colores"
-                      style="visibility: hidden; position: absolute"
-                    >
-                      <option value="Blanco" />
-                      <option value="Negro" />
-                      <option value="Gris" />
-                      <option value="Dorado" />
-                      <option value="Plata" />
-                      <option value="Azul" />
-                      <option value="Rojo" />
-                      <option value="Marrón/Beige" />
-                      <option value="Verde" />
-                      <option value="Amarillo" />
-                      <option value="Naranja" />
-                    </datalist> -->
                   </div>
                   <div
                     class="formGroup inputForm"
@@ -413,7 +392,7 @@
                       type="checkbox"
                       name="habilitado"
                       id="habilitado"
-                      style="margin: 0; width: max-content"
+                      style="padding: 8px; margin: 0; width: max-content"
                     />
                   </div>
                 </div>
@@ -425,6 +404,7 @@
                       name="numeroEconomico"
                       id="numeroEconomico"
                       placeholder="Número económico"
+                      style="padding: 8px"
                     />
                   </div>
                   <div class="formGroup inputForm">
@@ -434,6 +414,7 @@
                       name="tarjetonCiudad"
                       id="tarjetonCiudad"
                       placeholder="Tarjetón"
+                      style="padding: 8px"
                     />
                   </div>
                   <div class="formGroup inputForm">
@@ -444,6 +425,7 @@
                       id="yearVehiculo"
                       maxlength="4"
                       placeholder="Tipo"
+                      style="padding: 8px"
                     />
                   </div>
                 </div>
@@ -455,6 +437,8 @@
                       name="noSerie"
                       id="noSerie"
                       placeholder="No. de Serie"
+                      maxlength="17"
+                      style="padding: 8px"
                     />
                   </div>
                   <div class="formGroup inputForm">
@@ -464,6 +448,7 @@
                       name="polizaSeguro"
                       id="polizaSeguro"
                       placeholder="polizaSeguro"
+                      style="padding: 8px"
                     />
                   </div>
                   <div class="formGroup inputForm">
@@ -473,6 +458,7 @@
                       name="delegacionID"
                       id="delegacionID"
                       placeholder="ID Delegación"
+                      style="padding: 8px"
                     />
                   </div>
                 </div>
@@ -483,6 +469,7 @@
                       type="text"
                       name="fechaAlta"
                       id="fechaAlta"
+                      style="padding: 8px"
                       disabled
                       readonly
                     />
@@ -493,6 +480,7 @@
                       type="text"
                       name="fechaActualizacion"
                       id="fechaActualizacion"
+                      style="padding: 8px"
                       disabled
                       readonly
                     />
@@ -889,19 +877,16 @@
   </body>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      var input = document.querySelector("#placa");
-
-      input.addEventListener("input", function () {
-        this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
-      });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-      var input = document.querySelector("#yearVehiculo");
-
-      input.addEventListener("input", function () {
-        this.value = this.value.replace(/[^0-9]/g, "");
-      });
+      document
+        .querySelector("#placaNumero")
+        .addEventListener("input", function () {
+          this.value = this.value.replace(/[^0-9]/g, "");
+        });
+      document
+        .querySelector("#yearVehiculo")
+        .addEventListener("input", function () {
+          this.value = this.value.replace(/[^0-9]/g, "");
+        });
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -984,7 +969,7 @@
       const tableRow = document.createElement("TR");
       const CELL_LIST = [
         index + 1,
-        element.placa || "-",
+        element.placa,
         element.marca || "-",
         element.modelo || "-",
         element.yearVehiculo || "-",
@@ -1122,12 +1107,15 @@
               : { [item.name]: item.value };
           Object.assign(formObject, property);
         });
-        formObject.placa = formObject.placa.toUpperCase();
         const objectValues = {
           uid,
           fechaActualizacion: new Date().toISOString(),
         };
-        Object.assign(formObject, objectValues);
+        Object.assign(formObject, {
+          ...objectValues,
+          placa: formObject.placaNumero + formObject.placaTipo,
+        });
+
         delete formObject.fechaAlta;
         const response = await VEHICULOS_REFERENCE.doc(uid)
           .update(formObject)
@@ -1196,7 +1184,7 @@
 
         formObject.fechaAlta = todayDate;
         formObject.fechaActualizacion = todayDate;
-        formObject.placa = formObject.placa.toUpperCase();
+        formObject.placa = formObject.placaNumero + formObject.placaTipo;
         const vehicleRef = await VEHICULOS_REFERENCE.add(formObject);
 
         if (vehicleRef) {

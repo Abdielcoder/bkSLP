@@ -744,6 +744,52 @@ export const addDocumentToMessageCollection = async (e) => {
     .catch((error) => false);
 };
 
+export const getVehiclesFromInnerDocumentCollection = async (
+  concesionarioUID,
+  collection
+) => {
+  try {
+    return await firestore
+      .collection(collection)
+      .doc(concesionarioUID)
+      .collection("vehiculos")
+      .get()
+      .then((snapshot) => {
+        const documentsArray = [];
+        snapshot.forEach((document) => {
+          documentsArray.push({ uid: document.id, ...document.data() });
+        });
+        return documentsArray;
+      });
+  } catch (error) {
+    console.error("Error al obtener vehículos:", error);
+    return [];
+  }
+};
+
+export const getConductoresromInnerDocumentCollection = async (
+  concesionarioUID,
+  collection
+) => {
+  try {
+    return await firestore
+      .collection(collection)
+      .doc(concesionarioUID)
+      .collection("conductores")
+      .get()
+      .then((snapshot) => {
+        const documentsArray = [];
+        snapshot.forEach((document) => {
+          documentsArray.push({ uid: document.id, ...document.data() });
+        });
+        return documentsArray;
+      });
+  } catch (error) {
+    console.error("Error al obtener conductores:", error);
+    return [];
+  }
+};
+
 export const getDocumentsFromVehicleCollection = async (
   cUid,
   collection,
@@ -798,6 +844,73 @@ export const getDocumentsFromVehicleCollection = async (
     }
   } catch (error) {
     console.error("Error al obtener vehículos:", error);
+    return false;
+  }
+};
+
+export const getDocumentsFromConductoresCollection = async (
+  cUid,
+  collection,
+  conductores
+) => {
+  try {
+    const userInformation = await firestore
+      .collection(collection)
+      .doc(cUid)
+      .get()
+      .then((snapshot) => {
+        return snapshot.exists && snapshot.data();
+      });
+    if (
+      userInformation?.conductores === undefined ||
+      userInformation?.conductores.length === 0
+    ) {
+      return null;
+    }
+
+    const conductoresUIDFromUser = [
+      ...userInformation.conductores.map((v) => v.conductorUID),
+    ];
+    const querySnapshot = await Promise.all(
+      conductoresUIDFromUser.map(async (conductor) => {
+        return await firestore
+          .collection(conductores)
+          .doc(conductor)
+          .get()
+          .then((snapshot) => {
+            return snapshot.exists && { ...snapshot.data(), uid: snapshot.id };
+          });
+      })
+    );
+    if (querySnapshot.length > 0) {
+      const requiredInformationFromConductor = querySnapshot.map((req) => {
+        const {
+          numGafeteSCT,
+          nombre,
+          apellidoPaterno,
+          apellidoMaterno,
+          telefono,
+          uid: cUid,
+        } = req;
+        const conductores = userInformation.conductores;
+        const habilitado = conductores?.filter((i) => i.conductorUID === cUid);
+        return {
+          habilitado: habilitado[0]?.habilitado || false,
+          numGafeteSCT,
+          nombre,
+          apellidoPaterno,
+          apellidoMaterno,
+          telefono,
+          cUid,
+        };
+      });
+      return requiredInformationFromConductor;
+    } else {
+      console.log("No se encontraron conductores.");
+      return [];
+    }
+  } catch (error) {
+    console.error("Error al obtener conductores:", error);
     return false;
   }
 };
