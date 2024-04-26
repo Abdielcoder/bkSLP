@@ -32,7 +32,7 @@ table#operatorsTable thead tr th {
 table#operatorsTable tbody tr td {
   font-size: 12px;
   padding: 6px 8px;
-} 
+}
 table#operatorsTable tbody tr td:nth-child(8) {
   white-space: nowrap;
 }
@@ -43,6 +43,12 @@ table#operatorsTable tbody tr td:nth-child(2) {
 
 table#operatorsTable tbody tr td:nth-child(1) {
   text-transform: capitalize;
+}
+
+table#operatorsTable tbody tr td:nth-child(1),
+table#operatorsTable tbody tr td:nth-child(5),
+table#operatorsTable tbody tr td:nth-child(7) {
+  text-transform: uppercase !important;
 }
 
 div#operatorsTable_filter > label {

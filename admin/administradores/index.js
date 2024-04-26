@@ -188,6 +188,17 @@ function showModal(type) {
     document.querySelector("button.submit-button").innerHTML = "CREAR";
     document.querySelector("form#administradores>h4.row-title").innerHTML =
       "Da de alta un administrador Backoffice";
+
+    Object.values(FORM_ADMINISTRADORES).forEach((element) => {
+      if (element.type === "text" || element.type === "email") {
+        element.value = "";
+        return;
+      }
+      if (element.tagName === "SELECT") {
+        element.value = "0";
+      }
+    });
+
     return;
   }
   document.querySelector("div.modal-dialog h4.header-title").innerHTML =
@@ -259,11 +270,11 @@ function createRowToTable(list) {
 }
 
 function createActionButtons(uid) {
-  const tableCell = document.createElement("td"); 
+  const tableCell = document.createElement("td");
   const resetPasswordButton = document.createElement("button");
   const updateButton = document.createElement("button");
   const deleteButton = document.createElement("button");
- 
+
   const updateAttrs = {
     type: "button",
     class: "cellButtonTool",
@@ -285,12 +296,12 @@ function createActionButtons(uid) {
     "data-id": uid,
     title: "Eliminar",
   };
- 
+
   elementSetAttributes(updateButton, updateAttrs);
   elementSetAttributes(resetPasswordButton, resetPasswordAttrs);
   elementSetAttributes(deleteButton, deleteAttrs);
   elementSetAttributes(tableCell, { "data-type": "tools" });
- 
+
   updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
   resetPasswordButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#287bc8" fill-rule="evenodd"></path> </g></svg>`;
   deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>`;
@@ -303,7 +314,7 @@ function createActionButtons(uid) {
     handleResetPassword(resetPasswordButton, uid)
   );
   deleteButton.addEventListener("click", (e) => handleDeleteUser(uid));
- 
+
   tableCell.insertAdjacentElement("beforeend", updateButton);
   tableCell.insertAdjacentElement("beforeend", resetPasswordButton);
   tableCell.insertAdjacentElement("beforeend", deleteButton);

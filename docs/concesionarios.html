@@ -402,6 +402,7 @@
                         required
                         class="only-characters"
                         maxlength="18"
+                        data-length="18"
                         style="text-transform: uppercase"
                       />
                     </div>
@@ -415,6 +416,7 @@
                         required
                         style="text-transform: uppercase"
                         maxlength="16"
+                        data-length="16"
                       />
                     </div>
                   </div>
@@ -441,6 +443,7 @@
                         class="only-numbers"
                         id="telefono"
                         required
+                        data-length="10"
                         maxlength="10"
                       />
                     </div>
@@ -455,6 +458,7 @@
                         id="telefonoEmergencia"
                         class="only-numbers"
                         required
+                        data-length="10"
                         maxlength="10"
                       />
                     </div>
@@ -467,6 +471,7 @@
                         id="numeroEconomico"
                         class="only-numbers"
                         maxlength="4"
+                        data-length="4"
                         required
                       />
                     </div>
@@ -477,6 +482,7 @@
                         placeholder="Gafete SCT"
                         name="numGafeteSCT"
                         maxlength="5"
+                        data-length="5"
                         class="only-characters"
                         style="text-transform: uppercase"
                         id="numGafeteSCT"
@@ -511,7 +517,7 @@
                         placeholder="Número"
                         name="numeroCasa"
                         id="numeroCasa"
-                        class="only-numbers"
+                        class="only-characters-spaces"
                         maxlength="10"
                         required
                       />
@@ -539,6 +545,7 @@
                         placeholder="Código postal"
                         name="cp"
                         maxlength="5"
+                        data-length="5"
                         class="only-numbers"
                         id="cp"
                         required
@@ -573,7 +580,7 @@
                             id="especiales"
                           />
                           <label for="especiales"
-                            >Usuario con discapacidad</label
+                            >Persona con discapacidad</label
                           >
                         </div>
                         <div class="formGroup checkboxForm">
@@ -620,7 +627,7 @@
                         </div>
                         <div class="formGroup checkboxForm">
                           <input type="checkbox" name="epoc" id="epoc" />
-                          <label for="epoc"
+                          <label for="epoc" style="white-space: nowrap"
                             >Epoc (Enfermedad Pulmonar Obstructiva
                             Crónica)</label
                           >
@@ -632,6 +639,31 @@
                             id="cardiaca"
                           />
                           <label for="cardiaca">Insuficiencia cardiaca</label>
+                        </div>
+
+                        <div class="formGroup checkboxForm">
+                          <input
+                            type="checkbox"
+                            name="otrasEnfermedades"
+                            id="otrasEnfermedades"
+                          />
+                          <label for="otrasEnfermedades">Otros:</label>
+                          <br />
+                          <textarea
+                            name="otrasEnfermedadesTexto"
+                            id="otrasEnfermedadesTexto"
+                            cols="30"
+                            rows="10"
+                            style="
+                              width: 250px;
+                              font-size: 12px;
+                              padding: 8px;
+                              height: 60px;
+                              border: 1px solid #333;
+                              border-radius: 4px;
+                              resize: none;
+                            "
+                          ></textarea>
                         </div>
                       </div>
                     </div>
@@ -1630,10 +1662,11 @@
         input.addEventListener("input", inputValidOnlyTextOrNumber);
       });
 
-      document.querySelectorAll("input.only-characters-spaces").forEach((input) => {
-        input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
-      });
-
+      document
+        .querySelectorAll("input.only-characters-spaces")
+        .forEach((input) => {
+          input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
+        });
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -1728,6 +1761,8 @@
       }
       document.querySelector("#modalFormSubmit").style.display = "block";
       document.querySelector("#modalFormUpdateSubmit").style.display = "none";
+      document.querySelector("#otrasCapacidadesTexto").value = "";
+      document.querySelector("#otrasEnfermedadesTexto").value = "";
       document.querySelectorAll("button.tab-button").forEach((element) => {
         const attribute = element.getAttribute("data-tab");
         if (
@@ -1900,10 +1935,32 @@
     async function handleSubmit(e) {
       e.preventDefault();
       const targets = Object.entries(e.target).slice(0, -3);
-      console.log({ targets });
       const emailInput = targets.find((item) => item[1].type === "email");
       if (!validateEmail(emailInput[1].value)) {
         window.alert("Favor de verificar correo, debe ser un correo válido.");
+        return;
+      }
+
+      const preValidation = targets
+        .filter(([key, item]) => item.getAttribute("data-length"))
+        .map(([key, item]) => item);
+
+      let hasAnError = false;
+
+      preValidation.forEach((element) => {
+        const inputString = element.value.length;
+        const inputText = element.placeholder;
+        const inputRequest = parseInt(element.getAttribute("data-length"));
+        if (!(inputString >= inputRequest)) {
+          hasAnError = true;
+          element.style.border = "1px solid red";
+        } else {
+          element.style.border = "1px solid gray";
+        }
+      });
+
+      if (hasAnError) {
+        window.alert("Favor de llenar los campos correctamente.");
         return;
       }
 
@@ -1924,26 +1981,50 @@
     }
 
     async function handleUpdateUserInformation(e) {
-      const targets = modalForm.elements;
-      const uid = document.querySelector("#userAltaIdentifier").value;
-      const values = Object.entries(targets)
-        .filter((i) => isNaN(i[0]))
-        .map((i, index) => {
-          const name = i[1].name;
-          let val = i[1].type === "checkbox" ? i[1].checked : i[1].value;
-          return { [name]: val };
-        })
-        .slice(0, -2);
-
-      const emailValue = values.find((item) => item.correoElectronico);
-      if (!validateEmail(emailValue.correoElectronico)) {
+      const targets = Object.entries(modalForm).slice(0, -3);
+      const emailInput = targets.find((item) => item[1].type === "email");
+      if (!validateEmail(emailInput[1].value)) {
         window.alert("Favor de verificar correo, debe ser un correo válido.");
         return;
       }
 
+      const preValidation = targets
+        .filter(([key, item]) => item.getAttribute("data-length"))
+        .map(([key, item]) => item);
+
+      let hasAnError = false;
+
+      preValidation.forEach((element) => {
+        const inputString = element.value.length;
+        const inputText = element.placeholder;
+        const inputRequest = parseInt(element.getAttribute("data-length"));
+        if (!(inputString >= inputRequest)) {
+          hasAnError = true;
+          element.style.border = "1px solid red";
+        } else {
+          element.style.border = "1px solid gray";
+        }
+      });
+
+      if (hasAnError) {
+        window.alert("Favor de llenar los campos correctamente.");
+        return;
+      }
+
+      const values = targets.map((input, index) => {
+        const name = input[1].name;
+        let val =
+          input[1].type === "checkbox" ? input[1].checked : input[1].value;
+        return { [name]: val };
+      });
+
+      const userUID = document
+        .querySelector("#usuariosAltaModal")
+        .getAttribute("data-reference");
+
       const isUpdated = await updateDocumentByUid(
         values,
-        uid,
+        userUID,
         CONCESIONARIOS_COLLECTION
       );
       if (isUpdated === false) return;

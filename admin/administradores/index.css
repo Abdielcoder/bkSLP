@@ -52,6 +52,10 @@ table#table-administradores tbody td:not(:nth-child(-n + 2)) {
   text-transform: capitalize;
 }
 
+table#table-administradores tbody td:nth-child(1) {
+  text-transform: uppercase !important;
+}
+
 div#table-administradores > label {
   background-color: #2d6e3d;
   padding-left: 8px;

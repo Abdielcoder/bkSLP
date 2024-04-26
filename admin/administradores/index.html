@@ -347,6 +347,7 @@
                     class="only-letters"
                     maxlength="80"
                     placeholder="Nombre completo"
+                    style="text-transform: uppercase"
                     required
                   />
 
@@ -478,10 +479,11 @@
         input.addEventListener("input", inputValidOnlyTextOrNumber);
       });
 
-      document.querySelectorAll("input.only-characters-spaces").forEach((input) => {
-        input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
-      });
-
+      document
+        .querySelectorAll("input.only-characters-spaces")
+        .forEach((input) => {
+          input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
+        });
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
