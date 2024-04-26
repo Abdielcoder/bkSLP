@@ -328,6 +328,8 @@
                         placeholder="Nombre(s)"
                         name="nombre"
                         id="nombre"
+                        maxlength="40"
+                        class="only-letters"
                         required
                         style="text-transform: uppercase"
                       />
@@ -338,6 +340,8 @@
                         type="text"
                         placeholder="Apellido Paterno"
                         name="apellidoPaterno"
+                        class="only-letters"
+                        maxlength="20"
                         id="apellidoPaterno"
                         style="text-transform: uppercase"
                         required
@@ -349,6 +353,8 @@
                         type="text"
                         placeholder="Apellido Materno"
                         name="apellidoMaterno"
+                        class="only-letters"
+                        maxlength="20"
                         style="text-transform: uppercase"
                         id="apellidoMaterno"
                         required
@@ -383,6 +389,8 @@
                         id="curp"
                         required
                         maxlength="18"
+                        class="only-characters"
+                        style="text-transform: uppercase"
                       />
                     </div>
                     <div class="formGroup inputForm">
@@ -393,6 +401,8 @@
                         name="rfc"
                         id="rfc"
                         required
+                        class="only-characters"
+                        style="text-transform: uppercase"
                         maxlength="16"
                       />
                     </div>
@@ -418,6 +428,7 @@
                         placeholder="Teléfono"
                         name="telefono"
                         id="telefono"
+                        class="only-numbers"
                         required
                         maxlength="10"
                       />
@@ -431,6 +442,7 @@
                         placeholder="Teléfono de emergencia"
                         name="telefonoEmergencia"
                         id="telefonoEmergencia"
+                        class="only-numbers"
                         required
                         maxlength="10"
                       />
@@ -442,6 +454,7 @@
                         placeholder="Número económico"
                         name="numeroEconomico"
                         id="numeroEconomico"
+                        class="only-characters"
                         maxlength="4"
                         required
                       />
@@ -452,6 +465,7 @@
                         type="text"
                         placeholder="Gafete SCT"
                         name="numGafeteSCT"
+                        class="only-characters"
                         id="numGafeteSCT"
                         required
                         maxlength="5"
@@ -468,6 +482,8 @@
                       <input
                         type="text"
                         placeholder="Calle"
+                        class="only-characters-spaces"
+                        maxlength="80"
                         name="calle"
                         id="calle"
                         required
@@ -481,6 +497,8 @@
                       <input
                         type="text"
                         placeholder="Número"
+                        class="only-numbers"
+                        maxlength="20"
                         name="numeroCasa"
                         id="numeroCasa"
                         required
@@ -493,6 +511,8 @@
                         placeholder="Colonia"
                         name="colonia"
                         id="colonia"
+                        class="only-letters"
+                        maxlength="30"
                         required
                       />
                     </div>
@@ -505,22 +525,23 @@
                         type="text"
                         placeholder="Código postal"
                         name="cp"
+                        class="only-numbers"
+                        maxlength="5"
                         id="cp"
                         required
                       />
                     </div>
                     <div
-                      class="formGroup inputForm"
+                      class="formGroup selectForm"
                       style="max-width: 140px; width: 100%"
                     >
                       <label for="municipio">Municipio</label>
-                      <input
-                        type="municipio"
-                        placeholder="Municipio"
-                        name="municipio"
-                        id="municipio"
-                        required
-                      />
+                      <select name="municipio" id="municipio" required>
+                        <option value="sanluis">SAN LUIS POTOSI</option>
+                        <option value="soledaddegraciano">
+                          SOLEDAD DE GRACIANO SÁNCHEZ
+                        </option>
+                      </select>
                     </div>
                   </div>
 
@@ -1472,20 +1493,40 @@
     </div>
   </body>
   <script>
-    function allowOnlyNumbers(e) {
-      e.target.value = e.target.value.replace(/[^0-9]/g, "");
+    function inputValidOnlyNumbers() {
+      this.value = this.value.replace(/[^0-9]/g, "");
+    }
+
+    function inputValidOnlyTextOrSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z\s]/g, "");
+    }
+
+    function inputValidOnlyTextOrNumber() {
+      this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
+    }
+
+    function inputValidOnlyTextNumberAndSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, "");
     }
 
     document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("input.only-letters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrSpaces);
+      });
+
+      document.querySelectorAll("input.only-numbers").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyNumbers);
+      });
+
+      document.querySelectorAll("input.only-characters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrNumber);
+      });
+
       document
-        .querySelector("#telefono")
-        .addEventListener("input", allowOnlyNumbers);
-      document
-        .querySelector("#telefonoEmergencia")
-        .addEventListener("input", allowOnlyNumbers);
-      document
-        .querySelector("#numeroEconomico")
-        .addEventListener("input", allowOnlyNumbers);
+        .querySelectorAll("input.only-characters-spaces")
+        .forEach((input) => {
+          input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
+        });
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>

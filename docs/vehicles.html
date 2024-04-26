@@ -301,6 +301,8 @@
                       type="text"
                       name="modelo"
                       id="modelo"
+                      maxlength="20"
+                      class="only-letters"
                       placeholder="Modelo"
                       style="padding: 8px"
                     />
@@ -349,6 +351,7 @@
                         id="placaNumero"
                         placeholder="Placa número"
                         maxlength="4"
+                        class="only-numbers"
                         style="padding: 8px"
                       />
                     </label>
@@ -403,17 +406,21 @@
                       type="text"
                       name="numeroEconomico"
                       id="numeroEconomico"
+                      class="only-numbers"
+                      maxlength="4"
                       placeholder="Número económico"
                       style="padding: 8px"
                     />
                   </div>
                   <div class="formGroup inputForm">
-                    <label for="tarjetonCiudad">Tarjetón ciudad</label>
+                    <label for="gafeteSCT">Gafete SCT</label>
                     <input
                       type="text"
-                      name="tarjetonCiudad"
-                      id="tarjetonCiudad"
-                      placeholder="Tarjetón"
+                      name="gafeteSCT"
+                      class="only-characters"
+                      id="gafeteSCT"
+                      maxlength="5"
+                      placeholder="Gafete SCT"
                       style="padding: 8px"
                     />
                   </div>
@@ -425,6 +432,7 @@
                       id="yearVehiculo"
                       maxlength="4"
                       placeholder="Tipo"
+                      class="only-numbers"
                       style="padding: 8px"
                     />
                   </div>
@@ -436,6 +444,7 @@
                       type="text"
                       name="noSerie"
                       id="noSerie"
+                      class="only-characters"
                       placeholder="No. de Serie"
                       maxlength="17"
                       style="padding: 8px"
@@ -451,15 +460,14 @@
                       style="padding: 8px"
                     />
                   </div>
-                  <div class="formGroup inputForm">
-                    <label for="delegacionID">ID Delegación</label>
-                    <input
-                      type="text"
-                      name="delegacionID"
-                      id="delegacionID"
-                      placeholder="ID Delegación"
-                      style="padding: 8px"
-                    />
+                  <div class="formGroup selectForm">
+                    <label for="municipio">Municipio</label>
+                    <select name="municipio" id="municipio">
+                      <option value="sanluis">SAN LUIS POTOSI</option>
+                      <option value="soledaddegraciano">
+                        SOLEDAD DE GRACIANO SÁNCHEZ
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div class="flexed" data-display="none" id="form-dates">
@@ -876,17 +884,30 @@
     </div>
   </body>
   <script>
+    function inputValidOnlyNumbers() {
+      this.value = this.value.replace(/[^0-9]/g, "");
+    }
+
+    function inputValidOnlyTextOrSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z\s]/g, "");
+    }
+
+    function inputValidOnlyTextOrNumber() {
+      this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
-      document
-        .querySelector("#placaNumero")
-        .addEventListener("input", function () {
-          this.value = this.value.replace(/[^0-9]/g, "");
-        });
-      document
-        .querySelector("#yearVehiculo")
-        .addEventListener("input", function () {
-          this.value = this.value.replace(/[^0-9]/g, "");
-        });
+      document.querySelectorAll("input.only-letters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrSpaces);
+      });
+
+      document.querySelectorAll("input.only-numbers").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyNumbers);
+      });
+
+      document.querySelectorAll("input.only-characters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrNumber);
+      });
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>

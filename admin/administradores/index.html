@@ -105,7 +105,11 @@
                 HISTORICO DE VIAJES
               </a>
             </li>
-            <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none;">
+            <li
+              class="nav-item menu-button menu-closed"
+              id="admin-menu-li"
+              style="display: none"
+            >
               <a class="nav-link" href="#" id="administracion">
                 <span class="link-icons material-icons-sharp"
                   >manage_accounts</span
@@ -128,7 +132,11 @@
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none;">
+                  <li
+                    class="nav-item menu-linked hidden"
+                    id="roles-menu-li"
+                    style="display: none"
+                  >
                     <a class="nav-sublink" href="../roles/">
                       <span class="link-icons material-icons-sharp"
                         >groups</span
@@ -331,11 +339,13 @@
               <h4 class="row-title">Da de alta un administrador Backoffice</h4>
               <div class="row">
                 <div class="form-group">
-                  <label for="nombre">Nombre</label>
+                  <label for="nombre">Nombre Completo</label>
                   <input
                     type="text"
                     id="nombre"
                     name="nombre"
+                    class="only-letters"
+                    maxlength="80"
                     placeholder="Nombre completo"
                     required
                   />
@@ -398,6 +408,8 @@
                     type="text"
                     id="usuario"
                     name="usuario"
+                    maxlength="20"
+                    class="only-characters"
                     placeholder="Usuario"
                   />
                 </div>
@@ -410,6 +422,8 @@
                     id="departamento"
                     name="departamento"
                     placeholder="Departamento"
+                    class="only-characters-spaces"
+                    maxlength="20"
                     required
                   />
                 </div>
@@ -434,6 +448,42 @@
       </div>
     </div>
   </body>
+  <script>
+    function inputValidOnlyNumbers() {
+      this.value = this.value.replace(/[^0-9]/g, "");
+    }
+
+    function inputValidOnlyTextOrSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z\s]/g, "");
+    }
+
+    function inputValidOnlyTextOrNumber() {
+      this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
+    }
+
+    function inputValidOnlyTextNumberAndSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, "");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("input.only-letters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrSpaces);
+      });
+
+      document.querySelectorAll("input.only-numbers").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyNumbers);
+      });
+
+      document.querySelectorAll("input.only-characters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrNumber);
+      });
+
+      document.querySelectorAll("input.only-characters-spaces").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
+      });
+
+    });
+  </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>

@@ -339,8 +339,10 @@
                         placeholder="Nombre(s)"
                         name="nombre"
                         id="nombre"
+                        maxlength="40"
                         style="text-transform: uppercase"
                         required
+                        class="only-letters"
                       />
                     </div>
                     <div class="formGroup inputForm">
@@ -350,6 +352,8 @@
                         placeholder="Apellido Paterno"
                         name="apellidoPaterno"
                         id="apellidoPaterno"
+                        maxlength="20"
+                        class="only-letters"
                         style="text-transform: uppercase"
                         required
                       />
@@ -361,6 +365,8 @@
                         placeholder="Apellido Materno"
                         name="apellidoMaterno"
                         id="apellidoMaterno"
+                        maxlength="20"
+                        class="only-letters"
                         style="text-transform: uppercase"
                         required
                       />
@@ -394,6 +400,7 @@
                         name="curp"
                         id="curp"
                         required
+                        class="only-characters"
                         maxlength="18"
                         style="text-transform: uppercase"
                       />
@@ -431,6 +438,7 @@
                         type="tel"
                         placeholder="Teléfono"
                         name="telefono"
+                        class="only-numbers"
                         id="telefono"
                         required
                         maxlength="10"
@@ -445,6 +453,7 @@
                         placeholder="Teléfono de emergencia"
                         name="telefonoEmergencia"
                         id="telefonoEmergencia"
+                        class="only-numbers"
                         required
                         maxlength="10"
                       />
@@ -456,6 +465,7 @@
                         placeholder="Número económico"
                         name="numeroEconomico"
                         id="numeroEconomico"
+                        class="only-numbers"
                         maxlength="4"
                         required
                       />
@@ -467,6 +477,7 @@
                         placeholder="Gafete SCT"
                         name="numGafeteSCT"
                         maxlength="5"
+                        class="only-characters"
                         style="text-transform: uppercase"
                         id="numGafeteSCT"
                         required
@@ -485,6 +496,8 @@
                         placeholder="Calle"
                         name="calle"
                         id="calle"
+                        maxlength="80"
+                        class="only-characters-spaces"
                         required
                       />
                     </div>
@@ -498,6 +511,7 @@
                         placeholder="Número"
                         name="numeroCasa"
                         id="numeroCasa"
+                        class="only-numbers"
                         maxlength="10"
                         required
                       />
@@ -508,7 +522,10 @@
                         type="text"
                         placeholder="Colonia"
                         name="colonia"
+                        class="only-letters"
+                        maxlength="80"
                         id="colonia"
+                        class="only-letters"
                         required
                       />
                     </div>
@@ -521,22 +538,23 @@
                         type="text"
                         placeholder="Código postal"
                         name="cp"
+                        maxlength="5"
+                        class="only-numbers"
                         id="cp"
                         required
                       />
                     </div>
                     <div
-                      class="formGroup inputForm"
+                      class="formGroup selectForm"
                       style="max-width: 140px; width: 100%"
                     >
                       <label for="municipio">Municipio</label>
-                      <input
-                        type="municipio"
-                        placeholder="Municipio"
-                        name="municipio"
-                        id="municipio"
-                        required
-                      />
+                      <select name="municipio" id="municipio" required>
+                        <option value="sanluis">SAN LUIS POTOSI</option>
+                        <option value="soledaddegraciano">
+                          SOLEDAD DE GRACIANO SÁNCHEZ
+                        </option>
+                      </select>
                     </div>
                   </div>
 
@@ -656,6 +674,7 @@
                             id="otrasCapacidadesTexto"
                             cols="30"
                             rows="10"
+                            maxlength="200"
                             style="
                               width: 250px;
                               font-size: 12px;
@@ -1582,20 +1601,39 @@
     </div>
   </body>
   <script>
-    function allowOnlyNumbers() {
+    function inputValidOnlyNumbers() {
       this.value = this.value.replace(/[^0-9]/g, "");
     }
 
+    function inputValidOnlyTextOrSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z\s]/g, "");
+    }
+
+    function inputValidOnlyTextOrNumber() {
+      this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
+    }
+
+    function inputValidOnlyTextNumberAndSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, "");
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
-      document
-        .querySelector("#telefono")
-        .addEventListener("input", allowOnlyNumbers);
-      document
-        .querySelector("#telefonoEmergencia")
-        .addEventListener("input", allowOnlyNumbers);
-      document
-        .querySelector("#numeroEconomico")
-        .addEventListener("input", allowOnlyNumbers);
+      document.querySelectorAll("input.only-letters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrSpaces);
+      });
+
+      document.querySelectorAll("input.only-numbers").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyNumbers);
+      });
+
+      document.querySelectorAll("input.only-characters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrNumber);
+      });
+
+      document.querySelectorAll("input.only-characters-spaces").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
+      });
+
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -1692,7 +1730,11 @@
       document.querySelector("#modalFormUpdateSubmit").style.display = "none";
       document.querySelectorAll("button.tab-button").forEach((element) => {
         const attribute = element.getAttribute("data-tab");
-        if (attribute === "files" || attribute === "accounts" || attribute === "drivers") {
+        if (
+          attribute === "files" ||
+          attribute === "accounts" ||
+          attribute === "drivers"
+        ) {
           element.style.display = "none";
         }
       });
@@ -2032,8 +2074,6 @@
     }
 
     function handleDeleteUser(e, node) {
-      console.log(permissions);
-      console.log({ permissions: permissions.delete });
       if (permissions.delete == "0") {
         negateAccess();
         return;
@@ -2351,7 +2391,7 @@
           uid,
           CONCESIONARIOS_COLLECTION
         );
-      console.log(conductoresFromUser);
+
       if (conductoresFromUser.length === 0) return;
       document.querySelector("table#usuarios-list tbody").innerHTML = "";
       document.querySelector("#usuarios-searched").innerHTML = "";

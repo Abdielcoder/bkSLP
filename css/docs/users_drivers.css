@@ -32,8 +32,7 @@ table#operatorsTable thead tr th {
 table#operatorsTable tbody tr td {
   font-size: 12px;
   padding: 6px 8px;
-}
-table#operatorsTable tbody tr td:nth-child(1),
+} 
 table#operatorsTable tbody tr td:nth-child(8) {
   white-space: nowrap;
 }
