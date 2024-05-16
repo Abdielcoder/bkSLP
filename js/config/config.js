@@ -573,10 +573,7 @@ export const createUserAndSaveData = async (elements, collection) => {
 
     const { status, code, user } = await firebase
       .auth()
-      .createUserWithEmailAndPassword(
-        firestoreData.correoElectronico,
-        "1234abcd"
-      )
+      .createUserWithEmailAndPassword(firestoreData.correoElectronico, "1234abcd")
       .then((user) => {
         return {
           status: 200,
@@ -594,10 +591,9 @@ export const createUserAndSaveData = async (elements, collection) => {
       window.alert("Se ha guardado el registro con exito.");
       await resetPasswordToUser(firestoreData.correoElectronico);
 
-      const response = await firestore
-        .collection(collection)
-        .doc(user.uid)
-        .set(firestoreData);
+      const response = await firestore.collection(collection).doc(user.uid).set(firestoreData);
+
+      await insertIntoRealTime(firestoreData);
 
       const uploadSuccess = await uploadFilesToStorage(user.uid, collection);
 
@@ -616,14 +612,10 @@ export const createUserAndSaveData = async (elements, collection) => {
           window.alert("Corréo invalido, pruebe con otro.");
           break;
         case "auth/operation-not-allowed":
-          window.alert(
-            "Se ha presentado un error en el registro, favor de verificar con un administrador."
-          );
+          window.alert("Se ha presentado un error en el registro, favor de verificar con un administrador.");
           break;
         default:
-          window.alert(
-            "Se ha presentado un error, favor de verificar los datos introducidos."
-          );
+          window.alert("Se ha presentado un error, favor de verificar los datos introducidos.");
           break;
       }
       return false;
@@ -705,9 +697,7 @@ export const resetPasswordToUser = async (email) => {
     });
 
   if (response !== false) {
-    alert(
-      "Se ha enviado un correo de restablecimiento de contraseña, verificar su bandeja de entrada."
-    );
+    alert("Se ha enviado un correo de restablecimiento de contraseña, verificar su bandeja de entrada.");
     return true;
   }
   alert("Se ha presentado un error, favor de verificar");
@@ -722,8 +712,7 @@ export const getDocumentsFromMessageCollection = async () => {
   if (list) {
     let information = [];
     list.forEach((item) => {
-      const { accion, descripcion, destino, ejecutado, fechaAlta, message } =
-        item.data();
+      const { accion, descripcion, destino, ejecutado, fechaAlta, message } = item.data();
       information.push([message, descripcion, destino, ejecutado, accion]);
     });
     console.log({ information });
@@ -744,10 +733,7 @@ export const addDocumentToMessageCollection = async (e) => {
     .catch((error) => false);
 };
 
-export const getVehiclesFromInnerDocumentCollection = async (
-  concesionarioUID,
-  collection
-) => {
+export const getVehiclesFromInnerDocumentCollection = async (concesionarioUID, collection) => {
   try {
     return await firestore
       .collection(collection)
@@ -767,10 +753,7 @@ export const getVehiclesFromInnerDocumentCollection = async (
   }
 };
 
-export const getConductoresromInnerDocumentCollection = async (
-  concesionarioUID,
-  collection
-) => {
+export const getConductoresromInnerDocumentCollection = async (concesionarioUID, collection) => {
   try {
     return await firestore
       .collection(collection)
@@ -790,11 +773,7 @@ export const getConductoresromInnerDocumentCollection = async (
   }
 };
 
-export const getDocumentsFromVehicleCollection = async (
-  cUid,
-  collection,
-  vehiculos
-) => {
+export const getDocumentsFromVehicleCollection = async (cUid, collection, vehiculos) => {
   try {
     const userInformation = await firestore
       .collection(collection)
@@ -803,16 +782,11 @@ export const getDocumentsFromVehicleCollection = async (
       .then((snapshot) => {
         return snapshot.exists && snapshot.data();
       });
-    if (
-      userInformation?.vehicles === undefined ||
-      userInformation?.vehicles.length === 0
-    ) {
+    if (userInformation?.vehicles === undefined || userInformation?.vehicles.length === 0) {
       return null;
     }
 
-    const vehiclesUIDFromUser = [
-      ...userInformation.vehicles.map((v) => v.vehicleUID),
-    ];
+    const vehiclesUIDFromUser = [...userInformation.vehicles.map((v) => v.vehicleUID)];
     const querySnapshot = await Promise.all(
       vehiclesUIDFromUser.map(async (vehicle) => {
         return await firestore
@@ -848,11 +822,7 @@ export const getDocumentsFromVehicleCollection = async (
   }
 };
 
-export const getDocumentsFromConductoresCollection = async (
-  cUid,
-  collection,
-  conductores
-) => {
+export const getDocumentsFromConductoresCollection = async (cUid, collection, conductores) => {
   try {
     const userInformation = await firestore
       .collection(collection)
@@ -861,16 +831,11 @@ export const getDocumentsFromConductoresCollection = async (
       .then((snapshot) => {
         return snapshot.exists && snapshot.data();
       });
-    if (
-      userInformation?.conductores === undefined ||
-      userInformation?.conductores.length === 0
-    ) {
+    if (userInformation?.conductores === undefined || userInformation?.conductores.length === 0) {
       return null;
     }
 
-    const conductoresUIDFromUser = [
-      ...userInformation.conductores.map((v) => v.conductorUID),
-    ];
+    const conductoresUIDFromUser = [...userInformation.conductores.map((v) => v.conductorUID)];
     const querySnapshot = await Promise.all(
       conductoresUIDFromUser.map(async (conductor) => {
         return await firestore
@@ -884,14 +849,7 @@ export const getDocumentsFromConductoresCollection = async (
     );
     if (querySnapshot.length > 0) {
       const requiredInformationFromConductor = querySnapshot.map((req) => {
-        const {
-          numGafeteSCT,
-          nombre,
-          apellidoPaterno,
-          apellidoMaterno,
-          telefono,
-          uid: cUid,
-        } = req;
+        const { numGafeteSCT, nombre, apellidoPaterno, apellidoMaterno, telefono, uid: cUid } = req;
         const conductores = userInformation.conductores;
         const habilitado = conductores?.filter((i) => i.conductorUID === cUid);
         return {
@@ -924,9 +882,7 @@ export const uploadFilesToStorage = async (uid, collection) => {
       return;
     }
 
-    const reference = storage
-      .ref()
-      .child(`${collection}/${uid}/` + archivo.name);
+    const reference = storage.ref().child(`${collection}/${uid}/` + archivo.name);
     await reference.put(archivo);
 
     const url = await reference.getDownloadURL();
@@ -935,5 +891,61 @@ export const uploadFilesToStorage = async (uid, collection) => {
   } catch (error) {
     console.error("Error al subir imagenes, ", error);
     return false;
+  }
+};
+
+const insertIntoRealTime = async (data) => {
+  const {
+    apellidoMaterno,
+    apellidoPaterno,
+    nombre,
+    numeroEconomico,
+    telefono,
+    sexo,
+    uid,
+    municipio,
+    correoElectronico,
+    numGafeteSCT,
+  } = data;
+
+  const realtime = {
+    MUNICIPIO: String(municipio).toUpperCase(),
+    banderaMensajeI: "INACTIVA",
+    color: "(pendiente)",
+    correo: correoElectronico,
+    resenas: "5.0 (123 reñas)",
+    delegacionID: "SIN ID",
+    estatus: "ACTIVO",
+    gafete: numGafeteSCT,
+    genero: sexo,
+    id: uid,
+    image: "https://ecodani.com/images/yola.png",
+    last_gps_location: "32.446237013348124, -116.84971051461638",
+    marca: "(pendiente)",
+    modelo: "(pendiente)",
+    noLicencia_chofer: "(pendiente)",
+    nombre_chofer: [nombre, apellidoPaterno, apellidoMaterno].join(" "),
+    numero_economico: numeroEconomico,
+    placa: "(pendiente)",
+    proceso: "NIGUNO",
+    psw: "NINGUNO",
+    tarjeton_ciudad: "NINGUNO",
+    telefono: telefono,
+    tipo: "(pendiente)",
+    tipo_vehiculo: "(pendiente)",
+    user_id: "3335",
+  };
+  const isUpdated = await firebase
+    .database()
+    .ref()
+    .child(`Users/Drivers/${uid}`)
+    .update(realtime)
+    .then(() => true)
+    .catch(() => false);
+
+  if (isUpdated) {
+    window.alert("Se ha insertado datos del conductor a la base de datos.");
+  } else {
+    window.alert("Se ha presentado un error.");
   }
 };

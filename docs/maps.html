@@ -7,10 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/maps.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -34,12 +31,7 @@
           <hr />
         </div>
         <div class="search-bar">
-          <input
-            type="text"
-            name=""
-            id="searching-bar"
-            placeholder="Placas ó No. económico"
-          />
+          <input type="text" name="" id="searching-bar" placeholder="Placas ó No. económico" />
           <i class="search-icon"></i>
         </div>
         <div class="data-list">
@@ -62,65 +54,41 @@
 
       <main>
         <div id="mapid"></div>
-        <script
-          type="text/javaScript"
-          src="../js/dashboard/map/maps.js"
-        ></script>
+        <script type="text/javaScript" src="../js/dashboard/map/maps.js"></script>
         <div class="map-data-container">
           <button class="map-data" disabled>
             <span> Vehículos totales: </span>
             <span id="total-data">0</span>
           </button>
-          <button
-            class="map-data button-toggle-filter"
-            data-event="sitio"
-            data-vision="true"
-          >
+          <button class="map-data button-toggle-filter" data-event="sitio" data-vision="true">
             <span>
               <img class="eye-vision" src="../assets/svg/visible.svg" />
               Sitio:
             </span>
             <span id="sitio-data">0</span>
           </button>
-          <button
-            class="map-data button-toggle-filter"
-            data-event="libre"
-            data-vision="true"
-          >
+          <button class="map-data button-toggle-filter" data-event="libre" data-vision="true">
             <span>
               <img class="eye-vision" src="../assets/svg/visible.svg" />
               Libre:
             </span>
             <span id="libre-data">0</span>
           </button>
-          <button
-            class="map-data button-toggle-filter"
-            data-event="working"
-            data-vision="true"
-          >
+          <button class="map-data button-toggle-filter" data-event="working" data-vision="true">
             <span>
               <img class="eye-vision" src="../assets/svg/visible.svg" />
               En servicio
             </span>
             <span id="working-data">0</span>
           </button>
-          <button
-            class="map-data button-toggle-filter"
-            data-event="active"
-            data-vision="true"
-          >
+          <button class="map-data button-toggle-filter" data-event="active" data-vision="true">
             <span>
               <img class="eye-vision" src="../assets/svg/visible.svg" />
               Activos
             </span>
             <span id="active-data">0</span>
           </button>
-          <button
-            class="map-data"
-            data-event="inactive"
-            data-vision="false"
-            disabled
-          >
+          <button class="map-data" data-event="inactive" data-vision="false" disabled>
             <span>
               <img class="eye-vision" src="../assets/svg/hidden.svg" />
               No disponible
@@ -128,22 +96,14 @@
             <span id="inactive-data">0</span>
           </button>
           <hr class="separator warpan" style="display: none" />
-          <button
-            class="map-data warpan warning"
-            data-event="warning"
-            style="display: none"
-          >
+          <button class="map-data warpan warning" data-event="warning" style="display: none">
             <span>
               <img src="../assets/svg/warning.svg" />
               Warning
             </span>
             <span id="warning-data">0</span>
           </button>
-          <button
-            class="map-data warpan panic"
-            data-event="panic"
-            style="display: none"
-          >
+          <button class="map-data warpan panic" data-event="panic" style="display: none">
             <span>
               <img src="../assets/svg/panic.svg" />
               Panico
@@ -171,13 +131,6 @@
       <footer>
         <p id="copyrightFooter"></p>
       </footer>
-      <script>
-        window.addEventListener("DOMContentLoaded", () => {
-          const year = new Date().getFullYear();
-          document.querySelector("#copyrightFooter").textContent =
-            "\u00A9 " + year + " Copyright, Tu Taxi.";
-        });
-      </script>
     </div>
     <div class="modal alerts-modal" style="display: none">
       <div class="modal-container">
@@ -216,11 +169,24 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 <script type="module" src="../js/config/auth-config.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
-<script src="../js/global-context.js"></script>
-<!-- <script type="module" src="../js/dashboard/map/functionality.js" async></script>
+<!-- <script src="../js/global-context.js"></script> -->
+<script type="module" src="../js/dashboard/map/functionality.js" async></script>
 <script type="module" src="../js/dashboard/map/dom.js"></script>
-<script type="module" src="../js/dashboard/map/play_audio.js"></script> -->
+<!-- <script type="module" src="../js/dashboard/map/play_audio.js"></script> -->
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const year = new Date().getFullYear();
+    document.querySelector("#copyrightFooter").textContent = "\u00A9 " + year + " Copyright, Tu Taxi.";
+  });
+
+  document.querySelector("button#signout-button").addEventListener("click", function () {
+    firebase.auth().signOut();
+    sessionStorage.clear();
+    window.location.replace("https://tutaxislp.com.mx");
+  });
+</script>

@@ -1,93 +1,106 @@
-import { snap_tarifas, snap_admins, get_tarifas, snap_flag_rates } from '../config/config.js';
-import { getRateChangeLogs } from '../config/firestore-config.js'
+const firestore = firebase.firestore();
+const realtime = firebase.database().ref();
 
-let change_logs = await getRateChangeLogs();
-let tarifas = await get_tarifas();
-let data_table = null;
-var infoPrevio;
-var AWS_TO_ADDRESS = [];
+const INFO_TARIFAS_COLLECTION = realtime.child("Info_Tarifas/SLP");
+const TARIFAS_COLLECTION = realtime.child("Tarifas/SLP")
+const LOGS_INFO_TARIFAS_COLLECTION = firestore.collection("LogsCambioTarifa");
 
-const showTarifaBase = (city) => {
-  snap_tarifas.child(city).once('value', snap => {
-    const tarifas = snap.val();
+let DATATABLE = null;
 
-    // Mostrar los valores en los campos del formulario
-    document.querySelector("input[data-name='banderaDiurna']").value = tarifas.banderaDiurna;
-    document.querySelector("input[data-name='banderaNocturna']").value = tarifas.banderaNocturna;
-    document.querySelector("input[data-name='kilometro']").value = tarifas.kilometro;
-    document.querySelector("input[data-name='min']").value = tarifas.min;
-    // Asumiendo que tienes campos para las tarifas de la app también
-    document.querySelector("input[data-name='banderaDiurnaApp']").value = tarifas.banderaDiurnaApp;
-    document.querySelector("input[data-name='banderaNocturnaApp']").value = tarifas.banderaNocturnaApp;
-    document.querySelector("input[data-name='kilometroApp']").value = tarifas.kilometroApp;
-    document.querySelector("input[data-name='minApp']").value = tarifas.minApp;
+const showTarifaBase = () => {
+  INFO_TARIFAS_COLLECTION.once("value", (snapshot) => {
+    const formElements = Array.from(document.querySelector("form#tarifas")).slice(0, -1);
+    formElements.forEach((element) => {
+      element.value = snapshot.val()[element.name];
+    });
   });
 };
 
-const formatName = (fx, dx, tx) => {
-  fx = fx.includes("B") ? "initial" : fx.toLowerCase();
-  dx = dx.toLowerCase();
-  tx = tx.toLowerCase();
-  return `${fx}_${dx}_${tx}`
+function getElementsFromCollection() {
+  return INFO_TARIFAS_COLLECTION.once("value", (snapshot) => snapshot.val());
 }
 
-const showInfoHTML = ix => {
-  const DOM = document.querySelector(`input[data-name=${ix.name}]`);
-  if (DOM !== null) DOM.value = `$ ${ix.val}.00`;
-}
+const getRateChangeLogs = async () => {
+  return await LOGS_INFO_TARIFAS_COLLECTION.get().then(async (snap) => {
+    let logs_array = [];
+    snap.forEach((item) => {
+      const i = item.data();
+      const __item = {
+        ID: i.cambioId,
+        estatus: i.estatus,
+        fechaHora: i.fechaHora,
+        fechaHoraSol: i.fechaHoraSol,
+        solicitanteId: i.solicitanteId,
+        solicitanteUser: i.solicitanteUser,
+        cambio: {
+          descripcion: i.cambio[0].descripcion,
+          final: i.cambio[0].final,
+          previo: i.cambio[0].previo,
+          propiedad: i.cambio[0].propiedad,
+        },
+        validadores: {
+          estatus: i.validadores[0].estatus,
+          fecha: i.validadores[0].fecha,
+          validador: i.validadores[0].validador,
+        },
+      };
+      logs_array.push(__item);
+    });
+    return logs_array;
+  });
+};
 
 const getAllRatesChangeLogs = async (isCreated) => {
   try {
-    const tableWasCreated = await generateDatatable(isCreated);
+    const tableWasCreated = generateDatatable(isCreated);
     if (tableWasCreated === false) {
-      data_table.clear().draw(false);
+      DATATABLE.clear().draw(false);
     }
-    change_logs.forEach(item => {
-      const data_list = [
-        item.cambio.descripcion,
-        item.estatus,
-        item.fechaHora,
-        item.validadores.validador
-      ]
-      data_table.row.add([...data_list]).draw(false);
+    const changeLogs = await getRateChangeLogs();
+    changeLogs.forEach((item) => {
+      const data_list = [item.cambio.descripcion, item.estatus, item.fechaHora, item.validadores.validador];
+      DATATABLE.row.add([...data_list]).draw(false);
     });
   } catch (err) {
     console.log(err.code);
     console.log(err.message);
   }
-}
+};
 
-const generateDatatable = async (isCreated) => {
-  if (isCreated === false) {
-    data_table = new DataTable("#changelogs-list", {
-      info: false,
-      paging: false,
-      searching: false,
-      buttons: false
-    });
-    return true;
-  }
-  return false;
-}
+const generateDatatable = () => {
+  DATATABLE = new DataTable("#changelogs-list", {
+    info: false,
+    paging: false,
+    searching: false,
+    buttons: false,
+  });
+};
 
-// Añadiendo la funcionalidad de actualización
-document.getElementById('updateTarifaButton').addEventListener('click', (e) => {
-  e.preventDefault(); // Prevenir el envío por defecto del formulario
+document.querySelector("form#tarifas").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  // Obtener los valores de los inputs
-  const inputs = document.querySelectorAll('input[data-name]');
+  const inputs = Array.from(document.querySelector("form#tarifas")).slice(0, -1);
   const updateObj = {};
 
-  inputs.forEach(input => {
-    const key = input.getAttribute('data-name');
-    updateObj[key] = input.value;
+  inputs.forEach((element) => {
+    const { name, value } = element;
+    updateObj[name] = value;
   });
 
-  // Actualizar en Firebase
-  snap_tarifas.child('SLP').update(updateObj)
-    .then(() => alert('Datos actualizados con éxito.'))
-    .catch(error => console.error('Error al actualizar datos:', error));
+  const isUpdated = await INFO_TARIFAS_COLLECTION.update(updateObj)
+    .then(() => true)
+    .catch(() => false);
+  if (isUpdated) {
+    alert("Datos actualizados con éxito.");
+    TARIFAS_COLLECTION.update(updateObj);
+  } else {
+    alert("Se ha presentado un error al actualizar.");
+  }
 });
 
-getAllRatesChangeLogs(false);
-showTarifaBase('SLP');
+function main() {
+  getAllRatesChangeLogs();
+  showTarifaBase();
+}
+
+main();

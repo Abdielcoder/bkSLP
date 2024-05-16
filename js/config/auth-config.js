@@ -10,6 +10,7 @@ const config = {
 };
 
 firebase.initializeApp(config);
+
 const redirectToIndex = () => {
   if (window.location.pathname !== "/index.html") {
     window.location.replace("../../index.html");
@@ -24,6 +25,7 @@ window.onload = async function () {
     document.querySelector("div#root").classList.remove("preload");
   }
 };
+
 const renderMenus = () => {
   const vehiculosMenu = document.querySelector("#vehiculos-menu-li");
   const conductoresMenu = document.querySelector("#conductores-menu-li");
@@ -31,11 +33,11 @@ const renderMenus = () => {
   const mapaMenu = document.querySelector("#mapa-menu-li");
   const adminMenu = document.querySelector("#admin-menu-li");
   const rolesMenu = document.querySelector("#roles-menu-li");
+  const conductoresSubmenu = document.querySelector("li#conductores-submenu-li");
+  const vehiculosSubmenu = document.querySelector("li#vehiculos-submenu-li");
 
   const renderMap = sessionStorage.getItem("mapaPermission");
-  const renderConcesionarios = sessionStorage.getItem(
-    "concesionariosPermission"
-  );
+  const renderConcesionarios = sessionStorage.getItem("concesionariosPermission");
   const renderConductores = sessionStorage.getItem("conductoresPermission");
   const renderVehiculos = sessionStorage.getItem("vehiculosPermission");
   const renderAdmis = sessionStorage.getItem("adminsPermission");
@@ -52,7 +54,7 @@ const renderMenus = () => {
   const vehiculosPermission = checkStatus(renderVehiculos);
   const adminsPermission = checkStatus(renderAdmis);
   const rolesPermission = checkStatus(renderRoles);
- 
+
   if (adminsPermission == 0) {
     adminMenu.remove();
   } else {
@@ -84,29 +86,25 @@ const renderMenus = () => {
     if (conductoresPermission == 1 && vehiculosPermission === 1) {
       vehiculosMenu.remove();
       conductoresMenu.remove();
-      document.querySelector("li#conductores-submenu-li").style.display =
-        "block";
-      document.querySelector("li#vehiculos-submenu-li").style.display = "block";
+      conductoresSubmenu.style.display = "block";
+      vehiculosSubmenu.style.display = "block";
       return;
     }
     if (conductoresPermission == 0) {
-      document.querySelector("li#conductores-submenu-li").remove();
+      conductoresSubmenu.remove();
     } else {
-      document.querySelector("li#conductores-submenu-li").style.display =
-        "block";
+      conductoresSubmenu.style.display = "block";
     }
     if (vehiculosPermission == 0) {
-      document.querySelector("li#vehiculos-submenu-li").remove();
+      vehiculosSubmenu.remove();
     } else {
-      document.querySelector("li#vehiculos-submenu-li").style.display = "block";
+      vehiculosSubmenu.style.display = "block";
     }
   }
 };
 
 const checkStatus = (array) => {
-  const destructuringArray = array
-    .split("$")
-    .map((item) => parseInt(item.split(",")[1])); 
+  const destructuringArray = array.split("$").map((item) => parseInt(item.split(",")[1]));
 
   if (destructuringArray.every((item) => item === 1)) return 1;
   if (destructuringArray.every((item) => item === 0)) return 0;

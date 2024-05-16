@@ -1,118 +1,225 @@
-import { all_drivers, snap_working, snap_active, snap_warning, snap_panic, eiby_panic, eiby_warning } from '../../config/config.js';
-import { icons, dom_icons } from '../../dom/icons.js';
+import { icons, dom_icons } from "../../dom/icons.js";
 
-let drivers_list = await all_drivers();
-let working_list = [];
-let active_list = [];
-let warning_list = [];
-let panic_list = [];
-let eiby_panic_list = [];
-let eiby_warning_list = [];
+const realtime = firebase.database().ref();
+const DRIVERS_REALTIME_REFERENCE = realtime.child("Users/Drivers");
+const DRIVERS_WORKING_REFERENCE = realtime.child("drivers_working");
+const DRIVERS_ACTIVE_REFERENCE = realtime.child("active_drivers");
+export const PANIC_ALERTS_REFERENCE = realtime.child("panic_button");
+export const WARNING_ALERTS_REFERENCE = realtime.child("warning");
 
-/* Drivers Markers on Map*/
-let working_markers_list = [];
-let active_markers_list = [];
-let inactive_markers_list = [];
+let DRIVERS = [];
+let WORKING_DRIVERS = [];
+let ACTIVE_DRIVERS = [];
+let WARNING_NOTIFICATIONS = [];
+let PANIC_ALERTS = [];
+let WORKING_MAP_MARKERS = [];
+let ACTIVE_MAP_MARKERS = [];
+let INACTIVE_MAP_MARKERS = [];
+let WARNING_MAP_MARKERS = [];
+let WARNING_MAP_CIRCLE_MARKERS = [];
+let PANIC_MAP_MARKERS = [];
+let PANIC_CIRCLE_MAP_MARKERS = [];
+let SEARCH_INACTIVE_FILTER = [];
+let ACTIVE_COUNTER = 0;
+let WORKING_COUNTER = 0;
+let INACTIVE_COUNTER = 0;
+let WARNING_COUNTER = 0;
+let PANIC_COUNTER = 0;
 
-let warning_markers_list = [];
-let warning_circle_markers_list = [];
-let panic_markers_list = [];
-let panic_circle_markers_list = [];
-
-let search_inactive_filter = [];
-
-/* Counters */
-let driver_count = drivers_list.dcount;
-let libre_count = drivers_list.libre_count;
-let sitio_count = drivers_list.sitio_count;
-let active_count = 0;
-let working_count = 0;
-let inactive_count = drivers_list.icount;
-let warning_count = 0;
-let panic_count = 0;
+const TAXI_TOTAL_POINTER = document.querySelector("span#total-data");
+const LIBRE_TOTAL_POINTER = document.querySelector("span#libre-data");
+const SITIO_TOTAL_POINTER = document.querySelector("span#sitio-data");
+const WORKING_TOTAL_POINTER = document.querySelector("span#working-data");
+const ACTIVE_TOTAL_POINTER = document.querySelector("span#active-data");
+const INACTIVE_TOTAL_POINTER = document.querySelector("span#inactive-data");
 
 /* Warning / Panic */
 let isIconWarningActive = false;
 let isIconPanicActive = false;
 
-document.querySelector("span#total-data").textContent = driver_count;
-document.querySelector("span#libre-data").textContent = libre_count;
-document.querySelector("span#sitio-data").textContent = sitio_count;
+async function getAllDrivers() {
+  return await DRIVERS_REALTIME_REFERENCE.once("value").then((snapshot) => {
+    const snapshotDriversTotal = [];
+    let taxiLibreCounter = 0;
+    let taxiSitioCounter = 0;
+    snapshot.forEach((driver) => {
+      let object = driver.val();
+      let driverData = {
+        id: object.id,
+        personal: {
+          name: object.nombre_chofer,
+          email: object.correo,
+          phone: object.telefono,
+          gender: object.genero,
+          badge: object.gafete,
+          licence: object.noLicencia_chofer,
+          card: object.tarjeton_ciudad,
+        },
+        vehicle: {
+          num_economic: object.numero_economico,
+          service: object.tipo || "",
+          brand: object.marca,
+          model: object.modelo,
+          color: object.color,
+          plate: object.placa,
+          type: object.tipo_vehiculo,
+          last_gps: (() => {
+            if (object.last_gps_location === undefined) {
+              return [32.53169856666667, -116.95251346666667];
+            }
+            const gps = object.last_gps_location.split(", ");
+            return [gps[0], gps[1]];
+          })(),
+        },
+        delegation: {
+          id: object.delegacionID,
+          town: object.MUNICIPIO,
+        },
+        status: {
+          messageFlag: object.banderaMensajeI || "N/A",
+          status: object.estatus || "N/A",
+          process: object.proceso || "N/A",
+        },
+      };
+      driverData.vehicle.service == "SITIO" ? taxiSitioCounter++ : taxiSitioCounter;
+      driverData.vehicle.service == "LIBRE" ? taxiLibreCounter++ : taxiLibreCounter;
+      snapshotDriversTotal.push(driverData);
+    });
+    const data = {
+      list: snapshotDriversTotal,
+      taxiSitioCounter,
+      taxiLibreCounter,
+    };
+    return data;
+  });
+}
+
+async function main() {
+  const data = await getAllDrivers();
+  console.log(data);
+  DRIVERS = data.list;
+  data.list?.forEach((item) => {
+    addDriverMarkerOnMap(item, undefined, iconInactive, "inactive");
+    addDataDriverToList(item, "inactive", dom_icons.blackcar);
+  });
+
+  TAXI_TOTAL_POINTER.textContent = data.taxiLibreCounter + data.taxiSitioCounter;
+  INACTIVE_TOTAL_POINTER.textContent = data.taxiLibreCounter + data.taxiSitioCounter;
+  INACTIVE_COUNTER = data.taxiLibreCounter + data.taxiSitioCounter;
+  LIBRE_TOTAL_POINTER.textContent = data.taxiLibreCounter;
+  SITIO_TOTAL_POINTER.textContent = data.taxiSitioCounter;
+}
+
+main();
 
 const addDriverMarkerOnMap = async (item, current, iconColor, type) => {
   try {
+    const { vehicle, id } = item;
     const markerPopUpContainer = getPopUpCardFromMarker(item, current, type);
-    const whichService = item.vehicle.service || "indefinido";
+    const whichService = vehicle.service || "indefinido";
 
-    let marker = L.marker([
-      (current !== undefined ? current.l[0] : item.vehicle.last_gps[0]),
-      (current !== undefined ? current.l[1] : item.vehicle.last_gps[1])],
-      {
-        id: item.id,
-        title: item.vehicle.plate,
-        icon: iconColor,
-        alt: `marker-${item.id}`,
-        pos: `icon-${item.id}`
+    const latitude = current !== undefined ? current.l[0] : vehicle.last_gps[0];
+    const longitude = current !== undefined ? current.l[1] : vehicle.last_gps[1];
+
+    const markerOptions = {
+      id,
+      title: vehicle.plate,
+      icon: iconColor,
+      alt: `marker-${id}`,
+      pos: `icon-${id}`,
+    };
+
+    let marker = L.marker([latitude, longitude], markerOptions);
+
+    if (markerPopUpContainer) {
+      marker.bindPopup(markerPopUpContainer, { maxWidth: 500 }).on("click", (event) => {
+        event.target.openPopup();
       });
-
-    if (markerPopUpContainer !== false) {
-      marker.bindPopup(markerPopUpContainer, { maxWidth: 500 })
-        .on("click", event => { event.target.openPopup(); });
     }
     await marker.addTo(GeographicZone);
-    marker._icon.classList.add("eye-filter");
-    marker._icon.setAttribute("data-type", type);
-    marker._icon.setAttribute("data-service", whichService);
-    marker._icon.setAttribute("data-vision", "visible");
-    // console.log(marker);
+
+    const markerIcon = marker._icon;
+    markerIcon.classList.add("eye-filter");
+    markerIcon.setAttribute("data-type", type);
+    markerIcon.setAttribute("data-service", whichService);
+    markerIcon.setAttribute("data-vision", "visible");
+
     setMarkerToArray(marker, type);
   } catch (err) {
-    // console.log(err);
+    console.log(err);
   }
-}
+};
 
 const settingNewCarTypeInMap = (uid, snapshot) => {
-
-  let isWorkingNewDriver = working_markers_list.filter(item => item.options.id === uid);
-  if (isWorkingNewDriver.length !== 0) {
-    const item = drivers_list.list.filter(item => item.id === uid);
-    addDriverMarkerOnMap(item[0], snapshot, iconWorking, dom_icons.bluecar);
+  const { list: driversList } = DRIVERS;
+  let workingDriver = findDriverMarkerByUID(uid, WORKING_MAP_MARKERS);
+  if (workingDriver) {
+    const item = findDriverDataByUID(uid, driversList);
+    addDriverMarkerOnMap(item, snapshot, iconWorking, dom_icons.bluecar);
     return;
   }
 
-  let isActiveNewDriver = active_markers_list.filter(item => item.options.id === uid);
-  if (isActiveNewDriver.length !== 0) {
-    const item = drivers_list.list.filter(item => item.id === uid);
-    addDriverMarkerOnMap(item[0], snapshot, iconActive, dom_icons.greencar)
-    return;
+  let activeDriver = findDriverMarkerByUID(uid, ACTIVE_MAP_MARKERS);
+  if (activeDriver) {
+    const item = findDriverDataByUID(uid, driversList);
+    addDriverMarkerOnMap(item, snapshot, iconActive, dom_icons.greencar);
   }
-  return;
+};
+
+function tabModalEventListener({ currentTarget }) {
+  const modalTabButtons = document.querySelectorAll("button.tab-button");
+  const nameTab = currentTarget.getAttribute("data-tab");
+  const isSelected = currentTarget.getAttribute("aria-selected");
+
+  if (isSelected == "true") {
+    return false;
+  }
+
+  modalTabButtons.forEach((element) => {
+    const isCurrentElement = element.getAttribute("data-tab") === nameTab;
+    if (element.getAttribute("aria-selected") == "true" || !isCurrentElement) {
+      element.setAttribute("aria-selected", "false");
+    } else {
+      element.setAttribute("aria-selected", "true");
+    }
+  });
+
+  const tabContents = document.querySelectorAll("div.formContainer");
+  tabContents.forEach((element) => {
+    const isVisible = element.getAttribute("data-tabcontainer") === nameTab;
+    element.setAttribute("data-visibility", isVisible ? "true" : "false");
+  });
 }
 
-const removeDataFromTable = val => {
-  const row = document.getElementsByClassName("tr_" + val)[0];
-  row.remove();
-}
+const findDriverMarkerByUID = (uid, marker) => marker.find(({ options }) => options.id === uid);
+
+const findDriverDataByUID = (uid, array) => array.find(({ id }) => id === uid);
+
+const removeDataFromTable = (uid) => {
+  const elementString = "tr.tr_" + uid;
+  document.querySelectorAll(elementString).forEach((element) => {
+    element.remove();
+  });
+};
 
 const showAlertCountersOnMapContainer = (e, count) => {
-
   const button = document.querySelector(`button[data-event='${e}'`);
   const separator = document.querySelector(`hr.separator.warpan`);
 
-  if (warning_count >= 1) {
+  if (WARNING_COUNTER >= 1) {
     isIconWarningActive = true;
-    separator.style.display = 'block';
-    button.style.display = 'flex';
+    separator.style.display = "block";
+    button.style.display = "flex";
   }
-  if (panic_count >= 1) {
+  if (PANIC_COUNTER >= 1) {
     isIconPanicActive = true;
-    if (separator.style.display === 'none') {
-      separator.style.display = 'block';
+    if (separator.style.display === "none") {
+      separator.style.display = "block";
     }
-    button.style.display = 'flex';
+    button.style.display = "flex";
   }
   document.querySelector(`span#${e}-data`).textContent = count;
-}
+};
 
 const updateNodePosition = (array, node) => {
   return {
@@ -121,20 +228,17 @@ const updateNodePosition = (array, node) => {
     status: array.status,
     delegation: array.delegation,
     vehicle: array.vehicle,
-    w: node
-  }
-}
+    w: node,
+  };
+};
 
 const addDataDriverToList = async (driver, event, icon) => {
   try {
     if (driver !== undefined) {
-
       const list_container = document.querySelector("table#data-list tbody");
       const id = driver.id;
-
       const TR = document.createElement("tr");
       const TD = document.createElement("td");
-
       const SPAN = document.createElement("span");
       const IMG = document.createElement("img");
       TR.classList.add(`tr_${id}`);
@@ -152,64 +256,58 @@ const addDataDriverToList = async (driver, event, icon) => {
       TD.append(SPAN, IMG);
       TR.append(TD);
 
-      TR.addEventListener("click", event => {
+      TR.addEventListener("click", (event) => {
         const self = event.currentTarget;
-        const id = self.getAttribute("class").split('_')[1];
+        const id = self.getAttribute("class").split("_")[1];
         const type = self.getAttribute("data-type");
         focusMarkerOnMap(id, type);
-      })
+      });
 
-      list_container.insertAdjacentElement('beforeend', TR);
+      list_container.insertAdjacentElement("beforeend", TR);
     }
   } catch (err) {
-    console.log(err)
+    console.error(err);
   }
-}
+};
 
 const removeMarkerFromMap = (item) => {
-  const alt = item.options.alt
-  // item.unbindPopup().removeFrom(GeographicZone);
+  const { options } = item;
+  const element = `img[alt='${options.alt}']`;
   item.removeFrom(GeographicZone);
-  const markers = document.querySelectorAll(`img[alt='${alt}']`)
-  markers.forEach(item => {
-    item.remove();
-  })
-}
+  document.querySelectorAll(element).forEach((e) => e.remove());
+};
 
-const focusMarkerOnMap = async (i, t) => {
+const focusMarkerOnMap = async (uid, t) => {
+  let driverMarkerItem = [];
 
-  let driver_object = [];
-
-  if (t !== 'inactive') {
-
-    if (t === 'active') { driver_object = active_markers_list.filter(item => item.options.id === i); }
-    if (t === 'working') { driver_object = working_markers_list.filter(item => item.options.id === i); }
-    if (t === 'warning') { driver_object = warning_markers_list.filter(item => item.options.id === i); }
-    if (t === 'panic') { driver_object = panic_markers_list.filter(item => item.options.id === i); }
-    driver_object[0].openPopup();
-
-    const gps = driver_object[0].getLatLng();
-    GeographicZone.setView([gps.lat, gps.lng], 12);
+  if (t !== "inactive") {
+    if (t === "active") driverMarkerItem = ACTIVE_MAP_MARKERS.filter(({ options }) => options.id === uid);
+    if (t === "working") driverMarkerItem = WORKING_MAP_MARKERS.filter(({ options }) => options.id === uid);
+    if (t === "warning") driverMarkerItem = WARNING_MAP_MARKERS.filter(({ options }) => options.id === uid);
+    if (t === "panic") driverMarkerItem = PANIC_MAP_MARKERS.filter(({ options }) => options.id === uid);
+    driverMarkerItem[0].openPopup();
+    const { lat, lng } = driverMarkerItem[0].getLatLng();
+    GeographicZone.setView([lat, lng], 12);
     return;
   }
 
   updateSearchInactiveFilter(i);
-  const mr = inactive_markers_list.filter(item => item.options.id === i);
-  mr[0].openPopup();
-  const latlng = mr[0].getLatLng();
-  GeographicZone.setView([latlng.lat, latlng.lng], 12);
-  return;
-}
+  const marker = findDriverMarkerByUID(i, INACTIVE_MAP_MARKERS);
+  marker.openPopup();
+  const { latitude, longitude } = marker.getLatLng();
+  GeographicZone.setView([latitude, longitude], 12);
+};
 
-const updateSearchInactiveFilter = i => {
-
-  search_inactive_filter.forEach(item => { item.style.display = "none"; });
-  search_inactive_filter = [];
+const updateSearchInactiveFilter = (i) => {
+  SEARCH_INACTIVE_FILTER.forEach((item) => {
+    item.style.display = "none";
+  });
+  SEARCH_INACTIVE_FILTER = [];
   const inactive_marker = document.querySelector(`img[alt='marker-${i}']`);
   inactive_marker.style.display = "block";
-  search_inactive_filter.push(inactive_marker);
+  SEARCH_INACTIVE_FILTER.push(inactive_marker);
   return;
-}
+};
 
 const getPopUpCardFromMarker = (item, current, type) => {
   try {
@@ -362,45 +460,23 @@ const getPopUpCardFromMarker = (item, current, type) => {
         </table>
       </div>
     </div>
-  </div>  
-      `;
-
-      //   return `
-      //   <div class="popup-container"> 
-      //     <div>
-      //       <div class="popup-personal">
-      //         <div class="icon-text">${item.personal.gender == "m" ? icons.male : icons.female}<span class="capitalize bold">${item.personal.name}</span></div>
-      //         <div class="icon-text">${icons.phone}<span class="upper">${item.personal.phone}</span></div>
-      //         <div class="icon-text">${icons.badge}<span class="upper">${item.personal.badge}</span></div>
-      //         <div class="icon-text">${icons.card}<span class="upper">${item.personal.licence}</span></div>
-      //         <div class="icon-text">${icons.mail}<span class="lower">${item.personal.email}</span></div>
-      //       </div>
-      //       <div class="popup-vehicle">
-      //         <div class="icon-text"><span class="capitalize bold">${item.vehicle.brand} ${item.vehicle.model}</span></div>
-      //         <div class="icon-text">${icons.number}<span class="upper">${item.vehicle.num_economic}</span></div>
-      //         <div class="icon-text">${icons.number}<span class="upper">${item.vehicle.plate}</span></div>
-      //         <div class="icon-text">${icons.car}<span class="capitalize">${item.vehicle.type}</span></div>
-      //         <div class="icon-text">${icons.colors}<span class="capitalize">${item.vehicle.color || "n/a"}</span></div>
-      //       </div>
-      //     </div>
-      //     ${current === undefined ? '' : (isAlertEvent(current, type) || '')}
-      // </div>`;
+  </div>`;
     }
   } catch (err) {
     return false;
   }
-}
+};
 
 const isAlertEvent = (object, t) => {
-  if (t !== 'warning' && t !== 'panic') return;
+  if (t !== "warning" && t !== "panic") return;
   const timestamp = object.start;
   return `<div class="time_alert">Hora de alerta: ${formatedTime(timestamp)}</div>`;
-}
+};
 
-const formatedTime = tx => {
-  const t = tx.split('.');
-  return `${t[2]}/${t[1]}/${t[0]} ${t[3]}:${t[4]}:${t[5]}`
-}
+const formatedTime = (tx) => {
+  const t = tx.split(".");
+  return `${t[2]}/${t[1]}/${t[0]} ${t[3]}:${t[4]}:${t[5]}`;
+};
 
 const getDegreesFromMarker = (gps1, gps2) => {
   const rad = Math.PI / 180;
@@ -410,17 +486,18 @@ const getDegreesFromMarker = (gps1, gps2) => {
   let lon2 = gps2.lng * rad;
   let y = Math.sin(lon2 - lon1) * Math.cos(lat2);
   let x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
-  let bearing = ((Math.atan2(y, x) * 180 / Math.PI) + 360) % 360;
+  let bearing = ((Math.atan2(y, x) * 180) / Math.PI + 360) % 360;
   return bearing >= 180 ? bearing - 360 : bearing;
-}
+};
 
 const setMarkerToArray = async (object, type) => {
-  if (type === 'active') { active_markers_list.push(object); return; }
-  if (type === 'inactive') { inactive_markers_list.push(object); return; }
-  if (type === 'working') { working_markers_list.push(object); return; }
-  if (type === 'warning') { warning_markers_list.push(object); return; }
-  if (type === 'panic') { panic_markers_list.push(object); return; }
-}
+  if (type === "active") return ACTIVE_MAP_MARKERS.push(object);
+  if (type === "inactive") return INACTIVE_MAP_MARKERS.push(object);
+  if (type === "working") return WORKING_MAP_MARKERS.push(object);
+  if (type === "warning") return WARNING_MAP_MARKERS.push(object);
+  if (type === "panic") return PANIC_MAP_MARKERS.push(object);
+  return;
+};
 
 const updateDriverMarkerOrientation = (i, a) => {
   const iconImg = document.querySelector(`img[alt='marker-${i}']`);
@@ -428,9 +505,8 @@ const updateDriverMarkerOrientation = (i, a) => {
   iconImg.style.transformOrigin = "center";
   const newTransformAngle = `${iconStyle.split("rotate")[0]} rotate(${a}deg)`;
   iconImg.style.transform = newTransformAngle;
-}
+};
 
-// addWarningInfoToModalTable(item, isWarning, 'warning', dom_icons.yellowcar);
 const addWarningInfoToModalTable = (item, pos, type, icon) => {
   const modal = document.querySelector("div.modal-container-body table#alerts-list tbody");
   const items = [
@@ -443,124 +519,125 @@ const addWarningInfoToModalTable = (item, pos, type, icon) => {
     item.vehicle.brand,
     item.vehicle.plate,
     `${item.vehicle.type.replace("automovil ", "")} - ${item.vehicle.color}`,
-    `<button class="attention-button" data-type='${type}' data-id='${item.id}'><img src='${dom_icons.edit}'/></button>`
+    `<button class="attention-button" data-type='${type}' data-id='${item.id}'><img src='${dom_icons.edit}'/></button>`,
   ];
 
-  const TR = document.createElement('TR');
-  TR.setAttribute('class', `${type}-list_${item.id}`);
+  const TR = document.createElement("TR");
+  TR.setAttribute("class", `${type}-list_${item.id}`);
 
-  items.forEach(i => {
-    const TD = document.createElement('TD');
-    TD.insertAdjacentHTML('beforeend', i);
+  items.forEach((i) => {
+    const TD = document.createElement("TD");
+    TD.insertAdjacentHTML("beforeend", i);
     TR.appendChild(TD);
   });
 
   const BUTTON = TR.lastElementChild.children[0];
-  BUTTON.addEventListener("click", e => {
+  BUTTON.addEventListener("click", (e) => {
     const self = e.currentTarget;
-    const id = self.getAttribute('data-id');
+    const id = self.getAttribute("data-id");
     attendAlertFromListModal(type, id);
   });
 
   modal.insertAdjacentElement("beforeend", TR);
-}
+};
 
 const attendAlertFromListModal = (type, i) => {
   const alert_box = document.querySelector("div.modal-alert-box");
   alert_box.setAttribute("data-id", i);
   alert_box.setAttribute("data-type", type);
-  alert_box.style.display = 'block';
-}
+  alert_box.style.display = "block";
+};
 
 const checkDriverMarkerOnMap = async (type, uid, event) => {
   try {
-    let whichTypeIs = '';
-    const isWorking = await snap_working.child(uid).get().then(snap => {
-      return snap.exists();
-    });
-    const isActive = await snap_active.child(uid).get().then(snap => {
-      return snap.exists();
-    });
-    whichTypeIs = isWorking === true ? 'working' : isActive === true ? 'active' : '';
+    let whichTypeIs = "";
+    const isWorking = await DRIVERS_WORKING_REFERENCE.child(uid)
+      .get()
+      .then((snap) => {
+        return snap.exists();
+      });
+    const isActive = await DRIVERS_ACTIVE_REFERENCE.child(uid)
+      .get()
+      .then((snap) => {
+        return snap.exists();
+      });
+    whichTypeIs = isWorking === true ? "working" : isActive === true ? "active" : "";
 
     if (!isWorking && !isActive) return;
 
     const marker = document.querySelector(`img[alt='marker-${uid}'][data-type='${whichTypeIs}']`);
-    console.log(marker)
-    console.log(whichTypeIs);
+    // console.log(marker);
+    // console.log(whichTypeIs);
     const table_row = document.querySelectorAll(`tr.tr_${uid}`);
 
-    if (event === 'start') {
-      marker.style.display = 'none';
-      table_row.forEach(item => {
-        if (item.getAttribute('data-type') !== type) {
-          item.classList.add('no-display');
+    if (event === "start") {
+      marker.style.display = "none";
+      table_row.forEach((item) => {
+        if (item.getAttribute("data-type") !== type) {
+          item.classList.add("no-display");
         }
       });
       return;
     }
-    marker.style.display = 'block';
-    table_row.forEach(item => {
-      if (item.getAttribute('data-type') !== type) {
-        item.classList.remove('no-display');
+    marker.style.display = "block";
+    table_row.forEach((item) => {
+      if (item.getAttribute("data-type") !== type) {
+        item.classList.remove("no-display");
       }
     });
-
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
-}
+};
 
 const cleanAlertCountInContainerMap = (counter, type) => {
-
   document.querySelector(`span#${type}-data`).textContent = counter;
 
   if (counter === 0) {
-    document.querySelector(`button.map-data.warpan.${type}`).style.display = 'none';
+    document.querySelector(`button.map-data.warpan.${type}`).style.display = "none";
   }
 
-  if ((warning_count + panic_count) < 1) {
-    document.querySelectorAll('.warpan').forEach(elem => {
-      elem.style.display = 'none';
+  if (WARNING_COUNTER + PANIC_COUNTER < 1) {
+    document.querySelectorAll(".warpan").forEach((elem) => {
+      elem.style.display = "none";
     });
     GeographicZone.setView([32.4660333, -116.9167898], 11);
     return;
   }
 
   return;
-}
+};
 
 const addCircleToMap = (item, color, type) => {
-  let circle_marker = L.circle([item.node.l[0], item.node.l[1]],
-    {
-      radius: (() => { return type === "warning" ? 1200 : 2000; })(),
-      stroke: true,
-      weight: 2,
-      opacity: 0.65,
-      color: color,
-      fillColor: color,
-      className: `circle-${item.uid}`
-    });
-  if (type === "warning") { warning_circle_markers_list.push(circle_marker); }
-  if (type === "panic") { panic_circle_markers_list.push(circle_marker); }
-  circle_marker.addTo(GeographicZone)
-}
+  const circleOptions = {
+    radius: type === "warning" ? 1200 : 2000,
+    stroke: true,
+    weight: 2,
+    opacity: 0.65,
+    color: color,
+    fillColor: color,
+    className: `circle-${item.uid}`,
+  };
+  const CIRCLE_MAP_MARKER = L.circle([item.node.l[0], item.node.l[1]], circleOptions);
+  if (type === "warning") {
+    WARNING_MAP_CIRCLE_MARKERS.push(CIRCLE_MAP_MARKER);
+  }
+  if (type === "panic") {
+    PANIC_CIRCLE_MAP_MARKERS.push(CIRCLE_MAP_MARKER);
+  }
+  CIRCLE_MAP_MARKER.addTo(GeographicZone);
+};
 
 const removeCircleMarkerFromMap = (uid, type) => {
-  let circle_marker = [];
+  let CIRCLE_MAP_MARKER =
+    type === "warning"
+      ? WARNING_MAP_CIRCLE_MARKERS.filter(({ options }) => options.className === `circle-${uid}`)
+      : PANIC_CIRCLE_MAP_MARKERS.filter(({ options }) => options.className === `circle-${uid}`);
 
-  if (type === 'warning') {
-    circle_marker = warning_circle_markers_list.filter(item => item.options.className === `circle-${uid}`);
-  }
-
-  if (type === 'panic') {
-    circle_marker = panic_circle_markers_list.filter(item => item.options.className === `circle-${uid}`);
-  }
-
-  circle_marker.forEach(item => {
-    item.removeFrom(GeographicZone)
+  CIRCLE_MAP_MARKER.forEach((item) => {
+    item.removeFrom(GeographicZone);
   });
-}
+};
 
 const executeWebService = () => {
   const api = "http://ec2-3-15-238-62.us-east-2.compute.amazonaws.com/SendActivation.asmx/ActivationLog";
@@ -569,403 +646,258 @@ const executeWebService = () => {
   xhr.addEventListener("load", () => {
     if (this.readyState === 4 && this.status === 200) {
       console.log(this.response);
-    }
-    else {
-      console.log(this.response)
+    } else {
+      console.log(this.response);
     }
   });
   xhr.open("GET", api);
   xhr.send();
-}
+};
 
-snap_working.on('child_added', snap => {
-  const isWorking = snap.val();
+/**
+ * Drivers Working References (OnAdded, onChanged, onRemoved)
+ **/
+DRIVERS_WORKING_REFERENCE.on("child_added", (snap) => {
   try {
-    working_count++;
-    inactive_count--;
-    const driver_data = drivers_list.list.filter(item => item.id === snap.key);
-    const item = driver_data[0];
-    // console.log("LINE 420:")
-    // console.log(item);
-    working_list.push({ ...item, w: isWorking });
-    addDriverMarkerOnMap(item, isWorking, iconWorking, 'working');
-    addDataDriverToList(item, 'working', dom_icons.bluecar);
-    document.querySelector("span#working-data").textContent = working_count;
-    document.querySelector("span#inactive-data").textContent = inactive_count;
+    WORKING_COUNTER++;
+    INACTIVE_COUNTER--;
+    const item = findDriverDataByUID(snap.key, DRIVERS);
+    WORKING_DRIVERS.push({ ...item, w: snap.val() });
+    addDriverMarkerOnMap(item, snap.val(), iconWorking, "working");
+    addDataDriverToList(item, "working", dom_icons.bluecar);
+    WORKING_TOTAL_POINTER.textContent = WORKING_COUNTER;
+    INACTIVE_TOTAL_POINTER.textContent = INACTIVE_COUNTER;
+  } catch (err) {
+    console.error(err);
   }
-  catch (err) {
+});
+
+DRIVERS_WORKING_REFERENCE.on("child_changed", (snap) => {
+  try {
+    const driver = findDriverDataByUID(snap.key, WORKING_DRIVERS);
+    const marker = findDriverMarkerByUID(snap.key, WORKING_MAP_MARKERS);
+    const latitude = snap.val().l[0];
+    const longitude = snap.val().l[1];
+
+    if (!driver) return;
+
+    const newDegree = getDegreesFromMarker(
+      { lat: marker._latlng.lat, lng: marker._latlng.lng },
+      { lat: latitude, lng: longitude }
+    );
+
+    marker.setLatLng([latitude, longitude]);
+    updateDriverMarkerOrientation(snap.key, newDegree);
+
+    const new_item = updateNodePosition(driver, snap.val());
+    WORKING_DRIVERS = WORKING_DRIVERS.filter((item) => item.id !== snap.key);
+    WORKING_DRIVERS.push(new_item);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+DRIVERS_WORKING_REFERENCE.on("child_removed", ({ key }) => {
+  try {
+    WORKING_COUNTER--;
+    WORKING_DRIVERS = WORKING_DRIVERS.filter(({ id }) => id !== key);
+    const marker = findDriverMarkerByUID(key, WORKING_MAP_MARKERS);
+    removeMarkerFromMap(marker);
+    removeDataFromTable(key);
+    WORKING_MAP_MARKERS = WORKING_MAP_MARKERS.filter(({ options }) => options.id !== key);
+    WORKING_TOTAL_POINTER.textContent = WORKING_COUNTER;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+/**
+ * Realtime Events
+ * @param {Array<Object>} snapshot - Listado de objetos dentro de la colección.
+ * @throws {Error} Si dentro de una funcion algo se ejecuta mal.
+ */
+DRIVERS_ACTIVE_REFERENCE.on("child_added", (snapshot) => {
+  try {
+    ACTIVE_COUNTER++;
+    INACTIVE_COUNTER--;
+    const item = findDriverDataByUID(snapshot.key, DRIVERS);
+    ACTIVE_DRIVERS.push({ ...item, a: snapshot.val() });
+    addDriverMarkerOnMap(item, snapshot.val(), iconActive, "active");
+    addDataDriverToList(item, "active", dom_icons.greencar);
+    ACTIVE_TOTAL_POINTER.textContent = ACTIVE_COUNTER;
+    INACTIVE_TOTAL_POINTER.textContent = INACTIVE_COUNTER;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+DRIVERS_ACTIVE_REFERENCE.on("child_changed", (snap) => {
+  try {
+    const driver = findDriverDataByUID(snap.key, ACTIVE_DRIVERS);
+    const marker = findDriverMarkerByUID(snap.key, ACTIVE_MAP_MARKERS);
+    const latitude = snap.val().l[0];
+    const longitude = snap.val().l[1];
+
+    if (!driver) return;
+
+    const newDegree = getDegreesFromMarker(
+      { lat: marker._latlng.lat, lng: marker._latlng.lng },
+      { lat: latitude, lng: longitude }
+    );
+
+    marker.setLatLng([latitude, longitude]);
+    updateDriverMarkerOrientation(snap.key, newDegree);
+
+    const newDriverPosition = updateNodePosition(driver, snap.val());
+    ACTIVE_DRIVERS = ACTIVE_DRIVERS.filter((item) => item.id !== snap.key);
+    ACTIVE_DRIVERS.push(newDriverPosition);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+DRIVERS_ACTIVE_REFERENCE.on("child_removed", ({ key }) => {
+  try {
+    ACTIVE_COUNTER--;
+    ACTIVE_DRIVERS = ACTIVE_DRIVERS.filter(({ id }) => id !== key);
+    const marker = findDriverMarkerByUID(key, ACTIVE_MAP_MARKERS);
+    removeMarkerFromMap(marker);
+    removeDataFromTable(key);
+    ACTIVE_MAP_MARKERS = ACTIVE_MAP_MARKERS.filter(({ options }) => options.id !== key);
+    ACTIVE_TOTAL_POINTER.textContent = ACTIVE_COUNTER;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+/**
+ * Warning References (OnAdded, onChanged, onRemoved)
+ **/
+WARNING_ALERTS_REFERENCE.on("child_added", (snap) => {
+  try {
+    WARNING_COUNTER++;
+    const item = findDriverDataByUID(snap.key, DRIVERS);
+    WARNING_NOTIFICATIONS.push({ ...item, w: snap.val() });
+    checkDriverMarkerOnMap("warning", snap.key, "start");
+    addDriverMarkerOnMap(item, snap.val(), iconWarning, "warning");
+    addCircleToMap({ uid: snap.key, node: snap.val() }, "goldenrod", "warning");
+    addDataDriverToList(item, "warning", dom_icons.yellowcar);
+    addWarningInfoToModalTable(item, snap.val(), "warning", dom_icons.warning_icon);
+    showAlertCountersOnMapContainer("warning", WARNING_COUNTER);
+  } catch (err) {
     console.log(err);
   }
 });
 
-snap_active.on('child_added', snap => {
-  const isActive = snap.val();
+WARNING_ALERTS_REFERENCE.on("child_changed", (snap) => {
   try {
-    active_count++;
-    inactive_count--;
-    const driver_data = drivers_list.list.filter(item => item.id === snap.key);
-    const item = driver_data[0];
-    active_list.push({ ...item, a: isActive });
-    // console.log("LINE 438:")
-    // console.log(item)
-    addDriverMarkerOnMap(item, isActive, iconActive, 'active');
-    addDataDriverToList(item, 'active', dom_icons.greencar);
-    document.querySelector("span#active-data").textContent = active_count;
-    document.querySelector("span#inactive-data").textContent = inactive_count;
-  } catch (err) { console.log(err); }
-});
+    const { key } = snap;
+    const driver = findDriverDataByUID(key, WARNING_NOTIFICATIONS);
+    const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
+    const latitude = snap.val().l[0];
+    const longitude = snap.val().l[1];
 
-snap_warning.on('child_added', snap => {
-  const isWarning = snap.val();
-  try {
-    warning_count++;
-    const driver_data = drivers_list.list.filter(item => item.id === snap.key);
-    const item = driver_data[0];
-    warning_list.push({ ...item, w: isWarning });
-    checkDriverMarkerOnMap('warning', snap.key, 'start');
-    addDriverMarkerOnMap(item, isWarning, iconWarning, 'warning');
-    addCircleToMap({ uid: snap.key, node: snap.val() }, 'goldenrod', 'warning');
-    addDataDriverToList(item, 'warning', dom_icons.yellowcar);
-    addWarningInfoToModalTable(item, isWarning, 'warning', dom_icons.warning_icon);
-    showAlertCountersOnMapContainer('warning', warning_count);
+    if (!driver) return;
+
+    const newDegree = getDegreesFromMarker(
+      { lat: marker._latlng.lat, lng: marker._latlng.lng },
+      { lat: latitude, lng: longitude }
+    );
+
+    marker.setLatLng([latitude, longitude]);
+    updateDriverMarkerOrientation(key, newDegree);
+
+    /* Update the Object from his Array*/
+    const new_item = updateNodePosition(driver, snap.val());
+    WARNING_NOTIFICATIONS = WARNING_NOTIFICATIONS.filter((item) => item.id !== snap.key);
+    WARNING_NOTIFICATIONS.push(new_item);
   } catch (err) {
-    // console.log(err); 
+    console.error(err);
   }
 });
 
-snap_panic.on('child_added', snap => {
-  const isPanic = snap.val();
+WARNING_ALERTS_REFERENCE.on("child_removed", (snap) => {
   try {
-    panic_count++;
-    const driver_data = drivers_list.list.filter(item => item.id === snap.key);
-    const item = driver_data[0];
-    panic_list.push({ ...item, p: isPanic });
-    checkDriverMarkerOnMap('panic', snap.key, 'start');
-    addDriverMarkerOnMap(item, isPanic, iconPanic, 'panic');
-    addCircleToMap({ uid: snap.key, node: snap.val() }, '#ff0000', 'panic');
-    addDataDriverToList(item, 'panic', dom_icons.redcar);
-    addWarningInfoToModalTable(item, isPanic, 'panic', dom_icons.panic_icon);
-    showAlertCountersOnMapContainer('panic', panic_count);
+    const { key } = snap;
+    WARNING_COUNTER--;
+    WARNING_NOTIFICATIONS = WARNING_NOTIFICATIONS.filter((item) => item.id !== key);
+    checkDriverMarkerOnMap("warning", key, "finished");
+    const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
+    removeMarkerFromMap(marker);
+    removeCircleMarkerFromMap(key, "warning");
+    WARNING_MAP_MARKERS = WARNING_MAP_MARKERS.filter((item) => item.options.id !== key);
+    settingNewCarTypeInMap(key, snap.val());
+    cleanAlertCountInContainerMap(WARNING_COUNTER, "warning");
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+/**
+ * Panic References (OnAdded, onChanged, onRemoved)
+ **/
+PANIC_ALERTS_REFERENCE.on("child_added", (snap) => {
+  try {
+    PANIC_COUNTER++;
+    const item = findDriverDataByUID(snap.key, DRIVERS);
+    PANIC_ALERTS.push({ ...item, p: snap.val() });
+    checkDriverMarkerOnMap("panic", snap.key, "start");
+    addDriverMarkerOnMap(item, snap.val(), iconPanic, "panic");
+    addCircleToMap({ uid: snap.key, node: snap.val() }, "#ff0000", "panic");
+    addDataDriverToList(item, "panic", dom_icons.redcar);
+    addWarningInfoToModalTable(item, snap.val(), "panic", dom_icons.panic_icon);
+    showAlertCountersOnMapContainer("panic", PANIC_COUNTER);
     // executeWebService()
-
-    GeographicZone.setView([isPanic.l[0], isPanic.l[1]], 14);
+    GeographicZone.setView([snap.val().l[0], snap.val().l[1]], 14);
   } catch (err) {
-    // console.log(err); 
+    console.error(err);
   }
 });
 
-eiby_warning.on("child_added", snap => {
-  const i = snap.val();
+PANIC_ALERTS_REFERENCE.on("child_changed", (snap) => {
   try {
-    warning_count++;
-    const item = {
-      g: 'nullify',
-      l: [i.gps[0], i.gps[1]],
-      start: i.start,
-      tipo: "1"
-    }
-    const driver = drivers_list.list.filter(item => item.id === snap.key);
-    eiby_warning_list.push(item);
-    checkDriverMarkerOnMap('warning', snap.key, 'start');
-    addDriverMarkerOnMap(driver, item, iconWarning, 'warning');
-    addDataDriverToList(driver[0], 'warning', dom_icons.yellowcar);
-    addCircleToMap({ uid: snap.key, node: item }, "goldenrod", "warning");
-    addWarningInfoToModalTable(driver[0], item, 'warning', dom_icons.warning_icon);
-    showAlertCountersOnMapContainer('warning', warning_count);
-    addPanicToTable(driver, p);
+    const { key } = snap;
+    const driver = findDriverDataByUID(key, PANIC_ALERTS);
+    const marker = findDriverMarkerByUID(key, PANIC_MAP_MARKERS);
+    const latitude = snap.val().l[0];
+    const longitude = snap.val().l[1];
 
-  } catch (err) { console.log(err) }
-});
-
-eiby_panic.on("child_added", snap => {
-  const i = snap.val();
-  try {
-    panic_count++;
-    const item = {
-      g: 'nullify',
-      l: [i.gps[0], i.gps[1]],
-      start: i.start,
-      tipo: "1"
-    }
-    eiby_panic_list.push(item);
-    checkDriverMarkerOnMap('panic', snap.key, 'start');
-    const driver = drivers_list.list.filter(item => item.id == snap.key);
-    addDriverMarkerOnMap(driver[0], item, iconPanic, 'panic');
-    addCircleToMap({ uid: snap.key, node: item }, "#ff0000", "panic");
-    addDataDriverToList(driver[0], 'panic', dom_icons.redcar);
-    addWarningInfoToModalTable(driver[0], item, 'panic', dom_icons.panic_icon);
-    showAlertCountersOnMapContainer('panic', panic_count);
-
-    GeographicZone.setView([item.l[0], item.l[1]], 14);
-  } catch (err) { console.log(err) }
-});
-
-snap_working.on('child_changed', snap => {
-  try {
-    const key = snap.key;
-    const item_changed = working_list.filter(item => item.id === snap.key);
-    const marker_from_list = working_markers_list.filter(item => item.options.id === key)
-    const gps = {
-      lat: snap.val().l[0],
-      lng: snap.val().l[1]
-    }
-
-    if (item_changed.length === 0) return;
+    if (!driver) return;
 
     const newDegree = getDegreesFromMarker(
-      {
-        lat: marker_from_list[0]._latlng.lat,
-        lng: marker_from_list[0]._latlng.lng
-      },
-      {
-        lat: gps.lat,
-        lng: gps.lng
-      });
+      { lat: marker._latlng.lat, lng: marker._latlng.lng },
+      { lat: latitude, lng: longitude }
+    );
 
-    marker_from_list[0].setLatLng([gps.lat, gps.lng]);
+    marker.setLatLng([latitude, longitude]);
     updateDriverMarkerOrientation(key, newDegree);
 
     /* Update the Object from his Array*/
-    const new_item = updateNodePosition(item_changed[0], snap.val());
-    working_list = working_list.filter(item => item.id !== snap.key);
-    working_list.push(new_item);
-
-  } catch (err) { console.log(err); }
+    const new_item = updateNodePosition(driver, snap.val());
+    PANIC_ALERTS = PANIC_ALERTS.filter((item) => item.id !== snap.key);
+    PANIC_ALERTS.push(new_item);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
-snap_active.on('child_changed', snap => {
+PANIC_ALERTS_REFERENCE.on("child_removed", (snap) => {
   try {
-    const key = snap.key;
-    const item_changed = active_list.filter(item => item.id === snap.key);
-    const marker_from_list = active_markers_list.filter(item => item.options.id === key)
-    const gps = {
-      lat: snap.val().l[0],
-      lng: snap.val().l[1]
-    }
-
-    if (item_changed.length === 0) return;
-
-    const newDegree = getDegreesFromMarker(
-      {
-        lat: marker_from_list[0]._latlng.lat,
-        lng: marker_from_list[0]._latlng.lng
-      },
-      {
-        lat: gps.lat,
-        lng: gps.lng
-      });
-
-    marker_from_list[0].setLatLng([gps.lat, gps.lng]);
-    updateDriverMarkerOrientation(key, newDegree);
-
-    /* Update the Object from his Array*/
-    const new_item = updateNodePosition(item_changed[0], snap.val());
-    active_list = active_list.filter(item => item.id !== snap.key);
-    active_list.push(new_item);
-
-  } catch (err) { console.log(err); }
-});
-
-snap_warning.on('child_changed', snap => {
-  try {
-    const key = snap.key;
-    const item_changed = warning_list.filter(item => item.id === snap.key);
-    const marker_from_list = warning_markers_list.filter(item => item.options.id === key)
-    const gps = {
-      lat: snap.val().l[0],
-      lng: snap.val().l[1]
-    }
-
-    if (item_changed.length === 0) return;
-
-    const newDegree = getDegreesFromMarker(
-      {
-        lat: marker_from_list[0]._latlng.lat,
-        lng: marker_from_list[0]._latlng.lng
-      },
-      {
-        lat: gps.lat,
-        lng: gps.lng
-      });
-
-    marker_from_list[0].setLatLng([gps.lat, gps.lng]);
-    updateDriverMarkerOrientation(key, newDegree);
-
-    /* Update the Object from his Array*/
-    const new_item = updateNodePosition(item_changed[0], snap.val());
-    warning_list = warning_list.filter(item => item.id !== snap.key);
-    warning_list.push(new_item);
-
-  } catch (err) { console.log(err); }
-});
-
-snap_panic.on('child_changed', snap => {
-  try {
-    const key = snap.key;
-    const item_changed = panic_list.filter(item => item.id === snap.key);
-    const marker_from_list = panic_markers_list.filter(item => item.options.id === key)
-    const gps = {
-      lat: snap.val().l[0],
-      lng: snap.val().l[1]
-    }
-
-    if (item_changed.length === 0) return;
-
-    const newDegree = getDegreesFromMarker(
-      {
-        lat: marker_from_list[0]._latlng.lat,
-        lng: marker_from_list[0]._latlng.lng
-      },
-      {
-        lat: gps.lat,
-        lng: gps.lng
-      });
-
-    marker_from_list[0].setLatLng([gps.lat, gps.lng]);
-    updateDriverMarkerOrientation(key, newDegree);
-
-    /* Update the Object from his Array*/
-    const new_item = updateNodePosition(item_changed[0], snap.val());
-    panic_list = panic_list.filter(item => item.id !== snap.key);
-    panic_list.push(new_item);
-
-  } catch (err) { console.log(err); }
-});
-
-snap_working.on('child_removed', snap => {
-  try {
-    working_count--;
-    const uid = snap.key;
-
-    // console.log(working_list);
-    working_list = working_list.filter(item => item.id !== uid);
-    const working_in_map = working_markers_list.filter(item => item.options.id === uid);
-    removeMarkerFromMap(working_in_map[0]);
-    removeDataFromTable(uid);
-    working_markers_list = working_markers_list.filter(item => item.options.id !== uid);
-    document.querySelector("span#working-data").textContent = working_count;
-  } catch (err) { console.log(err); }
-});
-
-snap_active.on('child_removed', snap => {
-  try {
-    active_count--;
-    const uid = snap.key;
-    active_list = active_list.filter(item => item.id !== uid);
-    const active_in_map = active_markers_list.filter(item => item.options.id === uid);
-    // console.log(active_in_map);
-    removeMarkerFromMap(active_in_map[0]);
-    removeDataFromTable(uid);
-    active_markers_list = active_markers_list.filter(item => item.options.id !== uid);
-    document.querySelector("span#active-data").textContent = active_count;
-  } catch (err) { console.log(err); }
-});
-
-snap_warning.on('child_removed', snap => {
-  const uid = snap.key;
-  try {
-    warning_count--;
-    warning_list = warning_list.filter(item => item.id !== uid);
-    checkDriverMarkerOnMap('warning', snap.key, 'finished');
-    const warning_in_map = warning_markers_list.filter(item => item.options.id === uid);
-    removeMarkerFromMap(warning_in_map[0]);
-    removeCircleMarkerFromMap(uid, 'warning');
-    warning_markers_list = warning_markers_list.filter(item => item.options.id !== uid);
-    settingNewCarTypeInMap(uid, snap.val());
-    cleanAlertCountInContainerMap(warning_count, 'warning');
-  } catch (err) { console.log(err); }
-});
-
-snap_panic.on('child_removed', snap => {
-  const uid = snap.key;
-  try {
-    panic_count--;
-    panic_list = panic_list.filter(item => item.id !== uid);
-    checkDriverMarkerOnMap('panic', snap.key, 'finished');
-    const panic_in_map = panic_markers_list.filter(item => item.options.id === uid);
-    removeMarkerFromMap(panic_in_map[0]);
-    removeCircleMarkerFromMap(uid, 'panic');
-    panic_markers_list = panic_markers_list.filter(item => item.options.id !== uid);
-    settingNewCarTypeInMap(uid, snap.val());
-    cleanAlertCountInContainerMap(panic_count, 'panic');
-  } catch (err) { console.log(err); }
-});
-
-eiby_panic.on("child_removed", snap => {
-  const uid = snap.key;
-  const i = snap.val();
-  try {
-    panic_count--;
-    const __item = {
-      g: 'nullify',
-      l: [i.gps[0], i.gps[1]],
-      start: i.start,
-      tipo: "1"
-    }
-    checkDriverMarkerOnMap('panic', snap.key, 'finished');
-    const driver = panic_markers_list.filter(item => item.options.id === uid);
-    removeMarkerFromMap(driver[0])
-    removeCircleMarkerFromMap(uid, 'panic');
-    panic_markers_list = panic_markers_list.filter(item => item.options.id !== uid);
-    eiby_panic_list = eiby_panic_list.filter(item => item.id !== uid);
-    settingNewCarTypeInMap(uid, __item);
-    cleanAlertCountInContainerMap(panic_count, 'panic');
-  } catch (err) { console.log(err) }
-});
-
-eiby_warning.on("child_removed", snap => {
-  const i = snap.val();
-  const uid = snap.key;
-  try {
-    warning_count--;
-    const __item = {
-      g: 'nullify',
-      l: [i.gps[0], i.gps[1]],
-      start: i.start,
-      tipo: "1"
-    }
-    checkDriverMarkerOnMap('warning', snap.key, 'finished');
-    const driver = warning_markers_list.filter(item => item.options.id === uid);
-    removeMarkerFromMap(driver[0]);
-    removeCircleMarkerFromMap(uid, 'warning');
-    warning_markers_list = warning_markers_list.filter(item => item.options.id !== uid);
-    eiby_warning_list = eiby_warning_list.filter(item => item.id === uid);
-    settingNewCarTypeInMap(uid, __item);
-    cleanAlertCountInContainerMap(warning_count, 'warning');
-  } catch (err) { console.log(err) }
-
-});
-
-drivers_list.list.forEach(item => {
-  addDriverMarkerOnMap(item, undefined, iconInactive, 'inactive');
-  addDataDriverToList(item, 'inactive', dom_icons.blackcar);
+    const { key } = snap;
+    PANIC_COUNTER--;
+    PANIC_ALERTS = PANIC_ALERTS.filter((item) => item.id !== key);
+    checkDriverMarkerOnMap("panic", key, "finished");
+    const marker = findDriverMarkerByUID(key, PANIC_MAP_MARKERS);
+    removeMarkerFromMap(marker);
+    removeCircleMarkerFromMap(key, "panic");
+    PANIC_MAP_MARKERS = PANIC_MAP_MARKERS.filter((item) => item.options.id !== key);
+    settingNewCarTypeInMap(key, snap.val());
+    cleanAlertCountInContainerMap(PANIC_COUNTER, "panic");
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 $(document).on("click", ".tab-button", function (e) {
   tabModalEventListener(e);
 });
-
-function tabModalEventListener({ currentTarget }) {
-  const modalTabButtons = document.querySelectorAll("button.tab-button");
-  const nameTab = currentTarget.getAttribute("data-tab");
-  const isSelected = currentTarget.getAttribute("aria-selected");
-  if (isSelected == "true") {
-    return false;
-  }
-  modalTabButtons.forEach(element => {
-    if (element.getAttribute("aria-selected") == "true" || element.getAttribute("data-tab") !== nameTab) {
-      element.setAttribute("aria-selected", "false")
-      return;
-    }
-    element.setAttribute("aria-selected", "true");
-  })
-  // currentTarget.setAttribute("aria-selected", "true");
-  // <div class="formContainer" data-tabcontainer="data" data-visibility="true">
-  const tabContents = document.querySelectorAll("div.formContainer")
-  tabContents.forEach(element => {
-    element.setAttribute("data-visibility", "false");
-    if (element.getAttribute("data-tabcontainer") == nameTab) {
-      element.setAttribute("data-visibility", "true");
-    }
-  })
-}

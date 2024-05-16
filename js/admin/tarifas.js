@@ -1,46 +1,48 @@
-// tarifas.js
-import { get_tarifas, tarifasRef } from "../config/config.js";
+const realtime = firebase.database().ref();
+const tarifasRef = realtime.child("Tarifas/SLP");
 
-document.addEventListener("DOMContentLoaded", async () => {
-  let tarifas = await get_tarifas(); // Esto debería ser un objeto con las tarifas de SLP.
-  let data_table;
+// const getTarifas = () => {
+//   return tarifasRef.once("value").then((snap) => snap.val());
+// };
 
-  const formatCurrency = (cx) => {
-    return `$${parseFloat(cx).toFixed(2)}`;
-  };
+// document.addEventListener("DOMContentLoaded", async () => {
+//   let tarifas = await getTarifas(); // Esto debería ser un objeto con las tarifas de SLP.
+//   let data_table;
 
-  const generateDataTableObject = () => {
-    data_table = new DataTable("#rates-list", {
-      info: false,
-      paging: false,
-      searching: false,
-      buttons: false,
-    });
-  };
+//   const formatCurrency = (cx) => `$${parseFloat(cx).toFixed(2)}`;
 
-  generateDataTableObject();
+//   const generateDataTableObject = () => {
+//     data_table = new DataTable("#rates-list", {
+//       info: false,
+//       paging: false,
+//       searching: false,
+//       buttons: false,
+//     });
+//   };
 
-  // Suponiendo que tarifas sea un objeto con las tarifas directamente como propiedades
-  const data_list = [
-    "SLP", // ID
-    "SLP", // Ciudad
-    formatCurrency(tarifas.banderaDiurna),
-    formatCurrency(tarifas.banderaNocturna),
-    formatCurrency(tarifas.kilometro),
-    formatCurrency(tarifas.min),
-    formatCurrency(tarifas.banderaDiurnaApp),
-    formatCurrency(tarifas.banderaNocturnaApp),
-    formatCurrency(tarifas.kilometroApp),
-    formatCurrency(tarifas.minApp),
-  ];
+//   generateDataTableObject();
 
-  data_table.row.add(data_list).draw();
-  console.log("Tarifas desde tarifas.js" + data_list);
-});
+//   // Suponiendo que tarifas sea un objeto con las tarifas directamente como propiedades
+//   const data_list = [
+//     "SLP", // ID
+//     "SLP", // Ciudad
+//     formatCurrency(tarifas.banderaDiurna),
+//     formatCurrency(tarifas.banderaNocturna),
+//     formatCurrency(tarifas.kilometro),
+//     formatCurrency(tarifas.min),
+//     formatCurrency(tarifas.banderaDiurnaApp),
+//     formatCurrency(tarifas.banderaNocturnaApp),
+//     formatCurrency(tarifas.kilometroApp),
+//     formatCurrency(tarifas.minApp),
+//   ];
+
+//   data_table.row.add(data_list).draw();
+//   console.log("Tarifas desde tarifas.js" + data_list);
+// });
 
 tarifasRef.once("value", (snapshot) => {
   const tarifasData = snapshot.val();
-  const tableBody = document.querySelector("table#rates-list tbody")
+  const tableBody = document.querySelector("table#rates-list tbody");
 
   tableBody.innerHTML = `<tr>
         <td>SLP</td>
