@@ -1,13 +1,13 @@
-const realtime = firebase.database().ref();
+export const realtime = firebase.database().ref();
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const storage = firebase.storage();
 
-// export const snap_drivers = realtime.child("Users/Drivers");
+export const snap_drivers = realtime.child("Users/Drivers");
 // export const snap_admins = realtime.child("Users/Admins");
 // export const snap_clients = realtime.child("Users/Clients");
-// export const snap_working = realtime.child("drivers_working");
-// export const snap_active = realtime.child("active_drivers");
+export const snap_working = realtime.child("drivers_working");
+export const snap_active = realtime.child("active_drivers");
 // export const snap_panic = realtime.child("panic_button");
 // export const snap_warning = realtime.child("warning");
 // export const eiby_panic = realtime.child("eiby_panics");
@@ -429,125 +429,125 @@ export const getAllRoles = async () => {
 //   });
 // };
 
-// export const driversArr = () => {
-//   return snap_drivers.once("value").then((dt) => {
-//     let a = [];
-//     dt.forEach((el) => {
-//       const uid = el.key;
-//       if (uid.includes("eiby") === false) {
-//         if (!el.val().nombre_chofer.includes("AARON ARRIAGA FLORES")) {
-//           if (!el.val().correo.includes(".gob.mx")) {
-//             a.push({ uid: uid, v: el.val() });
-//           }
-//         }
-//       }
-//     });
-//     return { l: a.length, o: a };
-//   });
-// };
+export const driversArr = () => {
+  return snap_drivers.once("value").then((dt) => {
+    let a = [];
+    dt.forEach((el) => {
+      const uid = el.key;
+      if (uid.includes("eiby") === false) {
+        if (!el.val().nombre_chofer.includes("AARON ARRIAGA FLORES")) {
+          if (!el.val().correo.includes(".gob.mx")) {
+            a.push({ uid: uid, v: el.val() });
+          }
+        }
+      }
+    });
+    return { l: a.length, o: a };
+  });
+};
 
-// export const workingArr = () => {
-//   return snap_working.once("value").then((dt) => {
-//     let a = [];
-//     dt.forEach((el) => {
-//       a.push(el.val());
-//     });
-//     return { l: a.length, o: a };
-//   });
-// };
+export const workingArr = () => {
+  return snap_working.once("value").then((dt) => {
+    let a = [];
+    dt.forEach((el) => {
+      a.push(el.val());
+    });
+    return { l: a.length, o: a };
+  });
+};
 
-// export const activeArr = () => {
-//   return snap_active.once("value").then((dt) => {
-//     let a = [];
-//     dt.forEach((el) => {
-//       a.push(el.val());
-//     });
-//     return { l: a.length, o: a };
-//   });
-// };
+export const activeArr = () => {
+  return snap_active.once("value").then((dt) => {
+    let a = [];
+    dt.forEach((el) => {
+      a.push(el.val());
+    });
+    return { l: a.length, o: a };
+  });
+};
 
-// export const driverTrips = async () => {
-//   const tripsData = [];
+export const driverTrips = async () => {
+  const tripsData = [];
 
-//   await snap_trips.once("value").then(async (snap) => {
-//     await snap.forEach((ux) => {
-//       let driverTrips = [];
-//       let finishedTrips = 0;
-//       let tripCost = 0;
+  await snap_trips.once("value").then(async (snap) => {
+    await snap.forEach((ux) => {
+      let driverTrips = [];
+      let finishedTrips = 0;
+      let tripCost = 0;
 
-//       ux.forEach((tx) => {
-//         finishedTrips =
-//           tx.val().status === "finish" ? finishedTrips + 1 : finishedTrips;
-//         const tC = tx.val().tripCost || 0;
+      ux.forEach((tx) => {
+        finishedTrips =
+          tx.val().status === "finish" ? finishedTrips + 1 : finishedTrips;
+        const tC = tx.val().tripCost || 0;
 
-//         // if(parseInt(tC) > 2000) {console.log({uid: ux.key, trip: tx.key});}
-//         tripCost = tripCost + tC;
-//         const epoch = tx.key.replace("-", "");
-//         // const timestamp = new Date(parseInt(epoch)).toDateString();
-//         driverTrips.push({ epoch: parseInt(epoch), v: tx.val() });
-//       });
+        // if(parseInt(tC) > 2000) {console.log({uid: ux.key, trip: tx.key});}
+        tripCost = tripCost + tC;
+        const epoch = tx.key.replace("-", "");
+        // const timestamp = new Date(parseInt(epoch)).toDateString();
+        driverTrips.push({ epoch: parseInt(epoch), v: tx.val() });
+      });
 
-//       tripsData.push({
-//         uid: ux.key,
-//         numTrips: driverTrips.length,
-//         finishedTrips: finishedTrips,
-//         tripCost: tripCost,
-//         trips: driverTrips,
-//       });
-//     });
-//   });
+      tripsData.push({
+        uid: ux.key,
+        numTrips: driverTrips.length,
+        finishedTrips: finishedTrips,
+        tripCost: tripCost,
+        trips: driverTrips,
+      });
+    });
+  });
 
-//   return tripsData;
-// };
+  return tripsData;
+};
 
-// export const getFullDriverTripNodeData = async () => {
-//   const all_drivers = await snap_drivers
-//     .once("value")
-//     .then((data) => Object.keys(data.val()).length);
-//   let trips_array = [];
-//   let total_trips = 0;
-//   let total_finished_trips = 0;
-//   let total_money_refunds = 0;
+export const getFullDriverTripNodeData = async () => {
+  const all_drivers = await snap_drivers
+    .once("value")
+    .then((data) => Object.keys(data.val()).length);
+  let trips_array = [];
+  let total_trips = 0;
+  let total_finished_trips = 0;
+  let total_money_refunds = 0;
 
-//   await snap_trips.once("value", (doc) => {
-//     doc.forEach((obj) => {
-//       let driver_trips = [];
-//       let finished_trips = 0;
-//       let trips_refunds = 0;
+  await snap_trips.once("value", (doc) => {
+    doc.forEach((obj) => {
+      let driver_trips = [];
+      let finished_trips = 0;
+      let trips_refunds = 0;
 
-//       obj.forEach((itx) => {
-//         const i = itx.val();
-//         finished_trips =
-//           i.status === "finish" ? finished_trips + 1 : finished_trips;
-//         trips_refunds =
-//           i.tripCost !== undefined ? trips_refunds + i.tripCost : trips_refunds;
-//         driver_trips.push({
-//           dateEpoch: parseInt(itx.key.replace("-", "")),
-//           t: i,
-//         });
-//       });
+      obj.forEach((itx) => {
+        const i = itx.val();
+        finished_trips =
+          i.status === "finish" ? finished_trips + 1 : finished_trips;
+        trips_refunds =
+          i.tripCost !== undefined ? trips_refunds + i.tripCost : trips_refunds;
+        driver_trips.push({
+          dateEpoch: parseInt(itx.key.replace("-", "")),
+          t: i,
+        });
+      });
 
-//       trips_array.push({
-//         trips: driver_trips,
-//         finishedTrips: finished_trips,
-//         refunds: trips_refunds,
-//       });
+      trips_array.push({
+        trips: driver_trips,
+        finishedTrips: finished_trips,
+        refunds: trips_refunds,
+      });
 
-//       total_trips = total_trips + driver_trips.length;
-//       total_finished_trips = total_finished_trips + finished_trips;
-//       total_money_refunds = total_money_refunds + trips_refunds;
-//     });
-//   });
+      total_trips = total_trips + driver_trips.length;
+      total_finished_trips = total_finished_trips + finished_trips;
+      total_money_refunds = total_money_refunds + trips_refunds;
+    });
+  });
 
-//   return {
-//     tRefunds: total_money_refunds,
-//     tTrips: total_trips,
-//     tFinished: total_finished_trips,
-//     data: [...trips_array],
-//     gP: all_drivers,
-//     rP: trips_array.length,
-//   };
-// };
+  return {
+    tRefunds: total_money_refunds,
+    tTrips: total_trips,
+    tFinished: total_finished_trips,
+    data: [...trips_array],
+    gP: all_drivers,
+    rP: trips_array.length,
+  };
+};
 
 // export const adminArr = async () => {
 //   return snap_admins.once("value").then((dt) => {
@@ -713,7 +713,7 @@ export const getDocumentsFromMessageCollection = async () => {
     let information = [];
     list.forEach((item) => {
       const { accion, descripcion, destino, ejecutado, fechaAlta, message } = item.data();
-      information.push([message, descripcion, destino, ejecutado, accion]);
+    information.push([message, descripcion, destino/*, ejecutado, accion*/]);
     });
     console.log({ information });
     return information;

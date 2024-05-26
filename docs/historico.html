@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="../assets/icons/favicon.ico" />
-    <title>Tu Taxi | Portal Administrativo</title>
+    <title>Tu Taxi - Histórico</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../css/docs/main.css" />
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
+    <link rel="stylesheet" href="../css/docs/historico.css" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
       href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css"
     />
+    <!-- <link rel="stylesheet" href="../css/coreui.css"> -->
   </head>
 
   <body>
@@ -32,9 +33,9 @@
               </a>
             </li>
             <li class="nav-item" id="concesionario-menu-li" style="display: none">
-              <a class="nav-link hasSubmenu" href="./concesionarios.html" id="concesionario">
+              <a class="nav-link hasSubmenu selectedPage" href="#" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
-                CONCESIONARIO
+                CONCESIONARIOS
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
@@ -72,7 +73,7 @@
               </a>
             </li>
             <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="./historico.html">
+              <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
@@ -146,92 +147,49 @@
       </header>
 
       <!-- Main -->
-      <main>
+      <main style="position: relative">
         <div class="page-title">
-          <h2 class="header-module-title">Dashboard Backoffice</h2>
+          <h2 class="header-module-title">Histórico de viajes</h2>
         </div>
-        <div class="container" style="padding-top: 1rem">
-          <div class="dashboard_stats">
-            <div class="stat-card">
-              <h4># de viajes</h4>
-              <div class="stat-data">
-                <span data-icon_type="vehicle" class="material-icons-sharp">directions_car</span>
-                <span id="tripTotal">-</span>
-              </div>
-            </div>
-            <div class="stat-card">
-              <h4>Recaudo</h4>
-              <div class="stat-data">
-                <span data-icon_type="currency" class="material-icons-sharp">attach_money</span>
-                <span id="tripCollection">-</span>
-              </div>
-            </div>
-            <div class="stat-card">
-              <h4># promedio de viajes</h4>
-              <div class="stat-data">
-                <span data-icon_type="vehicle" class="material-icons-sharp">directions_car</span>
-                <span id="tripAvgTrips">-</span>
-              </div>
-            </div>
-            <div class="stat-card">
-              <h4>$ promedio por viaje</h4>
-              <div class="stat-data">
-                <span data-icon_type="currency" class="material-icons-sharp">attach_money</span>
-                <span id="tripAvgCollection">-</span>
-              </div>
-            </div>
-          </div>
-          <div class="graphics_container">
-            <div class="tadi-card">
-              <div class="card-header">
-                <h3>Vehículos</h3>
-              </div>
-              <div class="card-body">
-                <div class="graphic-container">
-                  <div>
-                    <canvas id="myChart" style="width: 360px; height: 360px"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tadi-card">
-              <div class="card-header">
-                <h3>Vehículos Activos</h3>
-              </div>
-              <div class="card-body">
-                <div class="graphic-container">
-                  <div>
-                    <canvas id="myChart_2" style="width: 360px; height: 360px"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tadi-card">
-              <div class="card-header">
-                <h3>Empadronamiento</h3>
-              </div>
-              <div class="card-body">
-                <div class="graphic-container">
-                  <div>
-                    <canvas id="myChart_3" style="width: 360px; height: 360px"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div class="container">
           <div class="container-module col-12">
-            <div class="page-title" style="padding-left: 0; margin-left: 0">
-              <h2 class="header-module-title">Ultimos Accesos</h2>
-            </div>
             <div class="module-body">
-              <div class="table_container">
-                <table id="access-list">
+              <div class="body-header">
+                <div>
+                  <h2
+                    style="
+                      margin: 0;
+                      color: #333;
+                      font-weight: 500;
+                      font-size: 20px;
+                      line-height: 30px;
+                      margin-bottom: 0.5rem;
+                    "
+                  >
+                    Conductores
+                  </h2>
+                  <select name="conductores" id="listadoConductores" style="padding: 10px 8px">
+                    <option value="0">Seleccionar un conductor</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-container display-none">
+                <table id="historico">
                   <thead>
-                    <th>Correo electrónico</th>
-                    <th>Usuario</th>
-                    <th>Fecha de acceso</th>
-                    <th>Hora de acceso</th>
+                    <tr>
+                      <th>Operador</th>
+                      <th>Número Económico</th>
+                      <th>Fecha de Inicio</th>
+                      <th>Hora de Inicio</th>
+                      <th>Duracion del viaje</th>
+                      <th>Monto</th>
+                      <th>Recibo desglosado</th>
+                      <th>Trayectoria</th>
+                      <th>Ubicación Partida</th>
+                      <th>Ubicación Destino</th>
+                      <th>Calificación</th>
+                      <th>Reseña</th>
+                    </tr>
                   </thead>
                   <tbody></tbody>
                 </table>
@@ -240,12 +198,48 @@
           </div>
         </div>
       </main>
+
       <!-- Footer -->
       <footer>
         <p id="copyrightFooter"></p>
       </footer>
     </div>
   </body>
+  <script>
+    function inputValidOnlyNumbers() {
+      this.value = this.value.replace(/[^0-9]/g, "");
+    }
+
+    function inputValidOnlyTextOrSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z\s]/g, "");
+    }
+
+    function inputValidOnlyTextOrNumber() {
+      this.value = this.value.replace(/[^a-zA-Z0-9]/g, "");
+    }
+
+    function inputValidOnlyTextNumberAndSpaces() {
+      this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, "");
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("input.only-letters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrSpaces);
+      });
+
+      document.querySelectorAll("input.only-numbers").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyNumbers);
+      });
+
+      document.querySelectorAll("input.only-characters").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextOrNumber);
+      });
+
+      document.querySelectorAll("input.only-characters-spaces").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
+      });
+    });
+  </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
@@ -253,16 +247,139 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
   <script src="../js/global-context.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script
     type="text/javascript"
     src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
   ></script>
-  <script src="../js/charts/chartsjs-plugin-label.js"></script>
-  <script type="module" src="../js/dashboard/main.js" async></script>
-  <!-- <script type="module" src="../js/dom/defaults.js"></script> -->
+  <script type="module" async>
+    import { firestore, realtime } from "../js/config/config.js";
+
+    let CONDUCTORES_REFERENCE = firestore.collection("conductores");
+    let LISTADO_CONDUCTORES = document.querySelector("select#listadoConductores");
+    let TABLA_HISTORICO = document.querySelector("#historico");
+    let DATATABLE_CONTEXT = null;
+    let CONDUCTORES_ARRAY = [];
+
+    const getConductores = async () => {
+      const { docs } = await CONDUCTORES_REFERENCE.get().catch((error) => false);
+      if (docs) {
+        let conductoresList = [];
+        docs.forEach((doc, index) => {
+          const conductor = { uid: doc.id, data: doc.data() };
+          conductoresList.push(conductor);
+          createOptionElements(conductor, index);
+        });
+        return conductoresList;
+      }
+    };
+
+    function createOptionElements({ uid, data }, index) {
+      const optionTag = document.createElement("option");
+      const { correoElectronico, nombre, apellidoPaterno, apellidoMaterno } = data;
+      optionTag.value = uid;
+      optionTag.dataset.key = index;
+      optionTag.innerHTML = `${correoElectronico} - ${nombre} ${apellidoPaterno} ${apellidoMaterno}`;
+      LISTADO_CONDUCTORES.insertAdjacentElement("beforeend", optionTag);
+    }
+
+    async function getDriverTrips(uid) {
+      const trips = await realtime
+        .child("DriverTrip/" + uid)
+        .once("value")
+        .then((snapshot) => Object.entries(snapshot.val()))
+        .catch((error) => false);
+      if (trips) {
+        const conductorSeleccionado = CONDUCTORES_ARRAY.find((conductor) => conductor.uid);
+        for (let i = 0; i < trips.length; i++) {
+          const tableRowData = destructureConductorData(conductorSeleccionado, trips[i]);
+          insertDataToRowTable(tableRowData);
+        }
+        generateDataTable();
+      }
+    }
+
+    function generateDataTable() {
+      TABLA_HISTORICO.parentElement.classList.remove("display-none");
+      DATATABLE_CONTEXT = new DataTable(TABLA_HISTORICO, {
+        dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
+        buttons: [
+          {
+            extend: "collection",
+            text: "Exportar",
+            buttons: ["excelHtml5", "pdfHtml5", "print"],
+          },
+        ],
+        oLanguage: {
+          sSearch: "Busqueda:",
+          oPaginate: {
+            sFirst: "Primera",
+            sPrevious: "Anterior",
+            sNext: "Siguiente",
+            sLast: "Ultima",
+          },
+        },
+        language: {
+          info: "Se muestran los registros _START_ al _END_ de _TOTAL_. ",
+          infoEmpty: "No se muestran registros.",
+          emptyTable: "No se registran datos en la tabla.",
+          infoFiltered: "(Filtrado de _MAX_ registros).",
+        },
+      });
+    }
+
+    function insertDataToRowTable(data) {
+      const rowTag = document.createElement("tr");
+      data.forEach((cell) => {
+        const tableCell = document.createElement("td");
+        tableCell.innerHTML = cell;
+        rowTag.append(tableCell);
+      });
+      TABLA_HISTORICO.children[1].append(rowTag);
+    }
+
+    function destructureConductorData({ data }, [tripId, tripData]) {
+      const [date, time] = formatTimestampToString(tripData.timeStart);
+      return [
+        [data.nombre, data.apellidoPaterno, data.apellidoMaterno].join(" "), //operador
+        data.numeroEconomico, //numeroEconomico
+        date, //fechaInicio
+        time, //HoraInicio
+        tripData.time.text, //duracion
+        "$ " + tripData.tripCost, //monto
+        0, //recibo
+        0, //trayectoria
+        0, //ubicacionPartida
+        tripData.finalDestination, //ubicacionDestino
+        0, //calificacion
+        0, //resena
+      ];
+    }
+
+    function formatTimestampToString(timestamp) {
+      const datetime = new Date(parseInt(timestamp) * 1000).toLocaleString("en-US", {
+        timeZone: "America/Mexico_City",
+      });
+      return datetime.split(", ");
+    }
+
+    function clearDataTable() {
+      DATATABLE_CONTEXT.clear().destroy();
+    }
+
+    LISTADO_CONDUCTORES.addEventListener("change", async function (e) {
+      await getDriverTrips(e.target.value);
+    });
+
+    async function main() {
+      const conductores = await getConductores();
+      CONDUCTORES_ARRAY = [...conductores];
+    }
+
+    main();
+  </script>
 </html>

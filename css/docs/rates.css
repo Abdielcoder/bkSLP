@@ -3,58 +3,50 @@ main {
   overflow-x: hidden;
 }
 
-div#rates-list_filter {
-  margin-bottom: 1rem;
-}
-
 table#rates-list {
   width: 100%;
   display: table;
   position: relative;
-  border-top: 1px solid rgba(0, 0, 0, .05);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  text-transform: uppercase;
   border-collapse: collapse;
 }
 
 table#rates-list tbody tr.even {
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: background-color 100ms linear;
 }
 
 table#rates-list tbody tr.odd {
-  background-color: rgba(0, 0, 0, .05);
+  background-color: #fff;
+  transition: background-color 100ms linear;
 }
 
 table#rates-list tbody tr:hover,
 table#rates-list tbody tr td:hover {
   background-color: #2d6e3d25;
   cursor: pointer;
+  transition: background-color 100ms linear;
 }
 
 table#rates-list thead th {
   color: #2d6e3d;
   text-align: start;
-  padding: 8px 4px;
-  font-size: 12px;
-  border-bottom: 1px solid gray;
+  height: 2.5rem;
+  background-color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 10px 18px;
+  border-bottom: 1px solid #111;
 }
 
 table#rates-list tbody tr td {
   font-size: 14px;
-  padding: 8px 4px;
-  border-bottom: 1px solid #80808050;
+  height: 2.5rem;
+  padding: 0 8px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap;
 }
-
-.container-header h1 {
-  font-weight: lighter;
-  font-size: 2rem;
-}
-
-.container-header p {
-  font-weight: lighter;
-  font-size: 14px;
-  margin-bottom: 1rem;
-}
-
-
 
 #municipios-list {
   width: 250px;
@@ -85,4 +77,13 @@ table#rates-list tbody tr td {
 .list_container {
   position: relative;
   display: block;
+}
+
+
+.table_container {
+  overflow-x: auto;
+  max-width: 100%;
+  width: 100%;
+  outline: 1px solid rgb(0 0 0 / 21%);
+  padding-bottom: 1.5rem;
 }

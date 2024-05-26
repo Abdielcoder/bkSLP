@@ -72,7 +72,7 @@
               </a>
             </li>
             <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="./historico.html">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
@@ -147,32 +147,17 @@
 
       <!-- Main -->
       <main style="position: relative">
+        <div class="page-title">
+          <h2 class="header-module-title">Conductores</h2>
+        </div>
         <div class="container">
-          <div class="tadi-card col-12">
-            <div class="card-header">
-              <h1>Registro conductores</h1>
-              <br />
-              <p>
-                Listado de conductores y recopilación de la información de sus viajes dentro del empadronamiento actual.
-              </p>
-            </div>
-            <div class="card-body">
-              <button id="userAdd" type="button" class="dateElement" style="margin-left: auto; padding: 4px 16px">
-                <span>NUEVO</span>
-                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                  <g id="SVGRepo_iconCarrier">
-                    <path
-                      d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17"
-                      stroke="#ffffff"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></path>
-                  </g>
-                </svg>
+          <div class="container-module col-12">
+            <div class="module-header">
+              <button id="userAdd" type="button" class="create-new">
+                <span>Alta Conductor</span>
               </button>
+            </div>
+            <div class="module-body">
               <div class="table-container">
                 <table id="operatorsTable">
                   <thead>
@@ -199,7 +184,20 @@
         <div id="usuariosAltaModal" class="modalForm" data-reference="">
           <div class="modalContent">
             <div class="containerHead">
-              <h2 style="font-size: 20px; text-align: start">Información general del conductor</h2>
+              <h2
+                style="
+                  font-size: 24px;
+                  color: #123019;
+                  line-height: 36px;
+                  font-weight: 600;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  font-family: Montserrat-Regular;
+                  text-align: start;
+                "
+              >
+                Información general del Conductor
+              </h2>
             </div>
             <div class="contentTabs">
               <ul class="tab-list">
@@ -220,13 +218,13 @@
                 </li>
               </ul>
             </div>
-            <div class="formContainer" data-tabcontainer="data" data-visibility="true" style="max-width: 1080px">
-              <div class="containerBody">
+            <div class="formContainer" data-tabcontainer="data" data-visibility="true">
+              <div class="containerBody" style="max-height: 600px; overflow-y: auto">
                 <form id="userAlta">
                   <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
                     Datos Personales
                   </h2>
-                  <div class="form-columns" style="flex-wrap: nowrap">
+                  <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
                       <label for="nombre">Nombre(s)</label>
                       <input
@@ -266,6 +264,8 @@
                         required
                       />
                     </div>
+                  </div>
+                  <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
                       <label for="correoElectronico">Correo electrónico</label>
                       <input
@@ -276,9 +276,7 @@
                         required
                       />
                     </div>
-                  </div>
-                  <div class="form-columns" style="flex-wrap: nowrap">
-                    <div class="formGroup selectForm" style="max-width: 120px">
+                    <div class="formGroup selectForm">
                       <label for="sexo">Genero</label>
                       <select name="sexo" id="sexo">
                         <option value="F" selected>Femenino</option>
@@ -300,6 +298,8 @@
                         style="text-transform: uppercase"
                       />
                     </div>
+                  </div>
+                  <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
                       <label for="rfc">RFC</label>
                       <input
@@ -310,13 +310,11 @@
                         required
                         class="only-characters"
                         style="text-transform: uppercase"
-                        maxlength="16"
-                        data-length="16"
+                        maxlength="13"
+                        data-length="13"
                       />
                     </div>
-                  </div>
-                  <div class="form-columns" style="flex-wrap: nowrap">
-                    <div class="formGroup selectForm" style="max-width: 120px">
+                    <div class="formGroup selectForm">
                       <label for="tipoSangre">Tipo de sangre</label>
                       <select name="tipoSangre" id="tipoSangre" required>
                         <option value="A-">A-</option>
@@ -342,6 +340,8 @@
                         data-length="10"
                       />
                     </div>
+                  </div>
+                  <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
                       <label for="telefonoEmergencia">Telefono de Emergencia</label>
                       <input
@@ -383,8 +383,11 @@
                       />
                     </div>
                   </div>
-                  <div class="form-columns" data-columns="3" style="flex-wrap: nowrap">
-                    <div class="formGroup inputForm">
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                    Domicilio particular
+                  </h2>
+                  <div class="form-columns flex-nowrap">
+                    <div class="formGroup inputForm" style="max-width: 100%">
                       <label for="calle">Calle</label>
                       <input
                         type="text"
@@ -396,7 +399,7 @@
                         required
                       />
                     </div>
-                    <div class="formGroup inputForm" style="max-width: 120px; width: 100%">
+                    <div class="formGroup inputForm">
                       <label for="numeroCasa">Número</label>
                       <input
                         type="text"
@@ -408,6 +411,8 @@
                         required
                       />
                     </div>
+                  </div>
+                  <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
                       <label for="colonia">Colonia o Fraccionamiento</label>
                       <input
@@ -420,7 +425,7 @@
                         required
                       />
                     </div>
-                    <div class="formGroup inputForm" style="max-width: 120px; width: 100%">
+                    <div class="formGroup inputForm">
                       <label for="cp">Código Postal</label>
                       <input
                         type="text"
@@ -433,7 +438,7 @@
                         required
                       />
                     </div>
-                    <div class="formGroup selectForm" style="max-width: 140px; width: 100%">
+                    <div class="formGroup selectForm">
                       <label for="municipio">Municipio</label>
                       <select name="municipio" id="municipio" required>
                         <option value="sanluis">SAN LUIS POTOSI</option>
@@ -441,109 +446,105 @@
                       </select>
                     </div>
                   </div>
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                    Desea o puede realizar viajes para personas con:
+                  </h2>
+                  <div class="checkboxGroup">
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="especiales" id="especiales" />
+                      <label for="especiales">Persona con discapacidad</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="mascotas" id="mascotas" />
+                      <label for="mascotas">Mascotas</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="equipaje" id="equipaje" />
+                      <label for="equipaje">Equipaje</label>
+                    </div>
+                  </div>
 
-                  <div class="checkbox-group">
-                    <div class="group-left">
-                      <div class="formParraf">
-                        <p style="font-size: 14px">Desea o puede realizar viajes para personas con:</p>
-                      </div>
-                      <div class="checkboxGroup">
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="especiales" id="especiales" />
-                          <label for="especiales">Persona con discapacidad</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="mascotas" id="mascotas" />
-                          <label for="mascotas">Mascotas</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="equipaje" id="equipaje" />
-                          <label for="equipaje">Equipaje</label>
-                        </div>
-                      </div>
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                    Padece de alguna de las siguentes enfermedades crónicas:
+                  </h2>
+                  <div class="checkboxGroup">
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="hipertension" id="hipertension" />
+                      <label for="hipertension">Hipertensión</label>
                     </div>
-                    <div class="group-right">
-                      <div class="formParraf">
-                        <p style="font-size: 14px">Padece de alguna de las siguentes enfermedades crónicas:</p>
-                      </div>
-                      <div class="checkboxGroup">
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="hipertension" id="hipertension" />
-                          <label for="hipertension">Hipertensión</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="diabetes" id="diabetes" />
-                          <label for="diabetes">Diabetes</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="epoc" id="epoc" />
-                          <label for="epoc" style="white-space: nowrap"
-                            >Epoc (Enfermedad Pulmonar Obstructiva Crónica)</label
-                          >
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="cardiaca" id="cardiaca" />
-                          <label for="cardiaca">Insuficiencia cardiaca</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="otrasEnfermedades" id="otrasEnfermedades" />
-                          <label for="otrasEnfermedades">Otros:</label>
-                          <br />
-                          <textarea
-                            name="otrasEnfermedadesTexto"
-                            id="otrasEnfermedadesTexto"
-                            cols="30"
-                            rows="10"
-                            style="
-                              width: 250px;
-                              font-size: 12px;
-                              padding: 8px;
-                              height: 60px;
-                              border: 1px solid #333;
-                              border-radius: 4px;
-                              resize: none;
-                            "
-                          ></textarea>
-                        </div>
-                      </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="diabetes" id="diabetes" />
+                      <label for="diabetes">Diabetes</label>
                     </div>
-                    <div class="group-right">
-                      <div class="formParraf">
-                        <p style="font-size: 14px">Capacitaciones tomadas por el operador:</p>
-                      </div>
-                      <div class="checkboxGroup">
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="rcp" id="rcp" />
-                          <label for="rcp">RCP</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="lenguaje" id="lenguaje" />
-                          <label for="lenguaje">Lenguaje de Señas</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="primerosAux" id="primerosAux" />
-                          <label for="primerosAux">Primeros Auxilios</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="otrasCapacidades" id="otrasCapacidades" />
-                          <label for="otrasCapacidades">Otros:</label>
-                          <textarea
-                            name="otrasCapacidadesTexto"
-                            id="otrasCapacidadesTexto"
-                            cols="30"
-                            rows="10"
-                            style="
-                              width: 250px;
-                              font-size: 12px;
-                              padding: 8px;
-                              height: 60px;
-                              border: 1px solid #333;
-                              border-radius: 4px;
-                              resize: none;
-                            "
-                          ></textarea>
-                        </div>
-                      </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="epoc" id="epoc" />
+                      <label for="epoc" style="white-space: nowrap"
+                        >Epoc (Enfermedad Pulmonar Obstructiva Crónica)</label
+                      >
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="cardiaca" id="cardiaca" />
+                      <label for="cardiaca">Insuficiencia cardiaca</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="otrasEnfermedades" id="otrasEnfermedades" />
+                      <label for="otrasEnfermedades">Otros:</label>
+                      <br />
+                      <textarea
+                        name="otrasEnfermedadesTexto"
+                        id="otrasEnfermedadesTexto"
+                        cols="30"
+                        disabled
+                        rows="10"
+                        style="
+                          width: 100%;
+                          display: block;
+                          font-size: 16px;
+                          padding: 16px;
+                          height: 120px;
+                          border: 1px solid #333;
+                          border-radius: 2px;
+                          resize: none;
+                        "
+                      ></textarea>
+                    </div>
+                  </div>
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                    Capacitaciones tomadas por el operador:
+                  </h2>
+                  <div class="checkboxGroup">
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="rcp" id="rcp" />
+                      <label for="rcp">RCP</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="lenguaje" id="lenguaje" />
+                      <label for="lenguaje">Lenguaje de Señas</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="primerosAux" id="primerosAux" />
+                      <label for="primerosAux">Primeros Auxilios</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="otrasCapacidades" id="otrasCapacidades" />
+                      <label for="otrasCapacidades">Otros:</label>
+                      <textarea
+                        name="otrasCapacidadesTexto"
+                        id="otrasCapacidadesTexto"
+                        cols="30"
+                        rows="10"
+                        disabled
+                        style="
+                          width: 100%;
+                          display: block;
+                          font-size: 16px;
+                          padding: 16px;
+                          height: 120px;
+                          border: 1px solid #333;
+                          border-radius: 2px;
+                          resize: none;
+                        "
+                      ></textarea>
                     </div>
                   </div>
                   <div class="containerFooter">
@@ -566,7 +567,7 @@
               class="formContainer"
               data-tabcontainer="accounts"
               data-visibility="false"
-              style="padding-top: 20px; width: 800px"
+              style="padding-top: 20px;"
             >
               <div class="containerBody">
                 <p style="font-size: 12px; font-weight: bold; margin-left: 4px">Buscar vehículo por numero de placa:</p>
@@ -714,6 +715,67 @@
                           </svg>
                         </div>
                       </label>
+
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Licencia de Conducir</p>
                   </div>
@@ -788,6 +850,67 @@
                           </svg>
                         </div>
                       </label>
+
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Póliza de Seguro</p>
                   </div>
@@ -856,6 +979,67 @@
                           </svg>
                         </div>
                       </label>
+
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>INE</p>
                   </div>
@@ -930,6 +1114,67 @@
                           </svg>
                         </div>
                       </label>
+
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>CURP</p>
                   </div>
@@ -1004,6 +1249,67 @@
                           </svg>
                         </div>
                       </label>
+
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Gafete de la SCT</p>
                   </div>
@@ -1078,6 +1384,67 @@
                           </svg>
                         </div>
                       </label>
+
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Conductor</p>
                   </div>
@@ -1152,6 +1519,67 @@
                           </svg>
                         </div>
                       </label>
+
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Antidoping</p>
                   </div>
@@ -1258,6 +1686,10 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
+  ></script>
   <script type="module">
     import {
       getDocumentsFromCollection,
@@ -1354,6 +1786,8 @@
       clearDataTable();
       await fetchingData();
     }
+    const checkboxOtrasEnfermedades = document.querySelector("input#otrasEnfermedades");
+    const checkboxOtrasCapacidades = document.querySelector("input#otrasCapacidades");
 
     // Modal Add Form Submit Event
     modalForm.addEventListener("submit", async (e) => await handleSubmit(e));
@@ -1365,6 +1799,17 @@
       await handleDeleteSubmit(e);
     });
 
+    function toggleTextArea(e) {
+      const textArea = e.target.id + "Texto";
+      const textareaTexto = document.querySelector("#" + textArea);
+      textareaTexto.disabled = !e.target.checked;
+      textareaTexto.focus();
+    }
+
+    checkboxOtrasEnfermedades.addEventListener("change", toggleTextArea);
+    checkboxOtrasCapacidades.addEventListener("change", toggleTextArea);
+
+
     function handleViewAltaModal(e) {
       if (e === true) {
         modalDialogAdd.classList.add("modalViewTrue");
@@ -1375,8 +1820,9 @@
       document.querySelector("div#vehiculos-searched").innerHTML = "";
       document.querySelector("input#placa").value = "";
       document.getElementById("usuariosAltaModal").setAttribute("data-reference", "");
-      document.querySelectorAll("textarea").forEach((element) => {
-        element.textContent = "";
+       document.querySelectorAll("textarea").forEach((element) => {
+        element.value = "";
+        element.disabled = true;
       });
       Object.entries(modalForm).forEach((item) => {
         const element = item[1];
@@ -1440,7 +1886,7 @@
       });
 
       usersDataTableContext = new DataTable(usersTable, {
-        dom: "Bfrtip",
+        dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
         buttons: [
           {
             extend: "collection",
@@ -1613,21 +2059,21 @@
 
       const updateAttrs = {
         type: "button",
-        class: "cellButtonTool",
+        class: "tableTools",
         "data-type": "update",
         "data-id": u,
         title: "Editar",
       };
       const resetPasswordAttrs = {
         type: "button",
-        class: "cellButtonTool",
+        class: "tableTools",
         "data-type": "update",
         "data-id": u,
         title: "Reestablecer contraseña",
       };
       const deleteAttrs = {
         type: "button",
-        class: "cellButtonTool",
+        class: "tableTools",
         "data-type": "delete",
         "data-id": u,
         title: "Eliminar",
@@ -1635,12 +2081,16 @@
 
       elementSetAttributes(updateButton, updateAttrs);
       elementSetAttributes(resetPasswordButton, resetPasswordAttrs);
-      elementSetAttributes(deleteButton, deleteAttrs);
-      elementSetAttributes(tableCell, { "data-type": "tools" });
+      elementSetAttributes(deleteButton, deleteAttrs); 
+      tableCell.classList.add("cellButtonTool")
 
-      updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
-      resetPasswordButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#287bc8" fill-rule="evenodd"></path> </g></svg>`;
-      deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>`;
+      const updateButtonHTML = `<span>Actualizar</span>`;
+      const resetPasswordButtonHTML = `<span>Reestablecer contraseña</span>`;
+      const deleteButtonHTML = `<span>Eliminar</span>`;
+
+      updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>${updateButtonHTML}`;
+      resetPasswordButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#287bc8" fill-rule="evenodd"></path> </g></svg>${resetPasswordButtonHTML}`;
+      deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>${deleteButtonHTML}`;
 
       updateButton.addEventListener("click", (e) => handleUpdateUser(e));
       resetPasswordButton.addEventListener("click", (e) => handleResetPassword(e.currentTarget.parentNode));
@@ -1768,7 +2218,7 @@
         // console.log({ FILELIST: urls });
         const files = urls.map((item) => {
           return {
-            url: item,
+            url: item || "../assets/img/nopic.png",
             name: item.split("%2F")[2].split("?")[0].split(".")[0].split("__")[1],
             type: item.split("%2F")[2].split("?")[0].split(".")[1],
           };
@@ -1776,22 +2226,25 @@
 
         document.querySelectorAll("img.imagePreview").forEach((element) => {
           const { name, alt } = element;
-          const currentFile = files.filter((item) => item.name === alt);
-          // console.log({ currentFile });
-          element.src =
-            currentFile[0].type !== "pdf" ? currentFile[0].url : "https://www.svgrepo.com/show/255818/pdf.svg";
-
+          const [currentFile] = files.filter((item) => item.name === alt);
+          if (currentFile === undefined || currentFile === null) {
+            element.src = "../assets/img/nopic.png";
+          } else if (currentFile?.type === "pdf") {
+            element.src = "https://www.svgrepo.com/show/255818/pdf.svg";
+          } else {
+            element.src = currentFile?.url;
+          }
           element.addEventListener("click", function (e) {
             const modal = document.querySelector("div.modal-preview-image");
             const modalDoc = document.querySelector("div.modal-preview-document");
-            if (currentFile[0].type !== "pdf") {
+            if (currentFile?.type !== "pdf") {
               modal.setAttribute("data-visibility", "visible");
-              document.getElementById("full-width-preview-Image").src = currentFile[0].url;
+              document.getElementById("full-width-preview-Image").src = currentFile?.url;
               return;
             }
 
             modalDoc.setAttribute("data-visibility", "visible");
-            document.getElementById("full-width-preview-Document").src = currentFile[0].url;
+            document.getElementById("full-width-preview-Document").src = currentFile?.url;
           });
         });
       }
@@ -2064,5 +2517,28 @@
       const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       return pattern.test(email);
     };
+    document.querySelectorAll("div.imageDelete").forEach((element) => {
+      element.addEventListener("click", function (e) {
+        const imageTag = e.currentTarget.parentNode.children[0];
+        const url = imageTag.getAttribute("src");
+        console.log({ url, imageTag });
+        if (url === "../assets/img/nopic.png") {
+          return;
+        }
+        const fileName = url.split("?")[0].split("__")[1];
+        const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+        const reference = storage.ref().child(`${CONDUCTORES_COLLECTION}/${uid}/__${fileName}`);
+        reference
+          .delete()
+          .then((snapshot) => {
+            window.alert("Se ha eliminado el archivo de manera satisfactoria.");
+            imageTag.src = "../assets/img/nopic.png";
+          })
+          .catch((error) => {
+            window.alert("Se ha presentado un error.");
+            console.error(error);
+          });
+      });
+    });
   </script>
 </html>

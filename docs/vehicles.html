@@ -5,10 +5,7 @@
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <title>Tu Taxi | Vehículos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/vehicles.css" />
     <link
@@ -34,42 +31,22 @@
                 MAPA
               </a>
             </li>
-            <li
-              class="nav-item"
-              id="concesionario-menu-li"
-              style="display: none"
-            >
-              <a
-                class="nav-link hasSubmenu"
-                href="./concesionarios.html"
-                id="concesionario"
-              >
+            <li class="nav-item" id="concesionario-menu-li" style="display: none">
+              <a class="nav-link hasSubmenu" href="./concesionarios.html" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIO
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
-                  <li
-                    class="nav-item-submenu"
-                    id="vehiculos-submenu-li"
-                    style="display: none"
-                  >
+                  <li class="nav-item-submenu" id="vehiculos-submenu-li" style="display: none">
                     <a class="nav-link" href="./vehicles.html">
-                      <span class="link-icons material-icons-sharp"
-                        >directions_car</span
-                      >
+                      <span class="link-icons material-icons-sharp">directions_car</span>
                       VEHICULOS
                     </a>
                   </li>
-                  <li
-                    class="nav-item"
-                    id="conductores-submenu-li"
-                    style="display: none"
-                  >
+                  <li class="nav-item" id="conductores-submenu-li" style="display: none">
                     <a class="nav-link" href="./users.html">
-                      <span class="link-icons material-icons-sharp"
-                        >person</span
-                      >
+                      <span class="link-icons material-icons-sharp">person</span>
                       CONDUCTORES
                     </a>
                   </li>
@@ -78,9 +55,7 @@
             </li>
             <li class="nav-item" id="vehiculos-menu-li" style="display: none">
               <a class="nav-link selectedPage" href="./vehicles.html">
-                <span class="link-icons material-icons-sharp"
-                  >directions_car</span
-                >
+                <span class="link-icons material-icons-sharp">directions_car</span>
                 VEHICULOS
               </a>
             </li>
@@ -97,20 +72,14 @@
               </a>
             </li>
             <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="./historico.html">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
             </li>
-            <li
-              class="nav-item menu-button menu-closed"
-              id="admin-menu-li"
-              style="display: none"
-            >
+            <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
               <a class="nav-link" href="#" id="administracion">
-                <span class="link-icons material-icons-sharp"
-                  >manage_accounts</span
-                >
+                <span class="link-icons material-icons-sharp">manage_accounts</span>
                 ADMINISTRACIÓN
               </a>
               <div id="administracion-submenu" data-displayed="hidden">
@@ -122,33 +91,20 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a
-                      class="nav-sublink"
-                      href="../admin/administradores/index.html"
-                    >
-                      <span class="link-icons material-icons-sharp"
-                        >person</span
-                      >
+                    <a class="nav-sublink" href="../admin/administradores/index.html">
+                      <span class="link-icons material-icons-sharp">person</span>
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li
-                    class="nav-item menu-linked hidden"
-                    id="roles-menu-li"
-                    style="display: none"
-                  >
+                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none">
                     <a class="nav-sublink" href="../admin/roles/index.html">
-                      <span class="link-icons material-icons-sharp"
-                        >groups</span
-                      >
+                      <span class="link-icons material-icons-sharp">groups</span>
                       ROLES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="#">
-                      <span class="link-icons material-icons-sharp"
-                        >person_pin</span
-                      >
+                      <span class="link-icons material-icons-sharp">person_pin</span>
                       CLIENTES
                     </a>
                   </li>
@@ -160,9 +116,7 @@
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../admin/base_rates.html">
-                      <span class="link-icons material-icons-sharp"
-                        >attach_money</span
-                      >
+                      <span class="link-icons material-icons-sharp">attach_money</span>
                       TARIFAS BASE
                     </a>
                   </li>
@@ -193,47 +147,18 @@
         <div class="header-bg-image"></div>
       </header>
 
-      <main>
+      <main style="position: relative">
+        <div class="page-title">
+          <h2 class="header-module-title">Vehículos</h2>
+        </div>
         <div class="container">
-          <div class="tadi-card">
-            <div class="card-header">
-              <h1>Vehículos</h1>
-              <br />
-              <p>Listado de vehículos dentro del empadronamiento actual.</p>
-            </div>
-            <div class="card-tools">
-              <button
-                type="button"
-                title="Dar de alta un nuevo vehículo"
-                id="button-add"
-              >
-                <span>Alta de vehículo</span>
-                <svg
-                  width="24px"
-                  height="24px"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></g>
-                  <g id="SVGRepo_iconCarrier">
-                    <path
-                      d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17"
-                      stroke="#ffffff"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></path>
-                  </g>
-                </svg>
+          <div class="container-module col-12">
+            <div class="module-header">
+              <button id="userAdd" type="button" class="create-new">
+                <span>Alta Vehículo</span>
               </button>
             </div>
-            <div class="card-body">
+            <div class="module-body">
               <div class="table-container">
                 <table id="vehicle-list">
                   <thead>
@@ -255,617 +180,737 @@
             </div>
           </div>
         </div>
-
-        <!-- MODALS  -->
-        <div
-          class="modal-dialog"
-          aria-modal="true"
-          data-visibility="hidden"
-          data-reference=""
-        >
-          <div class="dialog-bg"></div>
-          <div class="dialog-container">
-            <div class="container-head">
-              <h2
-                id="modal-dialog-title"
-                style="text-transform: uppercase"
-              ></h2>
-            </div>
-            <div class="container-body">
-              <form id="form-vehiculo">
-                <div class="flexed">
-                  <div class="formGroup selectForm" style="max-width: 120px">
-                    <label for="marca">Marca</label>
-                    <select name="marca" id="marca" style="padding: 8px">
-                      <option value="Nissan">Nissan</option>
-                      <option value="Chevrolet">Chevrolet</option>
-                      <option value="Volkswagen">Volkswagen</option>
-                      <option value="Toyota">Toyota</option>
-                      <option value="Ford">Ford</option>
-                      <option value="Honda">Honda</option>
-                      <option value="Hyundai">Hyundai</option>
-                      <option value="Kia">Kia</option>
-                      <option value="MG">MG</option>
-                      <option value="Chrysler">Chrysler</option>
-                      <option value="Dodge">Dodge</option>
-                      <option value="Fiat">Fiat</option>
-                      <option value="Seat">Seat</option>
-                      <option value="Peugeot">Peugeot</option>
-                      <option value="Suzuki">Suzuki</option>
-                      <option value="Renault">Renault</option>
-                    </select>
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="modelo">Modelo</label>
-                    <input
-                      type="text"
-                      name="modelo"
-                      id="modelo"
-                      maxlength="20"
-                      class="only-letters"
-                      placeholder="Modelo"
-                      style="padding: 8px"
-                    />
-                  </div>
-                  <div class="formGroup selectForm" style="max-width: 120px">
-                    <label for="tipoVehiculo">Tipo de vehículo</label>
-                    <select
-                      name="tipoVehiculo"
-                      id="tipoVehiculo"
-                      style="padding: 8px"
-                    >
-                      <option value="Hatchback">Hatchback</option>
-                      <option value="Sedan">Sedan</option>
-                      <option value="SUV">SUV</option>
-                      <option value="Crossover">Crossover</option>
-                      <option value="Coupe">Coupe</option>
-                    </select>
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="tipoCombustible">Tipo Combustible</label>
-                    <select
-                      id="tipoCombustible"
-                      name="tipoCombustible"
-                      style="padding: 8px"
-                    >
-                      <option value="gasolina">Gasolina</option>
-                      <option value="diesel">Diésel</option>
-                      <option value="gaslp">Gas LP</option>
-                      <option value="electrico">Eléctrico</option>
-                      <option value="hibrido">Híbrido</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="flexed">
-                  <div
-                    class="formGroup inputForm"
-                    style="display: flex; flex-direction: row"
-                  >
-                    <label
-                      for="placaNumero"
-                      style="display: flex; flex-direction: column"
-                      >Placa Número
-                      <input
-                        type="text"
-                        name="placaNumero"
-                        id="placaNumero"
-                        placeholder="Placa número"
-                        maxlength="4"
-                        class="only-numbers"
-                        style="padding: 8px"
-                      />
-                    </label>
-                    <label
-                      for="placaTipo"
-                      style="display: flex; flex-direction: column"
-                      >Placa Tipo
-                      <select
-                        name="placaTipo"
-                        id="placaTipo"
-                        style="padding: 8px"
-                      >
-                        <option value="TSE">TSE</option>
-                        <option value="TST">TST</option>
-                        <option value="TSG">TSG</option>
-                      </select>
-                    </label>
-                  </div>
-                  <div class="formGroup selectForm" style="max-width: 160px">
-                    <label for="color">Color</label>
-                    <select name="color" id="color" style="padding: 8px">
-                      <option value="blanco" selected>Blanco</option>
-                      <option value="verde">Verde</option>
-                    </select>
-                  </div>
-                  <div
-                    class="formGroup inputForm"
-                    style="
-                      display: flex;
-                      flex-direction: row-reverse;
-                      align-items: center;
-                      justify-content: center;
-                      margin: unset;
-                      gap: 0.5rem;
-                    "
-                  >
-                    <label for="habilitado" style="text-align: center"
-                      >Habilitado</label
-                    >
-                    <input
-                      type="checkbox"
-                      name="habilitado"
-                      id="habilitado"
-                      style="padding: 8px; margin: 0; width: max-content"
-                    />
-                  </div>
-                </div>
-                <div class="flexed">
-                  <div class="formGroup inputForm">
-                    <label for="numeroEconomico">Número Económico</label>
-                    <input
-                      type="text"
-                      name="numeroEconomico"
-                      id="numeroEconomico"
-                      class="only-numbers"
-                      maxlength="4"
-                      placeholder="Número económico"
-                      style="padding: 8px"
-                    />
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="gafeteSCT">Gafete SCT</label>
-                    <input
-                      type="text"
-                      name="gafeteSCT"
-                      class="only-characters"
-                      id="gafeteSCT"
-                      maxlength="5"
-                      placeholder="Gafete SCT"
-                      style="padding: 8px"
-                    />
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="yearVehiculo">Año del vehículo</label>
-                    <input
-                      type="text"
-                      name="yearVehiculo"
-                      id="yearVehiculo"
-                      maxlength="4"
-                      placeholder="Tipo"
-                      class="only-numbers"
-                      style="padding: 8px"
-                    />
-                  </div>
-                </div>
-                <div class="flexed">
-                  <div class="formGroup inputForm">
-                    <label for="noSerie">No. de Serie</label>
-                    <input
-                      type="text"
-                      name="noSerie"
-                      id="noSerie"
-                      class="only-characters"
-                      placeholder="No. de Serie"
-                      maxlength="17"
-                      style="padding: 8px"
-                    />
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="folio">Póliza de Seguro</label>
-                    <input
-                      type="text"
-                      name="polizaSeguro"
-                      id="polizaSeguro"
-                      placeholder="polizaSeguro"
-                      style="padding: 8px"
-                    />
-                  </div>
-                  <div class="formGroup selectForm">
-                    <label for="municipio">Municipio</label>
-                    <select name="municipio" id="municipio">
-                      <option value="sanluis">SAN LUIS POTOSI</option>
-                      <option value="soledaddegraciano">
-                        SOLEDAD DE GRACIANO SÁNCHEZ
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="flexed" data-display="none" id="form-dates">
-                  <div class="formGroup inputForm">
-                    <label for="fechaAlta">Fecha de alta</label>
-                    <input
-                      type="text"
-                      name="fechaAlta"
-                      id="fechaAlta"
-                      style="padding: 8px"
-                      disabled
-                      readonly
-                    />
-                  </div>
-                  <div class="formGroup inputForm">
-                    <label for="fechaActualizacion">Ultima actualización</label>
-                    <input
-                      type="text"
-                      name="fechaActualizacion"
-                      id="fechaActualizacion"
-                      style="padding: 8px"
-                      disabled
-                      readonly
-                    />
-                  </div>
-                </div>
-                <p style="font-size: 14px">Fotografias</p>
-                <div
-                  class="flexed"
-                  style="justify-content: center; padding: 10px 0"
-                >
-                  <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
-                      <img
-                        src="../assets/img/nopic.png"
-                        alt="frontalPreview"
-                        id="frontalPreview"
-                        class="previewImage"
-                        style="
-                          display: block;
-                          width: 95px;
-                          height: 95px;
-                          object-fit: cover;
-                        "
-                      />
-                      <label for="frontal">
-                        <input
-                          type="file"
-                          name="frontal"
-                          id="frontal"
-                          style="display: none"
-                          class="vehicleFiles"
-                        />
-                        <div class="imageEdit">
-                          <svg
-                            width="32px"
-                            height="32px"
-                            viewBox="-9.6 -9.6 43.20 43.20"
-                            id="Layer_1"
-                            data-name="Layer 1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="#ffffff"
-                            stroke="#ffffff"
-                            transform="matrix(1, 0, 0, 1, 0, 0)"
-                          >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
-                              <rect
-                                x="-9.6"
-                                y="-9.6"
-                                width="43.20"
-                                height="43.20"
-                                rx="21.6"
-                                fill="#e2e7e9"
-                                strokewidth="0"
-                              ></rect>
-                            </g>
-                            <g
-                              id="SVGRepo_tracerCarrier"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke="#CCCCCC"
-                              stroke-width="0.384"
-                            ></g>
-                            <g id="SVGRepo_iconCarrier">
-                              <defs>
-                                <style>
-                                  .cls-1 {
-                                    fill: none;
-                                    stroke: #000000;
-                                    stroke-miterlimit: 10;
-                                    stroke-width: 1.9200000000000004;
-                                  }
-                                </style>
-                              </defs>
-                              <polyline
-                                class="cls-1"
-                                points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
-                              ></polyline>
-                              <path
-                                class="cls-1"
-                                d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
-                              ></path>
-                            </g>
-                          </svg>
-                        </div>
-                      </label>
-                    </div>
-                    <p>Frontal</p>
-                  </div>
-                  <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
-                      <img
-                        src="../assets/img/nopic.png"
-                        alt="lateralDerechoPreview"
-                        id="lateralDerechoPreview"
-                        class="previewImage"
-                        style="
-                          display: block;
-                          width: 95px;
-                          height: 95px;
-                          object-fit: cover;
-                        "
-                      />
-                      <label for="lateralDerecho">
-                        <input
-                          type="file"
-                          name="lateralDerecho"
-                          id="lateralDerecho"
-                          style="display: none"
-                          class="vehicleFiles"
-                        />
-                        <div class="imageEdit">
-                          <svg
-                            width="32px"
-                            height="32px"
-                            viewBox="-9.6 -9.6 43.20 43.20"
-                            id="Layer_1"
-                            data-name="Layer 1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="#ffffff"
-                            stroke="#ffffff"
-                            transform="matrix(1, 0, 0, 1, 0, 0)"
-                          >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
-                              <rect
-                                x="-9.6"
-                                y="-9.6"
-                                width="43.20"
-                                height="43.20"
-                                rx="21.6"
-                                fill="#e2e7e9"
-                                strokewidth="0"
-                              ></rect>
-                            </g>
-                            <g
-                              id="SVGRepo_tracerCarrier"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke="#CCCCCC"
-                              stroke-width="0.384"
-                            ></g>
-                            <g id="SVGRepo_iconCarrier">
-                              <defs>
-                                <style>
-                                  .cls-1 {
-                                    fill: none;
-                                    stroke: #000000;
-                                    stroke-miterlimit: 10;
-                                    stroke-width: 1.9200000000000004;
-                                  }
-                                </style>
-                              </defs>
-                              <polyline
-                                class="cls-1"
-                                points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
-                              ></polyline>
-                              <path
-                                class="cls-1"
-                                d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
-                              ></path>
-                            </g>
-                          </svg>
-                        </div>
-                      </label>
-                    </div>
-                    <p>Lateral Derecho</p>
-                  </div>
-                  <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
-                      <img
-                        src="../assets/img/nopic.png"
-                        alt="lateralIzquierdoPreview"
-                        id="lateralIzquierdoPreview"
-                        class="previewImage"
-                        style="
-                          display: block;
-                          width: 95px;
-                          height: 95px;
-                          object-fit: cover;
-                        "
-                      />
-                      <label for="lateralIzquierdo">
-                        <input
-                          type="file"
-                          name="lateralIzquierdo"
-                          id="lateralIzquierdo"
-                          style="display: none"
-                          class="vehicleFiles"
-                        />
-                        <div class="imageEdit">
-                          <svg
-                            width="32px"
-                            height="32px"
-                            viewBox="-9.6 -9.6 43.20 43.20"
-                            id="Layer_1"
-                            data-name="Layer 1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="#ffffff"
-                            stroke="#ffffff"
-                            transform="matrix(1, 0, 0, 1, 0, 0)"
-                          >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
-                              <rect
-                                x="-9.6"
-                                y="-9.6"
-                                width="43.20"
-                                height="43.20"
-                                rx="21.6"
-                                fill="#e2e7e9"
-                                strokewidth="0"
-                              ></rect>
-                            </g>
-                            <g
-                              id="SVGRepo_tracerCarrier"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke="#CCCCCC"
-                              stroke-width="0.384"
-                            ></g>
-                            <g id="SVGRepo_iconCarrier">
-                              <defs>
-                                <style>
-                                  .cls-1 {
-                                    fill: none;
-                                    stroke: #000000;
-                                    stroke-miterlimit: 10;
-                                    stroke-width: 1.9200000000000004;
-                                  }
-                                </style>
-                              </defs>
-                              <polyline
-                                class="cls-1"
-                                points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
-                              ></polyline>
-                              <path
-                                class="cls-1"
-                                d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
-                              ></path>
-                            </g>
-                          </svg>
-                        </div>
-                      </label>
-                    </div>
-                    <p>Lateral Izquierdo</p>
-                  </div>
-                  <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
-                      <img
-                        src="../assets/img/nopic.png"
-                        alt="traseroPreview"
-                        id="traseroPreview"
-                        class="previewImage"
-                        style="
-                          display: block;
-                          width: 95px;
-                          height: 95px;
-                          object-fit: cover;
-                        "
-                      />
-                      <label for="trasero">
-                        <input
-                          type="file"
-                          name="trasero"
-                          id="trasero"
-                          style="display: none"
-                          class="vehicleFiles"
-                        />
-                        <div class="imageEdit">
-                          <svg
-                            width="32px"
-                            height="32px"
-                            viewBox="-9.6 -9.6 43.20 43.20"
-                            id="Layer_1"
-                            data-name="Layer 1"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="#ffffff"
-                            stroke="#ffffff"
-                            transform="matrix(1, 0, 0, 1, 0, 0)"
-                          >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
-                              <rect
-                                x="-9.6"
-                                y="-9.6"
-                                width="43.20"
-                                height="43.20"
-                                rx="21.6"
-                                fill="#e2e7e9"
-                                strokewidth="0"
-                              ></rect>
-                            </g>
-                            <g
-                              id="SVGRepo_tracerCarrier"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke="#CCCCCC"
-                              stroke-width="0.384"
-                            ></g>
-                            <g id="SVGRepo_iconCarrier">
-                              <defs>
-                                <style>
-                                  .cls-1 {
-                                    fill: none;
-                                    stroke: #000000;
-                                    stroke-miterlimit: 10;
-                                    stroke-width: 1.9200000000000004;
-                                  }
-                                </style>
-                              </defs>
-                              <polyline
-                                class="cls-1"
-                                points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
-                              ></polyline>
-                              <path
-                                class="cls-1"
-                                d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
-                              ></path>
-                            </g>
-                          </svg>
-                        </div>
-                      </label>
-                    </div>
-                    <p>Trasero</p>
-                  </div>
-                </div>
-                <div class="form-buttons-tools">
-                  <button type="button" id="form-button-cancel">
-                    <span>Cancelar</span>
-                  </button>
-                  <button type="submit" id="form-button-submit" data-type="">
-                    <span id="button-submit-text"></span>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
       </main>
 
+      <!-- MODALS  -->
+      <div class="modalForm" aria-modal="true" data-visibility="hidden" data-reference="">
+        <div class="dialog-bg"></div>
+        <div class="modalContent">
+          <div class="containerHead">
+            <h2
+              id="modal-dialog-title"
+              style="
+                font-size: 24px;
+                color: #123019;
+                line-height: 36px;
+                font-weight: 600;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-family: Montserrat-Regular;
+                text-align: start;
+              "
+            ></h2>
+          </div>
+          <div class="containerBody" style="max-height: 600px; overflow-y: auto">
+            <form id="form-vehiculo">
+              <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                Datos Generales
+              </h2>
+              <div class="form-columns flex-nowrap">
+                <div class="formGroup selectForm" style="max-width: 100%">
+                  <label for="marca">Marca <span style="color: rgb(185, 39, 39)">*</span></label>
+                  <select name="marca" id="marca" style="padding: 8px">
+                    <option value="undefined">Seleccionar opcion</option>
+                    <option value="nissan">Nissan</option>
+                    <option value="chevrolet">Chevrolet</option>
+                    <option value="volkswagen">Volkswagen</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="ford">Ford</option>
+                    <option value="honda">Honda</option>
+                    <option value="hyundai">Hyundai</option>
+                    <option value="kia">Kia</option>
+                    <option value="mg">MG</option>
+                    <option value="chrysler">Chrysler</option>
+                    <option value="dodge">Dodge</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="seat">Seat</option>
+                    <option value="peugeot">Peugeot</option>
+                    <option value="suzuki">Suzuki</option>
+                    <option value="renault">Renault</option>
+                  </select>
+                </div>
+                <div class="formGroup selectForm" style="max-width: 100%">
+                  <label for="modelo">Modelo <span style="color: rgb(185, 39, 39)">*</span></label>
+                  <select name="modelo" id="modelo" style="padding: 8px">
+                    <option value="0">Seleccionar modelo</option>
+                  </select>
+                </div>
+                <div class="formGroup selectForm" style="max-width: 100%">
+                  <label for="tipoVehiculo">Tipo de vehículo <span style="color: rgb(185, 39, 39)">*</span></label>
+                  <select name="tipoVehiculo" id="tipoVehiculo" style="padding: 8px">
+                    <option value="hatchback">Hatchback</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                    <option value="crossover">Crossover</option>
+                    <option value="coupe">Coupe</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-columns flex-nowrap">
+                <div class="formGroup selectForm" style="max-width: 100%">
+                  <label for="tipoCombustible">Tipo Combustible</label>
+                  <select id="tipoCombustible" name="tipoCombustible" style="padding: 8px">
+                    <option value="gasolina">Gasolina</option>
+                    <option value="diesel">Diésel</option>
+                    <option value="gaslp">Gas LP</option>
+                    <option value="electrico">Eléctrico</option>
+                    <option value="hibrido">Híbrido</option>
+                  </select>
+                </div>
+                <div class="formGroup inputForm">
+                  <label for="placaNumero">Placa Número <span style="color: rgb(185, 39, 39)">*</span></label>
+                  <input
+                    type="text"
+                    name="placaNumero"
+                    id="placaNumero"
+                    placeholder="Placa número"
+                    maxlength="4"
+                    class="only-numbers"
+                    style="padding: 8px"
+                  />
+                </div>
+                <div class="formGroup selectForm" style="max-width: 100%">
+                  <label for="placaTipo">Placa Tipo <span style="color: rgb(185, 39, 39)">*</span> </label>
+                  <select name="placaTipo" id="placaTipo" style="padding: 8px">
+                    <option value="tse">TSE</option>
+                    <option value="tst">TST</option>
+                    <option value="tsg">TSG</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-columns flex-nowrap" style="max-width: 100%">
+                <div class="formGroup inputForm">
+                  <label for="yearVehiculo">Año del vehículo</label>
+                  <select name="yearVehiculo" id="yearVehiculo" style="padding: 8px; width: 100%"></select>
+                </div>
+                <div class="formGroup inputForm">
+                  <label for="noSerie">No. de Serie <span style="color: rgb(185, 39, 39)">*</span></label>
+                  <input
+                    type="text"
+                    name="noSerie"
+                    id="noSerie"
+                    class="only-characters"
+                    placeholder="No. de Serie"
+                    maxlength="17"
+                    style="padding: 8px"
+                  />
+                </div>
+                <div class="formGroup selectForm">
+                  <label for="color">Color</label>
+                  <select name="color" id="color" style="padding: 8px">
+                    <option value="blanco" selected>Blanco</option>
+                    <option value="verde">Verde</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-columns flex-nowrap justify-start">
+                <div class="formGroup inputForm">
+                  <label for="numeroEconomico">Número Económico <span style="color: rgb(185, 39, 39)">*</span></label>
+                  <input
+                    type="text"
+                    name="numeroEconomico"
+                    id="numeroEconomico"
+                    class="only-numbers"
+                    maxlength="4"
+                    placeholder="Número económico"
+                    style="padding: 8px"
+                  />
+                </div>
+                <div class="formGroup inputForm">
+                  <label for="gafeteSCT">Gafete SCT <span style="color: rgb(185, 39, 39)">*</span></label>
+                  <input
+                    type="text"
+                    name="gafeteSCT"
+                    class="only-characters"
+                    id="gafeteSCT"
+                    maxlength="5"
+                    placeholder="Gafete SCT"
+                    style="padding: 8px"
+                  />
+                </div>
+              </div>
+              <div class="form-columns flex-nowrap justify-start">
+                <div class="formGroup inputForm">
+                  <label for="folio">Póliza de Seguro</label>
+                  <input
+                    type="text"
+                    name="polizaSeguro"
+                    id="polizaSeguro"
+                    placeholder="polizaSeguro"
+                    style="padding: 8px"
+                  />
+                </div>
+                <div class="formGroup selectForm">
+                  <label for="municipio">Municipio</label>
+                  <select name="municipio" id="municipio">
+                    <option value="sanluis">SAN LUIS POTOSI</option>
+                    <option value="soledaddegraciano">SOLEDAD DE GRACIANO SÁNCHEZ</option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="form-columns flex-nowrap"
+                data-display="none"
+                id="form-dates"
+                style="flex-direction: column; gap: 0; align-items: baseline"
+              >
+                <div class="formGroup inputForm" style="max-width: calc(calc(210px * 2) + 16px)">
+                  <label for="fechaAlta">Fecha de alta</label>
+                  <input type="text" name="fechaAlta" id="fechaAlta" style="padding: 8px" disabled readonly />
+                </div>
+                <div class="formGroup inputForm" style="max-width: calc(calc(210px * 2) + 16px)">
+                  <label for="fechaActualizacion">Ultima actualización</label>
+                  <input
+                    type="text"
+                    name="fechaActualizacion"
+                    id="fechaActualizacion"
+                    style="padding: 8px"
+                    disabled
+                    readonly
+                  />
+                </div>
+              </div>
+              <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                Fotografias del vehículo
+              </h2>
+              <div class="flexed" style="justify-content: center; padding: 10px 0">
+                <div class="file-box">
+                  <div style="padding: 8px; border: 1px solid lightslategray; border-radius: 2px">
+                    <img
+                      src="../assets/img/nopic.png"
+                      alt="frontal"
+                      id="frontalPreview"
+                      class="previewImage"
+                      style="display: block; width: 105px; height: 105px; object-fit: cover"
+                    />
+                    <label for="frontal">
+                      <input type="file" name="frontal" id="frontal" style="display: none" class="vehicleFiles" />
+                      <div class="imageEdit">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-9.6 -9.6 43.20 43.20"
+                          id="Layer_1"
+                          data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#ffffff"
+                          stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect
+                              x="-9.6"
+                              y="-9.6"
+                              width="43.20"
+                              height="43.20"
+                              rx="21.6"
+                              fill="#e2e7e9"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke="#CCCCCC"
+                            stroke-width="0.384"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline
+                              class="cls-1"
+                              points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                            ></polyline>
+                            <path
+                              class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+
+                    <div class="imageEdit imageDelete">
+                      <svg
+                        width="32px"
+                        height="32px"
+                        viewBox="-5.04 -5.04 34.08 34.08"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0">
+                          <rect
+                            x="-5.04"
+                            y="-5.04"
+                            width="34.08"
+                            height="34.08"
+                            rx="17.04"
+                            fill="#ebebeb"
+                            strokewidth="0"
+                          ></rect>
+                        </g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path
+                            d="M10 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M14 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M4 7H20"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <p>Frontal</p>
+                </div>
+                <div class="file-box">
+                  <div style="padding: 8px; border: 1px solid lightslategray; border-radius: 2px">
+                    <img
+                      src="../assets/img/nopic.png"
+                      alt="lateralDerecho"
+                      id="lateralDerechoPreview"
+                      class="previewImage"
+                      style="display: block; width: 105px; height: 105px; object-fit: cover"
+                    />
+                    <label for="lateralDerecho">
+                      <input
+                        type="file"
+                        name="lateralDerecho"
+                        id="lateralDerecho"
+                        style="display: none"
+                        class="vehicleFiles"
+                      />
+                      <div class="imageEdit">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-9.6 -9.6 43.20 43.20"
+                          id="Layer_1"
+                          data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#ffffff"
+                          stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect
+                              x="-9.6"
+                              y="-9.6"
+                              width="43.20"
+                              height="43.20"
+                              rx="21.6"
+                              fill="#e2e7e9"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke="#CCCCCC"
+                            stroke-width="0.384"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline
+                              class="cls-1"
+                              points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                            ></polyline>
+                            <path
+                              class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+
+                    <div class="imageEdit imageDelete">
+                      <svg
+                        width="32px"
+                        height="32px"
+                        viewBox="-5.04 -5.04 34.08 34.08"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0">
+                          <rect
+                            x="-5.04"
+                            y="-5.04"
+                            width="34.08"
+                            height="34.08"
+                            rx="17.04"
+                            fill="#ebebeb"
+                            strokewidth="0"
+                          ></rect>
+                        </g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path
+                            d="M10 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M14 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M4 7H20"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <p>Lateral Derecho</p>
+                </div>
+                <div class="file-box">
+                  <div style="padding: 8px; border: 1px solid lightslategray; border-radius: 2px">
+                    <img
+                      src="../assets/img/nopic.png"
+                      alt="lateralIzquierdo"
+                      id="lateralIzquierdoPreview"
+                      class="previewImage"
+                      style="display: block; width: 105px; height: 105px; object-fit: cover"
+                    />
+                    <label for="lateralIzquierdo">
+                      <input
+                        type="file"
+                        name="lateralIzquierdo"
+                        id="lateralIzquierdo"
+                        style="display: none"
+                        class="vehicleFiles"
+                      />
+                      <div class="imageEdit">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-9.6 -9.6 43.20 43.20"
+                          id="Layer_1"
+                          data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#ffffff"
+                          stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect
+                              x="-9.6"
+                              y="-9.6"
+                              width="43.20"
+                              height="43.20"
+                              rx="21.6"
+                              fill="#e2e7e9"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke="#CCCCCC"
+                            stroke-width="0.384"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline
+                              class="cls-1"
+                              points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                            ></polyline>
+                            <path
+                              class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+
+                    <div class="imageEdit imageDelete">
+                      <svg
+                        width="32px"
+                        height="32px"
+                        viewBox="-5.04 -5.04 34.08 34.08"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0">
+                          <rect
+                            x="-5.04"
+                            y="-5.04"
+                            width="34.08"
+                            height="34.08"
+                            rx="17.04"
+                            fill="#ebebeb"
+                            strokewidth="0"
+                          ></rect>
+                        </g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path
+                            d="M10 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M14 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M4 7H20"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <p>Lateral Izquierdo</p>
+                </div>
+                <div class="file-box">
+                  <div style="padding: 8px; border: 1px solid lightslategray; border-radius: 2px">
+                    <img
+                      src="../assets/img/nopic.png"
+                      alt="trasero"
+                      id="traseroPreview"
+                      class="previewImage"
+                      style="display: block; width: 105px; height: 105px; object-fit: cover"
+                    />
+                    <label for="trasero">
+                      <input type="file" name="trasero" id="trasero" style="display: none" class="vehicleFiles" />
+                      <div class="imageEdit">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-9.6 -9.6 43.20 43.20"
+                          id="Layer_1"
+                          data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#ffffff"
+                          stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect
+                              x="-9.6"
+                              y="-9.6"
+                              width="43.20"
+                              height="43.20"
+                              rx="21.6"
+                              fill="#e2e7e9"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke="#CCCCCC"
+                            stroke-width="0.384"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline
+                              class="cls-1"
+                              points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                            ></polyline>
+                            <path
+                              class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+
+                    <div class="imageEdit imageDelete">
+                      <svg
+                        width="32px"
+                        height="32px"
+                        viewBox="-5.04 -5.04 34.08 34.08"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0">
+                          <rect
+                            x="-5.04"
+                            y="-5.04"
+                            width="34.08"
+                            height="34.08"
+                            rx="17.04"
+                            fill="#ebebeb"
+                            strokewidth="0"
+                          ></rect>
+                        </g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path
+                            d="M10 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M14 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M4 7H20"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <p>Trasero</p>
+                </div>
+              </div>
+              <div class="form-buttons-tools">
+                <button type="button" id="form-button-cancel">
+                  <span>Cancelar</span>
+                </button>
+                <button type="submit" id="form-button-submit" data-type="">
+                  <span id="button-submit-text"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
       <div class="modal-preview-image" data-visibility="hidden">
         <div class="modal-bg"></div>
         <div class="modal-container">
@@ -918,14 +963,8 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
   <script src="../js/global-context.js"></script>
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
-  ></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
   <script
     type="text/javascript"
     src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
@@ -933,17 +972,74 @@
   <script type="module" async>
     import { firestore, storage } from "../js/config/config.js";
 
+    const carModels = {
+      nissan: [
+        "Tsuru",
+        "NP300",
+        "Versa",
+        "Sentra",
+        "March",
+        "Altima",
+        "NP300",
+        "X-Trail",
+        "Kicks",
+        "Maxima",
+        "Murano",
+        "Armada",
+        "Frontier",
+        "Leaf",
+        "Pathfinder",
+        "Rogue",
+      ],
+      chevrolet: [
+        "Aveo",
+        "Spark",
+        "Sonic",
+        "Onix",
+        "Trax",
+        "Equinox",
+        "Malibu",
+        "Silverado",
+        "Tornado",
+        "Cavalier",
+        "Blazer",
+        "Captiva",
+      ],
+      volkswagen: ["Jetta", "Vento", "Gol", "Polo", "Tiguan", "Golf", "Saveiro", "Virtus", "T-Cross", "Nivus", "Taos"],
+      ford: [
+        "Escape",
+        "Focus",
+        "Fusion",
+        "Edge",
+        "Explorer",
+        "Ecosport",
+        "Ranger",
+        "Lobo",
+        "Bronco-Sport",
+        "Expedition",
+        "Maverick",
+      ],
+      honda: ["Civic", "Accord", "Fit", "CR-V", "HR-V", "Pilot", "Odyssey", "Insight"],
+      hyundai: ["Grand-i10", "Accent", "Elantra", "Tucson", "Santa-Fe", "Creta", "Sonata", "Kona", "Palisade", "Venue"],
+      toyota: ["Yaris", "Corolla", "Camry", "RAV4", "Highlander", "Hilux", "Avanza", "Prius", "Sienna", "Tacoma"],
+      kia: ["Rio", "Forte", "Sportage", "Sorento", "Optima", "Soul", "Stinger", "Niro", "Seltos", "Telluride", "Sonet"],
+      mg: ["MG5", "ZS", "HS", "RX5"],
+      chrysler: ["Pacifica", "300"],
+      dodge: ["Attitude", "Charger", "Durango", "Journey", "Neon"],
+      fiat: ["Mobi", "Palio", "Uno", "500", "Ducato", "Argo"],
+      seat: ["Ibiza", "Leon", "Ateca", "Arona", "Toledo", "Tarraco"],
+      peugeot: ["208", "2008", "3008", "301", "5008", "Rifter"],
+      suzuki: ["Swift", "Vitara", "Ignis", "Ciaz", "S-Cross", "Ertiga", "Jimny"],
+      renault: ["Kwid", "Duster", "Koleos", "Sandero", "Logan", "Oroch", "Stepway"],
+    };
+
     let permissions = {};
-    let modalDialog = document.querySelector(
-      "div.modal-dialog[aria-modal='true'"
-    );
+    let modalDialog = document.querySelector("div.modalForm[aria-modal='true'");
     let modalTitle = document.getElementById("modal-dialog-title");
     let submitText = document.getElementById("button-submit-text");
     let vehicleForm = document.getElementById("form-vehiculo");
     let vehiclesTable = null;
-    let formEntries = Object.values(vehicleForm).filter(
-      (item) => item.type !== "button" && item.type !== "submit"
-    );
+    let formEntries = Object.values(vehicleForm).filter((item) => item.type !== "button" && item.type !== "submit");
 
     const VEHICULOS_REFERENCE = firestore.collection("vehiculos");
 
@@ -955,14 +1051,14 @@
 
       const updateAttrs = {
         type: "button",
-        class: "cellButtonTool",
+        class: "tableTools",
         "data-type": "update",
         "data-uid": uid,
         title: "Actualizar",
       };
       const deleteAttrs = {
         type: "button",
-        class: "cellButtonTool",
+        class: "tableTools",
         "data-type": "delete",
         "data-uid": uid,
         title: "Eliminar",
@@ -971,20 +1067,57 @@
       elementSetAttributes(updateButton, updateAttrs);
       elementSetAttributes(deleteButton, deleteAttrs);
       elementSetAttributes(tableCell, { "data-type": "tools" });
+      tableCell.classList.add("cellButtonTool");
 
-      updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
-      deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>`;
+      const updateButtonHTML = `<span>Actualizar</span>`;
+      const deleteButtonHTML = `<span>Eliminar</span>`;
+
+      updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>${updateButtonHTML}`;
+      deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>${deleteButtonHTML}`;
 
       updateButton.addEventListener("click", (e) => handleUpdateVehicle(e));
-      deleteButton.addEventListener("click", (e) =>
-        handleDeleteVehicle(e, e.currentTarget.parentNode)
-      );
+      deleteButton.addEventListener("click", (e) => handleDeleteVehicle(e, e.currentTarget.parentNode));
 
       tableCell.insertAdjacentElement("beforeend", updateButton);
       tableCell.insertAdjacentElement("beforeend", deleteButton);
 
       return tableCell;
     };
+
+    const selectModels = document.querySelector("select#modelo");
+
+    const fillCarModels = (event, type) => {
+      if (event === "" && type === 1) return;
+      selectModels.innerHTML = "";
+      const elementSelected = type === 0 ? event.target.value : event;
+      const modelosVehiculo = carModels[elementSelected];
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "0";
+      defaultOption.innerHTML = "Seleccionar modelo";
+      selectModels.append(defaultOption);
+      for (let i = 0; i < modelosVehiculo.length; i++) {
+        const optionElement = document.createElement("option");
+        optionElement.value = String(modelosVehiculo[i]).toUpperCase();
+        optionElement.innerHTML = modelosVehiculo[i];
+        selectModels.append(optionElement);
+      }
+    };
+
+    const selectMarcas = document.querySelector("select#marca").addEventListener("change", (e) => fillCarModels(e, 0));
+
+    function fillYearsToElement() {
+      const actualYear = parseInt(new Date().getFullYear());
+      const yearElement = document.querySelector("select#yearVehiculo");
+      let counter = 2017;
+      while (counter <= actualYear + 1) {
+        const optionElement = document.createElement("option");
+        optionElement.value = counter;
+        optionElement.innerHTML = counter;
+        counter === 2017 ? (optionElement.selected = true) : (optionElement.selected = false);
+        yearElement.append(optionElement);
+        counter++;
+      }
+    }
 
     const insertDataToTableBody = (element, index) => {
       const tableRow = document.createElement("TR");
@@ -1000,8 +1133,7 @@
       ];
       CELL_LIST.forEach((item) => {
         const rowCell = document.createElement("TD");
-        rowCell.textContent =
-          typeof item === "string" ? item.toLowerCase() : item;
+        rowCell.textContent = typeof item === "string" ? item.toLowerCase() : item;
         tableRow.appendChild(rowCell);
       });
 
@@ -1009,9 +1141,7 @@
       tableRow.setAttribute("data-reference", element.uid);
       tableRow.appendChild(tools);
 
-      document
-        .querySelector("table#vehicle-list tbody")
-        .insertAdjacentElement("beforeend", tableRow);
+      document.querySelector("table#vehicle-list tbody").insertAdjacentElement("beforeend", tableRow);
     };
 
     const getAllVehicles = async () => {
@@ -1034,64 +1164,99 @@
     };
 
     const getVehicleByID = async (uid) => {
-      try {
-        const response = await VEHICULOS_REFERENCE.doc(uid).get();
+      const response = await VEHICULOS_REFERENCE.doc(uid).get();
+      if (response.exists) {
+        try {
+          const storageReference = storage.ref().child("vehiculos/" + uid);
+          const result = await storageReference.listAll();
+          if (result.items.length > 0) {
+            const urls = await Promise.all(
+              result.items.map(async (item) => {
+                try {
+                  return await item.getDownloadURL();
+                } catch (error) {
+                  console.error("Error obteniendo URL: ", error);
+                  return null;
+                }
+              })
+            );
 
-        const storageReference = storage.ref().child("vehiculos/" + uid);
-        const result = await storageReference.listAll();
+            const files = urls.map((item) => {
+              return {
+                url: item || "../assets/img/nopic.png",
+                name: item.split("%2F")[2].split("?")[0].split(".")[0].split("__")[1],
+                type: item.split("%2F")[2].split("?")[0].split(".")[1],
+              };
+            });
 
-        const urls = await Promise.all(
-          result.items.map(async (item) => {
-            try {
-              return await item.getDownloadURL();
-            } catch (error) {
-              console.error("Error obteniendo URL: ", error);
-              return null;
-            }
-          })
-        );
+            console.log({ files });
 
-        if (response.exists) {
-          document
-            .querySelectorAll("img.previewImage")
-            .forEach((element, index) => {
-              element.src = urls[index] || "../assets/img/nopic.png";
+            document.querySelectorAll("img.previewImage").forEach((element) => {
+              const { name, alt } = element;
+              const [currentFile] = files.filter((item) => item.name === alt);
+              console.log({ name, alt, element, currentFile });
+              if (currentFile === undefined || currentFile === null) {
+                element.src = "../assets/img/nopic.png";
+              } else if (currentFile?.type === "pdf") {
+                element.src = "https://www.svgrepo.com/show/255818/pdf.svg";
+              } else {
+                element.src = currentFile?.url;
+              }
 
               element.addEventListener("click", function (e) {
                 const modal = document.querySelector("div.modal-preview-image");
-                modal.setAttribute("data-visibility", "visible");
-                document.getElementById("full-width-preview-Image").src =
-                  urls[index];
+                const modalDoc = document.querySelector("div.modal-preview-document");
+                if (currentFile?.type !== "pdf") {
+                  modal.setAttribute("data-visibility", "visible");
+                  document.getElementById("full-width-preview-Image").src = currentFile?.url;
+                  return;
+                }
+
+                modalDoc.setAttribute("data-visibility", "visible");
+                document.getElementById("full-width-preview-Document").src = currentFile?.url;
               });
             });
+          }
+        } catch (error) {
+          console.error("No se ha podido obtener información de archivos del usuario: ", error);
+        }
 
+        document.querySelectorAll(".dialog-bg").forEach((element, index) => {
+          element.addEventListener("click", function (e) {
+            const modal = e.target.parentNode;
+            modal.setAttribute("data-visibility", "hidden");
+          });
+        });
+
+        try {
           formEntries.forEach((element) => {
             const { name } = element;
             const isDate = name.includes("fecha");
             const data = response.data()[name] || "";
+            if (["frontal", "trasero", "lateralDerecho", "lateralIzquierdo"].includes(name)) return;
             if (isDate) {
               element.value = formatDateFromIsoString(data);
               return;
             }
-            element.value = data;
+            if (name === "modelo") {
+              const marca = String(response.data()["marca"]).toLowerCase();
+              const modelo = String(data).toUpperCase();
+              fillCarModels(marca, 1);
+              element.value = modelo;
+              return;
+            }
+
+            element.value = String(data).toLowerCase();
           });
-        } else {
-          throw new Error("El usuario no existe en la base de datos.");
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(
-          "No se ha podido obtener información del usuario: ",
-          error
-        );
-        return false;
       }
     };
 
     const formatDateFromIsoString = (value) => {
       const dateValue = new Date(value);
-      const [day, month, year] = dateValue
-        .toLocaleDateString("es-MX")
-        .split("/");
+      const [day, month, year] = dateValue.toLocaleDateString("es-MX").split("/");
       const time = dateValue.toLocaleTimeString("es-MX", { hour12: true });
       const monthsString = [
         "Enero",
@@ -1107,7 +1272,7 @@
         "Noviembre",
         "Diciembre",
       ];
-      return `${day}/${monthsString[parseInt(month) - 1]}/${year} ${time}`;
+      return `${day} DE ${monthsString[parseInt(month) - 1]} DEL ${year} ${time}`;
     };
 
     const updateVehicleByID = async () => {
@@ -1116,16 +1281,11 @@
           negateAccess();
           return;
         }
-        const uid = document
-          .querySelector("div.modal-dialog")
-          .getAttribute("data-reference");
+        const uid = document.querySelector("div.modalForm").getAttribute("data-reference");
         const formObject = {};
 
         formEntries.forEach((item) => {
-          const property =
-            item.type === "checkbox"
-              ? { [item.name]: item.checked }
-              : { [item.name]: item.value };
+          const property = item.type === "checkbox" ? { [item.name]: item.checked } : { [item.name]: item.value };
           Object.assign(formObject, property);
         });
         const objectValues = {
@@ -1142,8 +1302,6 @@
           .update(formObject)
           .catch((error) => false);
 
-        const uploadSuccess = await uploadImages(uid);
-
         if (response !== false) {
           alert("Se ha actualizado el usuario de manera corrrecta.");
           await handleRefetch();
@@ -1152,10 +1310,7 @@
         }
         throw new Error();
       } catch (error) {
-        console.error(
-          "Se ha presentado un error al actualizar el registro, ",
-          error
-        );
+        console.error("Se ha presentado un error al actualizar el registro, ", error);
         return false;
       }
     };
@@ -1172,20 +1327,13 @@
           .catch((error) => false);
 
         if (response) {
-          alert(
-            "Se ha eliminado el vehículo seleccionado, de manera correcta."
-          );
+          alert("Se ha eliminado el vehículo seleccionado, de manera correcta.");
           await handleRefetch();
           return true;
         }
       } catch (error) {
-        console.error(
-          "Se ha presentado un error al intentar eliminar el vehiculo seleccionado, ",
-          error
-        );
-        alert(
-          "Se ha presentado un error al intentar eliminar el vehiculo seleccionado."
-        );
+        console.error("Se ha presentado un error al intentar eliminar el vehiculo seleccionado, ", error);
+        alert("Se ha presentado un error al intentar eliminar el vehiculo seleccionado.");
         return false;
       }
     };
@@ -1209,8 +1357,6 @@
         const vehicleRef = await VEHICULOS_REFERENCE.add(formObject);
 
         if (vehicleRef) {
-          const uploadSuccess = await uploadImages(vehicleRef.id);
-
           alert("Se ha creado el vehículo correctamente.");
           await handleRefetch();
           hideDialog();
@@ -1237,9 +1383,7 @@
 
     vehicleForm.addEventListener("submit", async function (event) {
       event.preventDefault();
-      const type = document
-        .getElementById("form-button-submit")
-        .getAttribute("data-type");
+      const type = document.getElementById("form-button-submit").getAttribute("data-type");
 
       if (type === "add") {
         await createNewVehicle();
@@ -1249,10 +1393,8 @@
       }
     });
 
-    document
-      .getElementById("form-button-cancel")
-      .addEventListener("click", () => hideDialog());
-    document.getElementById("button-add").addEventListener("click", () => {
+    document.getElementById("form-button-cancel").addEventListener("click", () => hideDialog());
+    document.querySelector("button#userAdd").addEventListener("click", () => {
       showDialog("add");
     });
 
@@ -1264,12 +1406,8 @@
         }
         modalTitle.innerText = "Alta de vehículo";
         submitText.innerText = "Dar de alta";
-        document
-          .getElementById("form-button-submit")
-          .setAttribute("data-type", "add");
-        document
-          .getElementById("form-dates")
-          .setAttribute("data-display", "none");
+        document.getElementById("form-button-submit").setAttribute("data-type", "add");
+        document.getElementById("form-dates").setAttribute("data-display", "none");
       } else {
         if (permissions.update == "0") {
           negateAccess();
@@ -1277,13 +1415,11 @@
         }
         modalTitle.innerText = "Actualizar datos del vehículo";
         submitText.innerText = "Actualizar";
-        document
-          .getElementById("form-button-submit")
-          .setAttribute("data-type", "update");
-        document
-          .getElementById("form-dates")
-          .setAttribute("data-display", "block");
+        document.getElementById("form-button-submit").setAttribute("data-type", "update");
+        document.getElementById("form-dates").setAttribute("data-display", "block");
       }
+
+      fillYearsToElement();
       modalDialog.setAttribute("data-visibility", "visible");
     }
 
@@ -1296,9 +1432,8 @@
         element.src = "../assets/img/nopic.png";
       });
       modalDialog.setAttribute("data-reference", "");
-      document
-        .getElementById("form-dates")
-        .setAttribute("data-display", "none");
+      document.getElementById("form-dates").setAttribute("data-display", "none");
+      document.querySelector("select#yearVehiculo").innerHTML = "";
     }
 
     async function fetchingData() {
@@ -1309,7 +1444,7 @@
         });
 
         vehiclesTable = new DataTable("#vehicle-list", {
-          dom: "Bfrtip",
+          dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
           buttons: [
             {
               extend: "collection",
@@ -1336,27 +1471,45 @@
       }
     }
 
-    const uploadImages = async (uid) => {
-      try {
-        const inputFiles = document.querySelectorAll("input.vehicleFiles");
-        const imageList = [];
-
-        inputFiles.forEach(async (input) => {
-          const archivo = input.files[0];
-
-          if (archivo === null || archivo === undefined) {
-            return;
+    document.querySelectorAll(".vehicleFiles").forEach((element) => {
+      element.addEventListener("change", async function (e) {
+        try {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          const { name, type } = e.target;
+          console.log({ file, name, type: file.name.split(".")[1] });
+          const responseUpload = await uploadImages(file, name, file.name.split(".")[1]);
+          console.log({ responseUpload });
+          if (responseUpload) {
+            reader.onload = function (event) {
+              const url = event.target.result;
+              const dom = name + "Preview";
+              const imageDom = document.getElementById(dom);
+              imageDom.src = file.name.split(".")[1] === "pdf" ? "https://www.svgrepo.com/show/255818/pdf.svg" : url;
+            };
+            reader.readAsDataURL(file);
           }
-          const reference = await storage
-            .ref()
-            .child(`vehiculos/${uid}/` + input.name)
-            .put(archivo);
+        } catch (error) {
+          console.error(error.message);
+        }
+      });
+    });
 
-          const url = await reference.getDownloadURL();
-          imageList.push(url);
-        });
+    const uploadImages = async (file, name, type) => {
+      try {
+        const uid = document.querySelector("div.modalForm").getAttribute("data-reference");
+        console.log({ file, name, type, uid });
 
-        return imageList;
+        if (file === null || file === undefined) return;
+        const reference = storage.ref().child(`vehiculos/${uid}/__` + (name + "." + type));
+        await reference.put(file);
+
+        const url = await reference.getDownloadURL();
+        if (url) {
+          return true;
+        } else {
+          return false;
+        }
       } catch (error) {
         console.error("Error al subir imagenes, ", error);
         return false;
@@ -1395,29 +1548,25 @@
       }
     }
 
-    document
-      .querySelectorAll("input.vehicleFiles")
-      .forEach((element, index) => {
-        const { name } = element;
-        element.addEventListener("change", function () {
-          const file = this.files[0];
-          const reader = new FileReader();
+    document.querySelectorAll("input.vehicleFiles").forEach((element, index) => {
+      const { name } = element;
+      element.addEventListener("change", function () {
+        const file = this.files[0];
+        const reader = new FileReader();
 
-          reader.onload = function (event) {
-            const url = event.target.result;
-            const dom = `${name}Preview`;
-            document.getElementById(dom).src = url;
-          };
-          reader.readAsDataURL(file);
-        });
+        reader.onload = function (event) {
+          const url = event.target.result;
+          const dom = `${name}Preview`;
+          document.getElementById(dom).src = url;
+        };
+        reader.readAsDataURL(file);
       });
+    });
 
-    document
-      .querySelector("div.modal-bg")
-      .addEventListener("click", function (e) {
-        const modal = e.target.parentNode;
-        modal.setAttribute("data-visibility", "hidden");
-      });
+    document.querySelector("div.modal-bg").addEventListener("click", function (e) {
+      const modal = e.target.parentNode;
+      modal.setAttribute("data-visibility", "hidden");
+    });
 
     const rolesPermission = async () => {
       const permission = sessionStorage.getItem("vehiculosPermission");
@@ -1432,10 +1581,32 @@
     };
 
     const negateAccess = () => {
-      window.alert(
-        "No cuentas con los permisos necesarios para realizar esta operación."
-      );
+      window.alert("No cuentas con los permisos necesarios para realizar esta operación.");
     };
+
+    document.querySelectorAll("div.imageDelete").forEach((element) => {
+      element.addEventListener("click", function (e) {
+        const imageTag = e.currentTarget.parentNode.children[0];
+        const url = imageTag.getAttribute("src");
+        console.log({ url, imageTag });
+        if (url === "../assets/img/nopic.png") {
+          return;
+        }
+        const fileName = url.split("?")[0].split("__")[1];
+        const uid = document.querySelector("div.modalForm").getAttribute("data-reference");
+        const reference = storage.ref().child(`vehiculos/${uid}/__${fileName}`);
+        reference
+          .delete()
+          .then((snapshot) => {
+            window.alert("Se ha eliminado el archivo de manera satisfactoria.");
+            imageTag.src = "../assets/img/nopic.png";
+          })
+          .catch((error) => {
+            window.alert("Se ha presentado un error.");
+            console.error(error);
+          });
+      });
+    });
 
     await rolesPermission();
     await fetchingData();

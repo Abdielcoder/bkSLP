@@ -36,6 +36,7 @@ table#changelogs-list {
   display: table;
   position: relative;
   border-top: 1px solid rgba(0, 0, 0, .05);
+  text-transform: uppercase;
 }
 
 table#changelogs-list tbody tr.even {

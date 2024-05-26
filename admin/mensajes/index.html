@@ -7,10 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="./index.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -24,9 +21,7 @@
       <aside>
         <div id="aside-container">
           <div class="logo">
-            <a class="home-link" href="../../docs/main.html"
-              >Tu Taxi | Backoffice</a
-            >
+            <a class="home-link" href="../../docs/main.html">Tu Taxi | Backoffice</a>
           </div>
           <hr />
           <ul class="nav">
@@ -37,37 +32,21 @@
               </a>
             </li>
             <li class="nav-item" id="concesionario-menu-li">
-              <a
-                class="nav-link hasSubmenu"
-                href="../../docs/concesionarios.html"
-                id="concesionario"
-              >
+              <a class="nav-link hasSubmenu" href="../../docs/concesionarios.html" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIO
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
-                  <li
-                    class="nav-item-submenu"
-                    id="vehiculos-submenu-li"
-                    style="display: none"
-                  >
+                  <li class="nav-item-submenu" id="vehiculos-submenu-li" style="display: none">
                     <a class="nav-link" href="../../docs/vehicles.html">
-                      <span class="link-icons material-icons-sharp"
-                        >directions_car</span
-                      >
+                      <span class="link-icons material-icons-sharp">directions_car</span>
                       VEHICULOS
                     </a>
                   </li>
-                  <li
-                    class="nav-item"
-                    id="conductores-submenu-li"
-                    style="display: none"
-                  >
+                  <li class="nav-item" id="conductores-submenu-li" style="display: none">
                     <a class="nav-link" href="../../docs/users.html">
-                      <span class="link-icons material-icons-sharp"
-                        >person</span
-                      >
+                      <span class="link-icons material-icons-sharp">person</span>
                       CONDUCTORES
                     </a>
                   </li>
@@ -81,16 +60,14 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="../../docs//historico.html">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
             </li>
             <li class="nav-item menu-button menu-closed" id="admin-menu-li">
               <a class="nav-link" href="#" id="administracion">
-                <span class="link-icons material-icons-sharp"
-                  >manage_accounts</span
-                >
+                <span class="link-icons material-icons-sharp">manage_accounts</span>
                 ADMINISTRACIÓN
               </a>
               <div id="administracion-submenu" data-displayed="hidden">
@@ -103,25 +80,19 @@
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../administradores/index.html">
-                      <span class="link-icons material-icons-sharp"
-                        >person</span
-                      >
+                      <span class="link-icons material-icons-sharp">person</span>
                       ADMINISTRADORES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../roles/index.html">
-                      <span class="link-icons material-icons-sharp"
-                        >groups</span
-                      >
+                      <span class="link-icons material-icons-sharp">groups</span>
                       ROLES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../clients.html">
-                      <span class="link-icons material-icons-sharp"
-                        >person_pin</span
-                      >
+                      <span class="link-icons material-icons-sharp">person_pin</span>
                       CLIENTES
                     </a>
                   </li>
@@ -133,9 +104,7 @@
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../base_rates.html">
-                      <span class="link-icons material-icons-sharp"
-                        >attach_money</span
-                      >
+                      <span class="link-icons material-icons-sharp">attach_money</span>
                       TARIFAS BASE
                     </a>
                   </li>
@@ -144,9 +113,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <span class="link-icons material-icons-sharp">
-                  airline_seat_recline_extra</span
-                >
+                <span class="link-icons material-icons-sharp"> airline_seat_recline_extra</span>
                 CLIENTES
               </a>
             </li>
@@ -167,17 +134,18 @@
       </header>
 
       <!-- Main -->
-      <main>
+      <main style="position: relative">
+        <div class="page-title">
+          <h2 class="header-module-title">Mensajes</h2>
+        </div>
         <div class="container">
-          <div class="tadi-card col-12">
-            <div class="card-header">
-              <h1>Mensajes</h1>
-              <!-- <p>Listado de clientes registrados en plataforma.</p> -->
+          <div class="container-module col-12">
+            <div class="module-header">
+              <button type="button" class="create-new" id="userAdd">
+                <span> Agregar Mensaje </span>
+              </button>
             </div>
-            <div class="card-body">
-              <div id="buttons_container">
-                <button class="button" data-type="add">Agregar</button>
-              </div>
+            <div class="module-body">
               <div class="table_container">
                 <table id="messages-list">
                   <thead>
@@ -185,8 +153,8 @@
                       <th>Mensajes</th>
                       <th>Descripción</th>
                       <th>Destino</th>
-                      <th>Ejecutado</th>
-                      <th>Acción</th>
+                      <!-- <th>Ejecutado</th>
+                      <th>Acción</th> -->
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -196,49 +164,47 @@
           </div>
         </div>
         <div id="modalDialog" class="modalDialog" data-visibility="hidden">
-          <div class="dialogBackground"></div>
+          <div id="dialogBackground"></div>
           <div class="dialogContent">
             <div class="dialogTitle">
-              <h2>Alta nuevo mensaje</h2>
+              <h2
+                style="
+                  font-size: 24px;
+                  color: #123019;
+                  line-height: 36px;
+                  font-weight: 600;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  font-family: Montserrat-Regular;
+                  text-align: start;
+                "
+              >
+                Dar de alta un nuevo mensaje
+              </h2>
             </div>
             <div class="dialogContainer">
               <div class="formContainer">
                 <form id="messagesForm">
-                  <div class="formGroup inputForm">
+                  <div class="formGroup inputForm" style="width: 100%; max-width: 100%">
                     <label for="message">Mensaje</label>
-                    <input
-                      type="text"
-                      name="message"
-                      id="message"
-                      placeholder="Mensaje"
-                    />
+                    <input type="text" name="message" id="message" placeholder="Mensaje" />
                   </div>
-                  <div class="formGroup inputForm">
+                  <div class="formGroup inputForm" style="width: 100%; max-width: 100%">
                     <label for="descripcion">Descripción</label>
-                    <input
-                      type="text"
-                      name="descripcion"
-                      id="descripcion"
-                      placeholder="Descripción"
-                    />
+                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" />
                   </div>
-                  <div class="formGroup inputForm">
+                  <div class="formGroup inputForm" style="width: 100%; max-width: 100%">
                     <label for="destino">Destino</label>
-                    <input
-                      type="text"
-                      name="destino"
-                      id="destino"
-                      placeholder="destino"
-                    />
+                    <input type="text" name="destino" id="destino" placeholder="destino" />
                   </div>
-                  <div class="forGroup inputCheckbox">
+                  <!-- <div class="forGroup inputCheckbox">
                     <input type="checkbox" name="ejecutado" id="ejecutado" />
                     <label for="ejecutado">Ejecutado</label>
                   </div>
                   <div class="forGroup inputCheckbox">
                     <input type="checkbox" name="accion" id="accion" />
                     <label for="accion">Accion</label>
-                  </div>
+                  </div> -->
                   <div class="buttonsTools" style="margin-top: 1rem">
                     <button type="button" id="modalFormCancel">
                       <span>Cancelar</span>
@@ -268,21 +234,15 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
   <script src="../../js/global-context.js"></script>
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
-  ></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
   <script
     type="text/javascript"
     src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
   ></script>
   <script>
-    const addButton = document.querySelector(`button[data-type="add"]`);
-    const bgModal = document.getElementsByClassName("dialogBackground")[0];
+    const addButton = document.querySelector("#userAdd");
+    const bgModal = document.querySelector("#dialogBackground");
     const cancelButton = document.getElementById("modalFormCancel");
 
     const toggleModal = (e) => {
@@ -297,42 +257,58 @@
     cancelButton.addEventListener("click", toggleModal);
   </script>
   <script type="module" async defer>
-    import {
-      getDocumentsFromMessageCollection,
-      addDocumentToMessageCollection,
-    } from "../../js/config/config.js";
+    import { getDocumentsFromMessageCollection, addDocumentToMessageCollection } from "../../js/config/config.js";
 
-    document
-      .getElementById("messagesForm")
-      .addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const formData = Object.entries(e.target)
-          .filter(
-            (item) => item[1].type !== "submit" && item[1].type !== "button"
-          )
-          .map((item) => item[1]);
-        const objectData = {};
-        formData.forEach((element) => {
-          const { name, value, type, checked } = element;
-          const elementValue =
-            type === "text" ? { [name]: value } : { [name]: checked };
-          Object.assign(objectData, elementValue);
-        });
-        const result = await addDocumentToMessageCollection(objectData);
-
-        if (result) {
-          alert("Se ha creado un mensaje nuevo.");
-          generateTable();
-          toggleModal();
-        } else {
-          alert("Se ha presentado un error.");
-        }
+    document.getElementById("messagesForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = Object.entries(e.target)
+        .filter((item) => item[1].type !== "submit" && item[1].type !== "button")
+        .map((item) => item[1]);
+      const objectData = {};
+      formData.forEach((element) => {
+        const { name, value, type, checked } = element;
+        const elementValue = type === "text" ? { [name]: value } : { [name]: checked };
+        Object.assign(objectData, elementValue);
       });
+      const result = await addDocumentToMessageCollection(objectData);
+
+      if (result) {
+        alert("Se ha creado un mensaje nuevo.");
+        generateTable();
+        toggleModal();
+      } else {
+        alert("Se ha presentado un error.");
+      }
+    });
 
     const generateTable = async () => {
       const information = await getDocumentsFromMessageCollection();
       createRowToTable(information);
-      new DataTable("#messages-list");
+      new DataTable("#messages-list", {
+        dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
+        buttons: [
+          {
+            extend: "collection",
+            text: "Exportar datos",
+            buttons: ["excelHtml5", "pdfHtml5", "print"],
+          },
+        ],
+        oLanguage: {
+          sSearch: "Busqueda:",
+          oPaginate: {
+            sFirst: "Primera",
+            sPrevious: "Anterior",
+            sNext: "Siguiente",
+            sLast: "Ultima",
+          },
+        },
+        language: {
+          info: "Se muestran los registros _START_ al _END_ de _TOTAL_. ",
+          infoEmpty: "No se muestran registros.",
+          emptyTable: "No se registran datos en la tabla.",
+          infoFiltered: "(Filtrado de _MAX_ registros).",
+        },
+      });
     };
 
     function createRowToTable(list) {
@@ -345,9 +321,7 @@
           tableCell.appendChild(cellNode);
           tableRow.appendChild(tableCell);
         });
-        document
-          .querySelector("table#messages-list tbody")
-          .insertAdjacentElement("beforeend", tableRow);
+        document.querySelector("table#messages-list tbody").insertAdjacentElement("beforeend", tableRow);
       });
     }
 

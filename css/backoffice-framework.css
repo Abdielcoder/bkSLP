@@ -1,0 +1,309 @@
+:root {
+  --pantone-3425-c: #055a1c;
+  --pantone-348-c: #338c36;
+  --pantone-368-c: #76b82a;
+  --pantone-226-c: #e60064;
+  --pantone-431-c: #706f6f;
+  --pantone-429-c: #76b82a;
+  --pantone-427-c: #dadada;
+
+  --form-valid-color: #1b9e3e;
+  --form-valid-border-color: #1b9e3e;
+  --form-invalid-color: #e55353;
+  --form-invalid-border-color: #e55353;
+  --black: #080a0c;
+  --white: #fff;
+  --gray: #6d7d9c;
+  --gray-dark: #323a49;
+  --gray-100: #f3f4f7;
+  --gray-200: #e7eaee;
+  --gray-300: #dbdfe6;
+  --gray-400: #cfd4de;
+  --gray-500: #aab3c5;
+  --gray-600: #6d7d9c;
+  --gray-700: #4a566d;
+  --gray-800: #323a49;
+  --gray-900: #212631;
+  --primary: #5856d6;
+  --secondary: #6b7785;
+  --success: #1b9e3e;
+  --info: #39f;
+  --warning: #f9b115;
+  --danger: #e55353;
+  --light: #f3f4f7;
+  --dark: #212631;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+}
+
+@font-face {
+  font-family: Montserrat-Bold;
+  src: url("../assets/fonts/Montserrat/Montserrat-Bold.ttf");
+}
+@font-face {
+  font-family: Montserrat-Semibold;
+  src: url("../assets/fonts/Montserrat/Montserrat-SemiBold.ttf");
+}
+@font-face {
+  font-family: Montserrat-Medium;
+  src: url("../assets/fonts/Montserrat/Montserrat-Medium.ttf");
+}
+@font-face {
+  font-family: Montserrat-Regular;
+  src: url("../assets/fonts/Montserrat/Montserrat-Regular.ttf");
+}
+@font-face {
+  font-family: Montserrat-Light;
+  src: url("../assets/fonts/Montserrat/Montserrat-Light.ttf");
+}
+@font-face {
+  font-family: Montserrat-Extralight;
+  src: url("../assets/fonts/Montserrat/Montserrat-ExtraLight.ttf");
+}
+@font-face {
+  font-family: Montserrat-Thin;
+  src: url("../assets/fonts/Montserrat/Montserrat-Thin.ttf");
+}
+@font-face {
+  font-family: Literata-Bold;
+  src: url("../assets/fonts/Literata/Literata-Bold.ttf");
+}
+@font-face {
+  font-family: Literata-Semibold;
+  src: url("../assets/fonts/Literata/Literata-SemiBold.ttf");
+}
+@font-face {
+  font-family: Literata-Medium;
+  src: url("../assets/fonts/Literata/Literata-Medium.ttf");
+}
+@font-face {
+  font-family: Literata-Regular;
+  src: url("../assets/fonts/Literata/Literata-Regular.ttf");
+}
+@font-face {
+  font-family: Literata-Light;
+  src: url("../assets/fonts/Literata/Literata-Light.ttf");
+}
+@font-face {
+  font-family: Literata-Extralight;
+  src: url("../assets/fonts/Literata/Literata-ExtraLight.ttf");
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  /* outline: 1px solid green; */
+}
+
+body {
+  font-family: Montserrat-Regular;
+  font-size: 1rem;
+  color: var(--dark);
+  overflow: hidden;
+  background-color: #f3f4f7;
+}
+
+h6,
+h5,
+h4,
+h3,
+h2,
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: inherit;
+  font-family: Montserrat-Bold;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+div[data-root="root"] {
+  display: grid;
+  grid-template-columns: 16rem auto;
+  grid-template-rows: 3rem auto 2rem;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+
+  & > aside {
+    height: 100vh;
+    grid-column: 1 / 2;
+    grid-row: 1 / 4;
+  }
+
+  & > header {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    & > div.header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+      background-color: white;
+      height: -webkit-fill-available;
+      box-shadow: inset 0px -1px 0px 0px var(--gray-500);
+      & > h3 {
+        margin-left: 1rem;
+        margin-right: auto;
+        margin-bottom: 0;
+        line-height: normal;
+      }
+    }
+  }
+
+  & > main {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    & > .content {
+      padding: 1.5rem !important;
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+      display: block;
+    }
+
+    & > .content .container {
+      max-width: 1280px;
+      margin-inline: auto;
+      /* outline: 1px solid red; */
+
+      & > .container-row {
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+
+  & > footer {
+    grid-row: 3 / 4;
+    grid-column: 2 / 3;
+  }
+}
+
+/* Aside Bar Navigation */
+.sidebar {
+  width: 100%;
+  position: relative;
+  background-color: rgb(32 37 48);
+  height: inherit;
+  font-family: Montserrat-Extralight;
+
+  & > .sidebar-header {
+    padding: 1rem;
+    border-bottom: 1px solid #323a49;
+  }
+
+  & > .sidebar-navigation {
+    padding: 0.5rem;
+  }
+}
+
+.navigation-menu {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style: none;
+
+  & > .nav-item {
+    position: relative;
+  }
+
+  & > .nav-title {
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.38);
+    font-size: 80%;
+    font-weight: 700;
+  }
+
+  & .nav-link {
+    display: flex;
+    flex: 1;
+    column-gap: 0.5rem;
+    align-items: center;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    color: #ffffffde;
+    border-radius: 0.375rem;
+    background: transparent;
+    white-space: nowrap;
+    transition: background 150ms ease, color 150ms ease;
+    &:hover {
+      color: #ffffff;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.209);
+    }
+
+    & > .nav-icon {
+      pointer-events: none;
+      height: 1.25rem;
+      overflow: hidden;
+      vertical-align: middle;
+    }
+  }
+}
+
+.navigation-menu .nav-group {
+}
+
+.sidebar-footer {
+}
+
+/* Cards */
+
+.card {
+  width: 100%;
+  display: block;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  & > .card-header {
+    display: inline-block;
+    width: inherit;
+    background-color: var(--gray-100);
+    padding: 0.5rem 1rem;
+    box-shadow: inset -1px 0px 0px 0px var(--gray-500), inset 1px 0px 0px 0px var(--gray-500),
+      inset 0px 1px 0px 0px var(--gray-500), inset 0px 0px 0px 0px var(--gray-500);
+  }
+  & > .card-header strong {
+    font-size: 18px;
+    font-weight: bolder;
+    font-family: "Montserrat-Medium";
+    color: var(--black);
+  }
+  & > .card-header span {
+    font-size: 14px;
+    margin-left: 2px;
+    color: var(--gray-800);
+  }
+  & > .card-body {
+    background-color: var(--white);
+    padding: 1rem;
+    box-shadow: inset 0px 0px 0px 1px var(--gray-500);
+    & .styless {
+      padding: 0rem;
+      box-shadow: unset;
+    }
+  }
+}

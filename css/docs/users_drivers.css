@@ -8,6 +8,7 @@ table#operatorsTable {
   display: table;
   position: relative;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
+  text-transform: uppercase;
 }
 
 table#operatorsTable tbody tr.even {
@@ -23,42 +24,31 @@ table#operatorsTable tbody tr:hover {
   cursor: pointer;
 }
 
+table#operatorsTable tbody tr td.cellButtonTool {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 4px;
+}
+
 table#operatorsTable thead tr th {
   color: #2d6e3d;
   text-align: start;
   font-size: 14px;
-}
-
-table#operatorsTable tbody tr td {
-  font-size: 12px;
-  padding: 6px 8px;
-}
-table#operatorsTable tbody tr td:nth-child(8) {
   white-space: nowrap;
 }
 
-table#operatorsTable tbody tr td:nth-child(2) {
-  text-align: center !important;
-}
-
-table#operatorsTable tbody tr td:nth-child(1) {
-  text-transform: capitalize;
-}
-
-table#operatorsTable tbody tr td:nth-child(1),
-table#operatorsTable tbody tr td:nth-child(5),
-table#operatorsTable tbody tr td:nth-child(7) {
+table#operatorsTable tbody tr td {
+  font-size: 14px;
+  height: 2.5rem;
+  padding: 0 8px !important;
   text-transform: uppercase !important;
+  white-space: nowrap;
 }
 
-div#operatorsTable_filter > label {
-  background-color: #2d6e3d;
-  padding-left: 8px;
-  border-radius: 3px;
-  color: whitesmoke;
-  display: inline-block;
-  font-size: 0.8571em;
-  margin-bottom: 5px;
+table#operatorsTable tbody tr td:nth-child(2),
+table#operatorsTable tbody tr td:nth-child(6),
+table#operatorsTable tbody tr td:nth-child(7) {
+  text-align: center !important;
 }
 
 input[aria-controls="operatorsTable"] {
@@ -143,18 +133,6 @@ table#operatorsTable tbody tr td[data-type="tools"] {
   gap: 4px;
 }
 
-.cellButtonTool {
-  background: transparent;
-  border: none;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 2px 4px;
-}
-
-.cellButtonTool:hover {
-  cursor: pointer;
-}
-
 .cellButtonTool[data-type="view"] {
   color: #28a745;
 }
@@ -202,11 +180,6 @@ table#operatorsTable tbody tr td[data-type="tools"] {
   color: white;
 }
 
-#operatorsTable_filter {
-  float: left !important;
-  margin-bottom: 10px;
-}
-
 #userVehicleSearch,
 #userEmailSearch {
   display: flex;
@@ -226,13 +199,13 @@ div.formContainer[data-visibility="false"] {
 
 .modalContent {
   width: 100%;
-  max-width: max-content;
+  max-width: 700px;
   background-color: white;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
-  border-radius: 8px;
+  border-radius: 4px;
   transition: all 50ms linear;
 }
 
@@ -301,12 +274,17 @@ table#vehicles-list {
   border-collapse: collapse;
 }
 
-table#vehicles-list td,
-table#vehicles-list th {
+table#vehicles-list td {
   padding: 4px 6px;
   text-align: start;
   border-bottom: 1px solid #808080b3;
   font-size: 14px;
+}
+table#vehicles-list th {
+  color: #2d6e3d;
+  text-align: start;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 .file-box {

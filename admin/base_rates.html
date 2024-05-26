@@ -71,7 +71,7 @@
               </a>
             </li>
             <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="../docs/historico.html">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
@@ -146,14 +146,12 @@
 
       <!-- Main -->
       <main>
-        <div class="container">
-          <div class="tadi-card col-4">
-            <div class="card-header">
-              <h2 style="font-size: larger;">Tarifa Base</h2>
-              <br>
-              <p>Formulario de tarifas con base a ciudad e histórico de solicitudes de cambio.</p>
+        <div class="container" style="display: flex; flex-direction: row; column-gap: 24px">
+          <div class="container-module col-4">
+            <div class="page-title" style="padding-left: 0">
+              <h2 class="header-module-title">Tarifa Base</h2>
             </div>
-            <div class="card-body">
+            <div class="module-body">
               <form id="tarifas">
                 <div>
                   <label>Banderazo diurno:</label>
@@ -210,18 +208,17 @@
                     <label data-sign="$"></label>
                     <input type="text" name="minApp" placeholder="Precio por Min" id="special_min_cost" />
                   </div>
-                </div> 
-                <br>
+                </div>
+                <br />
                 <input type="submit" id="updateTarifaButton" value="Guardar" />
               </form>
             </div>
           </div>
-          <div class="tadi-card col-8">
-            <div class="card-header">
-              <h1>Solicitudes de cambio</h1>
-              <p></p>
+          <div class="container-module col-8">
+            <div class="page-title" style="padding-left: 0">
+              <h2 class="header-module-title">Solicitudes de cambio</h2>
             </div>
-            <div class="card-body">
+            <div class="module-body">
               <div id="table-list">
                 <table id="changelogs-list">
                   <thead>

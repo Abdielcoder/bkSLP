@@ -7,10 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/concesionarios.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -35,42 +32,22 @@
                 MAPA
               </a>
             </li>
-            <li
-              class="nav-item"
-              id="concesionario-menu-li"
-              style="display: none"
-            >
-              <a
-                class="nav-link hasSubmenu selectedPage"
-                href="#"
-                id="concesionario"
-              >
+            <li class="nav-item" id="concesionario-menu-li" style="display: none">
+              <a class="nav-link hasSubmenu selectedPage" href="#" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIOS
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
-                  <li
-                    class="nav-item-submenu"
-                    id="vehiculos-submenu-li"
-                    style="display: none"
-                  >
+                  <li class="nav-item-submenu" id="vehiculos-submenu-li" style="display: none">
                     <a class="nav-link" href="./vehicles.html">
-                      <span class="link-icons material-icons-sharp"
-                        >directions_car</span
-                      >
+                      <span class="link-icons material-icons-sharp">directions_car</span>
                       VEHICULOS
                     </a>
                   </li>
-                  <li
-                    class="nav-item"
-                    id="conductores-submenu-li"
-                    style="display: none"
-                  >
+                  <li class="nav-item" id="conductores-submenu-li" style="display: none">
                     <a class="nav-link" href="./users.html">
-                      <span class="link-icons material-icons-sharp"
-                        >person</span
-                      >
+                      <span class="link-icons material-icons-sharp">person</span>
                       CONDUCTORES
                     </a>
                   </li>
@@ -79,9 +56,7 @@
             </li>
             <li class="nav-item" id="vehiculos-menu-li" style="display: none">
               <a class="nav-link" href="./vehicles.html">
-                <span class="link-icons material-icons-sharp"
-                  >directions_car</span
-                >
+                <span class="link-icons material-icons-sharp">directions_car</span>
                 VEHICULO
               </a>
             </li>
@@ -98,20 +73,14 @@
               </a>
             </li>
             <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="./historico.html">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
             </li>
-            <li
-              class="nav-item menu-button menu-closed"
-              id="admin-menu-li"
-              style="display: none"
-            >
+            <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
               <a class="nav-link" href="#" id="administracion">
-                <span class="link-icons material-icons-sharp"
-                  >manage_accounts</span
-                >
+                <span class="link-icons material-icons-sharp">manage_accounts</span>
                 ADMINISTRACIÓN
               </a>
               <div id="administracion-submenu" data-displayed="hidden">
@@ -123,33 +92,20 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a
-                      class="nav-sublink"
-                      href="../admin/administradores/index.html"
-                    >
-                      <span class="link-icons material-icons-sharp"
-                        >person</span
-                      >
+                    <a class="nav-sublink" href="../admin/administradores/index.html">
+                      <span class="link-icons material-icons-sharp">person</span>
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li
-                    class="nav-item menu-linked hidden"
-                    id="roles-menu-li"
-                    style="display: none"
-                  >
+                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none">
                     <a class="nav-sublink" href="../admin/roles/index.html">
-                      <span class="link-icons material-icons-sharp"
-                        >groups</span
-                      >
+                      <span class="link-icons material-icons-sharp">groups</span>
                       ROLES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="#">
-                      <span class="link-icons material-icons-sharp"
-                        >person_pin</span
-                      >
+                      <span class="link-icons material-icons-sharp">person_pin</span>
                       CLIENTES
                     </a>
                   </li>
@@ -161,9 +117,7 @@
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../admin/base_rates.html">
-                      <span class="link-icons material-icons-sharp"
-                        >attach_money</span
-                      >
+                      <span class="link-icons material-icons-sharp">attach_money</span>
                       TARIFAS BASE
                     </a>
                   </li>
@@ -172,9 +126,7 @@
             </li>
             <li class="nav-item" id="clientes-menu-li">
               <a class="nav-link" href="#">
-                <span class="link-icons material-icons-sharp">
-                  airline_seat_recline_extra</span
-                >
+                <span class="link-icons material-icons-sharp"> airline_seat_recline_extra</span>
                 CLIENTES
               </a>
             </li>
@@ -196,52 +148,22 @@
 
       <!-- Main -->
       <main style="position: relative">
+        <div class="page-title">
+          <h2 class="header-module-title">Concesionarios</h2>
+        </div>
         <div class="container">
-          <div class="tadi-card col-12">
-            <div class="card-header">
-              <h1>Registro concesionarios</h1>
-              <br />
-              <p>
-                Listado de concesionarios y recopilación de la información
-                general dentro del empadronamiento actual.
-              </p>
-            </div>
-            <div class="card-body">
-              <button
-                id="userAdd"
-                type="button"
-                class="dateElement"
-                style="margin-left: auto; padding: 4px 16px"
-              >
-                <span>NUEVO</span>
-                <svg
-                  width="24px"
-                  height="24px"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></g>
-                  <g id="SVGRepo_iconCarrier">
-                    <path
-                      d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17"
-                      stroke="#ffffff"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></path>
-                  </g>
-                </svg>
+          <div class="container-module col-12">
+            <div class="module-header">
+              <button id="userAdd" type="button" class="create-new">
+                <span>Alta Concesionario</span>
               </button>
+            </div>
+            <div class="module-body">
               <div class="table-container">
                 <table id="concesionariosTable">
                   <thead>
                     <tr>
+                      <!-- <th></th> -->
                       <th>Nombre completo</th>
                       <th>Genero</th>
                       <th>Email</th>
@@ -264,77 +186,56 @@
         <div id="usuariosAltaModal" class="modalForm" data-reference="">
           <div class="modalContent">
             <div class="containerHead">
-              <h2 style="font-size: 20px; text-align: start">
+              <h2
+                style="
+                  font-size: 24px;
+                  color: #123019;
+                  line-height: 36px;
+                  font-weight: 600;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  font-family: Montserrat-Regular;
+                  text-align: start;
+                "
+              >
                 Información general del concesionario
               </h2>
             </div>
             <div class="contentTabs">
               <ul class="tab-list">
                 <li>
-                  <button
-                    type="button"
-                    class="tab-button"
-                    aria-selected="true"
-                    data-tab="data"
-                  >
+                  <button type="button" class="tab-button" aria-selected="true" data-tab="data">
                     <span>Datos</span>
                   </button>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    class="tab-button"
-                    aria-selected="false"
-                    data-tab="accounts"
-                  >
+                  <button type="button" class="tab-button" aria-selected="false" data-tab="accounts">
                     <span>Vehículos</span>
                   </button>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    class="tab-button"
-                    aria-selected="false"
-                    data-tab="files"
-                  >
+                  <button type="button" class="tab-button" aria-selected="false" data-tab="files">
                     <span>Archivos</span>
                   </button>
                 </li>
                 <li>
-                  <button
-                    type="button"
-                    class="tab-button"
-                    aria-selected="false"
-                    data-tab="drivers"
-                  >
+                  <button type="button" class="tab-button" aria-selected="false" data-tab="drivers">
                     <span>Conductores</span>
                   </button>
                 </li>
               </ul>
             </div>
-            <div
-              class="formContainer"
-              data-tabcontainer="data"
-              data-visibility="true"
-              style="max-width: 960px"
-            >
-              <div class="containerBody">
+
+            <div class="formContainer" data-tabcontainer="data" data-visibility="true">
+              <div class="containerBody" style="max-height: 600px; overflow-y: auto">
                 <form id="userAlta">
-                  <h2
-                    style="
-                      font-size: 20px;
-                      display: block;
-                      padding: 1rem 0;
-                      line-height: 1;
-                      color: #d3660e;
-                    "
-                  >
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
                     Datos Personales
                   </h2>
 
-                  <div class="form-columns" style="flex-wrap: nowrap">
+                  <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
-                      <label for="nombre">Nombre(s)</label>
+                      <label for="nombre">Nombre(s) <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Nombre(s)"
@@ -347,7 +248,9 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="apellidoPaterno">Apellido Paterno</label>
+                      <label for="apellidoPaterno"
+                        >Apellido Paterno <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="text"
                         placeholder="Apellido Paterno"
@@ -360,7 +263,9 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="apellidoMaterno">Apellido Materno</label>
+                      <label for="apellidoMaterno"
+                        >Apellido Materno <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="text"
                         placeholder="Apellido Materno"
@@ -372,8 +277,13 @@
                         required
                       />
                     </div>
+                  </div>
+
+                  <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
-                      <label for="correoElectronico">Correo electrónico</label>
+                      <label for="correoElectronico"
+                        >Correo electrónico <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="email"
                         placeholder="Correo electrónico"
@@ -382,19 +292,8 @@
                         required
                       />
                     </div>
-                  </div>
-
-                  <div class="form-columns" style="flex-wrap: nowrap">
-                    <div class="formGroup selectForm" style="max-width: 120px">
-                      <label for="sexo">Genero</label>
-                      <select name="sexo" id="sexo">
-                        <option value="F" selected>Femenino</option>
-                        <option value="M">Masculino</option>
-                        <option value="Otro">Otro</option>
-                      </select>
-                    </div>
                     <div class="formGroup inputForm">
-                      <label for="curp">Curp</label>
+                      <label for="curp">Curp <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Curp"
@@ -408,7 +307,7 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="rfc">RFC</label>
+                      <label for="rfc">RFC <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="RFC"
@@ -416,13 +315,14 @@
                         id="rfc"
                         required
                         style="text-transform: uppercase"
-                        maxlength="16"
-                        data-length="16"
+                        maxlength="13"
+                        data-length="13"
                       />
                     </div>
                   </div>
-                  <div class="form-columns" style="flex-wrap: nowrap">
-                    <div class="formGroup selectForm" style="max-width: 120px">
+
+                  <div class="form-columns flex-wrap justify-start">
+                    <div class="formGroup selectForm">
                       <label for="tipoSangre">Tipo de sangre</label>
                       <select name="tipoSangre" id="tipoSangre" required>
                         <option value="A-">A-</option>
@@ -435,8 +335,19 @@
                         <option value="AB-">AB-</option>
                       </select>
                     </div>
+                    <div class="formGroup selectForm">
+                      <label for="sexo">Genero</label>
+                      <select name="sexo" id="sexo">
+                        <option value="F" selected>Femenino</option>
+                        <option value="M">Masculino</option>
+                        <option value="Otro">Otro</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-columns flex-nowrap justify-start">
                     <div class="formGroup inputForm">
-                      <label for="telefono">Teléfono</label>
+                      <label for="telefono">Teléfono <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="tel"
                         placeholder="Teléfono"
@@ -449,9 +360,7 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="telefonoEmergencia"
-                        >Teléfono de Emergencia</label
-                      >
+                      <label for="telefonoEmergencia">Teléfono de Emergencia</label>
                       <input
                         type="tel"
                         placeholder="Teléfono de emergencia"
@@ -463,8 +372,13 @@
                         maxlength="10"
                       />
                     </div>
+                  </div>
+
+                  <div class="form-columns flex-nowrap justify-start">
                     <div class="formGroup inputForm">
-                      <label for="numeroEconomico">Numero Económico</label>
+                      <label for="numeroEconomico"
+                        >Numero Económico <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="text"
                         placeholder="Número económico"
@@ -477,7 +391,7 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="numGafeteSCT">Gafete SCT</label>
+                      <label for="numGafeteSCT">Gafete SCT <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Gafete SCT"
@@ -491,12 +405,13 @@
                       />
                     </div>
                   </div>
-                  <div
-                    class="form-columns"
-                    data-columns="3"
-                    style="flex-wrap: nowrap"
-                  >
-                    <div class="formGroup inputForm">
+
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                    Domicilio particular
+                  </h2>
+
+                  <div class="form-columns flex-nowrap justify-start">
+                    <div class="formGroup inputForm" style="max-width: unset">
                       <label for="calle">Calle</label>
                       <input
                         type="text"
@@ -508,10 +423,7 @@
                         required
                       />
                     </div>
-                    <div
-                      class="formGroup inputForm"
-                      style="max-width: 120px; width: 100%"
-                    >
+                    <div class="formGroup inputForm">
                       <label for="numeroCasa">Número</label>
                       <input
                         type="text"
@@ -523,6 +435,9 @@
                         required
                       />
                     </div>
+                  </div>
+
+                  <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
                       <label for="colonia">Colonia o Fraccionamiento</label>
                       <input
@@ -536,10 +451,14 @@
                         required
                       />
                     </div>
-                    <div
-                      class="formGroup inputForm"
-                      style="max-width: 120px; width: 100%"
-                    >
+                    <div class="formGroup selectForm">
+                      <label for="municipio">Municipio</label>
+                      <select name="municipio" id="municipio" required>
+                        <option value="sanluis">SAN LUIS POTOSI</option>
+                        <option value="soledaddegraciano">SOLEDAD DE GRACIANO SÁNCHEZ</option>
+                      </select>
+                    </div>
+                    <div class="formGroup inputForm">
                       <label for="cp">Código Postal</label>
                       <input
                         type="text"
@@ -552,213 +471,132 @@
                         required
                       />
                     </div>
-                    <div
-                      class="formGroup selectForm"
-                      style="max-width: 140px; width: 100%"
-                    >
-                      <label for="municipio">Municipio</label>
-                      <select name="municipio" id="municipio" required>
-                        <option value="sanluis">SAN LUIS POTOSI</option>
-                        <option value="soledaddegraciano">
-                          SOLEDAD DE GRACIANO SÁNCHEZ
-                        </option>
-                      </select>
+                  </div>
+
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                    Desea o puede realizar viajes para personas con:
+                  </h2>
+                  <div class="checkboxGroup">
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="especiales" id="especiales" />
+                      <label for="especiales">Persona con discapacidad</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="mascotas" id="mascotas" />
+                      <label for="mascotas">Mascotas</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="equipaje" id="equipaje" />
+                      <label for="equipaje">Equipaje</label>
+                    </div>
+                  </div>
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                    Padece de alguna de las siguentes enfermedades crónicas:
+                  </h2>
+
+                  <div class="checkboxGroup">
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="hipertension" id="hipertension" />
+                      <label for="hipertension">Hipertensión</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="diabetes" id="diabetes" />
+                      <label for="diabetes">Diabetes</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="epoc" id="epoc" />
+                      <label for="epoc" style="white-space: nowrap"
+                        >Epoc (Enfermedad Pulmonar Obstructiva Crónica)</label
+                      >
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="cardiaca" id="cardiaca" />
+                      <label for="cardiaca">Insuficiencia cardiaca</label>
+                    </div>
+
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="otrasEnfermedades" id="otrasEnfermedades" />
+                      <label for="otrasEnfermedades">Otros:</label>
+                      <br />
+                      <textarea
+                        name="otrasEnfermedadesTexto"
+                        id="otrasEnfermedadesTexto"
+                        cols="30"
+                        rows="10"
+                        disabled
+                        style="
+                          width: 100%;
+                          display: block;
+                          font-size: 16px;
+                          padding: 16px;
+                          height: 120px;
+                          border: 1px solid #333;
+                          border-radius: 2px;
+                          resize: none;
+                        "
+                      ></textarea>
                     </div>
                   </div>
 
-                  <div class="checkbox-group">
-                    <div class="group-left">
-                      <div class="formParraf">
-                        <p style="font-size: 14px">
-                          Desea o puede realizar viajes para personas con:
-                        </p>
-                      </div>
-                      <div class="checkboxGroup">
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="especiales"
-                            id="especiales"
-                          />
-                          <label for="especiales"
-                            >Persona con discapacidad</label
-                          >
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="mascotas"
-                            id="mascotas"
-                          />
-                          <label for="mascotas">Mascotas</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="equipaje"
-                            id="equipaje"
-                          />
-                          <label for="equipaje">Equipaje</label>
-                        </div>
-                      </div>
+                  <h2 style="font-size: 20px; display: block; padding: 1rem 0; line-height: 1; color: #d3660e">
+                    Capacitaciones tomadas por el concesionario:
+                  </h2>
+                  <div class="checkboxGroup">
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="rcp" id="rcp" />
+                      <label for="rcp">RCP</label>
                     </div>
-                    <div class="group-right">
-                      <div class="formParraf">
-                        <p style="font-size: 14px">
-                          Padece de alguna de las siguentes enfermedades
-                          crónicas:
-                        </p>
-                      </div>
-                      <div class="checkboxGroup">
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="hipertension"
-                            id="hipertension"
-                          />
-                          <label for="hipertension">Hipertensión</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="diabetes"
-                            id="diabetes"
-                          />
-                          <label for="diabetes">Diabetes</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="epoc" id="epoc" />
-                          <label for="epoc" style="white-space: nowrap"
-                            >Epoc (Enfermedad Pulmonar Obstructiva
-                            Crónica)</label
-                          >
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="cardiaca"
-                            id="cardiaca"
-                          />
-                          <label for="cardiaca">Insuficiencia cardiaca</label>
-                        </div>
-
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="otrasEnfermedades"
-                            id="otrasEnfermedades"
-                          />
-                          <label for="otrasEnfermedades">Otros:</label>
-                          <br />
-                          <textarea
-                            name="otrasEnfermedadesTexto"
-                            id="otrasEnfermedadesTexto"
-                            cols="30"
-                            rows="10"
-                            style="
-                              width: 250px;
-                              font-size: 12px;
-                              padding: 8px;
-                              height: 60px;
-                              border: 1px solid #333;
-                              border-radius: 4px;
-                              resize: none;
-                            "
-                          ></textarea>
-                        </div>
-                      </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="lenguaje" id="lenguaje" />
+                      <label for="lenguaje">Lenguaje de Señas</label>
                     </div>
-                    <div class="group-right">
-                      <div class="formParraf">
-                        <p style="font-size: 14px">
-                          Capacitaciones tomadas por el concesionario:
-                        </p>
-                      </div>
-                      <div class="checkboxGroup">
-                        <div class="formGroup checkboxForm">
-                          <input type="checkbox" name="rcp" id="rcp" />
-                          <label for="rcp">RCP</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="lenguaje"
-                            id="lenguaje"
-                          />
-                          <label for="lenguaje">Lenguaje de Señas</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="primerosAux"
-                            id="primerosAux"
-                          />
-                          <label for="primerosAux">Primeros Auxilios</label>
-                        </div>
-                        <div class="formGroup checkboxForm">
-                          <input
-                            type="checkbox"
-                            name="otrasCapacidades"
-                            id="otrasCapacidades"
-                          />
-                          <label for="otrasCapacidades">Otros:</label>
-                          <textarea
-                            name="otrasCapacidadesTexto"
-                            id="otrasCapacidadesTexto"
-                            cols="30"
-                            rows="10"
-                            maxlength="200"
-                            style="
-                              width: 250px;
-                              font-size: 12px;
-                              padding: 8px;
-                              height: 60px;
-                              border: 1px solid #333;
-                              border-radius: 4px;
-                              resize: none;
-                            "
-                          ></textarea>
-                        </div>
-                      </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="primerosAux" id="primerosAux" />
+                      <label for="primerosAux">Primeros Auxilios</label>
+                    </div>
+                    <div class="formGroup checkboxForm">
+                      <input type="checkbox" name="otrasCapacidades" id="otrasCapacidades" />
+                      <label for="otrasCapacidades">Otros:</label>
+                      <textarea
+                        name="otrasCapacidadesTexto"
+                        id="otrasCapacidadesTexto"
+                        cols="30"
+                        rows="10"
+                        disabled
+                        maxlength="200"
+                        style="
+                          width: 100%;
+                          display: block;
+                          font-size: 16px;
+                          padding: 16px;
+                          height: 120px;
+                          border: 1px solid #333;
+                          border-radius: 2px;
+                          resize: none;
+                        "
+                      ></textarea>
                     </div>
                   </div>
+
                   <div class="containerFooter">
                     <div class="buttonsTools">
-                      <button type="button" class="modalFormCancel">
-                        Cancelar
-                      </button>
+                      <button type="button" class="modalFormCancel">Cancelar</button>
                       <button type="submit" id="modalFormSubmit">
-                        <span>Agregar</span>
+                        <span>Generar</span>
                       </button>
-                      <button
-                        type="button"
-                        id="modalFormUpdateSubmit"
-                        style="display: none"
-                      >
+                      <button type="button" id="modalFormUpdateSubmit" style="display: none">
                         <span>Actualizar</span>
                       </button>
                     </div>
                   </div>
                 </form>
-                <input
-                  type="hidden"
-                  name="uid"
-                  value=""
-                  id="userAltaIdentifier"
-                />
+                <input type="hidden" name="uid" value="" id="userAltaIdentifier" />
               </div>
             </div>
 
-            <div
-              class="formContainer"
-              data-tabcontainer="accounts"
-              data-visibility="false"
-              style="padding-top: 20px; width: 800px"
-            >
+            <div class="formContainer" data-tabcontainer="accounts" data-visibility="false" style="padding-top: 20px">
               <div class="containerBody">
-                <p style="font-size: 12px; font-weight: bold; margin-left: 4px">
-                  Buscar vehículo por numero de placa:
-                </p>
+                <p style="font-size: 12px; font-weight: bold; margin-left: 4px">Buscar vehículo por numero de placa:</p>
                 <div class="placa-search">
                   <form id="userVehicleSearch">
                     <input
@@ -778,11 +616,7 @@
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g
-                          id="SVGRepo_tracerCarrier"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                         <g id="SVGRepo_iconCarrier">
                           <path
                             d="M15 15L21 21"
@@ -827,51 +661,24 @@
                 </div>
                 <div class="containerFooter">
                   <div class="buttonsTools">
-                    <button type="button" class="modalFormCancel">
-                      Cancelar
-                    </button>
+                    <button type="button" class="modalFormCancel">Cancelar</button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div
-              class="formContainer"
-              data-tabcontainer="files"
-              data-visibility="false"
-              style="padding-top: 20px"
-            >
+            <div class="formContainer" data-tabcontainer="files" data-visibility="false" style="padding-top: 20px">
               <div class="containerBody">
-                <h2
-                  style="
-                    font-size: 20px;
-                    display: block;
-                    line-height: 1;
-                    color: #d3660e;
-                  "
-                >
-                  Archivos
-                </h2>
+                <h2 style="font-size: 20px; display: block; line-height: 1; color: #d3660e">Archivos</h2>
                 <div class="files-container">
                   <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
+                    <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px">
                       <img
                         src="../assets/img/nopic.png"
                         alt="licenciaConcesionario"
                         id="licenciaConcesionarioPreview"
                         class="imagePreview"
-                        style="
-                          display: block;
-                          width: 120px;
-                          height: 120px;
-                          object-fit: cover;
-                        "
+                        style="display: block; width: 120px; height: 120px; object-fit: cover"
                       />
                       <label for="licenciaConcesionario">
                         <input
@@ -893,11 +700,7 @@
                             stroke="#ffffff"
                             transform="matrix(1, 0, 0, 1, 0, 0)"
                           >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
                               <rect
                                 x="-9.6"
                                 y="-9.6"
@@ -938,29 +741,78 @@
                           </svg>
                         </div>
                       </label>
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Licencia de Conducir</p>
                   </div>
 
                   <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
+                    <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px">
                       <img
                         src="../assets/img/nopic.png"
                         alt="polizaSeguro"
                         id="polizaSeguroPreview"
                         class="imagePreview"
-                        style="
-                          display: block;
-                          width: 120px;
-                          height: 120px;
-                          object-fit: cover;
-                        "
+                        style="display: block; width: 120px; height: 120px; object-fit: cover"
                       />
                       <label for="polizaSeguro">
                         <input
@@ -982,11 +834,7 @@
                             stroke="#ffffff"
                             transform="matrix(1, 0, 0, 1, 0, 0)"
                           >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
                               <rect
                                 x="-9.6"
                                 y="-9.6"
@@ -1027,38 +875,81 @@
                           </svg>
                         </div>
                       </label>
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Póliza de Seguro</p>
                   </div>
 
                   <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
+                    <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px">
                       <img
                         src="../assets/img/nopic.png"
                         alt="ine"
                         id="inePreview"
                         class="imagePreview"
-                        style="
-                          display: block;
-                          width: 120px;
-                          height: 120px;
-                          object-fit: cover;
-                        "
+                        style="display: block; width: 120px; height: 120px; object-fit: cover"
                       />
                       <label for="ine">
-                        <input
-                          type="file"
-                          name="ine"
-                          id="ine"
-                          style="display: none"
-                          class="documentationFiles"
-                        />
+                        <input type="file" name="ine" id="ine" style="display: none" class="documentationFiles" />
                         <div class="imageEdit">
                           <svg
                             width="32px"
@@ -1071,11 +962,7 @@
                             stroke="#ffffff"
                             transform="matrix(1, 0, 0, 1, 0, 0)"
                           >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
                               <rect
                                 x="-9.6"
                                 y="-9.6"
@@ -1116,29 +1003,78 @@
                           </svg>
                         </div>
                       </label>
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>INE</p>
                   </div>
 
                   <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
+                    <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px">
                       <img
                         src="../assets/img/nopic.png"
                         alt="claveUnica"
                         id="claveUnicaPreview"
                         class="imagePreview"
-                        style="
-                          display: block;
-                          width: 120px;
-                          height: 120px;
-                          object-fit: cover;
-                        "
+                        style="display: block; width: 120px; height: 120px; object-fit: cover"
                       />
                       <label for="claveUnica">
                         <input
@@ -1160,11 +1096,7 @@
                             stroke="#ffffff"
                             transform="matrix(1, 0, 0, 1, 0, 0)"
                           >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
                               <rect
                                 x="-9.6"
                                 y="-9.6"
@@ -1205,29 +1137,78 @@
                           </svg>
                         </div>
                       </label>
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>CURP</p>
                   </div>
 
                   <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
+                    <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px">
                       <img
                         src="../assets/img/nopic.png"
                         alt="gafeteSCT"
                         id="gafeteSCTPreview"
                         class="imagePreview"
-                        style="
-                          display: block;
-                          width: 120px;
-                          height: 120px;
-                          object-fit: cover;
-                        "
+                        style="display: block; width: 120px; height: 120px; object-fit: cover"
                       />
                       <label for="gafeteSCT">
                         <input
@@ -1249,11 +1230,7 @@
                             stroke="#ffffff"
                             transform="matrix(1, 0, 0, 1, 0, 0)"
                           >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
                               <rect
                                 x="-9.6"
                                 y="-9.6"
@@ -1294,29 +1271,78 @@
                           </svg>
                         </div>
                       </label>
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Gafete de la SCT</p>
                   </div>
 
                   <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
+                    <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px">
                       <img
                         src="../assets/img/nopic.png"
                         alt="fotografiaConcesionario"
                         id="fotografiaConcesionarioPreview"
                         class="imagePreview"
-                        style="
-                          display: block;
-                          width: 120px;
-                          height: 120px;
-                          object-fit: cover;
-                        "
+                        style="display: block; width: 120px; height: 120px; object-fit: cover"
                       />
                       <label for="fotografiaConcesionario">
                         <input
@@ -1338,11 +1364,7 @@
                             stroke="#ffffff"
                             transform="matrix(1, 0, 0, 1, 0, 0)"
                           >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
                               <rect
                                 x="-9.6"
                                 y="-9.6"
@@ -1383,29 +1405,78 @@
                           </svg>
                         </div>
                       </label>
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Concesionario</p>
                   </div>
 
                   <div class="file-box">
-                    <div
-                      style="
-                        padding: 4px;
-                        border: 1px solid lightslategray;
-                        border-radius: 2px;
-                      "
-                    >
+                    <div style="padding: 4px; border: 1px solid lightslategray; border-radius: 2px">
                       <img
                         src="../assets/img/nopic.png"
                         alt="datosAdicionales"
                         id="datosAdicionalesPreview"
                         class="imagePreview"
-                        style="
-                          display: block;
-                          width: 120px;
-                          height: 120px;
-                          object-fit: cover;
-                        "
+                        style="display: block; width: 120px; height: 120px; object-fit: cover"
                       />
                       <label for="datosAdicionales">
                         <input
@@ -1427,11 +1498,7 @@
                             stroke="#ffffff"
                             transform="matrix(1, 0, 0, 1, 0, 0)"
                           >
-                            <g
-                              id="SVGRepo_bgCarrier"
-                              stroke-width="0"
-                              transform="translate(0,0), scale(1)"
-                            >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
                               <rect
                                 x="-9.6"
                                 y="-9.6"
@@ -1472,35 +1539,81 @@
                           </svg>
                         </div>
                       </label>
+                      <div class="imageEdit imageDelete">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-5.04 -5.04 34.08 34.08"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0">
+                            <rect
+                              x="-5.04"
+                              y="-5.04"
+                              width="34.08"
+                              height="34.08"
+                              rx="17.04"
+                              fill="#ebebeb"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              d="M10 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M14 12V17"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M4 7H20"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                            <path
+                              d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                              stroke="#c81414"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
                     </div>
                     <p>Datos Adicionales</p>
                   </div>
                 </div>
                 <div class="containerFooter">
                   <div class="buttonsTools">
-                    <button type="button" class="modalFormCancel">
-                      Cancelar
-                    </button>
+                    <button type="button" class="modalFormCancel">Cancelar</button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div
-              class="formContainer"
-              data-tabcontainer="drivers"
-              data-visibility="false"
-              style="padding-top: 20px; width: 800px"
-            >
+            <div class="formContainer" data-tabcontainer="drivers" data-visibility="false" style="padding-top: 20px">
               <div class="containerBody">
-                <p
-                  style="
-                    font-size: 12px;
-                    font-weight: bold;
-                    margin-left: 4px;
-                    margin-bottom: 4px;
-                  "
-                >
+                <p style="font-size: 12px; font-weight: bold; margin-left: 4px; margin-bottom: 4px">
                   Buscar conductor mediante su correo electrónico:
                 </p>
                 <div class="placa-search">
@@ -1522,11 +1635,7 @@
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g
-                          id="SVGRepo_tracerCarrier"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                         <g id="SVGRepo_iconCarrier">
                           <path
                             d="M15 15L21 21"
@@ -1573,9 +1682,7 @@
                 </div>
                 <div class="containerFooter">
                   <div class="buttonsTools">
-                    <button type="button" class="modalFormCancel">
-                      Cancelar
-                    </button>
+                    <button type="button" class="modalFormCancel">Cancelar</button>
                   </div>
                 </div>
               </div>
@@ -1608,24 +1715,14 @@
       <div class="modal-preview-image" data-visibility="hidden">
         <div class="modal-bg"></div>
         <div class="modal-container">
-          <img
-            src="../assets/img/nopic.png"
-            alt="previewImage"
-            id="full-width-preview-Image"
-          />
+          <img src="../assets/img/nopic.png" alt="previewImage" id="full-width-preview-Image" />
         </div>
       </div>
 
       <div class="modal-preview-document" data-visibility="hidden">
         <div class="modal-bg"></div>
         <div class="modal-container">
-          <iframe
-            id="full-width-preview-Document"
-            src="#"
-            width="600"
-            height="700"
-            frameborder="0"
-          ></iframe>
+          <iframe id="full-width-preview-Document" src="#" width="600" height="700" frameborder="0"></iframe>
         </div>
       </div>
 
@@ -1665,11 +1762,9 @@
         input.addEventListener("input", inputValidOnlyTextOrNumber);
       });
 
-      document
-        .querySelectorAll("input.only-characters-spaces")
-        .forEach((input) => {
-          input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
-        });
+      document.querySelectorAll("input.only-characters-spaces").forEach((input) => {
+        input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
+      });
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -1680,21 +1775,13 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
   <script src="../js/global-context.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script
     type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"
+    src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
   ></script>
   <script type="module">
     import {
@@ -1726,6 +1813,7 @@
     ];
 
     let permissions = {};
+    let isUserSelected = false;
     const CONCESIONARIOS_COLLECTION = "concesionarios";
     const VEHICULOS_COLLECTION = "vehiculos";
     // Main Table
@@ -1757,6 +1845,19 @@
       });
     });
 
+    const checkboxOtrasEnfermedades = document.querySelector("input#otrasEnfermedades");
+    const checkboxOtrasCapacidades = document.querySelector("input#otrasCapacidades");
+
+    function toggleTextArea(e) {
+      const textArea = e.target.id + "Texto";
+      const textareaTexto = document.querySelector("#" + textArea);
+      textareaTexto.disabled = !e.target.checked;
+      textareaTexto.focus();
+    }
+
+    checkboxOtrasEnfermedades.addEventListener("change", toggleTextArea);
+    checkboxOtrasCapacidades.addEventListener("change", toggleTextArea);
+
     userAddbutton.addEventListener("click", () => {
       if (permissions.create == "0") {
         negateAccess();
@@ -1768,11 +1869,7 @@
       document.querySelector("#otrasEnfermedadesTexto").value = "";
       document.querySelectorAll("button.tab-button").forEach((element) => {
         const attribute = element.getAttribute("data-tab");
-        if (
-          attribute === "files" ||
-          attribute === "accounts" ||
-          attribute === "drivers"
-        ) {
+        if (attribute === "files" || attribute === "accounts" || attribute === "drivers") {
           element.style.display = "none";
         }
       });
@@ -1798,10 +1895,7 @@
 
     // Modal Add Form Submit Event
     modalForm.addEventListener("submit", async (e) => await handleSubmit(e));
-    deleteForm.addEventListener(
-      "submit",
-      async (e) => await handleDeleteSubmit(e)
-    );
+    deleteForm.addEventListener("submit", async (e) => await handleDeleteSubmit(e));
 
     function handleViewAltaModal(e) {
       if (e === true) {
@@ -1812,9 +1906,15 @@
       document.querySelector("table#vehicles-list tbody").innerHTML = "";
       document.querySelector("div#vehiculos-searched").innerHTML = "";
       document.querySelector("input#placa").value = "";
-      document
-        .querySelector("#usuariosAltaModal")
-        .setAttribute("data-reference", "");
+      document.querySelector("#usuariosAltaModal").setAttribute("data-reference", "");
+      document.querySelectorAll("textarea").forEach((element) => {
+        element.value = "";
+        element.disabled = true;
+      });
+      document.querySelectorAll(".row-element").forEach((element) => {
+        element.checked = false;
+        isUserSelected = false;
+      });
       Object.entries(modalForm).forEach((item) => {
         const element = item[1];
         const type = element.type;
@@ -1870,20 +1970,18 @@
     }
 
     async function fetchingData() {
-      const querySnapshots = await getDocumentsFromCollection(
-        CONCESIONARIOS_COLLECTION
-      );
+      const querySnapshots = await getDocumentsFromCollection(CONCESIONARIOS_COLLECTION);
       querySnapshots.forEach((doc) => {
         const document = doc.data();
         getDataFromDriversList(document);
       });
 
       usersDataTableContext = new DataTable(usersTable, {
-        dom: "Bfrtip",
+        dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
         buttons: [
           {
             extend: "collection",
-            text: "Exportar",
+            text: "Exportar datos",
             buttons: ["excelHtml5", "pdfHtml5", "print"],
           },
         ],
@@ -1909,9 +2007,7 @@
       const cell_list = {
         uid: list.uid,
         cells: [
-          list.nombre + " " + list.apellidoPaterno ||
-            "" + " " + list.apellidoMaterno ||
-            "",
+          list.nombre + " " + list.apellidoPaterno || "" + " " + list.apellidoMaterno || "",
           list.sexo,
           list.correoElectronico,
           list.telefono,
@@ -1969,15 +2065,11 @@
 
       const values = targets.map((input, index) => {
         const name = input[1].name;
-        let val =
-          input[1].type === "checkbox" ? input[1].checked : input[1].value;
+        let val = input[1].type === "checkbox" ? input[1].checked : input[1].value;
         return { [name]: val };
       });
 
-      const isCreated = await createUserAndSaveData(
-        values,
-        CONCESIONARIOS_COLLECTION
-      );
+      const isCreated = await createUserAndSaveData(values, CONCESIONARIOS_COLLECTION);
       if (isCreated === false) return;
       await handleRefetchingData();
       handleViewAltaModal(false);
@@ -2016,20 +2108,13 @@
 
       const values = targets.map((input, index) => {
         const name = input[1].name;
-        let val =
-          input[1].type === "checkbox" ? input[1].checked : input[1].value;
+        let val = input[1].type === "checkbox" ? input[1].checked : input[1].value;
         return { [name]: val };
       });
 
-      const userUID = document
-        .querySelector("#usuariosAltaModal")
-        .getAttribute("data-reference");
+      const userUID = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
 
-      const isUpdated = await updateDocumentByUid(
-        values,
-        userUID,
-        CONCESIONARIOS_COLLECTION
-      );
+      const isUpdated = await updateDocumentByUid(values, userUID, CONCESIONARIOS_COLLECTION);
       if (isUpdated === false) return;
       await handleRefetchingData();
       handleViewAltaModal(false);
@@ -2040,10 +2125,7 @@
 
       const uid = document.querySelector("#userDeleteIdentifier").value;
       const email = document.querySelector("#userDeleteEmailId").value;
-      const hasBeenDeleted = await deleteDocumentByUid(
-        uid,
-        CONCESIONARIOS_COLLECTION
-      );
+      const hasBeenDeleted = await deleteDocumentByUid(uid, CONCESIONARIOS_COLLECTION);
 
       if (hasBeenDeleted === false) return;
       await handleRefetchingData();
@@ -2061,34 +2143,67 @@
 
       const tools = createActionButtons(list.uid);
       tableRow.appendChild(tools);
-      document
-        .querySelector("table#concesionariosTable tbody")
-        .insertAdjacentElement("beforeend", tableRow);
+      document.querySelector("table#concesionariosTable tbody").insertAdjacentElement("beforeend", tableRow);
     }
 
+    // function createRowToTable(list) {
+    //   const tableRow = document.createElement("tr");
+    //   list.cells.forEach((item) => {
+    //     const tableCell = document.createElement("td");
+    //     const cellNode = document.createTextNode(item);
+    //     tableCell.appendChild(cellNode);
+    //     tableRow.appendChild(tableCell);
+    //   });
+
+    //   // const createCheckbox = document.createElement("td");
+    //   // const checkboxElement = document.createElement("input");
+    //   // checkboxElement.type = "checkbox";
+    //   // checkboxElement.classList.add("row-element");
+    //   // checkboxElement.dataset.uid = list.uid;
+
+    //   // checkboxElement.addEventListener("click", function (e) {
+    //   //   if (isUserSelected) {
+    //   //     document.querySelectorAll(".tools").forEach((element) => {
+    //   //       element.remove();
+    //   //     });
+    //   //     isUserSelected = false;
+    //   //     return;
+    //   //   }
+    //   //   isUserSelected = true;
+    //   //   const tableTopContainer = document.querySelector("#concesionariosTable_filter");
+    //   const tools = generateToolsElements(list.uid);
+    //   //   tableRow.insertAdjacentElement("beforebegin", toolsElements);
+    //   // });
+
+    //   // createCheckbox.insertAdjacentElement("beforeend", checkboxElement);
+    //   tableRow.append(tools);
+    //   document.querySelector("table#concesionariosTable tbody").insertAdjacentElement("beforeend", tableRow);
+    // }
+
     function createActionButtons(u) {
-      const tableCell = document.createElement("td");
+      const box = document.createElement("td");
+      box.classList.add("cellButtonTool");
       const resetPasswordButton = document.createElement("button");
       const updateButton = document.createElement("button");
       const deleteButton = document.createElement("button");
 
       const updateAttrs = {
         type: "button",
-        class: "cellButtonTool",
+        class: "tableTools",
         "data-type": "update",
         "data-id": u,
         title: "Editar",
       };
       const resetPasswordAttrs = {
         type: "button",
-        class: "cellButtonTool",
+        class: "tableTools",
         "data-type": "update",
         "data-id": u,
         title: "Reestablecer contraseña",
       };
       const deleteAttrs = {
         type: "button",
-        class: "cellButtonTool",
+        class: "tableTools",
         "data-type": "delete",
         "data-id": u,
         title: "Eliminar",
@@ -2097,25 +2212,25 @@
       elementSetAttributes(updateButton, updateAttrs);
       elementSetAttributes(resetPasswordButton, resetPasswordAttrs);
       elementSetAttributes(deleteButton, deleteAttrs);
-      elementSetAttributes(tableCell, { "data-type": "tools" });
+      elementSetAttributes(box, { "data-type": "tools" });
 
-      updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>`;
-      resetPasswordButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#287bc8" fill-rule="evenodd"></path> </g></svg>`;
-      deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>`;
+      const updateButtonHTML = `<span>Actualizar</span>`;
+      const resetPasswordButtonHTML = `<span>Reestablecer contraseña</span>`;
+      const deleteButtonHTML = `<span>Eliminar</span>`;
+
+      updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>${updateButtonHTML}`;
+      resetPasswordButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#287bc8" fill-rule="evenodd"></path> </g></svg>${resetPasswordButtonHTML}`;
+      deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>${deleteButtonHTML}`;
 
       updateButton.addEventListener("click", (e) => handleUpdateUser(e));
-      resetPasswordButton.addEventListener("click", (e) =>
-        handleResetPassword(e.currentTarget.parentNode)
-      );
-      deleteButton.addEventListener("click", (e) =>
-        handleDeleteUser(e, e.currentTarget.parentNode)
-      );
+      resetPasswordButton.addEventListener("click", (e) => handleResetPassword(e.currentTarget.parentNode));
+      deleteButton.addEventListener("click", (e) => handleDeleteUser(e, e.currentTarget.parentNode));
 
-      tableCell.insertAdjacentElement("beforeend", updateButton);
-      tableCell.insertAdjacentElement("beforeend", resetPasswordButton);
-      tableCell.insertAdjacentElement("beforeend", deleteButton);
+      box.insertAdjacentElement("beforeend", updateButton);
+      box.insertAdjacentElement("beforeend", resetPasswordButton);
+      box.insertAdjacentElement("beforeend", deleteButton);
 
-      return tableCell;
+      return box;
     }
 
     const handleResetPassword = async (e) => {
@@ -2144,9 +2259,7 @@
         return;
       }
       const uid = e.currentTarget.getAttribute("data-id");
-      document
-        .querySelector("#usuariosAltaModal")
-        .setAttribute("data-reference", uid);
+      document.querySelector("#usuariosAltaModal").setAttribute("data-reference", uid);
       document.querySelector("#userAltaIdentifier").value = uid;
       document.querySelector("#modalFormSubmit").style.display = "none";
       document.querySelector("#modalFormUpdateSubmit").style.display = "block";
@@ -2176,9 +2289,7 @@
     async function getOperatorByUid(uid) {
       let data = await getDocumentByUid(uid, CONCESIONARIOS_COLLECTION);
       GLOBAL_USER_DATA = data;
-      let formEntries = Object.values(modalForm).filter(
-        (item) => item.type !== "button" && item.type !== "submit"
-      );
+      let formEntries = Object.values(modalForm).filter((item) => item.type !== "button" && item.type !== "submit");
 
       formEntries.forEach((element) => {
         const { name, type } = element;
@@ -2201,10 +2312,7 @@
           return false;
         }
         modalTabButtons.forEach((element) => {
-          if (
-            element.getAttribute("aria-selected") == "true" ||
-            element.getAttribute("data-tab") !== nameTab
-          ) {
+          if (element.getAttribute("aria-selected") == "true" || element.getAttribute("data-tab") !== nameTab) {
             element.setAttribute("aria-selected", "false");
             return;
           }
@@ -2220,67 +2328,56 @@
       });
     });
 
-    document
-      .querySelector(`button.tab-button[data-tab="files"]`)
-      .addEventListener("click", async function (e) {
-        const uid = document
-          .querySelector("#usuariosAltaModal")
-          .getAttribute("data-reference");
-        const storageReference = storage
-          .ref()
-          .child(`${CONCESIONARIOS_COLLECTION}/${uid}`);
-        const result = await storageReference.listAll();
-        if (result.items.length > 0) {
-          const urls = await Promise.all(
-            result.items.map(async (item) => {
-              try {
-                return await item.getDownloadURL();
-              } catch (error) {
-                console.error("Error obteniendo url: ", error);
-                return null;
-              }
-            })
-          );
+    document.querySelector(`button.tab-button[data-tab="files"]`).addEventListener("click", async function (e) {
+      const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+      const storageReference = storage.ref().child(`${CONCESIONARIOS_COLLECTION}/${uid}`);
+      const result = await storageReference.listAll();
+      if (result.items.length > 0) {
+        const urls = await Promise.all(
+          result.items.map(async (item) => {
+            try {
+              return await item.getDownloadURL();
+            } catch (error) {
+              console.error("Error obteniendo url: ", error);
+              return null;
+            }
+          })
+        );
 
-          const files = urls.map((item) => {
-            return {
-              url: item,
-              name: item
-                .split("%2F")[2]
-                .split("?")[0]
-                .split(".")[0]
-                .split("__")[1],
-              type: item.split("%2F")[2].split("?")[0].split(".")[1],
-            };
+        const files = urls.map((item) => {
+          return {
+            url: item || "../assets/img/nopic.png",
+            name: item.split("%2F")[2].split("?")[0].split(".")[0].split("__")[1],
+            type: item.split("%2F")[2].split("?")[0].split(".")[1],
+          };
+        });
+
+        document.querySelectorAll("img.imagePreview").forEach((element) => {
+          const { name, alt } = element;
+          const [currentFile] = files.filter((item) => item.name === alt);
+          if (currentFile === undefined || currentFile === null) {
+            element.src = "../assets/img/nopic.png";
+          } else if (currentFile?.type === "pdf") {
+            element.src = "https://www.svgrepo.com/show/255818/pdf.svg";
+          } else {
+            element.src = currentFile?.url;
+          }
+
+          element.addEventListener("click", function (e) {
+            const modal = document.querySelector("div.modal-preview-image");
+            const modalDoc = document.querySelector("div.modal-preview-document");
+            if (currentFile?.type !== "pdf") {
+              modal.setAttribute("data-visibility", "visible");
+              document.getElementById("full-width-preview-Image").src = currentFile?.url;
+              return;
+            }
+
+            modalDoc.setAttribute("data-visibility", "visible");
+            document.getElementById("full-width-preview-Document").src = currentFile?.url;
           });
-
-          document.querySelectorAll("img.imagePreview").forEach((element) => {
-            const { name, alt } = element;
-            const currentFile = files.filter((item) => item.name === alt);
-            element.src =
-              currentFile[0].type !== "pdf"
-                ? currentFile[0].url
-                : "https://www.svgrepo.com/show/255818/pdf.svg";
-
-            element.addEventListener("click", function (e) {
-              const modal = document.querySelector("div.modal-preview-image");
-              const modalDoc = document.querySelector(
-                "div.modal-preview-document"
-              );
-              if (currentFile[0].type !== "pdf") {
-                modal.setAttribute("data-visibility", "visible");
-                document.getElementById("full-width-preview-Image").src =
-                  currentFile[0].url;
-                return;
-              }
-
-              modalDoc.setAttribute("data-visibility", "visible");
-              document.getElementById("full-width-preview-Document").src =
-                currentFile[0].url;
-            });
-          });
-        }
-      });
+        });
+      }
+    });
 
     document.querySelectorAll("div.modal-bg").forEach((element, array) =>
       element.addEventListener("click", function (e) {
@@ -2296,9 +2393,7 @@
         return;
       }
 
-      const userUID = document
-        .querySelector("#usuariosAltaModal")
-        .getAttribute("data-reference");
+      const userUID = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
       const message = habilitado
         ? "Estas seguro de deshabilitar el vehiculo al usuario?"
         : "Estas seguro de habilitar el vehiculo al usuario";
@@ -2330,9 +2425,7 @@
         return;
       }
 
-      const userUID = document
-        .querySelector("#usuariosAltaModal")
-        .getAttribute("data-reference");
+      const userUID = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
       const message = habilitado
         ? "Estas seguro de deshabilitar el vehiculo al usuario?"
         : "Estas seguro de habilitar el vehiculo al usuario";
@@ -2372,10 +2465,7 @@
       const checkboxStatus = document.createElement("button");
       checkboxStatus.setAttribute("type", "button");
       checkboxStatus.setAttribute("data-status", habilitado);
-      checkboxStatus.insertAdjacentHTML(
-        "afterbegin",
-        habilitado ? statusTrueIcon : statusFalseIcon
-      );
+      checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
       checkboxStatus.addEventListener("click", async function (e) {
         await statusFunction(element, array);
       });
@@ -2391,16 +2481,8 @@
     }
 
     function createConductorRow(element, index, array) {
-      const {
-        nombre,
-        apellidoMaterno,
-        apellidoPaterno,
-        telefono,
-        numGafeteSCT,
-        correoElectronico,
-        habilitado,
-        uid,
-      } = element;
+      const { nombre, apellidoMaterno, apellidoPaterno, telefono, numGafeteSCT, correoElectronico, habilitado, uid } =
+        element;
       const tableRow = document.createElement("tr");
       const rowCellIndex = document.createElement("td");
       const rowCellNombreCompleto = document.createElement("td");
@@ -2410,10 +2492,7 @@
       const rowCellStatus = document.createElement("td");
 
       rowCellIndex.insertAdjacentText("afterbegin", index + 1);
-      rowCellNombreCompleto.insertAdjacentText(
-        "afterbegin",
-        nombre + " " + apellidoPaterno + " " + apellidoMaterno
-      );
+      rowCellNombreCompleto.insertAdjacentText("afterbegin", nombre + " " + apellidoPaterno + " " + apellidoMaterno);
       rowCellTelefono.insertAdjacentText("afterbegin", telefono);
       rowCellCorreo.insertAdjacentText("afterbegin", correoElectronico);
       rowCellGafete.insertAdjacentText("afterbegin", numGafeteSCT);
@@ -2421,10 +2500,7 @@
       const checkboxStatus = document.createElement("button");
       checkboxStatus.setAttribute("type", "button");
       checkboxStatus.setAttribute("data-status", habilitado);
-      checkboxStatus.insertAdjacentHTML(
-        "afterbegin",
-        habilitado ? statusTrueIcon : statusFalseIcon
-      );
+      checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
       checkboxStatus.addEventListener("click", async function (e) {
         await statusFunctionConductores(element, array);
       });
@@ -2443,14 +2519,9 @@
 
     async function getAndRenderVehiclesFromUser() {
       document.querySelector("#placa").value = "";
-      const uid = document
-        .querySelector("#usuariosAltaModal")
-        .getAttribute("data-reference");
+      const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
 
-      const vehiclesFromUser = await getVehiclesFromInnerDocumentCollection(
-        uid,
-        CONCESIONARIOS_COLLECTION
-      );
+      const vehiclesFromUser = await getVehiclesFromInnerDocumentCollection(uid, CONCESIONARIOS_COLLECTION);
       if (vehiclesFromUser.length === 0) return;
       document.querySelector("table#vehicles-list tbody").innerHTML = "";
       document.querySelector("#vehiculos-searched").innerHTML = "";
@@ -2459,22 +2530,14 @@
 
       vehiclesFromUser.forEach((element, index, array) => {
         const tableRow = createVehicleRow(element, index, array);
-        document
-          .querySelector("table#vehicles-list tbody")
-          .insertAdjacentElement("beforeend", tableRow);
+        document.querySelector("table#vehicles-list tbody").insertAdjacentElement("beforeend", tableRow);
       });
     }
 
     async function getAndRenderDriversFromUser() {
       document.querySelector("#searchEmail").value = "";
-      const uid = document
-        .querySelector("#usuariosAltaModal")
-        .getAttribute("data-reference");
-      const conductoresFromUser =
-        await getConductoresromInnerDocumentCollection(
-          uid,
-          CONCESIONARIOS_COLLECTION
-        );
+      const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+      const conductoresFromUser = await getConductoresromInnerDocumentCollection(uid, CONCESIONARIOS_COLLECTION);
 
       if (conductoresFromUser.length === 0) return;
       document.querySelector("table#usuarios-list tbody").innerHTML = "";
@@ -2484,9 +2547,7 @@
 
       conductoresFromUser.forEach((element, index, array) => {
         const tableRow = createConductorRow(element, index, array);
-        document
-          .querySelector("table#usuarios-list tbody")
-          .insertAdjacentElement("beforeend", tableRow);
+        document.querySelector("table#usuarios-list tbody").insertAdjacentElement("beforeend", tableRow);
       });
     }
 
@@ -2503,50 +2564,35 @@
       await rolesPermission();
     });
 
-    document
-      .querySelectorAll("input.documentationFiles")
-      .forEach((element, index) => {
-        element.addEventListener("change", async function (e) {
-          try {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            const { name, type } = e.target;
-            const responseUpload = await uploadImages(
-              file,
-              name,
-              file.name.split(".")[1]
-            );
-            if (responseUpload) {
-              reader.onload = function (event) {
-                const url = event.target.result;
-                const dom = name + "Preview";
-                const imageDom = document.getElementById(dom);
-                imageDom.src =
-                  file.name.split(".")[1] === "pdf"
-                    ? "https://www.svgrepo.com/show/255818/pdf.svg"
-                    : url;
-              };
-              reader.readAsDataURL(file);
-            }
-          } catch (error) {
-            console.error(error.message);
+    document.querySelectorAll("input.documentationFiles").forEach((element, index) => {
+      element.addEventListener("change", async function (e) {
+        try {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          const { name, type } = e.target;
+          const responseUpload = await uploadImages(file, name, file.name.split(".")[1]);
+          if (responseUpload) {
+            reader.onload = function (event) {
+              const url = event.target.result;
+              const dom = name + "Preview";
+              const imageDom = document.getElementById(dom);
+              imageDom.src = file.name.split(".")[1] === "pdf" ? "https://www.svgrepo.com/show/255818/pdf.svg" : url;
+            };
+            reader.readAsDataURL(file);
           }
-        });
+        } catch (error) {
+          console.error(error.message);
+        }
       });
+    });
 
     const uploadImages = async (file, name, type) => {
       try {
-        const uid = document
-          .getElementById("usuariosAltaModal")
-          .getAttribute("data-reference");
+        const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
 
         if (file === null || file === undefined) return;
 
-        const reference = storage
-          .ref()
-          .child(
-            `${CONCESIONARIOS_COLLECTION}/${uid}/` + ("__" + name + "." + type)
-          );
+        const reference = storage.ref().child(`${CONCESIONARIOS_COLLECTION}/${uid}/` + ("__" + name + "." + type));
         await reference.put(file);
 
         const url = await reference.getDownloadURL();
@@ -2563,174 +2609,155 @@
     };
 
     /* Buscar y asignar Vehiculo*/
-    document
-      .querySelector("#userVehicleSearch")
-      .addEventListener("submit", async function (e) {
-        e.preventDefault();
-        try {
-          const searchString = e.target[0].value;
-          const response = await firestore
-            .collection(VEHICULOS_COLLECTION)
-            .where("placa", "==", searchString.toUpperCase())
-            .get()
-            .then((snapshot) => {
-              const res = [];
-              snapshot.forEach((doc) => {
-                res.push({ id: doc.id, data: doc.data() });
-              });
-              return res;
-            })
-            .catch((err) => {
-              console.error(err);
+    document.querySelector("#userVehicleSearch").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      try {
+        const searchString = e.target[0].value;
+        const response = await firestore
+          .collection(VEHICULOS_COLLECTION)
+          .where("placa", "==", searchString.toUpperCase())
+          .get()
+          .then((snapshot) => {
+            const res = [];
+            snapshot.forEach((doc) => {
+              res.push({ id: doc.id, data: doc.data() });
             });
-          if (response) {
-            const box = document.querySelector("#vehiculos-searched");
+            return res;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        if (response) {
+          const box = document.querySelector("#vehiculos-searched");
 
-            response.map((item, index, array) => {
-              const { id } = item;
-              const { marca, modelo, placa, propietario, owners } = item.data;
+          response.map((item, index, array) => {
+            const { id } = item;
+            const { marca, modelo, placa, propietario, owners } = item.data;
 
-              const list = document.createElement("div");
-              list.setAttribute("class", "optionVehicle");
-              const span = document.createElement("span");
-              span.innerText = `${marca} ${modelo} - ${placa}`;
-              list.insertAdjacentElement("beforeend", span);
+            const list = document.createElement("div");
+            list.setAttribute("class", "optionVehicle");
+            const span = document.createElement("span");
+            span.innerText = `${marca} ${modelo} - ${placa}`;
+            list.insertAdjacentElement("beforeend", span);
 
-              const button = document.createElement("button");
-              button.setAttribute("type", "button");
-              button.setAttribute("class", "botonAsignar");
-              button.addEventListener("click", async function (e) {
-                if (permissions.assign == "0") {
-                  negateAccess();
-                  return;
+            const button = document.createElement("button");
+            button.setAttribute("type", "button");
+            button.setAttribute("class", "botonAsignar");
+            button.addEventListener("click", async function (e) {
+              if (permissions.assign == "0") {
+                negateAccess();
+                return;
+              }
+              const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+              const message = "Estas seguro de asignar este vehiculo al concesionario?";
+              if (confirm(message)) {
+                const hasBeenAssigned = await firestore
+                  .collection(CONCESIONARIOS_COLLECTION)
+                  .doc(uid)
+                  .collection("vehiculos")
+                  .doc(id)
+                  .set({ ...item.data, habilitado: false })
+                  .then((snapshot) => {
+                    alert("Se ha asignado el vehiculo al usuario.");
+                    return true;
+                  })
+                  .catch((error) => {
+                    const errorMessage = "Se ha presentado un error, favor de verificar con un administrador.";
+                    alert(errorMessage);
+                    console.error(error);
+                    return false;
+                  });
+                if (hasBeenAssigned === true) {
+                  await getAndRenderVehiclesFromUser();
                 }
-                const uid = document
-                  .querySelector("#usuariosAltaModal")
-                  .getAttribute("data-reference");
-                const message =
-                  "Estas seguro de asignar este vehiculo al concesionario?";
-                if (confirm(message)) {
-                  const hasBeenAssigned = await firestore
-                    .collection(CONCESIONARIOS_COLLECTION)
-                    .doc(uid)
-                    .collection("vehiculos")
-                    .doc(id)
-                    .set({ ...item.data, habilitado: false })
-                    .then((snapshot) => {
-                      alert("Se ha asignado el vehiculo al usuario.");
-                      return true;
-                    })
-                    .catch((error) => {
-                      const errorMessage =
-                        "Se ha presentado un error, favor de verificar con un administrador.";
-                      alert(errorMessage);
-                      console.error(error);
-                      return false;
-                    });
-                  if (hasBeenAssigned === true) {
-                    await getAndRenderVehiclesFromUser();
-                  }
-                }
-              });
-
-              button.innerText = "Asignar";
-
-              list.insertAdjacentElement("beforeend", button);
-              box.insertAdjacentElement("beforeend", list);
+              }
             });
-          }
-        } catch (error) {
-          console.error("Se ha presentado un error, ", error);
+
+            button.innerText = "Asignar";
+
+            list.insertAdjacentElement("beforeend", button);
+            box.insertAdjacentElement("beforeend", list);
+          });
         }
-      });
+      } catch (error) {
+        console.error("Se ha presentado un error, ", error);
+      }
+    });
 
-    /* Buscar y asignar Conductor*/ 
-    document
-      .querySelector("#userEmailSearch")
-      .addEventListener("submit", async function (e) {
-        e.preventDefault();
-        try {
-          const searchString = e.target[0].value;
-          const response = await firestore
-            .collection("conductores")
-            .where("correoElectronico", "==", searchString)
-            .get()
-            .then((snapshot) => {
-              const res = [];
-              snapshot.forEach((doc) => {
-                res.push({ id: doc.id, data: doc.data() });
-              });
-              return res;
-            })
-            .catch((err) => {
-              console.error(err);
+    /* Buscar y asignar Conductor*/
+    document.querySelector("#userEmailSearch").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      try {
+        const searchString = e.target[0].value;
+        const response = await firestore
+          .collection("conductores")
+          .where("correoElectronico", "==", searchString)
+          .get()
+          .then((snapshot) => {
+            const res = [];
+            snapshot.forEach((doc) => {
+              res.push({ id: doc.id, data: doc.data() });
             });
-          if (response) {
-            const box = document.querySelector("#usuarios-searched");
+            return res;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        if (response) {
+          const box = document.querySelector("#usuarios-searched");
 
-            response.map((item, index, array) => {
-              const { id } = item;
-              const {
-                nombre,
-                apellidoPaterno,
-                apellidoMaterno,
-                telefono,
-                numGafeteSCT,
-              } = item.data;
+          response.map((item, index, array) => {
+            const { id } = item;
+            const { nombre, apellidoPaterno, apellidoMaterno, telefono, numGafeteSCT } = item.data;
 
-              const list = document.createElement("div");
-              list.setAttribute("class", "optionVehicle");
-              const span = document.createElement("span");
-              span.innerText = `${nombre} ${apellidoPaterno} ${apellidoMaterno} - ${telefono} - Gafete: ${numGafeteSCT}`;
-              list.insertAdjacentElement("beforeend", span);
+            const list = document.createElement("div");
+            list.setAttribute("class", "optionVehicle");
+            const span = document.createElement("span");
+            span.innerText = `${nombre} ${apellidoPaterno} ${apellidoMaterno} - ${telefono} - Gafete: ${numGafeteSCT}`;
+            list.insertAdjacentElement("beforeend", span);
 
-              const button = document.createElement("button");
-              button.setAttribute("type", "button");
-              button.setAttribute("class", "botonAsignar");
-              button.addEventListener("click", async function (e) {
-                if (permissions.assign == "0") {
-                  negateAccess();
-                  return;
+            const button = document.createElement("button");
+            button.setAttribute("type", "button");
+            button.setAttribute("class", "botonAsignar");
+            button.addEventListener("click", async function (e) {
+              if (permissions.assign == "0") {
+                negateAccess();
+                return;
+              }
+              const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+              const message = "Estas seguro de asignar este conductor al concesionario?";
+              if (confirm(message)) {
+                const hasBeenAssigned = await firestore
+                  .collection(CONCESIONARIOS_COLLECTION)
+                  .doc(uid)
+                  .collection("conductores")
+                  .doc(id)
+                  .set({ ...item.data, habilitado: false })
+                  .then((snapshot) => {
+                    alert("Se ha asignado el conductor al concesionario.");
+                    return true;
+                  })
+                  .catch((error) => {
+                    alert("Se ha presentado un error, favor de verificar con un administrador.");
+                    console.error(error);
+                    return false;
+                  });
+                if (hasBeenAssigned === true) {
+                  await getAndRenderDriversFromUser();
                 }
-                const uid = document
-                  .querySelector("#usuariosAltaModal")
-                  .getAttribute("data-reference");
-                const message =
-                  "Estas seguro de asignar este conductor al concesionario?";
-                if (confirm(message)) {
-                  const hasBeenAssigned = await firestore
-                    .collection(CONCESIONARIOS_COLLECTION)
-                    .doc(uid)
-                    .collection("conductores")
-                    .doc(id)
-                    .set({ ...item.data, habilitado: false })
-                    .then((snapshot) => {
-                      alert("Se ha asignado el conductor al concesionario.");
-                      return true;
-                    })
-                    .catch((error) => {
-                      alert(
-                        "Se ha presentado un error, favor de verificar con un administrador."
-                      );
-                      console.error(error);
-                      return false;
-                    });
-                  if (hasBeenAssigned === true) {
-                    await getAndRenderDriversFromUser();
-                  }
-                }
-              });
-
-              button.innerText = "Asignar";
-
-              list.insertAdjacentElement("beforeend", button);
-              box.insertAdjacentElement("beforeend", list);
+              }
             });
-          }
-        } catch (error) {
-          console.error("Se ha presentado un error, ", error);
+
+            button.innerText = "Asignar";
+
+            list.insertAdjacentElement("beforeend", button);
+            box.insertAdjacentElement("beforeend", list);
+          });
         }
-      });
+      } catch (error) {
+        console.error("Se ha presentado un error, ", error);
+      }
+    });
 
     const rolesPermission = async () => {
       const permission = sessionStorage.getItem("concesionariosPermission");
@@ -2745,9 +2772,32 @@
     };
 
     const negateAccess = () => {
-      window.alert(
-        "No cuentas con los permisos necesarios para realizar esta operación."
-      );
+      window.alert("No cuentas con los permisos necesarios para realizar esta operación.");
     };
+
+    document.querySelectorAll("div.imageDelete").forEach((element) => {
+      element.addEventListener("click", function (e) {
+        const imageTag = e.currentTarget.parentNode.children[0];
+        const url = imageTag.getAttribute("src");
+        console.log({ url, imageTag });
+        if (url === "../assets/img/nopic.png") {
+          return;
+        }
+        const fileName = url.split("?")[0].split("__")[1];
+        const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+        const reference = storage.ref().child(`${CONCESIONARIOS_COLLECTION}/${uid}/__${fileName}`);
+        // console.log({ reference: `${CONCESIONARIOS_COLLECTION}/${uid}/__${fileName}` });
+        reference
+          .delete()
+          .then((snapshot) => {
+            window.alert("Se ha eliminado el archivo de manera satisfactoria.");
+            imageTag.src = "../assets/img/nopic.png";
+          })
+          .catch((error) => {
+            window.alert("Se ha presentado un error.");
+            console.error(error);
+          });
+      });
+    });
   </script>
 </html>

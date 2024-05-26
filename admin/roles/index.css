@@ -34,7 +34,10 @@ table#roles thead th {
 
 table#roles tbody tr td {
   font-size: 14px;
-  padding: 6px 8px;
+  height: 2.5rem;
+  padding: 0 8px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap;
 }
 
 table#roles tbody tr td:nth-child(3),
@@ -45,7 +48,11 @@ table#roles tbody tr td:nth-child(7),
 table#roles tbody tr td:nth-child(8) {
   text-align: center;
 }
-
+.tool-actions {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 4px;
+}
 .container-header h1 {
   font-weight: lighter;
   font-size: 2rem;
@@ -180,7 +187,7 @@ div.formGroup.checkboxForm {
   margin-bottom: 1rem;
 }
 
-#button-add {
+#userAdd {
   display: flex;
   gap: 0.5rem;
   height: 32px;
@@ -195,7 +202,7 @@ div.formGroup.checkboxForm {
   color: white;
 }
 
-#button-add:hover {
+#userAdd:hover {
   cursor: pointer;
   background: rgb(45, 90, 61);
   transition: all 100ms linear;
@@ -205,4 +212,16 @@ table.dataTable tbody th,
 table.dataTable tbody td {
   padding: 4px 8px !important;
   font-size: 14px;
+}
+
+.cellButtonTool {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px;
+}
+
+.cellButtonTool:hover {
+  cursor: pointer;
 }

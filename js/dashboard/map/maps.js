@@ -39,7 +39,11 @@ var __icons = {
 }
 
 // -- Estilo de vehiculos --
-const iconWorking = L.icon({ iconUrl: '../assets/img/blue.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
+// const iconWorking = L.icon({ iconUrl: '../assets/img/blue.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
+/* 
+** New petition
+*/
+const iconWorking = L.icon({ iconUrl: '../assets/img/red.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
 const iconActive = L.icon({ iconUrl: '../assets/img/green.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
 const iconInactive = L.icon({ iconUrl: '../assets/img/black.png', iconSize: [40, 40], popupAnchor: [-2, -15] });
 const iconWarning = L.icon({ iconUrl: '../assets/img/yellow.png', iconSize: [40, 40], popupAnchor: [-2, -15] });

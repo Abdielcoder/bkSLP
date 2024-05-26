@@ -8,69 +8,39 @@ table#concesionariosTable {
   display: table;
   position: relative;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
+  text-transform: uppercase;
+  border-collapse: collapse;
 }
 
 table#concesionariosTable tbody tr.even {
   background-color: #fff;
+  transition: background-color 100ms linear;
 }
 
 table#concesionariosTable tbody tr.odd {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(40, 40, 40, 0.05);
+  transition: background-color 100ms linear;
 }
 
 table#concesionariosTable tbody tr:hover {
-  background-color: #0c435a60;
+  background-color: #0c5a0f2a;
   cursor: pointer;
+  transition: background-color 100ms linear;
 }
 
 table#concesionariosTable thead tr th {
   color: #2d6e3d;
   text-align: start;
   font-size: 14px;
-}
-
-table#concesionariosTable tbody tr td {
-  font-size: 12px;
-  padding: 6px 8px;
-}
-table#concesionariosTable tbody tr td:nth-child(1),
-table#concesionariosTable tbody tr td:nth-child(5),
-table#concesionariosTable tbody tr td:nth-child(7) {
-  text-transform: uppercase !important;
-}
-
-table#concesionariosTable tbody tr td:nth-child(1),
-table#concesionariosTable tbody tr td:nth-child(8) {
   white-space: nowrap;
 }
 
-table#concesionariosTable tbody tr td:nth-child(2) {
-  text-align: center !important;
-}
-
-table#concesionariosTable tbody tr td:nth-child(1) {
-  text-transform: capitalize;
-}
-
-div#concesionariosTable_filter > label {
-  background-color: #2d6e3d;
-  padding-left: 8px;
-  border-radius: 3px;
-  color: whitesmoke;
-  display: inline-block;
-  font-size: 0.8571em;
-  margin-bottom: 5px;
-}
-
-input[aria-controls="concesionariosTable"] {
-  width: 400px;
-  background-color: whitesmoke !important;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-left: none !important;
-  border-bottom-left-radius: 0px !important;
-  border-top-left-radius: 0px !important;
-  outline: 1px solid transparent;
+table#concesionariosTable tbody tr td {
+  font-size: 14px;
+  height: 2.5rem;
+  padding: 0 8px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap;
 }
 
 div.container-header h1 {
@@ -144,30 +114,6 @@ table#concesionariosTable tbody tr td[data-type="tools"] {
   gap: 4px;
 }
 
-.cellButtonTool {
-  background: transparent;
-  border: none;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 2px 4px;
-}
-
-.cellButtonTool:hover {
-  cursor: pointer;
-}
-
-.cellButtonTool[data-type="view"] {
-  color: #28a745;
-}
-
-.cellButtonTool[data-type="update"] {
-  color: #fd7e14;
-}
-
-.cellButtonTool[data-type="delete"] {
-  color: #dc3545;
-}
-
 #usuariosBajaModal .formContainer {
   padding: 20px;
 }
@@ -203,11 +149,6 @@ table#concesionariosTable tbody tr td[data-type="tools"] {
   color: white;
 }
 
-#concesionariosTable_filter {
-  float: left !important;
-  margin-bottom: 10px;
-}
-
 #userVehicleSearch,
 #userEmailSearch {
   display: flex;
@@ -227,13 +168,13 @@ div.formContainer[data-visibility="false"] {
 
 .modalContent {
   width: 100%;
-  max-width: max-content;
+  max-width: 700px;
   background-color: white;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
-  border-radius: 8px;
+  border-radius: 4px;
   transition: all 50ms linear;
 }
 
@@ -312,6 +253,7 @@ table#usuarios-list th {
   border-bottom: 1px solid #808080b3;
   font-size: 14px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .file-box {
@@ -505,4 +447,27 @@ button.botonAsignar:hover {
   align-items: baseline;
   justify-content: flex-start;
   gap: 3rem;
+}
+
+.cellButtonTool {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px;
+}
+
+.cellButtonTool:hover {
+  cursor: pointer;
+}
+
+div#usuarios-container-list {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+table#usuarios-list th,
+table#vehicles-list th {
+  color: #034e03;
 }

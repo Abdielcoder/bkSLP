@@ -113,6 +113,7 @@ async function main() {
 main();
 
 const addDriverMarkerOnMap = async (item, current, iconColor, type) => {
+  console.log({ iconColor });
   try {
     const { vehicle, id } = item;
     const markerPopUpContainer = getPopUpCardFromMarker(item, current, type);
@@ -310,162 +311,198 @@ const updateSearchInactiveFilter = (i) => {
 };
 
 const getPopUpCardFromMarker = (item, current, type) => {
+  console.log({ item, current, type });
   try {
     if (item !== undefined) {
       return `   
-  <div class="driver-popup">
-    <div class="popup-tabs">
-      <ul class="tab-list">
-        <li>
-          <button type="button" class="tab-button" aria-selected="true" data-tab="conductor">
-            <span>Conductor</span>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="tab-button" aria-selected="false" data-tab="vehiculo">
-            <span>Vehículo</span>
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div class="formContainer" data-tabcontainer="conductor" data-visibility="true">
-      <div class="popup-header">
-        <h2>Datos generales del conductor</h2>
-      </div>
-      <div class="popup-body">
-        <table>
-          <tr>
-            <td colspan="3"><span class="th">Nombre completo del conductor</span></td>
-            <td>${item.personal.name}</td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td><span class="th">Sexo:</span></td>
-            <td>${item.personal.gender == "m" ? icons.male : icons.female}</td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td><span class="th">E-mail:</span></td>
-            <td>${item.personal.email}</td>
-          </tr>
-          <tr>
-            <td><span class="th">Teléfono celular a 10 dígitos:</span></td>
-            <td>${item.personal.phone}</td>
-          </tr>
-          <tr>
-            <td><span class="th">Telefono de emergencia:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">Tipo de sangre:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">Examen antidoping:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">Enfermedades crónicas</span></td>
-            <td>
-              <table class="no-borders">
-                <tr>
-                  <td><span class="th">Hipertensión</span></td>
-                </tr>
-                <tr>
-                  <td><span class="th">Diabetes</span></td>
-                </tr>
-                <tr>
-                  <td><span class="th">Insuficiencia cardiaca</span></td>
-                </tr>
-                <tr>
-                  <td><span class="th">Epoc (Enfermedad Pulmonar Obstructiva Crónica)</span></td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-        <p class="popup-parraf">Generar código para validar numero telefónico y terminar el registro del conductor</p>
-        <table>
-          <tr>
-            <td><span class="th">Licencia:</span> </td>
-            <td>${item.personal.licence}</td>
-          </tr>
-          <tr>
-            <td><span class="th">INE:</span></td>
-            <td>${item.personal.badge}</td>
-          </tr>
-          <tr>
-            <td><span class="th">FOTOGRAFIA CONDUCTOR</span></td>
-            <td></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-    <div class="formContainer" data-tabcontainer="vehiculo" data-visibility="false">
-      <div class="popup-header">
-        <h2>Datos generales del Taxi</h2>
-      </div>
-      <div class="popup-body">
-        <table>
-          <tr>
-            <td><span class="th">Taxi incluyente:</span></td>
-            <td>
-              <table class="no-borders">
-                <tr>
-                  <td>Usuario con capacidades diferentes</td>
-                </tr>
-                <tr>
-                  <td>Mascotas</td>
-                </tr>
-                <tr>
-                  <td>Equipaje</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-
-        <table>
-          <tr>
-            <td><span class="th">Número económico de Taxi:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">ID Tarjetón:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">No. Placa:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">Marca Automovil:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">Modelo:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">Color automovil:</span></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><span class="th">Fotografia de automovil:</span></td>
-            <td></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>`;
+    <div class="driver-popup"> 
+      <div class="formContainer" data-tabcontainer="conductor" data-visibility="true">
+        <div class="popup-header">
+          <h2 style="margin-bottom: 0.5rem;">Datos generales del conductor</h2>
+        </div>
+        <div class="popup-body">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
+            <h6>Operador:</h6>
+            <span>${item.personal.name}</span>
+          </div>
+          <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
+            <h6>Contacto:</h6>
+            <span>${item.personal.phone}</span>
+          </div>
+          <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
+            <h6>Económico:</h6>
+            <span>${item.vehicle.num_economic}</span>
+          </div>
+          <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
+            <h6>Estado:</h6>
+            <span>${item.status.status}</span>
+          </div>
+        </div>
+      </div> 
+    </div>`;
     }
   } catch (err) {
     return false;
   }
 };
+
+// const getPopUpCardFromMarker = (item, current, type) => {
+//   try {
+//     if (item !== undefined) {
+//       return `
+//   <div class="driver-popup">
+//     <div class="popup-tabs">
+//       <ul class="tab-list">
+//         <li>
+//           <button type="button" class="tab-button" aria-selected="true" data-tab="conductor">
+//             <span>Conductor</span>
+//           </button>
+//         </li>
+//         <li>
+//           <button type="button" class="tab-button" aria-selected="false" data-tab="vehiculo">
+//             <span>Vehículo</span>
+//           </button>
+//         </li>
+//       </ul>
+//     </div>
+//     <div class="formContainer" data-tabcontainer="conductor" data-visibility="true">
+//       <div class="popup-header">
+//         <h2>Datos generales del conductor</h2>
+//       </div>
+//       <div class="popup-body">
+//         <table>
+//           <tr>
+//             <td colspan="3"><span class="th">Nombre completo del conductor</span></td>
+//             <td>${item.personal.name}</td>
+//           </tr>
+//         </table>
+//         <table>
+//           <tr>
+//             <td><span class="th">Sexo:</span></td>
+//             <td>${item.personal.gender == "m" ? icons.male : icons.female}</td>
+//           </tr>
+//         </table>
+//         <table>
+//           <tr>
+//             <td><span class="th">E-mail:</span></td>
+//             <td>${item.personal.email}</td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Teléfono celular a 10 dígitos:</span></td>
+//             <td>${item.personal.phone}</td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Telefono de emergencia:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Tipo de sangre:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Examen antidoping:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Enfermedades crónicas</span></td>
+//             <td>
+//               <table class="no-borders">
+//                 <tr>
+//                   <td><span class="th">Hipertensión</span></td>
+//                 </tr>
+//                 <tr>
+//                   <td><span class="th">Diabetes</span></td>
+//                 </tr>
+//                 <tr>
+//                   <td><span class="th">Insuficiencia cardiaca</span></td>
+//                 </tr>
+//                 <tr>
+//                   <td><span class="th">Epoc (Enfermedad Pulmonar Obstructiva Crónica)</span></td>
+//                 </tr>
+//               </table>
+//             </td>
+//           </tr>
+//         </table>
+//         <p class="popup-parraf">Generar código para validar numero telefónico y terminar el registro del conductor</p>
+//         <table>
+//           <tr>
+//             <td><span class="th">Licencia:</span> </td>
+//             <td>${item.personal.licence}</td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">INE:</span></td>
+//             <td>${item.personal.badge}</td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">FOTOGRAFIA CONDUCTOR</span></td>
+//             <td></td>
+//           </tr>
+//         </table>
+//       </div>
+//     </div>
+
+//     <div class="formContainer" data-tabcontainer="vehiculo" data-visibility="false">
+//       <div class="popup-header">
+//         <h2>Datos generales del Taxi</h2>
+//       </div>
+//       <div class="popup-body">
+//         <table>
+//           <tr>
+//             <td><span class="th">Taxi incluyente:</span></td>
+//             <td>
+//               <table class="no-borders">
+//                 <tr>
+//                   <td>Usuario con capacidades diferentes</td>
+//                 </tr>
+//                 <tr>
+//                   <td>Mascotas</td>
+//                 </tr>
+//                 <tr>
+//                   <td>Equipaje</td>
+//                 </tr>
+//               </table>
+//             </td>
+//           </tr>
+//         </table>
+
+//         <table>
+//           <tr>
+//             <td><span class="th">Número económico de Taxi:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">ID Tarjetón:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">No. Placa:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Marca Automovil:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Modelo:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Color automovil:</span></td>
+//             <td></td>
+//           </tr>
+//           <tr>
+//             <td><span class="th">Fotografia de automovil:</span></td>
+//             <td></td>
+//           </tr>
+//         </table>
+//       </div>
+//     </div>
+//   </div>`;
+//     }
+//   } catch (err) {
+//     return false;
+//   }
+// };
 
 const isAlertEvent = (object, t) => {
   if (t !== "warning" && t !== "panic") return;
@@ -664,7 +701,7 @@ DRIVERS_WORKING_REFERENCE.on("child_added", (snap) => {
     const item = findDriverDataByUID(snap.key, DRIVERS);
     WORKING_DRIVERS.push({ ...item, w: snap.val() });
     addDriverMarkerOnMap(item, snap.val(), iconWorking, "working");
-    addDataDriverToList(item, "working", dom_icons.bluecar);
+    addDataDriverToList(item, "working", dom_icons.redcar);
     WORKING_TOTAL_POINTER.textContent = WORKING_COUNTER;
     INACTIVE_TOTAL_POINTER.textContent = INACTIVE_COUNTER;
   } catch (err) {
@@ -901,3 +938,46 @@ PANIC_ALERTS_REFERENCE.on("child_removed", (snap) => {
 $(document).on("click", ".tab-button", function (e) {
   tabModalEventListener(e);
 });
+
+/*
+Tasks
+
+1) Codigo de colores de vehiculos ✅
+2) Agregar boton "Exportar" datos en Concesionario ✅
+3) Agregar boton "Exportar" datos en Conductores ✅
+4) Datos obligatorios distinguirlos con "*" ✅
+5) Todos los campos que se capturen se visualicen con MAYUSCULAS ✅
+6) Eliminar Placeholder "Tipo" y sustituir por "Año" (Agregar combobox 2017 a 2025) ✅
+7) RFC dejarlo a 13 digitos alfanumericos, sin que sea obligatorio cubrir los 13 digitos, ya que existen RFC de 12 digitos ✅
+8) Cambiar datos visibles en icono de vehiculo dentro del mapa ✅
+9) Ligar modelo y marca de vehiculos ✅
+10) Mensaje, cual es la funcion de "Ejecutado" y de "Accion"? ✅
+11) Reporte por viaje:
+      ● Operador
+      ● Número económico
+      ● Fecha de inicio
+      ● Hora de inicio
+      ● Duración del viaje 
+      ● Monto 
+      ● Recibo desglosado 
+      ● Trayectoria 
+      ● Ubicación Partida 
+      ● Ubicación Destino
+      ● Calificación 
+      ● Reseña
+  *Información almacenada por 1 año  
+12) Consultas generales por periocidad
+      [Fecha de inicio-fecha de termino]
+      ● Número de viajes
+      ● Vehículos activos en plataforma
+      ● Operadores activos en plataforma 
+      ● Número de estrellas por viaje
+
+13) Consultas especificas por periocidad
+      [Fecha de inicio-fecha de término]
+      ● Búsqueda por Número económico 
+      ● Número de viajes 
+      ● Promedio de estrellas por viaje 
+      ● Tiempo conectado en plataforma
+14) Eliminar algun archivo dentro de concesionario✅
+*/

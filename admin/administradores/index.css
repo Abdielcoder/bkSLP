@@ -2,11 +2,7 @@ main {
   overflow-y: auto;
   overflow-x: hidden;
 }
-
-div#table-administradores_filter {
-  margin-bottom: 1rem;
-}
-
+ 
 table#table-administradores {
   width: 100%;
   display: table;
@@ -32,28 +28,16 @@ table#table-administradores thead th {
 
 table#table-administradores tbody tr td {
   font-size: 14px;
-  padding: 6px 8px;
-}
-table#table-administradores tbody tr td:nth-child(1),
-table#table-administradores tbody tr td:nth-child(6) {
-  white-space: nowrap;
-}
-
-table#table-administradores tbody tr td:nth-child(3),
-table#table-administradores tbody tr td:nth-child(4),
-table#table-administradores tbody tr td:nth-child(5),
-table#table-administradores tbody tr td:nth-child(6),
-table#table-administradores tbody tr td:nth-child(7),
-table#table-administradores tbody tr td:nth-child(8) {
-  text-align: center;
-}
-
-table#table-administradores tbody td:not(:nth-child(-n + 2)) {
-  text-transform: capitalize;
-}
-
-table#table-administradores tbody td:nth-child(1) {
+  height: 2.5rem;
+  padding: 0 8px !important;
   text-transform: uppercase !important;
+  white-space: nowrap; 
+}
+
+table#table-administradores tbody tr td[data-type="tools"] {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 4px;
 }
 
 div#table-administradores > label {
@@ -83,16 +67,7 @@ div.datatable_operation_buttons {
   justify-content: flex-end;
   align-items: center;
 }
-
-div#table-administradores_filter > label {
-  display: inline-block;
-  background-color: #2d6e3d;
-  font-size: 1rem;
-  margin-bottom: 5px;
-  padding-left: 8px;
-  border-radius: 3px;
-  color: whitesmoke;
-}
+ 
 input[aria-controls="table-administradores"] {
   width: 400px;
   background-color: whitesmoke !important;
@@ -120,22 +95,14 @@ input[aria-controls="table-administradores"] {
   white-space: nowrap;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.1);
-  background: linear-gradient(
-    to bottom,
-    rgba(230, 230, 230, 0.1) 0%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
+  background: linear-gradient(to bottom, rgba(230, 230, 230, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
   user-select: none;
   text-decoration: none;
   outline: none;
   text-overflow: ellipsis;
 }
 .cup-button:hover:not(:disabled) {
-  background: linear-gradient(
-    to bottom,
-    rgba(153, 153, 153, 0.1) 0%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
+  background: linear-gradient(to bottom, rgba(153, 153, 153, 0.1) 0%, rgba(0, 0, 0, 0.1) 100%);
   border: 1px solid #666;
 }
 
@@ -146,31 +113,30 @@ input[aria-controls="table-administradores"] {
 }
 
 /* Modal */
-div.modal {
+div.modalForm {
   position: absolute;
-  z-index: 15;
+  z-index: 1015;
   background-color: rgba(30, 29, 29, 0.43);
-  top: 58px;
-  left: 258px;
-  bottom: 38px;
-  right: 0px;
   display: none;
   justify-content: center;
   align-items: center;
 }
 
-div.modal.expanded {
+div.modalForm.expanded {
   display: block;
 }
 
-div.modal_container {
-  position: relative;
+div.modalContent {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   height: auto;
-  width: 30%;
+  width: 600px;
   border-radius: 5px;
   background-color: rgb(252, 252, 252);
   box-shadow: 0px 0px 8px 4px #80808094;
-  padding: 0.5rem;
+  padding: 24px;
 }
 div.close_modal {
   position: absolute;
@@ -211,15 +177,14 @@ div.radio_form label {
   display: block;
   color: #2d6e3d;
 }
-button#generate_new_user {
+button#modalFormSubmit {
   background-color: #2d6e3d;
   color: white;
-  font-weight: lighter;
   padding: 0.5rem 0;
   border: none;
   border-radius: 3px;
 }
-button#generate_new_user:hover {
+button#modalFormSubmit:hover {
   background-color: #2d6e3de6;
   cursor: pointer;
 }
@@ -264,4 +229,24 @@ table.dataTable tbody th,
 table.dataTable tbody td {
   padding: 4px 8px !important;
   font-size: 14px;
+}
+
+.form-columns {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cellButtonTool {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px;
+}
+
+.cellButtonTool:hover {
+  cursor: pointer;
 }
