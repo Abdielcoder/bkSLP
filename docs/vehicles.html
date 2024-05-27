@@ -257,7 +257,7 @@
                     <option value="hibrido">Híbrido</option>
                   </select>
                 </div>
-                <div class="formGroup inputForm">
+                <div class="formGroup inputForm" style="max-width: 100%">
                   <label for="placaNumero">Placa Número <span style="color: rgb(185, 39, 39)">*</span></label>
                   <input
                     type="text"
@@ -278,12 +278,12 @@
                   </select>
                 </div>
               </div>
-              <div class="form-columns flex-nowrap" style="max-width: 100%">
-                <div class="formGroup inputForm">
+              <div class="form-columns flex-nowrap">
+                <div class="formGroup inputForm" style="max-width: 100%">
                   <label for="yearVehiculo">Año del vehículo</label>
                   <select name="yearVehiculo" id="yearVehiculo" style="padding: 8px; width: 100%"></select>
                 </div>
-                <div class="formGroup inputForm">
+                <div class="formGroup inputForm" style="max-width: 100%">
                   <label for="noSerie">No. de Serie <span style="color: rgb(185, 39, 39)">*</span></label>
                   <input
                     type="text"
@@ -295,7 +295,7 @@
                     style="padding: 8px"
                   />
                 </div>
-                <div class="formGroup selectForm">
+                <div class="formGroup selectForm" style="max-width: 100%">
                   <label for="color">Color</label>
                   <select name="color" id="color" style="padding: 8px">
                     <option value="blanco" selected>Blanco</option>
@@ -304,7 +304,7 @@
                 </div>
               </div>
               <div class="form-columns flex-nowrap justify-start">
-                <div class="formGroup inputForm">
+                <div class="formGroup inputForm" style="max-width: 100%">
                   <label for="numeroEconomico">Número Económico <span style="color: rgb(185, 39, 39)">*</span></label>
                   <input
                     type="text"
@@ -316,21 +316,7 @@
                     style="padding: 8px"
                   />
                 </div>
-                <div class="formGroup inputForm">
-                  <label for="gafeteSCT">Gafete SCT <span style="color: rgb(185, 39, 39)">*</span></label>
-                  <input
-                    type="text"
-                    name="gafeteSCT"
-                    class="only-characters"
-                    id="gafeteSCT"
-                    maxlength="5"
-                    placeholder="Gafete SCT"
-                    style="padding: 8px"
-                  />
-                </div>
-              </div>
-              <div class="form-columns flex-nowrap justify-start">
-                <div class="formGroup inputForm">
+                <div class="formGroup inputForm" style="max-width: 100%">
                   <label for="folio">Póliza de Seguro</label>
                   <input
                     type="text"
@@ -340,7 +326,7 @@
                     style="padding: 8px"
                   />
                 </div>
-                <div class="formGroup selectForm">
+                <div class="formGroup selectForm" style="max-width: 100%">
                   <label for="municipio">Municipio</label>
                   <select name="municipio" id="municipio">
                     <option value="sanluis">SAN LUIS POTOSI</option>
@@ -374,6 +360,140 @@
                 Fotografias del vehículo
               </h2>
               <div class="flexed" style="justify-content: center; padding: 10px 0">
+                <div class="file-box">
+                  <div style="padding: 8px; border: 1px solid lightslategray; border-radius: 2px">
+                    <img
+                      src="../assets/img/nopic.png"
+                      alt="polizaSeguroImg"
+                      id="polizaSeguroImgPreview"
+                      class="previewImage"
+                      style="display: block; width: 105px; height: 105px; object-fit: cover"
+                    />
+                    <label for="polizaSeguroImg">
+                      <input
+                        type="file"
+                        name="polizaSeguroImg"
+                        id="polizaSeguroImg"
+                        style="display: none"
+                        class="vehicleFiles"
+                      />
+                      <div class="imageEdit">
+                        <svg
+                          width="32px"
+                          height="32px"
+                          viewBox="-9.6 -9.6 43.20 43.20"
+                          id="Layer_1"
+                          data-name="Layer 1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="#ffffff"
+                          stroke="#ffffff"
+                          transform="matrix(1, 0, 0, 1, 0, 0)"
+                        >
+                          <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)">
+                            <rect
+                              x="-9.6"
+                              y="-9.6"
+                              width="43.20"
+                              height="43.20"
+                              rx="21.6"
+                              fill="#e2e7e9"
+                              strokewidth="0"
+                            ></rect>
+                          </g>
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke="#CCCCCC"
+                            stroke-width="0.384"
+                          ></g>
+                          <g id="SVGRepo_iconCarrier">
+                            <defs>
+                              <style>
+                                .cls-1 {
+                                  fill: none;
+                                  stroke: #000000;
+                                  stroke-miterlimit: 10;
+                                  stroke-width: 1.9200000000000004;
+                                }
+                              </style>
+                            </defs>
+                            <polyline
+                              class="cls-1"
+                              points="20.59 12 20.59 22.5 1.5 22.5 1.5 3.41 12.96 3.41"
+                            ></polyline>
+                            <path
+                              class="cls-1"
+                              d="M12,15.82l-4.77.95L8.18,12l9.71-9.71A2.69,2.69,0,0,1,19.8,1.5h0a2.7,2.7,0,0,1,2.7,2.7h0a2.69,2.69,0,0,1-.79,1.91Z"
+                            ></path>
+                          </g>
+                        </svg>
+                      </div>
+                    </label>
+
+                    <div class="imageEdit imageDelete">
+                      <svg
+                        width="32px"
+                        height="32px"
+                        viewBox="-5.04 -5.04 34.08 34.08"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+                      >
+                        <g id="SVGRepo_bgCarrier" stroke-width="0">
+                          <rect
+                            x="-5.04"
+                            y="-5.04"
+                            width="34.08"
+                            height="34.08"
+                            rx="17.04"
+                            fill="#ebebeb"
+                            strokewidth="0"
+                          ></rect>
+                        </g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                          <path
+                            d="M10 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M14 12V17"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M4 7H20"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                          <path
+                            d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                            stroke="#c81414"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <p>Poliza de Seguro</p>
+                </div>
                 <div class="file-box">
                   <div style="padding: 8px; border: 1px solid lightslategray; border-radius: 2px">
                     <img
@@ -918,8 +1038,9 @@
             src="../assets/img/nopic.png"
             alt="previewImage"
             id="full-width-preview-Image"
-            style="max-width: 540px; display: block; object-fit: contain"
+            style="max-width: 540px; display: none; object-fit: contain"
           />
+          <embed src="#" type="" style="width: 800px; height: 600px; display: none" id="full-width-preview-Document" />
         </div>
       </div>
       <!-- Footer -->
@@ -1189,44 +1310,23 @@
               };
             });
 
-            console.log({ files });
-
             document.querySelectorAll("img.previewImage").forEach((element) => {
               const { name, alt } = element;
               const [currentFile] = files.filter((item) => item.name === alt);
-              console.log({ name, alt, element, currentFile });
               if (currentFile === undefined || currentFile === null) {
                 element.src = "../assets/img/nopic.png";
               } else if (currentFile?.type === "pdf") {
                 element.src = "https://www.svgrepo.com/show/255818/pdf.svg";
+                element.dataset.reference = currentFile?.url;
               } else {
                 element.src = currentFile?.url;
+                element.dataset.reference = currentFile?.url;
               }
-
-              element.addEventListener("click", function (e) {
-                const modal = document.querySelector("div.modal-preview-image");
-                const modalDoc = document.querySelector("div.modal-preview-document");
-                if (currentFile?.type !== "pdf") {
-                  modal.setAttribute("data-visibility", "visible");
-                  document.getElementById("full-width-preview-Image").src = currentFile?.url;
-                  return;
-                }
-
-                modalDoc.setAttribute("data-visibility", "visible");
-                document.getElementById("full-width-preview-Document").src = currentFile?.url;
-              });
             });
           }
         } catch (error) {
           console.error("No se ha podido obtener información de archivos del usuario: ", error);
         }
-
-        document.querySelectorAll(".dialog-bg").forEach((element, index) => {
-          element.addEventListener("click", function (e) {
-            const modal = e.target.parentNode;
-            modal.setAttribute("data-visibility", "hidden");
-          });
-        });
 
         try {
           formEntries.forEach((element) => {
@@ -1253,6 +1353,41 @@
         }
       }
     };
+
+    document.querySelectorAll("img.previewImage").forEach((imageTag) => {
+      const { name, alt } = imageTag;
+
+      imageTag.addEventListener("click", function (e) {
+        const reference = imageTag.dataset?.reference;
+        const currentFile = {
+          name: reference.split("%2F")[2].split("?")[0].split(".")[0].split("__")[1],
+          type: reference.split("%2F")[2].split("?")[0].split(".")[1],
+        };
+        if (reference === undefined || reference === "") return;
+        const modal = document.querySelector("div.modal-preview-image");
+        const modalDoc = document.querySelector("div.modal-preview-document");
+        if (currentFile?.type !== "pdf") {
+          modal.setAttribute("data-visibility", "visible");
+          document.querySelector("#full-width-preview-Document").style.display = "none";
+          document.querySelector("#full-width-preview-Document").src = "#";
+          document.querySelector("#full-width-preview-Image").style.display = "block";
+          document.querySelector("#full-width-preview-Image").src = reference;
+          return;
+        }
+        modal.setAttribute("data-visibility", "visible");
+        document.querySelector("#full-width-preview-Image").style.display = "none";
+        document.querySelector("#full-width-preview-Image").src = "#";
+        document.querySelector("#full-width-preview-Document").style.display = "block";
+        document.querySelector("#full-width-preview-Document").src = reference;
+      });
+    });
+
+    document.querySelectorAll(".dialog-bg").forEach((element, index) => {
+      element.addEventListener("click", function (e) {
+        const modal = e.target.parentNode;
+        modal.setAttribute("data-visibility", "hidden");
+      });
+    });
 
     const formatDateFromIsoString = (value) => {
       const dateValue = new Date(value);
@@ -1430,7 +1565,11 @@
       clearFormData();
       document.querySelectorAll("img.previewImage").forEach((element) => {
         element.src = "../assets/img/nopic.png";
+        element.dataset.reference = "";
       });
+
+      document.querySelector("#full-width-preview-Document").src = "#";
+      document.querySelector("#full-width-preview-Image").src = "#";
       modalDialog.setAttribute("data-reference", "");
       document.getElementById("form-dates").setAttribute("data-display", "none");
       document.querySelector("select#yearVehiculo").innerHTML = "";
@@ -1478,14 +1617,15 @@
           const reader = new FileReader();
           const { name, type } = e.target;
           console.log({ file, name, type: file.name.split(".")[1] });
-          const responseUpload = await uploadImages(file, name, file.name.split(".")[1]);
-          console.log({ responseUpload });
+          const [responseUpload, firebaseStorage] = await uploadImages(file, name, file.name.split(".")[1]);
           if (responseUpload) {
             reader.onload = function (event) {
               const url = event.target.result;
               const dom = name + "Preview";
               const imageDom = document.getElementById(dom);
+              console.log({ url, dom, imageDom, responseUpload, firebaseStorage });
               imageDom.src = file.name.split(".")[1] === "pdf" ? "https://www.svgrepo.com/show/255818/pdf.svg" : url;
+              imageDom.dataset.reference = firebaseStorage ?? url;
             };
             reader.readAsDataURL(file);
           }
@@ -1498,21 +1638,19 @@
     const uploadImages = async (file, name, type) => {
       try {
         const uid = document.querySelector("div.modalForm").getAttribute("data-reference");
-        console.log({ file, name, type, uid });
-
         if (file === null || file === undefined) return;
         const reference = storage.ref().child(`vehiculos/${uid}/__` + (name + "." + type));
         await reference.put(file);
 
         const url = await reference.getDownloadURL();
         if (url) {
-          return true;
+          return [true, url];
         } else {
-          return false;
+          return [false, null];
         }
       } catch (error) {
         console.error("Error al subir imagenes, ", error);
-        return false;
+        return [false, null];
       }
     };
 
@@ -1587,11 +1725,8 @@
     document.querySelectorAll("div.imageDelete").forEach((element) => {
       element.addEventListener("click", function (e) {
         const imageTag = e.currentTarget.parentNode.children[0];
-        const url = imageTag.getAttribute("src");
-        console.log({ url, imageTag });
-        if (url === "../assets/img/nopic.png") {
-          return;
-        }
+        const url = imageTag.dataset.reference;
+        if (url === undefined || url === "") return;
         const fileName = url.split("?")[0].split("__")[1];
         const uid = document.querySelector("div.modalForm").getAttribute("data-reference");
         const reference = storage.ref().child(`vehiculos/${uid}/__${fileName}`);
@@ -1600,6 +1735,7 @@
           .then((snapshot) => {
             window.alert("Se ha eliminado el archivo de manera satisfactoria.");
             imageTag.src = "../assets/img/nopic.png";
+            imageTag.dataset.reference = ""
           })
           .catch((error) => {
             window.alert("Se ha presentado un error.");
