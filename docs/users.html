@@ -102,12 +102,12 @@
                       ROLES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="#">
+                  <!-- <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="../admin/clientes/index.html">
                       <span class="link-icons material-icons-sharp">person_pin</span>
                       CLIENTES
                     </a>
-                  </li>
+                  </li> -->
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../admin/rates.html">
                       <span class="link-icons material-icons-sharp">paid</span>
@@ -123,9 +123,9 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item" id="clientes-menu-li">
-              <a class="nav-link" href="#">
-                <span class="link-icons material-icons-sharp"> airline_seat_recline_extra</span>
+            <li class="nav-item">
+              <a class="nav-link" href="../admin/clientes/index.html">
+                <span class="link-icons material-icons-sharp">person_pin</span>
                 CLIENTES
               </a>
             </li>
@@ -563,52 +563,53 @@
               </div>
             </div>
 
-            <div
-              class="formContainer"
-              data-tabcontainer="accounts"
-              data-visibility="false"
-              style="padding-top: 20px;"
-            >
+            <div class="formContainer" data-tabcontainer="accounts" data-visibility="false" style="padding-top: 20px">
               <div class="containerBody">
-                <p style="font-size: 12px; font-weight: bold; margin-left: 4px">Buscar vehículo por numero de placa:</p>
                 <div class="placa-search">
                   <form id="userVehicleSearch">
-                    <input
-                      type="text"
-                      placeholder="Introducir placa del vehículo"
-                      name="placa"
-                      id="placa"
-                      class="search-placa"
-                      style="flex-grow: 1; outline: none"
-                    />
-                    <button type="submit" class="placa-button-icon">
-                      <svg
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                          <path
-                            d="M15 15L21 21"
-                            stroke="#323232"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          ></path>
-                          <path
-                            d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                            stroke="#323232"
-                            stroke-width="2"
-                          ></path>
-                        </g>
-                      </svg>
-                    </button>
+                    <div class="formGroup" style="width: 100%">
+                      <label for="placaSearch" style="font-size: 16px">Buscar vehículo por numero de placa:</label>
+                      <div style="display: flex; width: 100%">
+                        <input
+                          type="text"
+                          placeholder="Introducir placa del vehículo"
+                          name="placaSearch"
+                          id="placaSearch"
+                          class="search-placa"
+                          style="flex-grow: 1; outline: none"
+                        />
+                        <button type="submit" class="placa-button-icon">
+                          <svg
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <path
+                                d="M15 15L21 21"
+                                stroke="#323232"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></path>
+                              <path
+                                d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                                stroke="#323232"
+                                stroke-width="2"
+                              ></path>
+                            </g>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
                   </form>
                 </div>
+                <br />
+                <p>Vehículo encontrado</p>
                 <div
                   id="vehiculos-searched"
                   style="
@@ -621,11 +622,12 @@
                   "
                 ></div>
                 <div id="vehicles-container-list" data-reference="">
-                  <table id="vehicles-list">
+                  <table id="vehicles-list" style="text-transform: uppercase">
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Marca y modelo</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
                         <th>Placas</th>
                         <th>Habilitado</th>
                       </tr>
@@ -1704,40 +1706,27 @@
       storage,
     } from "../js/config/config.js";
 
-    const monthStrings = [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ];
-
     let permissions = {};
     const CONDUCTORES_COLLECTION = "conductores";
     const VEHICULOS_COLLECTION = "vehiculos";
-    // Main Table
-    var usersTable = document.getElementById("operatorsTable");
-    var usersDataTableContext = null;
-    // Modal Dialogs
-    const modalDialogAdd = document.getElementById("usuariosAltaModal");
-    const modalDialogEdit = document.getElementById("usuariosEditModal");
-    const modalDialogDelete = document.getElementById("usuariosBajaModal");
-    // Modal Form (Add)
-    const modalForm = document.querySelector("form#userAlta");
-    const deleteForm = document.getElementById("userBaja");
-    // Modal Buttons
-    const userAddbutton = document.querySelector("button#userAdd");
-    const userAddSubmitButton = document.getElementById("modalFormSubmit");
-    const userUpdateButton = document.getElementById("modalFormUpdateSubmit");
-    const deleteCancelButton = document.getElementById("modalFormDeleteCancel");
-    let addCancelButton = document.querySelectorAll("button.modalFormCancel");
+    const usuariosTabla = document.querySelector("#operatorsTable");
+    const usuariosAltaModal = document.querySelector("#usuariosAltaModal");
+    const usuarosEditModal = document.querySelector("#usuariosEditModal");
+    const usuariosBajaModal = document.querySelector("#usuariosBajaModal");
+    const usuariosAltaFormulario = document.querySelector("#userAlta");
+    const usuariosBajaFormulario = document.querySelector("#userBaja");
+    const usuariosAltaBoton = document.querySelector("#userAdd");
+    const usuariosAltaSubmit = document.querySelector("#modalFormSubmit");
+    const usuariosActualizarBoton = document.querySelector("#modalFormUpdateSubmit");
+    const usuariosEliminarBoton = document.querySelector("#modalFormDeleteCancel");
+    const otrasEnfermedadesCheckbox = document.querySelector("input#otrasEnfermedades");
+    const otrasCapacidadesCheckbox = document.querySelector("input#otrasCapacidades");
+    const modalTabsBotones = document.querySelectorAll("button.tab-button");
+    const placasBuscador = document.querySelector("#placaSearch");
+    const vehiculosEncontrados = document.querySelector("#vehiculos-searched");
+    const addCancelButton = document.querySelectorAll("button.modalFormCancel");
+    const vehiculosTBody = document.querySelector("table#vehicles-list tbody");
+    let usersDataTableContext = null;
     let GLOBAL_USER_DATA = null;
 
     const statusTrueIcon =
@@ -1746,22 +1735,21 @@
       '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM8.96965 8.96967C9.26254 8.67678 9.73742 8.67678 10.0303 8.96967L12 10.9394L13.9696 8.96969C14.2625 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0606 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73744 15.3232 9.26256 15.3232 8.96967 15.0303C8.67678 14.7374 8.67678 14.2626 8.96967 13.9697L10.9393 12L8.96965 10.0303C8.67676 9.73744 8.67676 9.26256 8.96965 8.96967Z" fill="#c7c7c7"></path> </g></svg>';
 
     addCancelButton.forEach((element) => {
-      element.addEventListener("click", async () => {
+      element.addEventListener("click", () => {
         handleViewAltaModal(false);
       });
     });
 
-    userAddbutton.addEventListener("click", () => {
-      // console.log(permissions);
+    usuariosAltaBoton.addEventListener("click", () => {
       if (permissions.create == "0") {
         negateAccess();
         return;
       }
-      document.getElementById("modalFormSubmit").style.display = "block";
-      document.getElementById("modalFormUpdateSubmit").style.display = "none";
+      usuariosAltaSubmit.style.display = "block";
+      usuariosActualizarBoton.style.display = "none";
       document.querySelector("#otrasCapacidadesTexto").value = "";
       document.querySelector("#otrasEnfermedadesTexto").value = "";
-      document.querySelectorAll("button.tab-button").forEach((element) => {
+      modalTabsBotones.forEach((element) => {
         const attribute = element.getAttribute("data-tab");
         if (attribute === "files" || attribute === "accounts") {
           element.style.display = "none";
@@ -1770,28 +1758,22 @@
       handleViewAltaModal(true);
     });
 
-    deleteCancelButton.addEventListener("click", async () => {
+    usuariosEliminarBoton.addEventListener("click", async () => {
       handleViewDeleteModal(false);
     });
 
-    userUpdateButton.addEventListener("click", async (e) => {
+    usuariosActualizarBoton.addEventListener("click", async (e) => {
       await handleUpdateUserInformation(e);
     });
 
-    function clearDataTable() {
-      usersDataTableContext.clear().destroy();
-    }
-
     async function handleRefetchingData() {
-      clearDataTable();
+      usersDataTableContext.clear().destroy();
       await fetchingData();
     }
-    const checkboxOtrasEnfermedades = document.querySelector("input#otrasEnfermedades");
-    const checkboxOtrasCapacidades = document.querySelector("input#otrasCapacidades");
 
     // Modal Add Form Submit Event
-    modalForm.addEventListener("submit", async (e) => await handleSubmit(e));
-    deleteForm.addEventListener("submit", async (e) => {
+    usuariosAltaFormulario.addEventListener("submit", async (e) => await handleSubmit(e));
+    usuariosBajaFormulario.addEventListener("submit", async (e) => {
       if (permissions.delete == "0") {
         negateAccess();
         return;
@@ -1806,25 +1788,24 @@
       textareaTexto.focus();
     }
 
-    checkboxOtrasEnfermedades.addEventListener("change", toggleTextArea);
-    checkboxOtrasCapacidades.addEventListener("change", toggleTextArea);
-
+    otrasEnfermedadesCheckbox.addEventListener("change", toggleTextArea);
+    otrasCapacidadesCheckbox.addEventListener("change", toggleTextArea);
 
     function handleViewAltaModal(e) {
       if (e === true) {
-        modalDialogAdd.classList.add("modalViewTrue");
+        usuariosAltaModal.classList.add("modalViewTrue");
         return;
       }
       GLOBAL_USER_DATA = null;
-      document.querySelector("table#vehicles-list tbody").innerHTML = "";
-      document.querySelector("div#vehiculos-searched").innerHTML = "";
-      document.querySelector("input#placa").value = "";
-      document.getElementById("usuariosAltaModal").setAttribute("data-reference", "");
-       document.querySelectorAll("textarea").forEach((element) => {
+      vehiculosTBody.innerHTML = "";
+      vehiculosEncontrados.innerHTML = "";
+      placasBuscador.value = "";
+      usuariosAltaModal.setAttribute("data-reference", "");
+      document.querySelectorAll("textarea").forEach((element) => {
         element.value = "";
         element.disabled = true;
       });
-      Object.entries(modalForm).forEach((item) => {
+      Object.entries(usuariosAltaFormulario).forEach((item) => {
         const element = item[1];
         const type = element.type;
         if (type === "text" || type === "email" || type === "tel") {
@@ -1839,7 +1820,7 @@
           element.checked = false;
           return;
         }
-        document.querySelectorAll("button.tab-button").forEach((element) => {
+        modalTabsBotones.forEach((element) => {
           if (element.getAttribute("data-tab") === "data") {
             element.setAttribute("aria-selected", "true");
             return;
@@ -1859,23 +1840,13 @@
         return;
       });
 
-      modalDialogAdd.classList.remove("modalViewTrue");
+      usuariosAltaModal.classList.remove("modalViewTrue");
     }
 
-    function handleViewEditModal(e) {
-      if (e === true) {
-        modalDialogEdit.classList.add("modalViewTrue");
-        return;
-      }
-      modalDialogEdit.classList.remove("modalViewTrue");
-    }
-
-    function handleViewDeleteModal(e) {
-      if (e === true) {
-        modalDialogDelete.classList.add("modalViewTrue");
-        return;
-      }
-      modalDialogDelete.classList.remove("modalViewTrue");
+    function handleViewDeleteModal(flag) {
+      flag === true
+        ? usuariosBajaModal.classList.add("modalViewTrue")
+        : usuariosBajaModal.classList.remove("modalViewTrue");
     }
 
     async function fetchingData() {
@@ -1885,7 +1856,7 @@
         getDataFromDriversList(document);
       });
 
-      usersDataTableContext = new DataTable(usersTable, {
+      usersDataTableContext = new DataTable(usuariosTabla, {
         dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
         buttons: [
           {
@@ -1930,6 +1901,20 @@
     }
 
     const formatDate = (datetime) => {
+      const monthStrings = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+      ];
       const [date, time] = datetime.slice(0, -5).split("T");
       const [year, month, day] = date.split("-");
       return day + " de " + monthStrings[parseInt(month) - 1] + " del " + year;
@@ -1980,7 +1965,7 @@
     }
 
     async function handleUpdateUserInformation(e) {
-      const targets = Object.entries(modalForm).slice(0, -3);
+      const targets = Object.entries(usuariosAltaFormulario).slice(0, -3);
       const emailInput = targets.find((item) => item[1].type === "email");
       if (!validateEmail(emailInput[1].value)) {
         window.alert("Favor de verificar correo, debe ser un correo válido.");
@@ -2010,14 +1995,14 @@
         return;
       }
 
-      const uid = document.getElementById("userAltaIdentifier").value;
+      const uid = document.querySelector("#userAltaIdentifier").value;
       const values = targets.map((input, index) => {
         const name = input[1].name;
         let val = input[1].type === "checkbox" ? input[1].checked : input[1].value;
         return { [name]: val };
       });
 
-      console.log({ updateValues: values });
+      // console.log({ updateValues: values });
 
       const isUpdated = await updateDocumentByUid(values, uid, CONDUCTORES_COLLECTION);
       if (isUpdated === false) return;
@@ -2028,8 +2013,8 @@
     async function handleDeleteSubmit(e) {
       e.preventDefault();
 
-      const uid = document.getElementById("userDeleteIdentifier").value;
-      const email = document.getElementById("userDeleteEmailId").value;
+      const uid = document.querySelector("#userDeleteIdentifier").value;
+      const email = document.querySelector("#userDeleteEmailId").value;
       const hasBeenDeleted = await deleteDocumentByUid(uid, CONDUCTORES_COLLECTION);
 
       if (hasBeenDeleted === false) return;
@@ -2081,8 +2066,8 @@
 
       elementSetAttributes(updateButton, updateAttrs);
       elementSetAttributes(resetPasswordButton, resetPasswordAttrs);
-      elementSetAttributes(deleteButton, deleteAttrs); 
-      tableCell.classList.add("cellButtonTool")
+      elementSetAttributes(deleteButton, deleteAttrs);
+      tableCell.classList.add("cellButtonTool");
 
       const updateButtonHTML = `<span>Actualizar</span>`;
       const resetPasswordButtonHTML = `<span>Reestablecer contraseña</span>`;
@@ -2124,17 +2109,16 @@
     }
 
     async function handleUpdateUser(e) {
-      console.log({ permissions });
       if (permissions.update == "0") {
         negateAccess();
         return;
       }
       const uid = e.currentTarget.getAttribute("data-id");
-      document.getElementById("usuariosAltaModal").setAttribute("data-reference", uid);
-      document.getElementById("userAltaIdentifier").value = uid;
-      document.getElementById("modalFormSubmit").style.display = "none";
-      document.getElementById("modalFormUpdateSubmit").style.display = "block";
-      document.querySelectorAll("button.tab-button").forEach((element) => {
+      usuariosAltaModal.setAttribute("data-reference", uid);
+      document.querySelector("#userAltaIdentifier").value = uid;
+      usuariosAltaSubmit.style.display = "none";
+      usuariosActualizarBoton.style.display = "block";
+      modalTabsBotones.forEach((element) => {
         element.style.display = "block";
       });
       handleViewAltaModal(true);
@@ -2150,8 +2134,8 @@
 
       const tableRow = node.parentNode;
       const email = tableRow.childNodes[2].innerText;
-      const input = document.getElementById("userDeleteIdentifier");
-      const emailInput = document.getElementById("userDeleteEmailId");
+      const input = document.querySelector("#userDeleteIdentifier");
+      const emailInput = document.querySelector("#userDeleteEmailId");
       input.value = uid;
       emailInput.value = email;
       handleViewDeleteModal(true);
@@ -2160,7 +2144,9 @@
     async function getOperatorByUid(uid) {
       let data = await getDocumentByUid(uid, CONDUCTORES_COLLECTION);
       GLOBAL_USER_DATA = data;
-      let formEntries = Object.values(modalForm).filter((item) => item.type !== "button" && item.type !== "submit");
+      let formEntries = Object.values(usuariosAltaFormulario).filter(
+        (item) => item.type !== "button" && item.type !== "submit"
+      );
 
       formEntries.forEach((element) => {
         const { name, type } = element;
@@ -2173,16 +2159,14 @@
       });
     }
 
-    const modalTabButtons = document.querySelectorAll("button.tab-button");
-
-    modalTabButtons.forEach((tab, index) => {
+    modalTabsBotones.forEach((tab, index) => {
       tab.addEventListener("click", ({ currentTarget }) => {
         const nameTab = currentTarget.getAttribute("data-tab");
         const isSelected = currentTarget.getAttribute("aria-selected");
         if (isSelected == "true") {
           return false;
         }
-        modalTabButtons.forEach((element) => {
+        modalTabsBotones.forEach((element) => {
           if (element.getAttribute("aria-selected") == "true" || element.getAttribute("data-tab") !== nameTab) {
             element.setAttribute("aria-selected", "false");
             return;
@@ -2200,8 +2184,8 @@
     });
 
     document.querySelector(`button.tab-button[data-tab="files"]`).addEventListener("click", async function (e) {
-      const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
-      // console.log(uid);
+      const uid = usuariosAltaModal.getAttribute("data-reference");
+      // // console.log(uid);
       const storageReference = storage.ref().child(`${CONDUCTORES_COLLECTION}/${uid}`);
       const result = await storageReference.listAll();
       if (result.items.length > 0) {
@@ -2215,7 +2199,7 @@
             }
           })
         );
-        // console.log({ FILELIST: urls });
+        // // console.log({ FILELIST: urls });
         const files = urls.map((item) => {
           return {
             url: item || "../assets/img/nopic.png",
@@ -2239,12 +2223,12 @@
             const modalDoc = document.querySelector("div.modal-preview-document");
             if (currentFile?.type !== "pdf") {
               modal.setAttribute("data-visibility", "visible");
-              document.getElementById("full-width-preview-Image").src = currentFile?.url;
+              document.querySelector("#full-width-preview-Image").src = currentFile?.url;
               return;
             }
 
             modalDoc.setAttribute("data-visibility", "visible");
-            document.getElementById("full-width-preview-Document").src = currentFile?.url;
+            document.querySelector("#full-width-preview-Document").src = currentFile?.url;
           });
         });
       }
@@ -2257,14 +2241,14 @@
       })
     );
 
-    async function statusFunction(element, array) {
+    async function changeVehicleStatus(element, array) {
       const { uid, habilitado } = element;
       if (array?.filter((item) => item.habilitado === true).length > 2) {
         alert("Conductor no puede tener mas de 2 vehiculos habilitados");
         return;
       }
 
-      const userUID = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+      const userUID = usuariosAltaModal.getAttribute("data-reference");
       const message = habilitado
         ? "Estas seguro de deshabilitar el vehiculo al usuario?"
         : "Estas seguro de habilitar el vehiculo al usuario";
@@ -2282,7 +2266,8 @@
 
         if (documentUpdated) {
           alert("Se ha actualizado de manera correcta.");
-          if (habilitado) {
+          if (!habilitado) {
+            // console.log("HABILITADO");
             await updateRealtimeUserVehicle(element, userUID);
           }
           await getAndRenderVehiclesFromUser();
@@ -2303,6 +2288,7 @@
           tipo: "LIBRE",
           color,
         };
+
         const isUpdated = await firebase
           .database()
           .ref()
@@ -2310,9 +2296,9 @@
           .update(vehicleData)
           .then(() => true)
           .catch(() => false);
-        console.log({ isUpdated });
+        // console.log({ isUpdated });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
 
@@ -2320,26 +2306,30 @@
       const { marca, modelo, placa, habilitado, uid } = element;
       const tableRow = document.createElement("tr");
       const rowCellIndex = document.createElement("td");
-      const rowCellBrandModel = document.createElement("td");
+      const rowCellBrand = document.createElement("td");
+      const rowCellModel = document.createElement("td");
       const rowCellPlaca = document.createElement("td");
       const rowCellStatus = document.createElement("td");
 
       rowCellIndex.insertAdjacentText("afterbegin", index + 1);
-      rowCellBrandModel.insertAdjacentText("afterbegin", marca + " " + modelo);
+      rowCellBrand.insertAdjacentText("afterbegin", marca);
+      rowCellModel.insertAdjacentText("afterbegin", modelo);
       rowCellPlaca.insertAdjacentText("afterbegin", placa);
 
       const checkboxStatus = document.createElement("button");
       checkboxStatus.setAttribute("type", "button");
       checkboxStatus.setAttribute("data-status", habilitado);
+      checkboxStatus.setAttribute("data-reference", uid);
       checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
       checkboxStatus.addEventListener("click", async function (e) {
-        await statusFunction(element, array);
+        await changeVehicleStatus(element, array);
       });
       checkboxStatus.setAttribute("class", "statusButtonVehicle");
       rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
 
       tableRow.insertAdjacentElement("beforeend", rowCellIndex);
-      tableRow.insertAdjacentElement("beforeend", rowCellBrandModel);
+      tableRow.insertAdjacentElement("beforeend", rowCellBrand);
+      tableRow.insertAdjacentElement("beforeend", rowCellModel);
       tableRow.insertAdjacentElement("beforeend", rowCellPlaca);
       tableRow.insertAdjacentElement("beforeend", rowCellStatus);
 
@@ -2347,19 +2337,19 @@
     }
 
     async function getAndRenderVehiclesFromUser() {
-      document.querySelector("#placa").value = "";
-      const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+      placasBuscador.value = "";
+      const uid = usuariosAltaModal.getAttribute("data-reference");
 
       const vehiclesFromUser = await getVehiclesFromInnerDocumentCollection(uid, CONDUCTORES_COLLECTION);
       if (vehiclesFromUser.length === 0) return;
-      document.querySelector("table#vehicles-list tbody").innerHTML = "";
-      document.querySelector("#vehiculos-searched").innerHTML = "";
+      vehiculosTBody.innerHTML = "";
+      vehiculosEncontrados.innerHTML = "";
       const table = document.createElement("table");
       const tableBody = document.createElement("tbody");
 
       vehiclesFromUser.forEach((element, index, array) => {
         const tableRow = createVehicleRow(element, index, array);
-        document.querySelector("table#vehicles-list tbody").insertAdjacentElement("beforeend", tableRow);
+        vehiculosTBody.insertAdjacentElement("beforeend", tableRow);
       });
     }
 
@@ -2378,17 +2368,16 @@
           const file = e.target.files[0];
           const reader = new FileReader();
           const { name, type } = e.target;
-          // console.log(e.target.files[0]);
+          // // console.log(e.target.files[0]);
 
           const responseUpload = await uploadImages(file, name, file.name.split(".")[1]);
           if (responseUpload) {
             reader.onload = function (event) {
               const url = event.target.result;
-              const dom = name + "Preview";
-              const imageDom = document.getElementById(dom);
+              const imageDom = document.querySelector(`#${name}Preview`);
               imageDom.src = file.name.split(".")[1] === "pdf" ? "https://www.svgrepo.com/show/255818/pdf.svg" : url;
             };
-            // console.log(file);
+            // // console.log(file);
             reader.readAsDataURL(file);
           }
         } catch (error) {
@@ -2399,7 +2388,7 @@
 
     const uploadImages = async (file, name, type) => {
       try {
-        const uid = document.getElementById("usuariosAltaModal").getAttribute("data-reference");
+        const uid = usuariosAltaModal.getAttribute("data-reference");
 
         if (file === null || file === undefined) return;
 
@@ -2409,7 +2398,9 @@
         const url = await reference.getDownloadURL();
 
         if (url) {
-          // console.log("Se ha cargado el archivo de manera correcta");
+          if (name === "fotografiaConductor") {
+            await firebase.database().ref().child(`Users/Drivers/${uid}`).update({ image: url });
+          }
           return true;
         } else {
           throw new Error();
@@ -2426,7 +2417,7 @@
         const searchString = e.target[0].value;
         const response = await firestore
           .collection(VEHICULOS_COLLECTION)
-          .where("placa", "==", searchString.toUpperCase())
+          .where("placa", "==", String(searchString).toLowerCase())
           .get()
           .then((snapshot) => {
             const res = [];
@@ -2439,8 +2430,6 @@
             console.error(err);
           });
         if (response) {
-          const box = document.querySelector("#vehiculos-searched");
-
           response.map((item, index, array) => {
             const { id } = item;
             const { marca, modelo, placa, propietario, owners } = item.data;
@@ -2448,7 +2437,7 @@
             const list = document.createElement("div");
             list.setAttribute("class", "optionVehicle");
             const span = document.createElement("span");
-            span.innerText = `${marca} ${modelo} - ${placa}`;
+            span.innerText = String(`${marca} ${modelo} - ${placa}`).toUpperCase();
             list.insertAdjacentElement("beforeend", span);
 
             const button = document.createElement("button");
@@ -2459,7 +2448,7 @@
                 negateAccess();
                 return;
               }
-              const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+              const uid = usuariosAltaModal.getAttribute("data-reference");
               const message = "Estas seguro de asignar este vehiculo al conductor?";
               if (confirm(message)) {
                 const hasBeenAssigned = await firestore
@@ -2487,7 +2476,7 @@
             button.innerText = "Asignar";
 
             list.insertAdjacentElement("beforeend", button);
-            box.insertAdjacentElement("beforeend", list);
+            vehiculosEncontrados.insertAdjacentElement("beforeend", list);
           });
         }
       } catch (error) {
@@ -2504,7 +2493,7 @@
       permission.split("$").forEach((permit) => {
         const name = permit.split(",")[0];
         const value = permit.split(",")[1];
-        // console.log({ name, value });
+        // // console.log({ name, value });
         permissions[name] = value;
       });
     };
@@ -2517,16 +2506,17 @@
       const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       return pattern.test(email);
     };
+
     document.querySelectorAll("div.imageDelete").forEach((element) => {
       element.addEventListener("click", function (e) {
         const imageTag = e.currentTarget.parentNode.children[0];
         const url = imageTag.getAttribute("src");
-        console.log({ url, imageTag });
+        // console.log({ url, imageTag });
         if (url === "../assets/img/nopic.png") {
           return;
         }
         const fileName = url.split("?")[0].split("__")[1];
-        const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+        const uid = usuariosAltaModal.getAttribute("data-reference");
         const reference = storage.ref().child(`${CONDUCTORES_COLLECTION}/${uid}/__${fileName}`);
         reference
           .delete()

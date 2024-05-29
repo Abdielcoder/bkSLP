@@ -103,12 +103,12 @@
                       ROLES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="#">
+                  <!-- <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="../admin/clientes/index.html">
                       <span class="link-icons material-icons-sharp">person_pin</span>
                       CLIENTES
                     </a>
-                  </li>
+                  </li> -->
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../admin/rates.html">
                       <span class="link-icons material-icons-sharp">paid</span>
@@ -124,9 +124,9 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item" id="clientes-menu-li">
-              <a class="nav-link" href="#">
-                <span class="link-icons material-icons-sharp"> airline_seat_recline_extra</span>
+            <li class="nav-item">
+              <a class="nav-link" href="../admin/clientes/index.html">
+                <span class="link-icons material-icons-sharp">person_pin</span>
                 CLIENTES
               </a>
             </li>
@@ -596,45 +596,51 @@
 
             <div class="formContainer" data-tabcontainer="accounts" data-visibility="false" style="padding-top: 20px">
               <div class="containerBody">
-                <p style="font-size: 12px; font-weight: bold; margin-left: 4px">Buscar vehículo por numero de placa:</p>
                 <div class="placa-search">
                   <form id="userVehicleSearch">
-                    <input
-                      type="text"
-                      placeholder="Introducir placa del vehículo"
-                      name="placa"
-                      id="placa"
-                      class="search-placa"
-                      style="flex-grow: 1; outline: none"
-                    />
-                    <button type="submit" class="placa-button-icon">
-                      <svg
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                          <path
-                            d="M15 15L21 21"
-                            stroke="#323232"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          ></path>
-                          <path
-                            d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                            stroke="#323232"
-                            stroke-width="2"
-                          ></path>
-                        </g>
-                      </svg>
-                    </button>
+                    <div class="formGroup" style="width: 100%">
+                      <label for="placaSearch" style="font-size: 16px">Buscar vehículo por numero de placa:</label>
+                      <div style="display: flex; width: 100%">
+                        <input
+                          type="text"
+                          placeholder="Introducir placa del vehículo"
+                          name="placaSearch"
+                          id="placaSearch"
+                          class="search-placa"
+                          style="flex-grow: 1; outline: none"
+                        />
+                        <button type="submit" class="placa-button-icon">
+                          <svg
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                              <path
+                                d="M15 15L21 21"
+                                stroke="#323232"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></path>
+                              <path
+                                d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                                stroke="#323232"
+                                stroke-width="2"
+                              ></path>
+                            </g>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
                   </form>
                 </div>
+                <br />
+                <p>Vehículo encontrado</p>
                 <div
                   id="vehiculos-searched"
                   style="
@@ -647,11 +653,12 @@
                   "
                 ></div>
                 <div id="vehicles-container-list" data-reference="">
-                  <table id="vehicles-list">
+                  <table id="vehicles-list" style="text-transform: uppercase">
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Marca y modelo</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
                         <th>Placas</th>
                         <th>Habilitado</th>
                       </tr>
@@ -1816,17 +1823,13 @@
     let isUserSelected = false;
     const CONCESIONARIOS_COLLECTION = "concesionarios";
     const VEHICULOS_COLLECTION = "vehiculos";
-    // Main Table
     var usersTable = document.querySelector("#concesionariosTable");
     var usersDataTableContext = null;
-    // Modal Dialogs
     const modalDialogAdd = document.querySelector("#usuariosAltaModal");
     const modalDialogEdit = document.querySelector("#usuariosEditModal");
     const modalDialogDelete = document.querySelector("#usuariosBajaModal");
-    // Modal Form (Add)
     const modalForm = document.querySelector("form#userAlta");
     const deleteForm = document.querySelector("#userBaja");
-    // Modal Buttons
     const userAddbutton = document.querySelector("button#userAdd");
     const userAddSubmitButton = document.querySelector("#modalFormSubmit");
     const userUpdateButton = document.querySelector("#modalFormUpdateSubmit");
@@ -1905,7 +1908,7 @@
       GLOBAL_USER_DATA = null;
       document.querySelector("table#vehicles-list tbody").innerHTML = "";
       document.querySelector("div#vehiculos-searched").innerHTML = "";
-      document.querySelector("input#placa").value = "";
+      document.querySelector("input#placaSearch").value = "";
       document.querySelector("#usuariosAltaModal").setAttribute("data-reference", "");
       document.querySelectorAll("textarea").forEach((element) => {
         element.value = "";
@@ -2146,40 +2149,6 @@
       document.querySelector("table#concesionariosTable tbody").insertAdjacentElement("beforeend", tableRow);
     }
 
-    // function createRowToTable(list) {
-    //   const tableRow = document.createElement("tr");
-    //   list.cells.forEach((item) => {
-    //     const tableCell = document.createElement("td");
-    //     const cellNode = document.createTextNode(item);
-    //     tableCell.appendChild(cellNode);
-    //     tableRow.appendChild(tableCell);
-    //   });
-
-    //   // const createCheckbox = document.createElement("td");
-    //   // const checkboxElement = document.createElement("input");
-    //   // checkboxElement.type = "checkbox";
-    //   // checkboxElement.classList.add("row-element");
-    //   // checkboxElement.dataset.uid = list.uid;
-
-    //   // checkboxElement.addEventListener("click", function (e) {
-    //   //   if (isUserSelected) {
-    //   //     document.querySelectorAll(".tools").forEach((element) => {
-    //   //       element.remove();
-    //   //     });
-    //   //     isUserSelected = false;
-    //   //     return;
-    //   //   }
-    //   //   isUserSelected = true;
-    //   //   const tableTopContainer = document.querySelector("#concesionariosTable_filter");
-    //   const tools = generateToolsElements(list.uid);
-    //   //   tableRow.insertAdjacentElement("beforebegin", toolsElements);
-    //   // });
-
-    //   // createCheckbox.insertAdjacentElement("beforeend", checkboxElement);
-    //   tableRow.append(tools);
-    //   document.querySelector("table#concesionariosTable tbody").insertAdjacentElement("beforeend", tableRow);
-    // }
-
     function createActionButtons(u) {
       const box = document.createElement("td");
       box.classList.add("cellButtonTool");
@@ -2386,7 +2355,7 @@
       })
     );
 
-    async function statusFunction(element, array) {
+    async function changeVehicleStatus(element, array) {
       const { uid, habilitado } = element;
       if (array?.filter((item) => item.habilitado === true).length > 2) {
         alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
@@ -2418,7 +2387,7 @@
       }
     }
 
-    async function statusFunctionConductores(element, array) {
+    async function changeStatusConductores(element, array) {
       const { uid, habilitado } = element;
       if (array?.filter((item) => item.habilitado === true).length > 2) {
         alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
@@ -2454,26 +2423,30 @@
       const { marca, modelo, placa, habilitado, uid } = element;
       const tableRow = document.createElement("tr");
       const rowCellIndex = document.createElement("td");
-      const rowCellBrandModel = document.createElement("td");
+      const rowCellBrand = document.createElement("td");
+      const rowCellModel = document.createElement("td");
       const rowCellPlaca = document.createElement("td");
       const rowCellStatus = document.createElement("td");
 
       rowCellIndex.insertAdjacentText("afterbegin", index + 1);
-      rowCellBrandModel.insertAdjacentText("afterbegin", marca + " " + modelo);
+      rowCellBrand.insertAdjacentText("afterbegin", marca);
+      rowCellModel.insertAdjacentText("afterbegin", modelo);
       rowCellPlaca.insertAdjacentText("afterbegin", placa);
 
       const checkboxStatus = document.createElement("button");
       checkboxStatus.setAttribute("type", "button");
       checkboxStatus.setAttribute("data-status", habilitado);
+      checkboxStatus.setAttribute("data-reference", uid);
       checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
       checkboxStatus.addEventListener("click", async function (e) {
-        await statusFunction(element, array);
+        await changeVehicleStatus(element, array);
       });
       checkboxStatus.setAttribute("class", "statusButtonVehicle");
       rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
 
       tableRow.insertAdjacentElement("beforeend", rowCellIndex);
-      tableRow.insertAdjacentElement("beforeend", rowCellBrandModel);
+      tableRow.insertAdjacentElement("beforeend", rowCellBrand);
+      tableRow.insertAdjacentElement("beforeend", rowCellModel);
       tableRow.insertAdjacentElement("beforeend", rowCellPlaca);
       tableRow.insertAdjacentElement("beforeend", rowCellStatus);
 
@@ -2502,7 +2475,7 @@
       checkboxStatus.setAttribute("data-status", habilitado);
       checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
       checkboxStatus.addEventListener("click", async function (e) {
-        await statusFunctionConductores(element, array);
+        await changeStatusConductores(element, array);
       });
       checkboxStatus.setAttribute("class", "statusButtonVehicle");
       rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
@@ -2518,7 +2491,7 @@
     }
 
     async function getAndRenderVehiclesFromUser() {
-      document.querySelector("#placa").value = "";
+      document.querySelector("#placaSearch").value = "";
       const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
 
       const vehiclesFromUser = await getVehiclesFromInnerDocumentCollection(uid, CONCESIONARIOS_COLLECTION);
@@ -2615,7 +2588,7 @@
         const searchString = e.target[0].value;
         const response = await firestore
           .collection(VEHICULOS_COLLECTION)
-          .where("placa", "==", searchString.toUpperCase())
+          .where("placa", "==", String(searchString).toLowerCase())
           .get()
           .then((snapshot) => {
             const res = [];
@@ -2637,7 +2610,7 @@
             const list = document.createElement("div");
             list.setAttribute("class", "optionVehicle");
             const span = document.createElement("span");
-            span.innerText = `${marca} ${modelo} - ${placa}`;
+            span.innerText = String(`${marca} ${modelo} - ${placa}`).toUpperCase();
             list.insertAdjacentElement("beforeend", span);
 
             const button = document.createElement("button");
@@ -2779,14 +2752,12 @@
       element.addEventListener("click", function (e) {
         const imageTag = e.currentTarget.parentNode.children[0];
         const url = imageTag.getAttribute("src");
-        console.log({ url, imageTag });
         if (url === "../assets/img/nopic.png") {
           return;
         }
         const fileName = url.split("?")[0].split("__")[1];
         const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
         const reference = storage.ref().child(`${CONCESIONARIOS_COLLECTION}/${uid}/__${fileName}`);
-        // console.log({ reference: `${CONCESIONARIOS_COLLECTION}/${uid}/__${fileName}` });
         reference
           .delete()
           .then((snapshot) => {

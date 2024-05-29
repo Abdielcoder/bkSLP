@@ -27,6 +27,7 @@ table#vehicle-list tbody tr:hover {
 table#vehicle-list thead th {
   color: #2d6e3d;
   text-align: start;
+  background-color: #FFF;
 }
 
 table#vehicle-list tbody tr td {

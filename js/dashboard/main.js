@@ -1,5 +1,6 @@
 import { totalDriversChart, activeDriversChart, padronChart, data as DT } from "../charts/charts.default.js";
-import { firestore } from "../config/config.js";
+
+const firestore = firebase.firestore();
 // import { logs_accesos } from "../config/firestore-config.js";
 
 const ctx = document.querySelector("canvas#myChart").getContext("2d");
@@ -62,8 +63,7 @@ const showAccesos = async () => {
 const showAccesosHTML = (documents) => {
   const table = document.querySelector("table#access-list tbody");
 
-  documents.forEach((doc) => {
-    console.log(doc);
+  documents.forEach((doc) => { 
     const trTag = document.createElement("tr");
     const emailTag = document.createElement("td");
     emailTag.innerHTML = doc.email;
@@ -80,42 +80,7 @@ const showAccesosHTML = (documents) => {
     table.append(trTag);
   });
 };
-
-const formatDate = (dx) => {
-  if (dx === undefined) return "n/a";
-
-  const MONTHS = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
-
-  if (dx.includes("T") === true) {
-    const dateSplitted = dx.split("T");
-    const d = {
-      year: dateSplitted[0].split("-")[0],
-      month: dateSplitted[0].split("-")[1],
-      day: dateSplitted[0].split("-")[2],
-      hour: dateSplitted[1].split(":")[0],
-      min: dateSplitted[1].split(":")[1],
-      seg: dateSplitted[1].split(":")[2].split(".")[0],
-    };
-    return {
-      date: `${d.day} de ${MONTHS[parseInt(d.month) - 1]} del ${d.year}`,
-      time: `${d.hour}:${d.min}:${d.seg}`,
-    };
-  }
-};
-
+  
 const formatCurrency = (cx) => {
   const coin = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
   return coin.format(cx);
@@ -123,56 +88,3 @@ const formatCurrency = (cx) => {
 
 getDataTRips();
 showAccesos();
-
-// DB_WORKING.on("child_added", snap => {
-//   if(myChart2 !== undefined) return;
-//   const v = w.l;
-//   Object.assign(w, { l : v + 1 });
-//   myChart.data.datasets[0].data = [a.l, v + 1, d.l - (a.l + (v + 1))];
-//   myChart2.data.datasets[0].data = [a.l, v + 1];
-//   myChart.update();
-//   myChart2.update();
-// });
-
-// DB_WORKING.on("child_removed", snap => {
-//   const v = w.l;
-//   Object.assign(w, { l : v - 1 });
-//   myChart.data.datasets[0].data = [a.l, v - 1, d.l - (a.l + (v - 1))];
-//   myChart2.data.datasets[0].data = [a.l, v - 1];
-//   myChart.update();
-//   myChart2.update();
-// });
-
-// DB_ACTIVE.on("child_added", snap => {
-//   if(myChart2 !== undefined) return;
-//   const v = a.l;
-//   Object.assign(a, { l : v + 1 });
-//   myChart.data.datasets[0].data = [v + 1, w.l, d.l - ((v + 1) + w.l)];
-//   myChart2.data.datasets[0].data = [v + 1, w.l];
-//   myChart.update();
-//   myChart2.update();
-// });
-
-// DB_ACTIVE.on("child_removed", snap => {
-//   const v = a.l;
-//   Object.assign(a, { l : v - 1 });
-//   myChart.data.datasets[0].data = [v - 1, w.l, d.l - ((v - 1) + w.l)];
-//   myChart2.data.datasets[0].data = [v - 1, w.l];
-//   myChart.update();
-//   myChart2.update();
-// });
-
-// DB_DRIVER.on("child_added", snap => {
-//   if(myChart !== undefined) return;
-//   const v = d.l;
-//   Object.assign(d, { l: v + 1});
-//   myChart.data.datasets[0].data = [ a.l, w.l, (v + 1) - (a.l + w.l) ];
-//   myChart3.data.datasets[0].data = [d.l, (8000 - (v + 1))];
-// });
-
-// DB_DRIVER.on("child_removed", snap => {
-//   const v = d.l;
-//   Object.assign(d, { l: v - 1});
-//   myChart.data.datasets[0].data = [ a.l, w.l, (v - 1) - (a.l + w.l) ];
-//   myChart3.data.datasets[0].data = [d.l, (8000 - (v - 1))];
-// });

@@ -32,6 +32,7 @@ table#concesionariosTable thead tr th {
   color: #2d6e3d;
   text-align: start;
   font-size: 14px;
+  background-color: #fff;
   white-space: nowrap;
 }
 
@@ -234,25 +235,30 @@ ul.tab-list li:first-child {
   }
 }
 
+
 div#vehicles-container-list {
-  padding: 10px;
+  padding: 1rem 0;
+
 }
 
-table#vehicles-list,
-table#usuarios-list {
+table#vehicles-list {
   width: 100%;
   border-collapse: collapse;
+  text-transform: uppercase;
 }
 
-table#vehicles-list td,
-table#vehicles-list th,
-table#usuarios-list td,
-table#usuarios-list th {
-  padding: 16px 8px;
+table#vehicles-list td {
+  padding: 4px 6px;
   text-align: start;
-  border-bottom: 1px solid #808080b3;
+  border-bottom: 1px solid #8080803a;
   font-size: 14px;
-  text-transform: uppercase;
+}
+table#vehicles-list th {
+  padding: 4px 6px;
+  color: #2d6e3d;
+  text-align: start;
+  font-size: 14px;
+  border-bottom: 1px solid #808080b3;
   white-space: nowrap;
 }
 

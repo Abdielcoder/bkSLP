@@ -1,0 +1,60 @@
+main {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+table#clientes {
+  width: 100%;
+  display: table;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+table#clientes tbody tr.even {
+  background-color: #fff;
+}
+
+table#clientes tbody tr.odd {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+table#clientes tbody tr:hover {
+  background-color: #0c435a60;
+  cursor: pointer;
+}
+
+table#clientes tbody tr td.cellButtonTool {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 4px;
+}
+
+table#clientes thead tr th {
+  color: #2d6e3d;
+  text-align: start;
+  font-size: 14px;
+  background-color: #fff;
+  white-space: nowrap;
+}
+
+table#clientes tbody tr td {
+  font-size: 14px;
+  height: 2.5rem;
+  padding: 10px 14px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap;
+}
+
+.clientProfilePic {
+  width: 50px;
+  height: 50px;
+  display: block;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.middle-content {
+  margin-inline: auto;
+}

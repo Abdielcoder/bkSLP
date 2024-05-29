@@ -70,6 +70,7 @@ const createAdminUser = async () => {
   const formObject = await userReducerFormData();
   const userExists = CONTEXT?.some((item) => item.usuario === formObject.usuario);
   if (userExists) return errorHandler("userExists", { user: formObject.email });
+  if (!formObject.email.includes("@tutaxislp.com.mx")) return errorHandler("invalid-domain", formObject.email);
   const hasEmptySpaces = Object.values(formObject).some((item) => item === "");
   if (hasEmptySpaces) return errorHandler("emptySpaces");
 
@@ -282,7 +283,7 @@ function createActionButtons(uid) {
   elementSetAttributes(resetPasswordButton, resetPasswordAttrs);
   elementSetAttributes(deleteButton, deleteAttrs);
   elementSetAttributes(tableCell, { "data-type": "tools" });
-  tableCell.classList.add("cellButtonTool")
+  tableCell.classList.add("cellButtonTool");
 
   const updateButtonHTML = `<span>Actualizar</span>`;
   const resetPasswordButtonHTML = `<span>Reestablecer contraseña</span>`;
@@ -396,6 +397,11 @@ const errorHandler = (code, args) => {
       window.alert("El usuario [" + args.user + "] ya existe, favor de seleccionar otro nombre de usuario");
       break;
     case "emptySpaces":
+      break;
+    case "invalid-domain":
+      window.alert(
+        "La plataforma Backoffice no permite el registro de usuarios con correo fuera del dominio Tu Taxi. Intente con un correo valido."
+      );
       break;
     default:
       window.alert("Se ha presentado un error, favor de verificar los datos introducidos.");

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <link rel="icon" href="../../assets/icons/favicon.ico" />
-    <title>Tu Taxi | Usuarios</title>
+    <title>Tu Taxi | Clientes</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" />
@@ -104,7 +104,7 @@
                     </a>
                   </li>
                   <!-- <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../clientes/index.html">
+                    <a class="nav-sublink" href="#">
                       <span class="link-icons material-icons-sharp">person_pin</span>
                       CLIENTES
                     </a>
@@ -125,7 +125,7 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../clientes/index.html">
+              <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">person_pin</span>
                 CLIENTES
               </a>
@@ -148,27 +148,29 @@
       <!-- Main -->
       <main>
         <div class="page-title">
-          <h2 class="header-module-title">Administradores Backoffice</h2>
+          <h2 class="header-module-title">Clientes</h2>
         </div>
         <div class="container">
           <div class="container-module col-12">
-            <div class="module-header">
+            <!-- <div class="module-header">
               <button id="userAdd" type="button" class="create-new">
                 <span>Alta Administrador</span>
               </button>
-            </div>
+            </div> -->
             <div class="module-body">
               <div class="table-container">
-                <table id="table-administradores">
+                <table id="clientes">
                   <thead>
                     <tr>
-                      <th>Nombre</th>
-                      <th>Correo</th>
-                      <th>Usuario</th>
-                      <th>Departamento</th>
-                      <th>Rol</th>
+                      <th>Perfil</th>
+                      <th>Correo Electrónico</th>
+                      <th>Nombre Completo</th>
+                      <th>Genero</th>
+                      <th>Teléfono</th>
+                      <th>Fecha de nacimiento</th>
+                      <th># de viajes</th>
+                      <th>Ultimo viaje</th>
                       <th>Fecha de alta</th>
-                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -183,118 +185,6 @@
       <footer>
         <p id="copyrightFooter"></p>
       </footer>
-    </div>
-
-    <div id="modalForm" class="modalForm" data-document="null" data-submit="null">
-      <div class="modal-background close-modal"></div>
-      <div class="modalContent">
-        <div class="containerHead">
-          <h2
-            style="
-              font-size: 24px;
-              color: #123019;
-              line-height: 36px;
-              font-weight: 600;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              font-family: Montserrat-Regular;
-              text-align: start;
-            "
-          >
-            Alta Administrador
-          </h2>
-        </div>
-        <div class="containerBody" style="max-height: 600px; overflow-y: auto; padding-top: 16px">
-          <form action="" class="form-content" id="administradores">
-            <div class="form-columns">
-              <div class="formGroup inputForm" style="max-width: 100%">
-                <label for="nombre">Nombre Completo <span style="color: rgb(185, 39, 39)">*</span></label>
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  class="only-letters"
-                  maxlength="80"
-                  placeholder="Nombre completo"
-                  style="text-transform: uppercase"
-                  required
-                />
-
-                <span class="error-message">
-                  <svg
-                    width="12px"
-                    height="12px"
-                    viewBox="0 0 512 512"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    fill="#000000"
-                  >
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                      <title>warning-filled</title>
-                      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <g id="add" fill="#d52a2a" transform="translate(32.000000, 42.666667)">
-                          <path
-                            d="M246.312928,5.62892705 C252.927596,9.40873724 258.409564,14.8907053 262.189374,21.5053731 L444.667042,340.84129 C456.358134,361.300701 449.250007,387.363834 428.790595,399.054926 C422.34376,402.738832 415.04715,404.676552 407.622001,404.676552 L42.6666667,404.676552 C19.1025173,404.676552 7.10542736e-15,385.574034 7.10542736e-15,362.009885 C7.10542736e-15,354.584736 1.93772021,347.288125 5.62162594,340.84129 L188.099293,21.5053731 C199.790385,1.04596203 225.853517,-6.06216498 246.312928,5.62892705 Z M224,272 C208.761905,272 197.333333,283.264 197.333333,298.282667 C197.333333,313.984 208.415584,325.248 224,325.248 C239.238095,325.248 250.666667,313.984 250.666667,298.624 C250.666667,283.264 239.238095,272 224,272 Z M245.333333,106.666667 L202.666667,106.666667 L202.666667,234.666667 L245.333333,234.666667 L245.333333,106.666667 Z"
-                            id="Combined-Shape"
-                          ></path>
-                        </g>
-                      </g>
-                    </g>
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <div class="form-columns flex-nowrap">
-              <div class="formGroup inputForm" style="max-width: 100%">
-                <label for="email">Corréo electrónico <span style="color: rgb(185, 39, 39)">*</span></label>
-                <input type="email" id="email" name="email" placeholder="Corréo electrónico" required />
-              </div>
-              <div class="formGroup inputForm" style="max-width: 100%">
-                <label for="usuario">Nombre usuario</label>
-                <input
-                  type="text"
-                  id="usuario"
-                  name="usuario"
-                  maxlength="20"
-                  class="only-characters"
-                  placeholder="Usuario"
-                />
-              </div>
-            </div>
-            <div class="form-columns flex-nowrap">
-              <div class="formGroup inputForm" style="max-width: 100%">
-                <label for="departamento">Departamento</label>
-                <input
-                  type="text"
-                  id="departamento"
-                  name="departamento"
-                  placeholder="Departamento"
-                  class="only-characters-spaces"
-                  maxlength="20"
-                  required
-                />
-              </div>
-              <div class="formGroup selectForm" style="max-width: 100%">
-                <label for="rolClave">Rol desempeñado <span style="color: rgb(185, 39, 39)">*</span></label>
-                <select name="rolClave" id="rolClave" required>
-                  <option value="0">Seleccione una opción</option>
-                </select>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="containerFooter">
-          <div class="buttonsTools">
-            <button type="button" style="width: 100%; max-width: 100%" class="close-button close-modal">
-              CANCELAR
-            </button>
-            <button type="button" style="width: 100%; max-width: 100%" id="modalFormSubmit">Aceptar</button>
-          </div>
-        </div>
-      </div>
     </div>
   </body>
   <script>
@@ -346,5 +236,134 @@
     type="text/javascript"
     src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
   ></script>
-  <script type="module" src="./index.js"></script>
+  <script type="module" defer>
+    const firestore = firebase.firestore();
+    const clientes = firestore.collection("clientes");
+    let tableClientes = document.querySelector("table#clientes");
+    let dataTableContext = null;
+    let CLIENTES_COLLECTION_DATA = [];
+
+    async function getClientesCollection() {
+      return await clientes.get().then((snapshot) => {
+        let array = [];
+        snapshot.docs.forEach((document) => {
+          const data = document.data();
+          const object = {
+            imageURL: data.imageURL,
+            correoElectronico: data.correoElectronico,
+            nombreCompleto: data.nombreCompleto,
+            genero: data.genero,
+            telefono: data.telefono,
+            fechaNacimiento: data.fechaNacimiento,
+            numeroViajes: data.numeroViajes,
+            ultimoViaje: data.ultimoViaje,
+            fechaAlta: data.fechaAlta,
+            uid: document.id,
+          };
+          array.push(object);
+        });
+        return array;
+      });
+    }
+
+    function generateRowsForTableBody(array) {
+      try {
+        array.forEach((client, index, array) => {
+          const tableRow = document.createElement("tr");
+          tableRow.dataset.reference = client.uid;
+          const dataFields = Object.entries(client);
+          dataFields.slice(0, -1).forEach(([key, value]) => {
+            const cell = createCellElement(key, value);
+            tableRow.insertAdjacentElement("beforeend", cell);
+          });
+          tableClientes.children[1].insertAdjacentElement("beforeend", tableRow);
+        });
+        return true;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function createCellElement(key, value) {
+      const cell = document.createElement("td");
+      if (key === "imageURL") {
+        const imageTag = document.createElement("img");
+        imageTag.src = value;
+        imageTag.alt = "Foto de Perfil";
+        imageTag.className = "clientProfilePic middle-content";
+        cell.insertAdjacentElement("beforeend", imageTag);
+      } else {
+        cell.innerHTML = key.includes("fecha") || key == "ultimoViaje" ? formatStringDate(value) : value;
+        cell.dataset.key = key;
+      }
+      return cell;
+    }
+
+    function formatStringDate(value) {
+      const monthStrings = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+      ];
+      if (value.includes("T")) {
+        const [date, time] = value.split("T");
+        const [year, month, day] = date.split("-");
+        const [hour, minutes, seconds] = time.split(":");
+
+        const monthName = monthStrings[parseInt(month) - 1];
+
+        return `${day} de ${monthName} del ${year} ${hour}:${minutes}:${seconds.split(".")[0]}`;
+      }
+
+      const [year, month, day] = value.split("-");
+      const monthName = monthStrings[parseInt(month) - 1];
+      return `${day} de ${monthName} del ${year}`;
+    }
+
+    function initializeDataTable(data) {
+      generateRowsForTableBody(data);
+      dataTableContext = new DataTable(tableClientes, {
+        dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
+        buttons: [
+          {
+            extend: "collection",
+            text: "Exportar",
+            buttons: ["excelHtml5", "pdfHtml5", "print"],
+          },
+        ],
+        oLanguage: {
+          sSearch: "Busqueda:",
+          oPaginate: {
+            sFirst: "Primera",
+            sPrevious: "Anterior",
+            sNext: "Siguiente",
+            sLast: "Ultima",
+          },
+        },
+        language: {
+          info: "Se muestran los registros _START_ al _END_ de _TOTAL_. ",
+          infoEmpty: "No se muestran registros.",
+          emptyTable: "No se registran datos en la tabla.",
+          infoFiltered: "(Filtrado de _MAX_ registros).",
+        },
+      });
+    }
+
+    async function main() {
+      const response = await getClientesCollection();
+      CLIENTES_COLLECTION_DATA.push(...response);
+      initializeDataTable(response);
+    }
+
+    main();
+  </script>
 </html>
