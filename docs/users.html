@@ -310,8 +310,7 @@
                         required
                         class="only-characters"
                         style="text-transform: uppercase"
-                        maxlength="13"
-                        data-length="13"
+                        maxlength="13" 
                       />
                     </div>
                     <div class="formGroup selectForm">
@@ -568,7 +567,9 @@
                 <div class="placa-search">
                   <form id="userVehicleSearch">
                     <div class="formGroup" style="width: 100%">
-                      <label for="placaSearch" style="font-size: 16px">Buscar vehículo por numero de placa:</label>
+                      <label class="placa-search-text" for="placaSearch" style="font-size: 16px"
+                        >Buscar vehículo por numero de placa:</label
+                      >
                       <div style="display: flex; width: 100%">
                         <input
                           type="text"
@@ -608,13 +609,11 @@
                     </div>
                   </form>
                 </div>
-                <br />
-                <p>Vehículo encontrado</p>
                 <div
                   id="vehiculos-searched"
                   style="
                     width: 100%;
-                    display: block;
+                    display: none;
                     min-height: 40px;
                     padding: 0.5rem;
                     border: 1px solid gray;
@@ -1705,6 +1704,7 @@
       firestore,
       storage,
     } from "../js/config/config.js";
+    import Iconos from "../constants/icons.js";
 
     let permissions = {};
     const CONDUCTORES_COLLECTION = "conductores";
@@ -1725,14 +1725,9 @@
     const placasBuscador = document.querySelector("#placaSearch");
     const vehiculosEncontrados = document.querySelector("#vehiculos-searched");
     const addCancelButton = document.querySelectorAll("button.modalFormCancel");
-    const vehiculosTBody = document.querySelector("table#vehicles-list tbody");
+    const vehicleTableBody = document.querySelector("table#vehicles-list tbody");
     let usersDataTableContext = null;
     let GLOBAL_USER_DATA = null;
-
-    const statusTrueIcon =
-      '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#399220"></path> </g></svg>';
-    const statusFalseIcon =
-      '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM8.96965 8.96967C9.26254 8.67678 9.73742 8.67678 10.0303 8.96967L12 10.9394L13.9696 8.96969C14.2625 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0606 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73744 15.3232 9.26256 15.3232 8.96967 15.0303C8.67678 14.7374 8.67678 14.2626 8.96967 13.9697L10.9393 12L8.96965 10.0303C8.67676 9.73744 8.67676 9.26256 8.96965 8.96967Z" fill="#c7c7c7"></path> </g></svg>';
 
     addCancelButton.forEach((element) => {
       element.addEventListener("click", () => {
@@ -1797,7 +1792,7 @@
         return;
       }
       GLOBAL_USER_DATA = null;
-      vehiculosTBody.innerHTML = "";
+      vehicleTableBody.innerHTML = "";
       vehiculosEncontrados.innerHTML = "";
       placasBuscador.value = "";
       usuariosAltaModal.setAttribute("data-reference", "");
@@ -2241,10 +2236,15 @@
       })
     );
 
-    async function changeVehicleStatus(element, array) {
+    async function changeVehicleStatus(element, array, status) {
       const { uid, habilitado } = element;
-      if (array?.filter((item) => item.habilitado === true).length > 2) {
-        alert("Conductor no puede tener mas de 2 vehiculos habilitados");
+      const totalHabilitado = document.querySelectorAll("button.statusButtonVehicle");
+      const statusHabilitados = [];
+      totalHabilitado.forEach((element) => {
+        statusHabilitados.push(element.dataset.status == "true");
+      });
+      if (statusHabilitados.filter((e) => e == true).length >= 2 && status == true) {
+        alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
         return;
       }
 
@@ -2304,53 +2304,107 @@
 
     function createVehicleRow(element, index, array) {
       const { marca, modelo, placa, habilitado, uid } = element;
+
+      // Crear la fila de la tabla
       const tableRow = document.createElement("tr");
-      const rowCellIndex = document.createElement("td");
-      const rowCellBrand = document.createElement("td");
-      const rowCellModel = document.createElement("td");
-      const rowCellPlaca = document.createElement("td");
-      const rowCellStatus = document.createElement("td");
+      tableRow.className = "vehicleAssigned";
+      tableRow.dataset.reference = uid;
 
-      rowCellIndex.insertAdjacentText("afterbegin", index + 1);
-      rowCellBrand.insertAdjacentText("afterbegin", marca);
-      rowCellModel.insertAdjacentText("afterbegin", modelo);
-      rowCellPlaca.insertAdjacentText("afterbegin", placa);
-
-      const checkboxStatus = document.createElement("button");
-      checkboxStatus.setAttribute("type", "button");
-      checkboxStatus.setAttribute("data-status", habilitado);
-      checkboxStatus.setAttribute("data-reference", uid);
-      checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
-      checkboxStatus.addEventListener("click", async function (e) {
-        await changeVehicleStatus(element, array);
+      // Crear las celdas de la fila
+      const cells = [index + 1, marca, modelo, placa].map((content) => {
+        const cell = document.createElement("td");
+        cell.textContent = content;
+        return cell;
       });
-      checkboxStatus.setAttribute("class", "statusButtonVehicle");
-      rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
 
-      tableRow.insertAdjacentElement("beforeend", rowCellIndex);
-      tableRow.insertAdjacentElement("beforeend", rowCellBrand);
-      tableRow.insertAdjacentElement("beforeend", rowCellModel);
-      tableRow.insertAdjacentElement("beforeend", rowCellPlaca);
-      tableRow.insertAdjacentElement("beforeend", rowCellStatus);
+      // Crear y configurar el botón de estado
+      const checkboxStatus = document.createElement("button");
+      checkboxStatus.type = "button";
+      checkboxStatus.dataset.status = habilitado;
+      checkboxStatus.dataset.reference = uid;
+      checkboxStatus.innerHTML = habilitado ? Iconos.success : Iconos.failure;
+      checkboxStatus.className = "statusButtonVehicle";
+      checkboxStatus.addEventListener("click", async (event) => {
+        await changeVehicleStatus(element, array, !(event.currentTarget.dataset.status == "true"));
+      });
+
+      const rowCellStatus = document.createElement("td");
+      rowCellStatus.appendChild(checkboxStatus);
+      rowCellStatus.className = "cellStatus";
+
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.dataset.reference = uid;
+      deleteButton.innerHTML = Iconos.eliminar;
+      deleteButton.className = "buttonDelete";
+      deleteButton.title = "Eliminar vehiculo de concesionario";
+      deleteButton.addEventListener("click", async () => {
+        await deleteVehiculoAssigned(element);
+      });
+      rowCellStatus.appendChild(deleteButton);
+      cells.push(rowCellStatus);
+
+      // Añadir todas las celdas a la fila
+      cells.forEach((cell) => tableRow.appendChild(cell));
 
       return tableRow;
     }
+    async function deleteVehiculoAssigned(element) {
+      try {
+        const message = "Estas seguro de eliminar vehiculo del concesionario correspondiente?";
+        if (!confirm(message)) return;
+        const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
+        const box = document.querySelector("#vehiculos-searched");
+        const response = await firestore
+          .collection("conductores")
+          .doc(uid)
+          .collection("vehiculos")
+          .doc(element.uid)
+          .delete()
+          .then(() => true)
+          .catch(() => false);
 
+        if (response) {
+          const currentRow = document.querySelector(`tr[data-reference=${element.uid}]`);
+          box.style.display = "none";
+          currentRow.remove();
+          window.alert("Se ha eliminado el vehiculo del concesionario.");
+          showOrHideFormulary();
+        }
+      } catch (error) {
+        console.error("Se ha presentado un error...", error);
+        window.alert("Se ha presentado un error...", error);
+      }
+    }
     async function getAndRenderVehiclesFromUser() {
-      placasBuscador.value = "";
-      const uid = usuariosAltaModal.getAttribute("data-reference");
-
+      document.querySelector("#placaSearch").value = "";
+      const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
       const vehiclesFromUser = await getVehiclesFromInnerDocumentCollection(uid, CONDUCTORES_COLLECTION);
+
       if (vehiclesFromUser.length === 0) return;
-      vehiculosTBody.innerHTML = "";
-      vehiculosEncontrados.innerHTML = "";
+      vehicleTableBody.innerHTML = "";
+      document.querySelector("#vehiculos-searched").innerHTML = "";
+      document.querySelector("#vehiculos-searched").style.display = "none";
       const table = document.createElement("table");
       const tableBody = document.createElement("tbody");
 
       vehiclesFromUser.forEach((element, index, array) => {
         const tableRow = createVehicleRow(element, index, array);
-        vehiculosTBody.insertAdjacentElement("beforeend", tableRow);
+        vehicleTableBody.insertAdjacentElement("beforeend", tableRow);
       });
+
+      showOrHideFormulary();
+    }
+
+    function showOrHideFormulary() {
+      const totalVehiculeAssigned = document.querySelectorAll("tr.vehicleAssigned");
+      const vehiculoSearch = document.querySelector("#userVehicleSearch");
+
+      if (totalVehiculeAssigned.length >= 4) {
+        vehiculoSearch.classList.add("hidden");
+      } else {
+        vehiculoSearch.classList.remove("hidden");
+      }
     }
 
     $(`button.tab-button[data-tab="accounts"]`).on("click", async function (e) {
@@ -2413,76 +2467,76 @@
 
     document.querySelector("#userVehicleSearch").addEventListener("submit", async function (e) {
       e.preventDefault();
+      const searchString = e.target[0].value.toLowerCase();
+      const box = document.querySelector("#vehiculos-searched");
+      box.innerHTML = ""; // Limpiar resultados anteriores
       try {
-        const searchString = e.target[0].value;
-        const response = await firestore
-          .collection(VEHICULOS_COLLECTION)
-          .where("placa", "==", String(searchString).toLowerCase())
-          .get()
-          .then((snapshot) => {
-            const res = [];
-            snapshot.forEach((doc) => {
-              res.push({ id: doc.id, data: doc.data() });
-            });
-            return res;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        const snapshot = await firestore.collection(VEHICULOS_COLLECTION).where("placa", "==", searchString).get();
+
+        const response = snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
+
         if (response) {
-          response.map((item, index, array) => {
-            const { id } = item;
-            const { marca, modelo, placa, propietario, owners } = item.data;
+          box.style.display = "block";
+          response.forEach((item) => {
+            const {
+              id,
+              data: { marca, modelo, placa },
+            } = item;
 
             const list = document.createElement("div");
-            list.setAttribute("class", "optionVehicle");
+            list.className = "optionVehicle";
+
             const span = document.createElement("span");
-            span.innerText = String(`${marca} ${modelo} - ${placa}`).toUpperCase();
-            list.insertAdjacentElement("beforeend", span);
+            console.log(`${marca} ${modelo} - ${placa}`);
+            span.innerText = `${marca} ${modelo} - ${placa}`;
+            list.appendChild(span);
 
             const button = document.createElement("button");
-            button.setAttribute("type", "button");
-            button.setAttribute("class", "botonAsignar");
-            button.addEventListener("click", async function (e) {
-              if (permissions.assign == "0") {
-                negateAccess();
-                return;
-              }
-              const uid = usuariosAltaModal.getAttribute("data-reference");
-              const message = "Estas seguro de asignar este vehiculo al conductor?";
-              if (confirm(message)) {
-                const hasBeenAssigned = await firestore
-                  .collection(CONDUCTORES_COLLECTION)
-                  .doc(uid)
-                  .collection("vehiculos")
-                  .doc(id)
-                  .set({ ...item.data, habilitado: false })
-                  .then((snapshot) => {
-                    alert("Se ha asignado el vehiculo al usuario.");
-                    return true;
-                  })
-                  .catch((error) => {
-                    const errorMessage = "Se ha presentado un error, favor de verificar con un administrador.";
-                    alert(errorMessage);
-                    console.error(error);
-                    return false;
-                  });
-                if (hasBeenAssigned === true) {
-                  await getAndRenderVehiclesFromUser();
-                }
-              }
-            });
-
+            button.type = "button";
+            button.className = "botonAsignar";
             button.innerText = "Asignar";
+            button.addEventListener("click", async () => handleAssignVehicle(item));
 
-            list.insertAdjacentElement("beforeend", button);
-            vehiculosEncontrados.insertAdjacentElement("beforeend", list);
+            list.appendChild(button);
+            box.appendChild(list);
           });
         }
       } catch (error) {
         console.error("Se ha presentado un error, ", error);
       }
     });
+    async function handleAssignVehicle(item) {
+      const totalVehiclesAssigned = document.querySelectorAll("tr.vehicleAssigned");
+      if (permissions.assign === "0") {
+        negateAccess();
+        return;
+      }
+      if (totalVehiclesAssigned.length >= 4) {
+        window.alert("Solo puede tener asignados, 4 vehiculos a un Conductor.");
+        return;
+      }
+
+      const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
+      const message = "¿Estás seguro de asignar este vehículo al concesionario?";
+      if (!confirm(message)) return;
+
+      try {
+        await firestore
+          .collection(CONDUCTORES_COLLECTION)
+          .doc(uid)
+          .collection("vehiculos")
+          .doc(item.id)
+          .set({
+            ...item.data,
+            habilitado: false,
+          });
+        alert("Se ha asignado el vehículo al usuario.");
+        await getAndRenderVehiclesFromUser();
+      } catch (error) {
+        alert("Se ha presentado un error, favor de verificar con un administrador.");
+        console.error(error);
+      }
+    }
 
     const rolesPermission = async () => {
       const permission = sessionStorage.getItem("conductoresPermission");
@@ -2529,6 +2583,12 @@
             console.error(error);
           });
       });
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" || event.key === "Esc") {
+        handleViewAltaModal(false);
+      }
     });
   </script>
 </html>

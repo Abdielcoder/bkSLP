@@ -342,6 +342,12 @@ document.querySelectorAll(".close-modal").forEach((element) => {
   element.addEventListener("click", () => hideModalDialog(false));
 });
 
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape" || event.key === "Esc") {
+    hideModalDialog(false);
+  }
+});
+
 const getEstructuredDataFromForm = (data) => {
   let ObjectData = {};
   Object.entries(data).forEach((element) => {

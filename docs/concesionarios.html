@@ -315,8 +315,7 @@
                         id="rfc"
                         required
                         style="text-transform: uppercase"
-                        maxlength="13"
-                        data-length="13"
+                        maxlength="13" 
                       />
                     </div>
                   </div>
@@ -599,7 +598,9 @@
                 <div class="placa-search">
                   <form id="userVehicleSearch">
                     <div class="formGroup" style="width: 100%">
-                      <label for="placaSearch" style="font-size: 16px">Buscar vehículo por numero de placa:</label>
+                      <label id="search-item" for="placaSearch" style="font-size: 16px"
+                        >Busca vehículo por numero de placa y asignalo al concesionario:</label
+                      >
                       <div style="display: flex; width: 100%">
                         <input
                           type="text"
@@ -639,13 +640,11 @@
                     </div>
                   </form>
                 </div>
-                <br />
-                <p>Vehículo encontrado</p>
                 <div
                   id="vehiculos-searched"
                   style="
                     width: 100%;
-                    display: block;
+                    display: none;
                     min-height: 40px;
                     padding: 0.5rem;
                     border: 1px solid gray;
@@ -1620,8 +1619,8 @@
 
             <div class="formContainer" data-tabcontainer="drivers" data-visibility="false" style="padding-top: 20px">
               <div class="containerBody">
-                <p style="font-size: 12px; font-weight: bold; margin-left: 4px; margin-bottom: 4px">
-                  Buscar conductor mediante su correo electrónico:
+                <p style="font-size: 16px; font-weight: 500; margin-bottom: 8px" id="placa-search-text">
+                  Busca conductor introduciendo su email, y asignalo al concesionario:
                 </p>
                 <div class="placa-search">
                   <form id="userEmailSearch">
@@ -1631,7 +1630,7 @@
                       name="searchEmail"
                       id="searchEmail"
                       class="search-placa"
-                      style="flex-grow: 1; outline: none"
+                      style="flex-grow: 1; outline: none; font-size: 14px"
                     />
                     <button type="submit" class="placa-button-icon">
                       <svg
@@ -1670,6 +1669,7 @@
                     padding: 0.5rem;
                     border: 1px solid gray;
                     margin-top: 1rem;
+                    display: none;
                   "
                 ></div>
                 <div id="usuarios-container-list" data-reference="">
@@ -1680,7 +1680,6 @@
                         <th>Nombre Completo</th>
                         <th>Teléfono</th>
                         <th>Correo</th>
-                        <th>Gafete SCT</th>
                         <th>Habilitado</th>
                       </tr>
                     </thead>
@@ -1803,6 +1802,7 @@
       firestore,
       storage,
     } from "../js/config/config.js";
+    import Iconos from "../constants/icons.js";
 
     const monthStrings = [
       "Enero",
@@ -1821,10 +1821,11 @@
 
     let permissions = {};
     let isUserSelected = false;
+    let usersTable = document.querySelector("#concesionariosTable");
+    let usersDataTableContext = null;
+    let addCancelButton = document.querySelectorAll("button.modalFormCancel");
     const CONCESIONARIOS_COLLECTION = "concesionarios";
     const VEHICULOS_COLLECTION = "vehiculos";
-    var usersTable = document.querySelector("#concesionariosTable");
-    var usersDataTableContext = null;
     const modalDialogAdd = document.querySelector("#usuariosAltaModal");
     const modalDialogEdit = document.querySelector("#usuariosEditModal");
     const modalDialogDelete = document.querySelector("#usuariosBajaModal");
@@ -1834,22 +1835,22 @@
     const userAddSubmitButton = document.querySelector("#modalFormSubmit");
     const userUpdateButton = document.querySelector("#modalFormUpdateSubmit");
     const deleteCancelButton = document.querySelector("#modalFormDeleteCancel");
-    let addCancelButton = document.querySelectorAll("button.modalFormCancel");
+    const checkboxOtrasEnfermedades = document.querySelector("input#otrasEnfermedades");
+    const checkboxOtrasCapacidades = document.querySelector("input#otrasCapacidades");
+    const modalTabButtons = document.querySelectorAll("button.tab-button");
+    const vehicleTableBody = document.querySelector("table#vehicles-list tbody");
     let GLOBAL_USER_DATA = null;
-
-    const statusTrueIcon =
-      '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#399220"></path> </g></svg>';
-    const statusFalseIcon =
-      '<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22ZM8.96965 8.96967C9.26254 8.67678 9.73742 8.67678 10.0303 8.96967L12 10.9394L13.9696 8.96969C14.2625 8.6768 14.7374 8.6768 15.0303 8.96969C15.3232 9.26258 15.3232 9.73746 15.0303 10.0303L13.0606 12L15.0303 13.9697C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73744 15.3232 9.26256 15.3232 8.96967 15.0303C8.67678 14.7374 8.67678 14.2626 8.96967 13.9697L10.9393 12L8.96965 10.0303C8.67676 9.73744 8.67676 9.26256 8.96965 8.96967Z" fill="#c7c7c7"></path> </g></svg>';
 
     addCancelButton.forEach((element) => {
       element.addEventListener("click", async () => {
         handleViewAltaModal(false);
       });
     });
-
-    const checkboxOtrasEnfermedades = document.querySelector("input#otrasEnfermedades");
-    const checkboxOtrasCapacidades = document.querySelector("input#otrasCapacidades");
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" || event.key === "Esc") {
+        handleViewAltaModal(false);
+      }
+    });
 
     function toggleTextArea(e) {
       const textArea = e.target.id + "Texto";
@@ -1866,11 +1867,11 @@
         negateAccess();
         return;
       }
-      document.querySelector("#modalFormSubmit").style.display = "block";
-      document.querySelector("#modalFormUpdateSubmit").style.display = "none";
+      userAddSubmitButton.style.display = "block";
+      userUpdateButton.style.display = "none";
       document.querySelector("#otrasCapacidadesTexto").value = "";
       document.querySelector("#otrasEnfermedadesTexto").value = "";
-      document.querySelectorAll("button.tab-button").forEach((element) => {
+      modalTabButtons.forEach((element) => {
         const attribute = element.getAttribute("data-tab");
         if (attribute === "files" || attribute === "accounts" || attribute === "drivers") {
           element.style.display = "none";
@@ -1879,20 +1880,11 @@
       handleViewAltaModal(true);
     });
 
-    deleteCancelButton.addEventListener("click", async () => {
-      handleViewDeleteModal(false);
-    });
-
-    userUpdateButton.addEventListener("click", async (e) => {
-      await handleUpdateUserInformation(e);
-    });
-
-    function clearDataTable() {
-      usersDataTableContext.clear().destroy();
-    }
+    deleteCancelButton.addEventListener("click", () => handleViewDeleteModal(false));
+    userUpdateButton.addEventListener("click", async (event) => await handleUpdateUserInformation(event));
 
     async function handleRefetchingData() {
-      clearDataTable();
+      usersDataTableContext.clear().destroy();
       await fetchingData();
     }
 
@@ -1906,7 +1898,7 @@
         return;
       }
       GLOBAL_USER_DATA = null;
-      document.querySelector("table#vehicles-list tbody").innerHTML = "";
+      vehicleTableBody.innerHTML = "";
       document.querySelector("div#vehiculos-searched").innerHTML = "";
       document.querySelector("input#placaSearch").value = "";
       document.querySelector("#usuariosAltaModal").setAttribute("data-reference", "");
@@ -1933,7 +1925,7 @@
           element.checked = false;
           return;
         }
-        document.querySelectorAll("button.tab-button").forEach((element) => {
+        modalTabButtons.forEach((element) => {
           if (element.getAttribute("data-tab") === "data") {
             element.setAttribute("aria-selected", "true");
             return;
@@ -2152,52 +2144,31 @@
     function createActionButtons(u) {
       const box = document.createElement("td");
       box.classList.add("cellButtonTool");
-      const resetPasswordButton = document.createElement("button");
-      const updateButton = document.createElement("button");
-      const deleteButton = document.createElement("button");
+      box.dataset.type = "tools";
 
-      const updateAttrs = {
-        type: "button",
-        class: "tableTools",
-        "data-type": "update",
-        "data-id": u,
-        title: "Editar",
-      };
-      const resetPasswordAttrs = {
-        type: "button",
-        class: "tableTools",
-        "data-type": "update",
-        "data-id": u,
-        title: "Reestablecer contraseña",
-      };
-      const deleteAttrs = {
-        type: "button",
-        class: "tableTools",
-        "data-type": "delete",
-        "data-id": u,
-        title: "Eliminar",
-      };
+      const buttonsData = [
+        { type: "update", title: "Editar", icon: Iconos.editar, text: "Actualizar", handler: handleUpdateUser },
+        {
+          type: "update",
+          title: "Reestablecer contraseña",
+          icon: Iconos.reset,
+          text: "Reestablecer contraseña",
+          handler: handleResetPassword,
+        },
+        { type: "delete", title: "Eliminar", icon: Iconos.eliminar, text: "Eliminar", handler: handleDeleteUser },
+      ];
 
-      elementSetAttributes(updateButton, updateAttrs);
-      elementSetAttributes(resetPasswordButton, resetPasswordAttrs);
-      elementSetAttributes(deleteButton, deleteAttrs);
-      elementSetAttributes(box, { "data-type": "tools" });
-
-      const updateButtonHTML = `<span>Actualizar</span>`;
-      const resetPasswordButtonHTML = `<span>Reestablecer contraseña</span>`;
-      const deleteButtonHTML = `<span>Eliminar</span>`;
-
-      updateButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c88528" d="M2.85 10.907l-.672 1.407L.033 17.26a.535.535 0 0 0 0 .368.917.917 0 0 0 .155.184.917.917 0 0 0 .184.155A.54.54 0 0 0 .56 18a.48.48 0 0 0 .18-.033l4.946-2.145 1.407-.672 8.53-8.53-4.244-4.243zM4.857 14l-1.515.657L4 13.143l.508-1.064 1.415 1.413zM16.707 5.537l-4.244-4.244.707-.707a2 2 0 0 1 2.83 0L17.414 2a2 2 0 0 1 0 2.83z"></path> </g></svg>${updateButtonHTML}`;
-      resetPasswordButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17.408 3.412a1.974 1.974 0 0 0 0-2.82 1.973 1.973 0 0 0-2.819 0l-.29.29-.59-.59a1.009 1.009 0 0 0-1.65.35l-.35-.35a1.004 1.004 0 1 0-1.42 1.42l.35.35a1.033 1.033 0 0 0-.58.58l-.35-.35a1.004 1.004 0 0 0-1.42 1.42L9.879 5.3l-3.02 3.01c-.01.01-.02.03-.03.04A4.885 4.885 0 0 0 5 8a5 5 0 1 0 5 5 4.885 4.885 0 0 0-.35-1.83c.01-.01.03-.02.04-.03l7.718-7.728zM5 15a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="#287bc8" fill-rule="evenodd"></path> </g></svg>${resetPasswordButtonHTML}`;
-      deleteButton.innerHTML = `<svg width="16px" height="16px" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#c84028" d="M13 18H5a2 2 0 0 1-2-2V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2zm3-15a1 1 0 0 1-1 1H3a1 1 0 0 1 0-2h3V1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1z"></path> </g></svg>${deleteButtonHTML}`;
-
-      updateButton.addEventListener("click", (e) => handleUpdateUser(e));
-      resetPasswordButton.addEventListener("click", (e) => handleResetPassword(e.currentTarget.parentNode));
-      deleteButton.addEventListener("click", (e) => handleDeleteUser(e, e.currentTarget.parentNode));
-
-      box.insertAdjacentElement("beforeend", updateButton);
-      box.insertAdjacentElement("beforeend", resetPasswordButton);
-      box.insertAdjacentElement("beforeend", deleteButton);
+      buttonsData.forEach(({ type, title, icon, text, handler }) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "tableTools";
+        button.dataset.type = type;
+        button.dataset.id = u;
+        button.title = title;
+        button.innerHTML = `${icon}<span>${text}</span>`;
+        button.addEventListener("click", (e) => handler(e, e.currentTarget.parentNode));
+        box.appendChild(button);
+      });
 
       return box;
     }
@@ -2230,9 +2201,9 @@
       const uid = e.currentTarget.getAttribute("data-id");
       document.querySelector("#usuariosAltaModal").setAttribute("data-reference", uid);
       document.querySelector("#userAltaIdentifier").value = uid;
-      document.querySelector("#modalFormSubmit").style.display = "none";
-      document.querySelector("#modalFormUpdateSubmit").style.display = "block";
-      document.querySelectorAll("button.tab-button").forEach((element) => {
+      userAddSubmitButton.style.display = "none";
+      userUpdateButton.style.display = "block";
+      modalTabButtons.forEach((element) => {
         element.style.display = "block";
       });
       handleViewAltaModal(true);
@@ -2270,8 +2241,6 @@
         return;
       });
     }
-
-    const modalTabButtons = document.querySelectorAll("button.tab-button");
 
     modalTabButtons.forEach((tab, index) => {
       tab.addEventListener("click", ({ currentTarget }) => {
@@ -2355,6 +2324,48 @@
       })
     );
 
+    async function changeStatusConductores(element, array, status) {
+      const { uid, habilitado } = element;
+      const totalHabilitado = document.querySelectorAll("button.statusButtonVehicle");
+      const statusHabilitados = [];
+      totalHabilitado.forEach((element) => {
+        statusHabilitados.push(element.dataset.status == "true");
+      });
+      console.log({
+        all: array?.filter((item) => item.habilitado === true).length >= 2,
+        allStatus: statusHabilitados.filter((e) => e == true).length >= 2,
+        status,
+      });
+      if (statusHabilitados.filter((e) => e == true).length >= 2 && status == true) {
+        alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
+        return;
+      }
+
+      const userUID = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
+      const message = habilitado
+        ? "Estas seguro de deshabilitar el vehiculo al concesionario?"
+        : "Estas seguro de habilitar el vehiculo al concesionario";
+      if (confirm(message)) {
+        const documentUpdated = await firestore
+          .collection(CONCESIONARIOS_COLLECTION)
+          .doc(userUID)
+          .collection("conductores")
+          .doc(uid)
+          .update({
+            habilitado: !habilitado,
+          })
+          .then(() => true)
+          .catch(() => false);
+
+        if (documentUpdated) {
+          alert("Se ha actualizado de manera correcta.");
+          await getAndRenderDriversFromUser();
+          return;
+        }
+        alert("No se pudo actualizar, favor de verificar.");
+      }
+    }
+
     async function changeVehicleStatus(element, array) {
       const { uid, habilitado } = element;
       if (array?.filter((item) => item.habilitado === true).length > 2) {
@@ -2387,105 +2398,160 @@
       }
     }
 
-    async function changeStatusConductores(element, array) {
-      const { uid, habilitado } = element;
-      if (array?.filter((item) => item.habilitado === true).length > 2) {
-        alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
-        return;
-      }
-
-      const userUID = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
-      const message = habilitado
-        ? "Estas seguro de deshabilitar el vehiculo al usuario?"
-        : "Estas seguro de habilitar el vehiculo al usuario";
-      if (confirm(message)) {
-        const documentUpdated = await firestore
-          .collection(CONCESIONARIOS_COLLECTION)
-          .doc(userUID)
-          .collection("conductores")
-          .doc(uid)
-          .update({
-            habilitado: !habilitado,
-          })
-          .then(() => true)
-          .catch(() => false);
-
-        if (documentUpdated) {
-          alert("Se ha actualizado de manera correcta.");
-          await getAndRenderDriversFromUser();
-          return;
-        }
-        alert("No se pudo actualizar, favor de verificar.");
-      }
-    }
-
     function createVehicleRow(element, index, array) {
       const { marca, modelo, placa, habilitado, uid } = element;
+
+      // Crear la fila de la tabla
       const tableRow = document.createElement("tr");
-      const rowCellIndex = document.createElement("td");
-      const rowCellBrand = document.createElement("td");
-      const rowCellModel = document.createElement("td");
-      const rowCellPlaca = document.createElement("td");
-      const rowCellStatus = document.createElement("td");
+      tableRow.className = "vehicleAssigned";
+      tableRow.dataset.reference = uid;
 
-      rowCellIndex.insertAdjacentText("afterbegin", index + 1);
-      rowCellBrand.insertAdjacentText("afterbegin", marca);
-      rowCellModel.insertAdjacentText("afterbegin", modelo);
-      rowCellPlaca.insertAdjacentText("afterbegin", placa);
+      // Crear las celdas de la fila
+      const cells = [index + 1, marca, modelo, placa].map((content) => {
+        const cell = document.createElement("td");
+        cell.textContent = content;
+        return cell;
+      });
 
+      // Crear y configurar el botón de estado
       const checkboxStatus = document.createElement("button");
-      checkboxStatus.setAttribute("type", "button");
-      checkboxStatus.setAttribute("data-status", habilitado);
-      checkboxStatus.setAttribute("data-reference", uid);
-      checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
-      checkboxStatus.addEventListener("click", async function (e) {
+      checkboxStatus.type = "button";
+      checkboxStatus.dataset.status = habilitado;
+      checkboxStatus.dataset.reference = uid;
+      checkboxStatus.innerHTML = habilitado ? Iconos.success : Iconos.failure;
+      checkboxStatus.className = "statusButtonVehicle";
+      checkboxStatus.addEventListener("click", async (event) => {
         await changeVehicleStatus(element, array);
       });
-      checkboxStatus.setAttribute("class", "statusButtonVehicle");
-      rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
 
-      tableRow.insertAdjacentElement("beforeend", rowCellIndex);
-      tableRow.insertAdjacentElement("beforeend", rowCellBrand);
-      tableRow.insertAdjacentElement("beforeend", rowCellModel);
-      tableRow.insertAdjacentElement("beforeend", rowCellPlaca);
-      tableRow.insertAdjacentElement("beforeend", rowCellStatus);
+      const rowCellStatus = document.createElement("td");
+      rowCellStatus.appendChild(checkboxStatus);
+      rowCellStatus.className = "cellStatus";
+
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.dataset.reference = uid;
+      deleteButton.innerHTML = Iconos.eliminar;
+      deleteButton.className = "buttonDelete";
+      deleteButton.title = "Eliminar vehiculo de concesionario";
+      deleteButton.addEventListener("click", async () => {
+        await deleteVehiculoAssigned(element);
+      });
+      rowCellStatus.appendChild(deleteButton);
+      cells.push(rowCellStatus);
+
+      // Añadir todas las celdas a la fila
+      cells.forEach((cell) => tableRow.appendChild(cell));
 
       return tableRow;
     }
 
+    async function deleteVehiculoAssigned(element) {
+      try { 
+        const message = "Estas seguro de eliminar vehiculo del concesionario correspondiente?";
+        if (!confirm(message)) return;
+        const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
+        const box = document.querySelector("#vehiculos-searched");
+        const response = await firestore
+          .collection("concesionarios")
+          .doc(uid)
+          .collection("vehiculos")
+          .doc(element.uid)
+          .delete()
+          .then(() => true)
+          .catch(() => false);
+
+        if (response) {
+          const currentRow = document.querySelector(`tr[data-reference=${element.uid}]`);
+          box.style.display = "none";
+          currentRow.remove();
+          window.alert("Se ha eliminado el vehiculo del concesionario.");
+          showOrHideFormulary(1);
+        }
+      } catch (error) {
+        console.error("Se ha presentado un error...", error);
+        window.alert("Se ha presentado un error...", error);
+      }
+    }
+
+    async function deleteConductorAssigned(element) {
+      try {
+        const message = "Estas seguro de eliminar Conductor al Concesionario correspondiente?";
+        if (!confirm(message)) return;
+        const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
+        const box = document.querySelector("#usuarios-searched");
+        const response = await firestore
+          .collection("concesionarios")
+          .doc(uid)
+          .collection("conductores")
+          .doc(element.uid)
+          .delete()
+          .then(() => true)
+          .catch(() => false);
+
+        if (response) {
+          const currentRow = document.querySelector(`tr[data-reference=${element.uid}]`);
+          box.style.display = "none";
+          currentRow.remove();
+          window.alert("Se ha eliminado el conductor del concesionario.");
+          showOrHideFormulary(0);
+        }
+      } catch (error) {
+        console.error("Se ha presentado un error...");
+        windw.alert("Se ha presentado un error...");
+      }
+    }
+
     function createConductorRow(element, index, array) {
-      const { nombre, apellidoMaterno, apellidoPaterno, telefono, numGafeteSCT, correoElectronico, habilitado, uid } =
-        element;
+      const { nombre, apellidoMaterno, apellidoPaterno, telefono, correoElectronico, habilitado, uid } = element;
+
+      // Crear la fila de la tabla
       const tableRow = document.createElement("tr");
-      const rowCellIndex = document.createElement("td");
-      const rowCellNombreCompleto = document.createElement("td");
-      const rowCellTelefono = document.createElement("td");
-      const rowCellGafete = document.createElement("td");
-      const rowCellCorreo = document.createElement("td");
-      const rowCellStatus = document.createElement("td");
+      tableRow.dataset.reference = uid;
+      tableRow.className = "assigned";
 
-      rowCellIndex.insertAdjacentText("afterbegin", index + 1);
-      rowCellNombreCompleto.insertAdjacentText("afterbegin", nombre + " " + apellidoPaterno + " " + apellidoMaterno);
-      rowCellTelefono.insertAdjacentText("afterbegin", telefono);
-      rowCellCorreo.insertAdjacentText("afterbegin", correoElectronico);
-      rowCellGafete.insertAdjacentText("afterbegin", numGafeteSCT);
+      // Crear las celdas de la fila
+      const cellsData = [
+        index + 1,
+        `${nombre} ${apellidoPaterno} ${apellidoMaterno.split("")[0]}`,
+        telefono,
+        correoElectronico,
+      ];
 
-      const checkboxStatus = document.createElement("button");
-      checkboxStatus.setAttribute("type", "button");
-      checkboxStatus.setAttribute("data-status", habilitado);
-      checkboxStatus.insertAdjacentHTML("afterbegin", habilitado ? statusTrueIcon : statusFalseIcon);
-      checkboxStatus.addEventListener("click", async function (e) {
-        await changeStatusConductores(element, array);
+      const cells = cellsData.map((content) => {
+        const cell = document.createElement("td");
+        cell.textContent = content;
+        return cell;
       });
-      checkboxStatus.setAttribute("class", "statusButtonVehicle");
-      rowCellStatus.insertAdjacentElement("beforeend", checkboxStatus);
 
-      tableRow.insertAdjacentElement("beforeend", rowCellIndex);
-      tableRow.insertAdjacentElement("beforeend", rowCellNombreCompleto);
-      tableRow.insertAdjacentElement("beforeend", rowCellTelefono);
-      tableRow.insertAdjacentElement("beforeend", rowCellCorreo);
-      tableRow.insertAdjacentElement("beforeend", rowCellGafete);
-      tableRow.insertAdjacentElement("beforeend", rowCellStatus);
+      // Crear y configurar el botón de estado
+      const checkboxStatus = document.createElement("button");
+      checkboxStatus.type = "button";
+      checkboxStatus.dataset.status = habilitado;
+      checkboxStatus.dataset.reference = uid;
+      checkboxStatus.innerHTML = habilitado ? Iconos.success : Iconos.failure;
+      checkboxStatus.className = "statusButtonVehicle";
+      checkboxStatus.addEventListener("click", async (event) => {
+        await changeStatusConductores(element, array, !(event.currentTarget.dataset.status == "true"));
+      });
+
+      const rowCellStatus = document.createElement("td");
+      rowCellStatus.className = "cellStatus";
+      rowCellStatus.appendChild(checkboxStatus);
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.dataset.reference = uid;
+      deleteButton.innerHTML = Iconos.eliminar;
+      deleteButton.className = "buttonDelete";
+      deleteButton.title = "Eliminar conductor de concesionario";
+      deleteButton.addEventListener("click", async () => {
+        await deleteConductorAssigned(element);
+      });
+      rowCellStatus.appendChild(deleteButton);
+      cells.push(rowCellStatus);
+
+      // Añadir todas las celdas a la fila
+      cells.forEach((cell) => tableRow.appendChild(cell));
 
       return tableRow;
     }
@@ -2493,18 +2559,21 @@
     async function getAndRenderVehiclesFromUser() {
       document.querySelector("#placaSearch").value = "";
       const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
-
       const vehiclesFromUser = await getVehiclesFromInnerDocumentCollection(uid, CONCESIONARIOS_COLLECTION);
+
       if (vehiclesFromUser.length === 0) return;
-      document.querySelector("table#vehicles-list tbody").innerHTML = "";
+      vehicleTableBody.innerHTML = "";
       document.querySelector("#vehiculos-searched").innerHTML = "";
+      document.querySelector("#vehiculos-searched").style.display = "none";
       const table = document.createElement("table");
       const tableBody = document.createElement("tbody");
 
       vehiclesFromUser.forEach((element, index, array) => {
         const tableRow = createVehicleRow(element, index, array);
-        document.querySelector("table#vehicles-list tbody").insertAdjacentElement("beforeend", tableRow);
+        vehicleTableBody.insertAdjacentElement("beforeend", tableRow);
       });
+
+      showOrHideFormulary(1);
     }
 
     async function getAndRenderDriversFromUser() {
@@ -2515,6 +2584,7 @@
       if (conductoresFromUser.length === 0) return;
       document.querySelector("table#usuarios-list tbody").innerHTML = "";
       document.querySelector("#usuarios-searched").innerHTML = "";
+      document.querySelector("#usuarios-searched").style.display = "none";
       const table = document.createElement("table");
       const tableBody = document.createElement("tbody");
 
@@ -2522,6 +2592,35 @@
         const tableRow = createConductorRow(element, index, array);
         document.querySelector("table#usuarios-list tbody").insertAdjacentElement("beforeend", tableRow);
       });
+
+      showOrHideFormulary(0);
+    }
+
+    function showOrHideFormulary(type) {
+      const totalUserAssigned = document.querySelectorAll("tr.assigned");
+      const totalVehiculeAssigned = document.querySelectorAll("tr.vehicleAssigned");
+      const userSearch = document.querySelector("#userEmailSearch");
+      const vehiculoSearch = document.querySelector("#userVehicleSearch");
+      const userSearchText = document.querySelector("#placa-search-text");
+      const vehiculoSearchText = document.querySelector("#search-item");
+      if (type === 0) {
+        if (totalUserAssigned.length > 3) {
+          userSearch.classList.add("hidden");
+          userSearchText.classList.add("hidden");
+        } else {
+          userSearch.classList.remove("hidden");
+          userSearchText.classList.remove("hidden");
+        }
+        return;
+      } else {
+        if (totalVehiculeAssigned.length >= 1) {
+          vehiculoSearch.classList.add("hidden");
+          vehiculoSearchText.classList.add("hidden");
+        } else {
+          vehiculoSearch.classList.remove("hidden");
+          vehiculoSearchText.classList.remove("hidden");
+        }
+      }
     }
 
     $(`button.tab-button[data-tab="accounts"]`).on("click", async function (e) {
@@ -2584,153 +2683,151 @@
     /* Buscar y asignar Vehiculo*/
     document.querySelector("#userVehicleSearch").addEventListener("submit", async function (e) {
       e.preventDefault();
-      try {
-        const searchString = e.target[0].value;
-        const response = await firestore
-          .collection(VEHICULOS_COLLECTION)
-          .where("placa", "==", String(searchString).toLowerCase())
-          .get()
-          .then((snapshot) => {
-            const res = [];
-            snapshot.forEach((doc) => {
-              res.push({ id: doc.id, data: doc.data() });
-            });
-            return res;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-        if (response) {
-          const box = document.querySelector("#vehiculos-searched");
+      const searchString = e.target[0].value.toLowerCase();
+      const box = document.querySelector("#vehiculos-searched");
+      box.innerHTML = ""; // Limpiar resultados anteriores
 
-          response.map((item, index, array) => {
-            const { id } = item;
-            const { marca, modelo, placa, propietario, owners } = item.data;
+      try {
+        const snapshot = await firestore.collection(VEHICULOS_COLLECTION).where("placa", "==", searchString).get();
+
+        const response = snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
+
+        if (response) {
+          box.style.display = "block";
+          response.forEach((item) => {
+            const {
+              id,
+              data: { marca, modelo, placa },
+            } = item;
 
             const list = document.createElement("div");
-            list.setAttribute("class", "optionVehicle");
+            list.className = "optionVehicle";
+
             const span = document.createElement("span");
-            span.innerText = String(`${marca} ${modelo} - ${placa}`).toUpperCase();
-            list.insertAdjacentElement("beforeend", span);
+            console.log(`${marca} ${modelo} - ${placa}`);
+            span.innerText = `${marca} ${modelo} - ${placa}`;
+            list.appendChild(span);
 
             const button = document.createElement("button");
-            button.setAttribute("type", "button");
-            button.setAttribute("class", "botonAsignar");
-            button.addEventListener("click", async function (e) {
-              if (permissions.assign == "0") {
-                negateAccess();
-                return;
-              }
-              const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
-              const message = "Estas seguro de asignar este vehiculo al concesionario?";
-              if (confirm(message)) {
-                const hasBeenAssigned = await firestore
-                  .collection(CONCESIONARIOS_COLLECTION)
-                  .doc(uid)
-                  .collection("vehiculos")
-                  .doc(id)
-                  .set({ ...item.data, habilitado: false })
-                  .then((snapshot) => {
-                    alert("Se ha asignado el vehiculo al usuario.");
-                    return true;
-                  })
-                  .catch((error) => {
-                    const errorMessage = "Se ha presentado un error, favor de verificar con un administrador.";
-                    alert(errorMessage);
-                    console.error(error);
-                    return false;
-                  });
-                if (hasBeenAssigned === true) {
-                  await getAndRenderVehiclesFromUser();
-                }
-              }
-            });
-
+            button.type = "button";
+            button.className = "botonAsignar";
             button.innerText = "Asignar";
+            button.addEventListener("click", async () => handleAssignVehicle(item));
 
-            list.insertAdjacentElement("beforeend", button);
-            box.insertAdjacentElement("beforeend", list);
+            list.appendChild(button);
+            box.appendChild(list);
           });
         }
       } catch (error) {
-        console.error("Se ha presentado un error, ", error);
+        console.error("Se ha presentado un error:", error);
       }
     });
+
+    async function handleAssignVehicle(item) {
+      const totalVehiclesAssigned = document.querySelectorAll("tr.vehicleAssigned");
+      if (permissions.assign === "0") {
+        negateAccess();
+        return;
+      }
+      if (totalVehiclesAssigned.length >= 1) {
+        window.alert("Solo puede tener asignados, un vehiculo a un Concesionario.");
+        return;
+      }
+
+      const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
+      const message = "¿Estás seguro de asignar este vehículo al concesionario?";
+      if (!confirm(message)) return;
+
+      try {
+        await firestore
+          .collection(CONCESIONARIOS_COLLECTION)
+          .doc(uid)
+          .collection("vehiculos")
+          .doc(item.id)
+          .set({
+            ...item.data,
+            habilitado: false,
+          });
+        alert("Se ha asignado el vehículo al usuario.");
+        await getAndRenderVehiclesFromUser();
+      } catch (error) {
+        alert("Se ha presentado un error, favor de verificar con un administrador.");
+        console.error(error);
+      }
+    }
 
     /* Buscar y asignar Conductor*/
     document.querySelector("#userEmailSearch").addEventListener("submit", async function (e) {
       e.preventDefault();
-      try {
-        const searchString = e.target[0].value;
-        const response = await firestore
-          .collection("conductores")
-          .where("correoElectronico", "==", searchString)
-          .get()
-          .then((snapshot) => {
-            const res = [];
-            snapshot.forEach((doc) => {
-              res.push({ id: doc.id, data: doc.data() });
-            });
-            return res;
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-        if (response) {
-          const box = document.querySelector("#usuarios-searched");
+      const searchString = String(e.target[0].value).toLowerCase();
+      const box = document.querySelector("#usuarios-searched");
+      box.innerHTML = ""; // Limpiar resultados anteriores
 
-          response.map((item, index, array) => {
-            const { id } = item;
-            const { nombre, apellidoPaterno, apellidoMaterno, telefono, numGafeteSCT } = item.data;
+      try {
+        const snapshot = await firestore.collection("conductores").where("correoElectronico", "==", searchString).get();
+        const response = snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
+        if (response) {
+          box.style.display = "block";
+          response.forEach((item) => {
+            const {
+              id,
+              data: { nombre, apellidoPaterno, apellidoMaterno, telefono, numGafeteSCT },
+            } = item;
 
             const list = document.createElement("div");
-            list.setAttribute("class", "optionVehicle");
+            list.className = "optionVehicle";
+
             const span = document.createElement("span");
-            span.innerText = `${nombre} ${apellidoPaterno} ${apellidoMaterno} - ${telefono} - Gafete: ${numGafeteSCT}`;
-            list.insertAdjacentElement("beforeend", span);
+            span.innerText = `${nombre} ${apellidoPaterno} ${apellidoMaterno} - ${telefono}`;
+            list.appendChild(span);
 
             const button = document.createElement("button");
-            button.setAttribute("type", "button");
-            button.setAttribute("class", "botonAsignar");
-            button.addEventListener("click", async function (e) {
-              if (permissions.assign == "0") {
-                negateAccess();
-                return;
-              }
-              const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
-              const message = "Estas seguro de asignar este conductor al concesionario?";
-              if (confirm(message)) {
-                const hasBeenAssigned = await firestore
-                  .collection(CONCESIONARIOS_COLLECTION)
-                  .doc(uid)
-                  .collection("conductores")
-                  .doc(id)
-                  .set({ ...item.data, habilitado: false })
-                  .then((snapshot) => {
-                    alert("Se ha asignado el conductor al concesionario.");
-                    return true;
-                  })
-                  .catch((error) => {
-                    alert("Se ha presentado un error, favor de verificar con un administrador.");
-                    console.error(error);
-                    return false;
-                  });
-                if (hasBeenAssigned === true) {
-                  await getAndRenderDriversFromUser();
-                }
-              }
-            });
-
+            button.type = "button";
+            button.className = "botonAsignar";
             button.innerText = "Asignar";
+            button.addEventListener("click", async () => handleAssignDriver(item));
 
-            list.insertAdjacentElement("beforeend", button);
-            box.insertAdjacentElement("beforeend", list);
+            list.appendChild(button);
+            box.appendChild(list);
           });
         }
       } catch (error) {
-        console.error("Se ha presentado un error, ", error);
+        console.error("Se ha presentado un error:", error);
       }
     });
+
+    async function handleAssignDriver(item) {
+      const totalAssigned = document.querySelectorAll("tr.assigned");
+      if (permissions.assign === "0") {
+        negateAccess();
+        return;
+      }
+      if (totalAssigned.length >= 4) {
+        window.alert("No puede haber mas de 4 Conductores asignados a un Concesionario.");
+        return;
+      }
+
+      const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
+      const message = "¿Estás seguro de asignar este conductor al concesionario?";
+      if (!confirm(message)) return;
+
+      try {
+        await firestore
+          .collection(CONCESIONARIOS_COLLECTION)
+          .doc(uid)
+          .collection("conductores")
+          .doc(item.id)
+          .set({
+            ...item.data,
+            habilitado: false,
+          });
+        alert("Se ha asignado el conductor al concesionario.");
+        await getAndRenderDriversFromUser();
+      } catch (error) {
+        alert("Se ha presentado un error, favor de verificar con un administrador.");
+        console.error(error);
+      }
+    }
 
     const rolesPermission = async () => {
       const permission = sessionStorage.getItem("concesionariosPermission");

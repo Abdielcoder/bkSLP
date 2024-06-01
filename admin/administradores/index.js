@@ -216,7 +216,11 @@ BUTTON_ADD.addEventListener("click", async () => {
 BUTTON_CLOSE_MODAL.forEach((element) => {
   element.addEventListener("click", async () => hideModal(false));
 });
-
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape" || event.key === "Esc") {
+    hideModal(false);
+  }
+});
 document.querySelector("button#modalFormSubmit").addEventListener("click", async function (e) {
   const type = document.querySelector("#modalForm").getAttribute("data-submit");
   if (type === "add") {

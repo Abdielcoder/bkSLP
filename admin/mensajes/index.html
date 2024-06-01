@@ -25,16 +25,16 @@
           </div>
           <hr />
           <ul class="nav">
-            <li class="nav-item">
+            <li class="nav-item" id="mapa-menu-li" style="display: none">
               <a class="nav-link" href="../../docs/maps.html">
                 <span class="link-icons material-icons-sharp">map</span>
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="concesionario-menu-li">
+            <li class="nav-item" id="concesionario-menu-li" style="display: none">
               <a class="nav-link hasSubmenu" href="../../docs/concesionarios.html" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
-                CONCESIONARIO
+                CONCESIONARIOS
               </a>
               <div id="concesionario-submenu" data-displayed="hidden">
                 <ul class="nav-link-submenu">
@@ -53,6 +53,18 @@
                 </ul>
               </div>
             </li>
+            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
+              <a class="nav-link" href="../../docs/vehicles.html">
+                <span class="link-icons material-icons-sharp">directions_car</span>
+                VEHICULOS
+              </a>
+            </li>
+            <li class="nav-item" id="conductores-menu-li" style="display: none">
+              <a class="nav-link" href="../../docs/users.html">
+                <span class="link-icons material-icons-sharp">person</span>
+                CONDUCTORES
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <span class="link-icons material-icons-sharp">chat</span>
@@ -60,12 +72,12 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../docs//historico.html">
+              <a class="nav-link" href="../../docs/historico.html">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
             </li>
-            <li class="nav-item menu-button menu-closed" id="admin-menu-li">
+            <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
               <a class="nav-link" href="#" id="administracion">
                 <span class="link-icons material-icons-sharp">manage_accounts</span>
                 ADMINISTRACIÓN
@@ -73,29 +85,23 @@
               <div id="administracion-submenu" data-displayed="hidden">
                 <ul>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink selectedPage" href="#">
+                    <a class="nav-sublink" href="#">
                       <span class="link-icons material-icons-sharp">chat</span>
                       MENSAJES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../administradores/index.html">
+                    <a class="nav-sublink selectedPage" href="../administradores/">
                       <span class="link-icons material-icons-sharp">person</span>
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../roles/index.html">
+                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none">
+                    <a class="nav-sublink" href="../roles/">
                       <span class="link-icons material-icons-sharp">groups</span>
                       ROLES
                     </a>
-                  </li>
-                  <!-- <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../clientes/index.html">
-                      <span class="link-icons material-icons-sharp">person_pin</span>
-                      CLIENTES
-                    </a>
-                  </li> -->
+                  </li> 
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../rates.html">
                       <span class="link-icons material-icons-sharp">paid</span>

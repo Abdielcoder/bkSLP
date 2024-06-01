@@ -34,7 +34,7 @@ table#operatorsTable thead tr th {
   color: #2d6e3d;
   text-align: start;
   font-size: 14px;
-  background-color: #FFF;
+  background-color: #fff;
   white-space: nowrap;
 }
 
@@ -268,7 +268,6 @@ ul.tab-list li:first-child {
 
 div#vehicles-container-list {
   padding: 1rem 0;
-
 }
 
 table#vehicles-list {
@@ -459,7 +458,7 @@ button.botonAsignar:hover {
 .statusButtonVehicle {
   background: none;
   outline: none;
-  border: none; 
+  border: none;
   display: block;
 }
 
@@ -482,4 +481,22 @@ button.botonAsignar:hover {
   align-items: baseline;
   justify-content: flex-start;
   gap: 3rem;
+}
+.cellStatus {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  column-gap: 1rem;
+}
+.buttonDelete {
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.hidden {
+  display: none !important;
 }

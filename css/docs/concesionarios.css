@@ -235,10 +235,8 @@ ul.tab-list li:first-child {
   }
 }
 
-
 div#vehicles-container-list {
   padding: 1rem 0;
-
 }
 
 table#vehicles-list {
@@ -430,7 +428,6 @@ button.botonAsignar:hover {
   background: none;
   outline: none;
   border: none;
-  margin-inline: auto;
   display: block;
 }
 
@@ -471,9 +468,39 @@ div#usuarios-container-list {
   display: block;
   width: 100%;
   overflow-x: auto;
+  padding-top: 1rem;
 }
-
+table#usuarios-list {
+  width: 100%;
+}
 table#usuarios-list th,
 table#vehicles-list th {
   color: #034e03;
+  padding: 8px 0;
+  text-align: start;
+}
+
+table#usuarios-list td {
+  padding: 8px 0;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.cellStatus {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  column-gap: 1rem;
+}
+.buttonDelete {
+  padding: 0px;
+  border: none;
+  background-color: transparent;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.hidden {
+  display: none !important;
 }
