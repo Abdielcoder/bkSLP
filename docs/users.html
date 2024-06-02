@@ -310,7 +310,7 @@
                         required
                         class="only-characters"
                         style="text-transform: uppercase"
-                        maxlength="13" 
+                        maxlength="13"
                       />
                     </div>
                     <div class="formGroup selectForm">
@@ -2270,10 +2270,32 @@
             // console.log("HABILITADO");
             await updateRealtimeUserVehicle(element, userUID);
           }
+          await changeVehicleStatusOnRealtime(!habilitado, userUID, uid);
           await getAndRenderVehiclesFromUser();
           return;
         }
         alert("No se pudo actualizar, favor de verificar.");
+      }
+    }
+
+    async function changeVehicleStatusOnRealtime(status, conductor, vehiculo) {
+      try {
+        // console.log({ status, concesionario, conductor });
+        const reference = firebase.database().ref("Users/Drivers/" + conductor);
+        const snapshot = await reference.get();
+        const data = snapshot.val();
+        // console.log({ data: data.concesionarioAsignado });
+        const arrayVehiculos = data.vehiculosAsignados.map(({ habilitado, uid }) => {
+          return uid === vehiculo ? { habilitado: status, uid } : { habilitado, uid };
+        });
+
+        // console.log({ status, conductor, vehiculo, arrayVehiculos, ...data.vehiculosAsignados });
+        return await reference
+          .update({ vehiculosAsignados: arrayVehiculos })
+          .then(() => true)
+          .catch(() => false);
+      } catch (error) {
+        console.error(error);
       }
     }
 
@@ -2366,6 +2388,7 @@
 
         if (response) {
           const currentRow = document.querySelector(`tr[data-reference=${element.uid}]`);
+          await deleteVehiculoAsignadoRealtime(uid, element.uid);
           box.style.display = "none";
           currentRow.remove();
           window.alert("Se ha eliminado el vehiculo del concesionario.");
@@ -2376,6 +2399,22 @@
         window.alert("Se ha presentado un error...", error);
       }
     }
+
+    async function deleteVehiculoAsignadoRealtime(conductor, vehiculo) {
+      try {
+        const reference = firebase.database().ref("Users/Drivers/" + conductor);
+        const snapshot = await reference.get();
+        const data = snapshot.val();
+        const arrayVehiculosAsignados = [];
+
+        if (data.vehiculosAsignados !== undefined) {
+          const newArray = data.vehiculosAsignados.filter(({ habilitado, uid }) => uid !== vehiculo);
+
+          await reference.update({ vehiculosAsignados: newArray });
+        }
+      } catch (error) {}
+    }
+
     async function getAndRenderVehiclesFromUser() {
       document.querySelector("#placaSearch").value = "";
       const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
@@ -2487,7 +2526,7 @@
             list.className = "optionVehicle";
 
             const span = document.createElement("span");
-            console.log(`${marca} ${modelo} - ${placa}`);
+            // console.log(`${marca} ${modelo} - ${placa}`);
             span.innerText = `${marca} ${modelo} - ${placa}`;
             list.appendChild(span);
 
@@ -2530,12 +2569,34 @@
             ...item.data,
             habilitado: false,
           });
+        await asignarVehiculoAConductorRealtime(uid, item.id);
         alert("Se ha asignado el vehículo al usuario.");
         await getAndRenderVehiclesFromUser();
       } catch (error) {
         alert("Se ha presentado un error, favor de verificar con un administrador.");
         console.error(error);
       }
+    }
+
+    async function asignarVehiculoAConductorRealtime(conductor, vehiculo) {
+      try {
+        const reference = firebase.database().ref("Users/Drivers/" + conductor);
+        const snapshot = await reference.get();
+        const data = snapshot.val();
+        let arrayVehiculosAsignados = [];
+        if (data.vehiculosAsignados) {
+          if (Array.isArray(data.vehiculosAsignados)) {
+            arrayVehiculosAsignados = data.vehiculosAsignados;
+          } else {
+            arrayVehiculosAsignados = [data.vehiculosAsignados];
+          }
+          arrayVehiculosAsignados.push({ habilitado: false, uid: vehiculo });
+        } else {
+          arrayVehiculosAsignados.push({ habilitado: false, uid: vehiculo });
+        }
+
+        await reference.update({ vehiculosAsignados: arrayVehiculosAsignados });
+      } catch (error) {}
     }
 
     const rolesPermission = async () => {

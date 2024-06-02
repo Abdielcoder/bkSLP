@@ -315,7 +315,7 @@
                         id="rfc"
                         required
                         style="text-transform: uppercase"
-                        maxlength="13" 
+                        maxlength="13"
                       />
                     </div>
                   </div>
@@ -1902,6 +1902,7 @@
       document.querySelector("div#vehiculos-searched").innerHTML = "";
       document.querySelector("input#placaSearch").value = "";
       document.querySelector("#usuariosAltaModal").setAttribute("data-reference", "");
+      document.querySelector("table#usuarios-list tbody").innerHTML = "";
       document.querySelectorAll("textarea").forEach((element) => {
         element.value = "";
         element.disabled = true;
@@ -2331,11 +2332,11 @@
       totalHabilitado.forEach((element) => {
         statusHabilitados.push(element.dataset.status == "true");
       });
-      console.log({
-        all: array?.filter((item) => item.habilitado === true).length >= 2,
-        allStatus: statusHabilitados.filter((e) => e == true).length >= 2,
-        status,
-      });
+      // console.log({
+      //   all: array?.filter((item) => item.habilitado === true).length >= 2,
+      //   allStatus: statusHabilitados.filter((e) => e == true).length >= 2,
+      //   status,
+      // });
       if (statusHabilitados.filter((e) => e == true).length >= 2 && status == true) {
         alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
         return;
@@ -2358,11 +2359,32 @@
           .catch(() => false);
 
         if (documentUpdated) {
+          const changeStatusResponse = await changeStatusOnRealtime(habilitado, userUID, uid);
           alert("Se ha actualizado de manera correcta.");
           await getAndRenderDriversFromUser();
           return;
         }
         alert("No se pudo actualizar, favor de verificar.");
+      }
+    }
+
+    async function changeStatusOnRealtime(status, concesionario, conductor) {
+      try {
+        // console.log({ status, concesionario, conductor });
+        const reference = firebase.database().ref("Users/Drivers/" + conductor);
+        const snapshot = await reference.get();
+        const data = snapshot.val();
+        // console.log({ data: data.concesionarioAsignado });
+        const arrayConcesionarios = data.concesionarioAsignado.map(({ habilitado, uid }) => {
+          return uid === concesionario ? { habilitado: !status, uid } : { habilitado, uid };
+        });
+
+        return await reference
+          .update({ concesionarioAsignado: arrayConcesionarios })
+          .then(() => true)
+          .catch(() => false);
+      } catch (error) {
+        console.error(error);
       }
     }
 
@@ -2447,7 +2469,7 @@
     }
 
     async function deleteVehiculoAssigned(element) {
-      try { 
+      try {
         const message = "Estas seguro de eliminar vehiculo del concesionario correspondiente?";
         if (!confirm(message)) return;
         const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
@@ -2493,12 +2515,34 @@
           const currentRow = document.querySelector(`tr[data-reference=${element.uid}]`);
           box.style.display = "none";
           currentRow.remove();
+          const realtimeResponse = await deleteConductorAssignedFromRealtime(uid, element.uid);
           window.alert("Se ha eliminado el conductor del concesionario.");
           showOrHideFormulary(0);
         }
       } catch (error) {
         console.error("Se ha presentado un error...");
         windw.alert("Se ha presentado un error...");
+      }
+    }
+
+    async function deleteConductorAssignedFromRealtime(concesionario, conductor) {
+      try {
+        const reference = firebase.database().ref("Users/Drivers/" + conductor);
+        const snapshot = await reference.get();
+        const userData = snapshot.val();
+        const arrayConcesionarios = [];
+
+        if (userData.concesionarioAsignado !== undefined) {
+          const newArrayConcesionarios = userData.concesionarioAsignado.filter(
+            ({ habilitado, uid }) => uid !== concesionario
+          );
+          // console.log({ newArrayConcesionarios });
+          await reference.update({ concesionarioAsignado: newArrayConcesionarios });
+        }
+
+        // console.log({ userData, concesionario, conductor });
+      } catch (error) {
+        console.error(error);
       }
     }
 
@@ -2704,7 +2748,7 @@
             list.className = "optionVehicle";
 
             const span = document.createElement("span");
-            console.log(`${marca} ${modelo} - ${placa}`);
+            // console.log(`${marca} ${modelo} - ${placa}`);
             span.innerText = `${marca} ${modelo} - ${placa}`;
             list.appendChild(span);
 
@@ -2821,10 +2865,35 @@
             ...item.data,
             habilitado: false,
           });
-        alert("Se ha asignado el conductor al concesionario.");
+        await updateUserRealTimeAssignedConcesionario(uid, item.id);
         await getAndRenderDriversFromUser();
       } catch (error) {
         alert("Se ha presentado un error, favor de verificar con un administrador.");
+        console.error(error);
+      }
+    }
+
+    async function updateUserRealTimeAssignedConcesionario(concesionario, conductor) {
+      // console.log({ concesionario, conductor });
+      try {
+        const userReference = firebase.database().ref("/Users/Drivers/" + conductor);
+        const snapshot = await userReference.get();
+        const userData = snapshot.val();
+        let arrayConcesionarios = [];
+        if (userData.concesionarioAsignado) {
+          if (Array.isArray(userData.concesionarioAsignado)) {
+            arrayConcesionarios = userData.concesionarioAsignado;
+          } else {
+            arrayConcesionarios = [userData.concesionarioAsignado];
+          }
+          arrayConcesionarios.push({ habilitado: false, uid: concesionario });
+        } else {
+          arrayConcesionarios.push({ habilitado: false, uid: concesionario });
+        }
+
+        await userReference.update({ concesionarioAsignado: arrayConcesionarios });
+        alert("Se ha asignado el conductor al concesionario.");
+      } catch (error) {
         console.error(error);
       }
     }
