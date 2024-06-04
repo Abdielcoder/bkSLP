@@ -2331,14 +2331,10 @@
       const statusHabilitados = [];
       totalHabilitado.forEach((element) => {
         statusHabilitados.push(element.dataset.status == "true");
-      });
-      // console.log({
-      //   all: array?.filter((item) => item.habilitado === true).length >= 2,
-      //   allStatus: statusHabilitados.filter((e) => e == true).length >= 2,
-      //   status,
-      // });
+      }); 
+      
       if (statusHabilitados.filter((e) => e == true).length >= 2 && status == true) {
-        alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
+        alert("Concesionario no puede tener mas de 2 conductores habilitados");
         return;
       }
 
