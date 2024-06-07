@@ -6,7 +6,7 @@ div.stat-card {
   flex-grow: 1;
   padding: 1rem;
   background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: 1px solid #c7c7c7;
 }
 
 div.stat-data {

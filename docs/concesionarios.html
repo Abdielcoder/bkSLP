@@ -2065,7 +2065,7 @@
         return { [name]: val };
       });
 
-      const isCreated = await createUserAndSaveData(values, CONCESIONARIOS_COLLECTION);
+      const isCreated = await createUserAndSaveData(values, CONCESIONARIOS_COLLECTION, true);
       if (isCreated === false) return;
       await handleRefetchingData();
       handleViewAltaModal(false);
@@ -2331,8 +2331,8 @@
       const statusHabilitados = [];
       totalHabilitado.forEach((element) => {
         statusHabilitados.push(element.dataset.status == "true");
-      }); 
-      
+      });
+
       if (statusHabilitados.filter((e) => e == true).length >= 2 && status == true) {
         alert("Concesionario no puede tener mas de 2 conductores habilitados");
         return;
@@ -2597,6 +2597,7 @@
     }
 
     async function getAndRenderVehiclesFromUser() {
+      document.querySelector("#userVehicleSearch").classList.remove("hidden");
       document.querySelector("#placaSearch").value = "";
       const uid = document.querySelector("#usuariosAltaModal").getAttribute("data-reference");
       const vehiclesFromUser = await getVehiclesFromInnerDocumentCollection(uid, CONCESIONARIOS_COLLECTION);
@@ -2651,7 +2652,6 @@
           userSearch.classList.remove("hidden");
           userSearchText.classList.remove("hidden");
         }
-        return;
       } else {
         if (totalVehiculeAssigned.length >= 1) {
           vehiculoSearch.classList.add("hidden");

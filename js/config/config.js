@@ -22,7 +22,7 @@ export const getAllRoles = async () => {
     });
 };
 
-export const createUserAndSaveData = async (elements, collection) => {
+export const createUserAndSaveData = async (elements, collection, isConcesionario = false) => {
   try {
     let firestoreData = {};
     elements?.forEach((i) => {
@@ -44,8 +44,11 @@ export const createUserAndSaveData = async (elements, collection) => {
       firestoreData = { ...firestoreData, uid: user.uid };
       await resetPasswordToUser(firestoreData.correoElectronico);
       await firestore.collection(collection).doc(user.uid).set(firestoreData);
+      if (isConcesionario === true) {
+        await firestore.collection("conductores").doc(user.uid).set(firestoreData);
+      }
 
-      if (collection === "conductores") {
+      if (collection === "conductores" || isConcesionario === true) {
         await insertIntoRealTime(firestoreData);
       }
       window.alert("Se ha guardado el registro con exito.");
@@ -396,7 +399,7 @@ const insertIntoRealTime = async (data) => {
     gafete: numGafeteSCT,
     genero: sexo,
     id: uid,
-    image: "",
+    image: "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg",
     last_gps_location: "32.446237013348124, -116.84971051461638",
     marca: "N/A",
     modelo: "N/A",

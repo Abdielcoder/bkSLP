@@ -2244,7 +2244,7 @@
         statusHabilitados.push(element.dataset.status == "true");
       });
       if (statusHabilitados.filter((e) => e == true).length >= 2 && status == true) {
-        alert("Concesionario no puede tener mas de 2 vehiculos habilitados");
+        alert("Conductor no puede tener mas de 2 vehiculos habilitados");
         return;
       }
 
@@ -2359,7 +2359,7 @@
       deleteButton.dataset.reference = uid;
       deleteButton.innerHTML = Iconos.eliminar;
       deleteButton.className = "buttonDelete";
-      deleteButton.title = "Eliminar vehiculo de concesionario";
+      deleteButton.title = "Eliminar vehiculo de conductor";
       deleteButton.addEventListener("click", async () => {
         await deleteVehiculoAssigned(element);
       });
@@ -2373,7 +2373,7 @@
     }
     async function deleteVehiculoAssigned(element) {
       try {
-        const message = "Estas seguro de eliminar vehiculo del concesionario correspondiente?";
+        const message = "Estas seguro de eliminar vehiculo del conductor correspondiente?";
         if (!confirm(message)) return;
         const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
         const box = document.querySelector("#vehiculos-searched");
@@ -2391,7 +2391,7 @@
           await deleteVehiculoAsignadoRealtime(uid, element.uid);
           box.style.display = "none";
           currentRow.remove();
-          window.alert("Se ha eliminado el vehiculo del concesionario.");
+          window.alert("Se ha eliminado el vehiculo del conductor.");
           showOrHideFormulary();
         }
       } catch (error) {
@@ -2556,7 +2556,7 @@
       }
 
       const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
-      const message = "¿Estás seguro de asignar este vehículo al concesionario?";
+      const message = "¿Estás seguro de asignar este vehículo al conductor?";
       if (!confirm(message)) return;
 
       try {
