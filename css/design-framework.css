@@ -109,11 +109,11 @@
 }
 .modal-dialog[data-submit="update"] .modal-header,
 .modal-dialog[data-submit="update"] .submit-button {
-  background: rgb(253, 126, 20);
+  background: #2d6e3d;
   transition: background-color 150ms linear;
 }
 .modal-dialog[data-submit="update"] .submit-button:hover {
-  background: rgb(253, 106, 20);
+  background: #2d6e3d;
   transition: background-color 150ms linear;
 }
 .modal-body {

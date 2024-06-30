@@ -7,28 +7,29 @@ const DRIVERS_ACTIVE_REFERENCE = realtime.child("active_drivers");
 export const PANIC_ALERTS_REFERENCE = realtime.child("panic_button");
 export const WARNING_ALERTS_REFERENCE = realtime.child("warning");
 
-let DRIVERS = [];
-let WORKING_DRIVERS = [];
-let ACTIVE_DRIVERS = [];
-let WARNING_NOTIFICATIONS = [];
-let PANIC_ALERTS = [];
-let WORKING_MAP_MARKERS = [];
-let ACTIVE_MAP_MARKERS = [];
-let INACTIVE_MAP_MARKERS = [];
-let WARNING_MAP_MARKERS = [];
-let WARNING_MAP_CIRCLE_MARKERS = [];
-let PANIC_MAP_MARKERS = [];
-let PANIC_CIRCLE_MAP_MARKERS = [];
-let SEARCH_INACTIVE_FILTER = [];
-let ACTIVE_COUNTER = 0;
-let WORKING_COUNTER = 0;
-let INACTIVE_COUNTER = 0;
-let WARNING_COUNTER = 0;
-let PANIC_COUNTER = 0;
+let GLOBAL_ALL_DRIVERS_ARRAY = [];
+let GLOBAL_WORKING_DRIVERS_ARRAY = [];
+let GLOBAL_ACTIVE_DRIVERS_ARRAY = [];
+let WARNING_NOTIFICATIONS_ARRAY = [];
+let PANIC_ALERTS_ARRAY = [];
+let WORKING_MAP_MARKERS_ARRAY = [];
+let ACTIVE_MAP_MARKERS_ARRAY = [];
+let INACTIVE_MAP_MARKERS_ARRAY = [];
+let WARNING_MAP_MARKERS_ARRAY = [];
+let WARNING_MAP_CIRCLE_MARKERS_ARRAY = [];
+let PANIC_MAP_MARKERS_ARRAY = [];
+let PANIC_CIRCLE_MAP_MARKERS_ARRAY = [];
+let SEARCH_INACTIVE_FILTER_ARRAY = [];
+let ALL_DRIVERS_COUNTER_INT = 0;
+let ACTIVE_COUNTER_INT = 0;
+let WORKING_COUNTER_INT = 0;
+let INACTIVE_COUNTER_INT = 0;
+let WARNING_COUNTER_INT = 0;
+let PANIC_COUNTER_INT = 0;
 
 const TAXI_TOTAL_POINTER = document.querySelector("span#total-data");
-const LIBRE_TOTAL_POINTER = document.querySelector("span#libre-data");
-const SITIO_TOTAL_POINTER = document.querySelector("span#sitio-data");
+// const LIBRE_TOTAL_POINTER = document.querySelector("span#libre-data");
+// const SITIO_TOTAL_POINTER = document.querySelector("span#sitio-data");
 const WORKING_TOTAL_POINTER = document.querySelector("span#working-data");
 const ACTIVE_TOTAL_POINTER = document.querySelector("span#active-data");
 const INACTIVE_TOTAL_POINTER = document.querySelector("span#inactive-data");
@@ -38,96 +39,91 @@ let isIconWarningActive = false;
 let isIconPanicActive = false;
 
 async function getAllDrivers() {
-  return await DRIVERS_REALTIME_REFERENCE.once("value").then((snapshot) => {
-    const snapshotDriversTotal = [];
-    let taxiLibreCounter = 0;
-    let taxiSitioCounter = 0;
-    snapshot.forEach((driver) => {
-      let object = driver.val();
-      let driverData = {
-        id: object.id,
-        personal: {
-          name: object.nombre_chofer,
-          email: object.correo,
-          phone: object.telefono,
-          gender: object.genero,
-          badge: object.gafete,
-          licence: object.noLicencia_chofer,
-          card: object.tarjeton_ciudad,
-        },
-        vehicle: {
-          num_economic: object.numero_economico,
-          service: object.tipo || "",
-          brand: object.marca,
-          model: object.modelo,
+  const driversSnapshot = await DRIVERS_REALTIME_REFERENCE.once("value")
+    .then((snapshot) => {
+      let allDriversFromSnapshot = [];
+      let taxiLibreCounter = 0;
+      let taxiSitioCounter = 0;
+      snapshot.forEach((document) => {
+        let object = document.val();
+        let documentData = {
+          uid: object.id,
+          nombreChofer: object.nombre_chofer,
+          correo: object.correo,
+          telefono: object.telefono,
+          genero: object.genero,
+          gafete: object.gafete,
+          licenciaChofer: object.noLicencia_chofer,
+          tarjetonCiudad: object.tarjeton_ciudad,
+          numeroEconomico: object.numero_economico,
+          servicio: object.tipo || "",
+          marca: object.marca,
+          modelo: object.modelo,
           color: object.color,
-          plate: object.placa,
-          type: object.tipo_vehiculo,
-          last_gps: (() => {
+          placa: object.placa,
+          tipoVehiculo: object.tipo_vehiculo,
+          lastGps: (() => {
             if (object.last_gps_location === undefined) {
               return [32.53169856666667, -116.95251346666667];
             }
             const gps = object.last_gps_location.split(", ");
-            return [gps[0], gps[1]];
+            return { lat: gps[0], lng: gps[1] };
           })(),
-        },
-        delegation: {
-          id: object.delegacionID,
-          town: object.MUNICIPIO,
-        },
-        status: {
+          idDelegacion: object.delegacionID,
+          municipio: object.MUNICIPIO,
           messageFlag: object.banderaMensajeI || "N/A",
-          status: object.estatus || "N/A",
-          process: object.proceso || "N/A",
-        },
+          estatus: object.estatus || "N/A",
+          proceso: object.proceso || "N/A",
+        };
+        String(documentData.service).toUpperCase() == "SITIO" ? taxiSitioCounter++ : taxiSitioCounter;
+        String(documentData.service).toUpperCase() == "LIBRE" ? taxiLibreCounter++ : taxiLibreCounter;
+        allDriversFromSnapshot.push(documentData);
+      });
+      return {
+        array: allDriversFromSnapshot,
+        taxiSitioCounter,
+        taxiLibreCounter,
       };
-      driverData.vehicle.service == "SITIO" ? taxiSitioCounter++ : taxiSitioCounter;
-      driverData.vehicle.service == "LIBRE" ? taxiLibreCounter++ : taxiLibreCounter;
-      snapshotDriversTotal.push(driverData);
+    })
+    .catch((error) => {
+      console.error(error);
+      return [];
     });
-    const data = {
-      list: snapshotDriversTotal,
-      taxiSitioCounter,
-      taxiLibreCounter,
-    };
-    return data;
-  });
+  return driversSnapshot;
 }
 
 async function main() {
-  const data = await getAllDrivers();
-  console.log(data);
-  DRIVERS = data.list;
-  data.list?.forEach((item) => {
-    addDriverMarkerOnMap(item, undefined, iconInactive, "inactive");
-    addDataDriverToList(item, "inactive", dom_icons.blackcar);
-  });
-
-  TAXI_TOTAL_POINTER.textContent = data.taxiLibreCounter + data.taxiSitioCounter;
-  INACTIVE_TOTAL_POINTER.textContent = data.taxiLibreCounter + data.taxiSitioCounter;
-  INACTIVE_COUNTER = data.taxiLibreCounter + data.taxiSitioCounter;
-  LIBRE_TOTAL_POINTER.textContent = data.taxiLibreCounter;
-  SITIO_TOTAL_POINTER.textContent = data.taxiSitioCounter;
+  const drivers = await getAllDrivers();
+  console.log({ MAIN: drivers });
+  GLOBAL_ALL_DRIVERS_ARRAY = drivers.array;
+  console.log({ drivers });
+  // drivers?.array.forEach((item) => {
+  //   addDriverMarkerOnMap(item, undefined, iconInactive, "inactive");
+  //   addDataDriverToList(item, "inactive", dom_icons.blackcar);
+  // });
+  ALL_DRIVERS_COUNTER_INT = drivers.array.length;
+  TAXI_TOTAL_POINTER.textContent = drivers.array.length;
+  INACTIVE_TOTAL_POINTER.textContent =
+    drivers.array.length - (parseInt(drivers.taxiLibreCounter) + parseInt(drivers.taxiSitioCounter));
+  INACTIVE_COUNTER_INT = drivers.taxiLibreCounter + drivers.taxiSitioCounter;
+  // LIBRE_TOTAL_POINTER.textContent = drivers.taxiLibreCounter;
+  // SITIO_TOTAL_POINTER.textContent = drivers.taxiSitioCounter;
 }
 
-main();
-
-const addDriverMarkerOnMap = async (item, current, iconColor, type) => {
-  console.log({ iconColor });
+const addDriverMarkerOnMap = async (data, currentDriver, iconColor, type) => {
   try {
-    const { vehicle, id } = item;
-    const markerPopUpContainer = getPopUpCardFromMarker(item, current, type);
-    const whichService = vehicle.service || "indefinido";
+    const markerPopUpContainer = getPopUpCardFromMarker(data, currentDriver, type);
+    const whichService = data.servicio || "indefinido";
 
-    const latitude = current !== undefined ? current.l[0] : vehicle.last_gps[0];
-    const longitude = current !== undefined ? current.l[1] : vehicle.last_gps[1];
+    const latitude = currentDriver !== undefined ? currentDriver.l[0] : data.last_gps.lat;
+    const longitude = currentDriver !== undefined ? currentDriver.l[1] : data.last_gps.lng;
 
     const markerOptions = {
-      id,
-      title: vehicle.plate,
+      id: data.uid,
+      title: data.placa,
       icon: iconColor,
-      alt: `marker-${id}`,
-      pos: `icon-${id}`,
+      alt: `marker-${data.uid}`,
+      pos: `icon-${data.uid}`,
     };
 
     let marker = L.marker([latitude, longitude], markerOptions);
@@ -146,28 +142,608 @@ const addDriverMarkerOnMap = async (item, current, iconColor, type) => {
     markerIcon.setAttribute("data-vision", "visible");
 
     setMarkerToArray(marker, type);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.error(error);
   }
 };
 
 const settingNewCarTypeInMap = (uid, snapshot) => {
-  const { list: driversList } = DRIVERS;
-  let workingDriver = findDriverMarkerByUID(uid, WORKING_MAP_MARKERS);
+  let workingDriver = findDriverMarkerByUID(uid, WORKING_MAP_MARKERS_ARRAY);
   if (workingDriver) {
-    const item = findDriverDataByUID(uid, driversList);
+    const item = findDriverDataByUID(uid, GLOBAL_ALL_DRIVERS_ARRAY);
     addDriverMarkerOnMap(item, snapshot, iconWorking, dom_icons.bluecar);
     return;
   }
 
-  let activeDriver = findDriverMarkerByUID(uid, ACTIVE_MAP_MARKERS);
+  let activeDriver = findDriverMarkerByUID(uid, ACTIVE_MAP_MARKERS_ARRAY);
   if (activeDriver) {
-    const item = findDriverDataByUID(uid, driversList);
+    const item = findDriverDataByUID(uid, GLOBAL_ALL_DRIVERS_ARRAY);
     addDriverMarkerOnMap(item, snapshot, iconActive, dom_icons.greencar);
   }
 };
 
-function tabModalEventListener({ currentTarget }) {
+const findDriverMarkerByUID = (uid, marker) => marker.find(({ options }) => options.id === uid);
+
+const findDriverDataByUID = (uid, array) => array.find(({ id }) => id === uid);
+
+const removeDataFromTable = (uid) => {
+  const elementString = "tr.tr_" + uid;
+  document.querySelectorAll(elementString).forEach((element) => {
+    element.remove();
+  });
+};
+
+const showAlertCountersOnMapContainer = (e, count) => {
+  const button = document.querySelector(`button[data-event='${e}'`);
+  const separator = document.querySelector(`hr.separator.warpan`);
+
+  if (WARNING_COUNTER_INT >= 1) {
+    isIconWarningActive = true;
+    separator.style.display = "block";
+    button.style.display = "flex";
+  }
+  if (PANIC_COUNTER_INT >= 1) {
+    isIconPanicActive = true;
+    if (separator.style.display === "none") {
+      separator.style.display = "block";
+    }
+    button.style.display = "flex";
+  }
+  document.querySelector(`span#${e}-data`).textContent = count;
+};
+
+const updateNodePosition = (array, node) => {
+  return {
+    ...array,
+    w: node,
+  };
+};
+
+const addDataDriverToList = async (driver, event, icon) => {
+  if (driver === undefined) return;
+
+  const tableBody = document.querySelector("table#data-list tbody");
+  const trElement = document.createElement("tr");
+  const tdElement = document.createElement("td");
+  const spanElement = document.createElement("span");
+  const imageElement = document.createElement("img");
+  trElement.classList.add(`tr_${driver.uid}`);
+  tdElement.classList.add("cell-list");
+  trElement.setAttribute("data-type", event);
+  tdElement.setAttribute("data-num", driver.numeroEconomico);
+  tdElement.setAttribute("data-phone", driver.telefono);
+  tdElement.setAttribute("data-licence", driver.licenciaChofer);
+  tdElement.style.textTransform = "uppercase";
+
+  spanElement.textContent = driver.placa;
+
+  imageElement.src = icon;
+  imageElement.classList.add("car_icon");
+
+  tdElement.append(spanElement, imageElement);
+  trElement.append(tdElement);
+
+  trElement.addEventListener("click", (event) => {
+    const { currentTarget } = event;
+    // const id = self.getAttribute("class").split("_")[1];
+    const type = currentTarget.getAttribute("data-type");
+    focusMarkerOnMap(driver.uid, type);
+  });
+
+  tableBody.insertAdjacentElement("beforeend", trElement);
+};
+
+const removeMarkerFromMap = (item) => {
+  if (item === undefined) return;
+  const { options } = item;
+  const element = `img[alt='${options.alt}']`;
+  item.removeFrom(GeographicZone);
+  document.querySelectorAll(element).forEach((event) => event.remove());
+};
+
+// const focusMarkerOnMap = async (uid, t) => {
+//   let driverMarkerItem = [];
+
+//   if (t !== "inactive") {
+//     if (t === "active") driverMarkerItem = ACTIVE_MAP_MARKERS.filter(({ options }) => options.id === uid);
+//     if (t === "working") driverMarkerItem = WORKING_MAP_MARKERS.filter(({ options }) => options.id === uid);
+//     if (t === "warning") driverMarkerItem = WARNING_MAP_MARKERS.filter(({ options }) => options.id === uid);
+//     if (t === "panic") driverMarkerItem = PANIC_MAP_MARKERS.filter(({ options }) => options.id === uid);
+//     driverMarkerItem[0].openPopup();
+//     const { lat, lng } = driverMarkerItem[0].getLatLng();
+//     GeographicZone.setView([lat, lng], 12);
+//     return;
+//   }
+
+//   updateSearchInactiveFilter(i);
+//   const marker = findDriverMarkerByUID(i, INACTIVE_MAP_MARKERS);
+//   marker.openPopup();
+//   const { latitude, longitude } = marker.getLatLng();
+//   GeographicZone.setView([latitude, longitude], 12);
+// };
+
+// const updateSearchInactiveFilter = (i) => {
+//   SEARCH_INACTIVE_FILTER.forEach((item) => {
+//     item.style.display = "none";
+//   });
+//   SEARCH_INACTIVE_FILTER = [];
+//   const inactive_marker = document.querySelector(`img[alt='marker-${i}']`);
+//   inactive_marker.style.display = "block";
+//   SEARCH_INACTIVE_FILTER.push(inactive_marker);
+//   return;
+// };
+
+const getPopUpCardFromMarker = (driver) => {
+  if (driver !== undefined) {
+    return `
+        <div class="driver-popup">
+          <div class="formContainer" data-tabcontainer="conductor" data-visibility="true">
+            <div class="popup-header">
+              <h2 style="margin-bottom: 0.5rem;">Datos generales del conductor</h2>
+            </div>
+            <div class="popup-body">
+              <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
+                <h6>Operador:</h6>
+                <span style="text-transform: uppercase;">${driver.nombreChofer}</span>
+              </div>
+              <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
+                <h6>Contacto:</h6>
+                <span>${driver.telefono}</span>
+              </div>
+              <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
+                <h6>Económico:</h6>
+                <span>${driver.numeroEconomico}</span>
+              </div>
+              <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
+                <h6>Estado:</h6>
+                <span>${driver.estatus}</span>
+              </div>
+            </div>
+          </div>
+        </div>`;
+  }
+};
+
+const getDegreesFromMarker = (gps1, gps2) => {
+  const rad = Math.PI / 180;
+  let lat1 = gps1.lat * rad;
+  let lat2 = gps2.lat * rad;
+  let lon1 = gps1.lng * rad;
+  let lon2 = gps2.lng * rad;
+  let y = Math.sin(lon2 - lon1) * Math.cos(lat2);
+  let x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+  let bearing = ((Math.atan2(y, x) * 180) / Math.PI + 360) % 360;
+  return bearing >= 180 ? bearing - 360 : bearing;
+};
+
+const setMarkerToArray = async (object, type) => {
+  if (type === "active") return ACTIVE_MAP_MARKERS_ARRAY.push(object);
+  if (type === "inactive") return INACTIVE_MAP_MARKERS_ARRAY.push(object);
+  if (type === "working") return WORKING_MAP_MARKERS_ARRAY.push(object);
+  if (type === "warning") return WARNING_MAP_MARKERS_ARRAY.push(object);
+  if (type === "panic") return PANIC_MAP_MARKERS_ARRAY.push(object);
+  return;
+};
+
+const updateDriverMarkerOrientation = (uid, deg) => {
+  const iconImg = document.querySelector(`img[alt='marker-${uid}']`);
+  const iconStyle = iconImg.style.transform;
+  iconImg.style.transformOrigin = "center";
+  iconImg.style.transform = `${iconStyle.split("rotate")[0]} rotate(${deg}deg)`;
+};
+
+const addWarningInfoToModalTable = (item, pos, type, icon) => {
+  const modal = document.querySelector("div.modal-container-body table#alerts-list tbody");
+  console.log({ item, pos, type, icon });
+  const items = [
+    `<img class="${pos}_icon" src="${icon}"/>`,
+    item.nombreChofer,
+    item.telefono,
+    item.gafete,
+    item.correo,
+    item.numeroEconomico,
+    item.marca,
+    item.placa,
+    `${item.servicio.replace("automovil ", "")} - ${item.color}`,
+    `<button class="attention-button" data-type='${type}' data-id='${item.uid}'><img src='${dom_icons.edit}'/></button>`,
+  ];
+
+  const TR = document.createElement("TR");
+  TR.setAttribute("class", `${type}-list_${item.uid}`);
+
+  items.forEach((i) => {
+    const TD = document.createElement("TD");
+    TD.insertAdjacentHTML("beforeend", i);
+    TR.appendChild(TD);
+  });
+
+  const BUTTON = TR.lastElementChild.children[0];
+  BUTTON.addEventListener("click", (e) => {
+    const self = e.currentTarget;
+    const id = self.getAttribute("data-id");
+    attendAlertFromListModal(type, id);
+  });
+
+  modal.insertAdjacentElement("beforeend", TR);
+};
+
+const attendAlertFromListModal = (type, uid) => {
+  const alertBox = document.querySelector("div.modal-alert-box");
+  alertBox.setAttribute("data-id", uid);
+  alertBox.setAttribute("data-type", type);
+  alertBox.style.display = "block";
+};
+
+const checkDriverMarkerOnMap = async (type, uuid, event) => {
+  try {
+    console.log({ type, uuid, event });
+    let whichTypeIs = "";
+    const isWorking = GLOBAL_WORKING_DRIVERS_ARRAY.find(({ uid }) => uid === uuid);
+    const isActive = GLOBAL_ACTIVE_DRIVERS_ARRAY.find(({ uid }) => uid === uuid);
+    if (isWorking) whichTypeIs = "working";
+    if (isActive) whichTypeIs = "active";
+
+    console.log({ whichTypeIs, isWorking, isActive });
+    // if (!isWorking && !isActive) return;
+
+    // const marker = document.querySelector(`img[alt='marker-${uuid}'][data-type='${whichTypeIs}']`);
+    // const table_row = document.querySelectorAll(`tr.tr_${uuid}`);
+
+    // if (event === "start") {
+    //   marker.style.display = "none";
+    //   table_row.forEach((item) => {
+    //     if (item.getAttribute("data-type") !== type) {
+    //       item.classList.add("no-display");
+    //     }
+    //   });
+    //   return;
+    // }
+    // marker.style.display = "block";
+    // table_row.forEach((item) => {
+    //   if (item.getAttribute("data-type") !== type) {
+    //     item.classList.remove("no-display");
+    //   }
+    // });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const cleanAlertCountInContainerMap = (counter, type) => {
+  document.querySelector(`span#${type}-data`).textContent = counter;
+
+  if (counter === 0) {
+    document.querySelector(`button.map-data.warpan.${type}`).style.display = "none";
+  }
+  console.log({ WARNING_COUNTER_INT, PANIC_COUNTER_INT });
+
+  if (WARNING_COUNTER_INT + PANIC_COUNTER_INT < 1) {
+    document.querySelectorAll(".warpan").forEach((elem) => {
+      elem.style.display = "none";
+    });
+    GeographicZone.setView([32.4660333, -116.9167898], 11);
+    return;
+  }
+};
+
+const addCircleToMap = (item, color, type) => {
+  const circleOptions = {
+    radius: type === "warning" ? 1200 : 2000,
+    stroke: true,
+    weight: 2,
+    opacity: 0.65,
+    color: color,
+    fillColor: color,
+    className: `circle-${item.uid}`,
+  };
+  const CIRCLE_MAP_MARKER = L.circle([item.node.l[0], item.node.l[1]], circleOptions);
+  if (type === "warning") {
+    WARNING_MAP_CIRCLE_MARKERS_ARRAY.push(CIRCLE_MAP_MARKER);
+  }
+  if (type === "panic") {
+    PANIC_CIRCLE_MAP_MARKERS_ARRAY.push(CIRCLE_MAP_MARKER);
+  }
+  CIRCLE_MAP_MARKER.addTo(GeographicZone);
+};
+
+const removeCircleMarkerFromMap = (uid, type) => {
+  let CIRCLE_MAP_MARKER =
+    type === "warning"
+      ? WARNING_MAP_CIRCLE_MARKERS_ARRAY.filter(({ options }) => options.className === `circle-${uid}`)
+      : PANIC_CIRCLE_MAP_MARKERS_ARRAY.filter(({ options }) => options.className === `circle-${uid}`);
+
+  CIRCLE_MAP_MARKER.forEach((item) => {
+    item.removeFrom(GeographicZone);
+  });
+};
+
+// const executeWebService = () => {
+//   const api = "http://ec2-3-15-238-62.us-east-2.compute.amazonaws.com/SendActivation.asmx/ActivationLog";
+//   const xhr = new XMLHttpRequest();
+
+//   xhr.addEventListener("load", () => {
+//     if (this.readyState === 4 && this.status === 200) {
+//       // console.log(this.response);
+//     } else {
+//       // console.log(this.response);
+//     }
+//   });
+//   xhr.open("GET", api);
+//   xhr.send();
+// };
+
+/**
+ * Drivers Working References (OnAdded, onChanged, onRemoved)
+ **/
+
+main();
+
+DRIVERS_WORKING_REFERENCE.on("child_added", (snapshot) => {
+  try {
+    const workingDriverSnapshot = { uid: snapshot.key, ...snapshot.val() };
+
+    const isActiveExist = GLOBAL_ACTIVE_DRIVERS_ARRAY.find(({ uid }) => uid === workingDriverSnapshot.uid);
+    if (isActiveExist) {
+      try {
+        removeDataFromTable(workingDriverSnapshot.uid);
+        const marker = ACTIVE_MAP_MARKERS_ARRAY.find(({ options }) => options.id === workingDriverSnapshot.uid);
+        removeMarkerFromMap(marker);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    const driverData = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === workingDriverSnapshot.uid);
+
+    if (driverData === null || driverData === undefined) return;
+    GLOBAL_WORKING_DRIVERS_ARRAY.push({ ...driverData, ...workingDriverSnapshot });
+    WORKING_COUNTER_INT = GLOBAL_WORKING_DRIVERS_ARRAY.length;
+
+    INACTIVE_COUNTER_INT = ALL_DRIVERS_COUNTER_INT - ACTIVE_COUNTER_INT - WORKING_COUNTER_INT;
+    addDriverMarkerOnMap(driverData, workingDriverSnapshot, iconWorking, "working");
+    addDataDriverToList(driverData, "working", dom_icons.redcar);
+    WORKING_TOTAL_POINTER.textContent = WORKING_COUNTER_INT;
+    INACTIVE_TOTAL_POINTER.textContent = INACTIVE_COUNTER_INT;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+DRIVERS_WORKING_REFERENCE.on("child_changed", (snap) => {
+  const driver = findDriverDataByUID(snap.key, GLOBAL_WORKING_DRIVERS_ARRAY);
+  const marker = findDriverMarkerByUID(snap.key, WORKING_MAP_MARKERS_ARRAY);
+  const latitude = snap.val().l[0];
+  const longitude = snap.val().l[1];
+
+  if (!driver) return;
+
+  const newDegree = getDegreesFromMarker(
+    { lat: marker._latlng.lat, lng: marker._latlng.lng },
+    { lat: latitude, lng: longitude }
+  );
+
+  marker.setLatLng([latitude, longitude]);
+  updateDriverMarkerOrientation(snap.key, newDegree);
+
+  const new_item = updateNodePosition(driver, snap.val());
+  GLOBAL_WORKING_DRIVERS_ARRAY = GLOBAL_WORKING_DRIVERS_ARRAY.filter((item) => item.id !== snap.key);
+  GLOBAL_WORKING_DRIVERS_ARRAY.push(new_item);
+});
+
+DRIVERS_WORKING_REFERENCE.on("child_removed", ({ key }) => {
+  GLOBAL_WORKING_DRIVERS_ARRAY = GLOBAL_WORKING_DRIVERS_ARRAY.filter(({ uid }) => uid !== key);
+  WORKING_COUNTER_INT = GLOBAL_WORKING_DRIVERS_ARRAY.length;
+
+  const marker = WORKING_MAP_MARKERS_ARRAY.find(({ uid }) => uid === key);
+  removeMarkerFromMap(marker);
+  removeDataFromTable(key);
+  WORKING_MAP_MARKERS_ARRAY = WORKING_MAP_MARKERS_ARRAY.filter(({ options }) => options.id !== key);
+  console.log({
+    active: ACTIVE_COUNTER_INT,
+    working: WORKING_COUNTER_INT,
+    total: GLOBAL_WORKING_DRIVERS_ARRAY.length,
+  });
+  WORKING_TOTAL_POINTER.textContent = WORKING_COUNTER_INT;
+  INACTIVE_TOTAL_POINTER.textContent = GLOBAL_ALL_DRIVERS_ARRAY.length - ACTIVE_COUNTER_INT - WORKING_COUNTER_INT;
+});
+
+DRIVERS_ACTIVE_REFERENCE.on("child_added", (snapshot) => {
+  try {
+    const activeDriverSnapshot = { uid: snapshot.key, ...snapshot.val() };
+
+    const isAWorkingExist = GLOBAL_WORKING_DRIVERS_ARRAY.find(({ uid }) => uid === activeDriverSnapshot.uid);
+    if (isAWorkingExist) {
+      try {
+        removeDataFromTable(activeDriverSnapshot.uid);
+        const marker = WORKING_MAP_MARKERS_ARRAY.find(({ uid }) => uid === activeDriverSnapshot.uid);
+        removeMarkerFromMap(marker);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const driverData = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === activeDriverSnapshot.uid);
+    if (driverData === null || driverData === undefined) return;
+
+    GLOBAL_ACTIVE_DRIVERS_ARRAY.push({ ...driverData, ...activeDriverSnapshot });
+    ACTIVE_COUNTER_INT = GLOBAL_ACTIVE_DRIVERS_ARRAY.length;
+
+    INACTIVE_COUNTER_INT = ALL_DRIVERS_COUNTER_INT - ACTIVE_COUNTER_INT - WORKING_COUNTER_INT;
+    const markerAdded = addDriverMarkerOnMap(driverData, activeDriverSnapshot, iconActive, "active");
+    addDataDriverToList(driverData, "active", dom_icons.greencar);
+
+    ACTIVE_TOTAL_POINTER.textContent = ACTIVE_COUNTER_INT;
+    INACTIVE_TOTAL_POINTER.textContent = INACTIVE_COUNTER_INT;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+DRIVERS_ACTIVE_REFERENCE.on("child_changed", (snap) => {
+  const driver = findDriverDataByUID(snap.key, GLOBAL_ACTIVE_DRIVERS_ARRAY);
+  const marker = findDriverMarkerByUID(snap.key, ACTIVE_MAP_MARKERS_ARRAY);
+  const latitude = snap.val().l[0];
+  const longitude = snap.val().l[1];
+
+  if (!driver) return;
+
+  const newDegree = getDegreesFromMarker(
+    { lat: marker._latlng.lat, lng: marker._latlng.lng },
+    { lat: latitude, lng: longitude }
+  );
+
+  marker.setLatLng([latitude, longitude]);
+  updateDriverMarkerOrientation(snap.key, newDegree);
+
+  const newDriverPosition = updateNodePosition(driver, snap.val());
+  GLOBAL_ACTIVE_DRIVERS_ARRAY = GLOBAL_ACTIVE_DRIVERS_ARRAY.filter((item) => item.id !== snap.key);
+  GLOBAL_ACTIVE_DRIVERS_ARRAY.push(newDriverPosition);
+});
+
+DRIVERS_ACTIVE_REFERENCE.on("child_removed", ({ key }) => {
+  GLOBAL_ACTIVE_DRIVERS_ARRAY = GLOBAL_ACTIVE_DRIVERS_ARRAY.filter(({ uid }) => uid !== key);
+  ACTIVE_COUNTER_INT = GLOBAL_ACTIVE_DRIVERS_ARRAY.length;
+
+  const marker = ACTIVE_MAP_MARKERS_ARRAY.find(({ options }) => options.id === key);
+  removeMarkerFromMap(marker);
+  removeDataFromTable(key);
+  ACTIVE_MAP_MARKERS_ARRAY = ACTIVE_MAP_MARKERS_ARRAY.filter(({ options }) => options.id !== key);
+  console.log({
+    active: ACTIVE_COUNTER_INT,
+    working: WORKING_COUNTER_INT,
+    total: GLOBAL_WORKING_DRIVERS_ARRAY.length,
+  });
+  ACTIVE_TOTAL_POINTER.textContent = ACTIVE_COUNTER_INT;
+  INACTIVE_TOTAL_POINTER.textContent = GLOBAL_ALL_DRIVERS_ARRAY.length - ACTIVE_COUNTER_INT - WORKING_COUNTER_INT;
+});
+
+/**
+ * Warning References (OnAdded, onChanged, onRemoved)
+ **/
+WARNING_ALERTS_REFERENCE.on("child_added", (snapshot) => {
+  const driverData = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === snapshot.key);
+  WARNING_NOTIFICATIONS_ARRAY.push({ ...driverData, w: snapshot.val() });
+  checkDriverMarkerOnMap("warning", snapshot.key, "start");
+  // addDriverMarkerOnMap(item, snap.val(), iconWarning, "warning");
+  addCircleToMap({ uid: snapshot.key, node: snapshot.val() }, "goldenrod", "warning");
+  // addDataDriverToList(item, "warning", dom_icons.yellowcar);
+  WARNING_COUNTER_INT = WARNING_NOTIFICATIONS_ARRAY.length;
+  addWarningInfoToModalTable(driverData, snapshot.val(), "warning", dom_icons.warning_icon);
+  showAlertCountersOnMapContainer("warning", WARNING_COUNTER_INT);
+});
+// // WARNING_ALERTS_REFERENCE.on("child_changed", (snap) => {
+// //   try {
+// //     const { key } = snap;
+// //     const driver = findDriverDataByUID(key, WARNING_NOTIFICATIONS);
+// //     const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
+// //     const latitude = snap.val().l[0];
+// //     const longitude = snap.val().l[1];
+
+// //     if (!driver) return;
+
+// //     const newDegree = getDegreesFromMarker(
+// //       { lat: marker._latlng.lat, lng: marker._latlng.lng },
+// //       { lat: latitude, lng: longitude }
+// //     );
+
+// //     marker.setLatLng([latitude, longitude]);
+// //     updateDriverMarkerOrientation(key, newDegree);
+
+// //     /* Update the Object from his Array*/
+// //     const new_item = updateNodePosition(driver, snap.val());
+// //     WARNING_NOTIFICATIONS = WARNING_NOTIFICATIONS.filter((item) => item.id !== snap.key);
+// //     WARNING_NOTIFICATIONS.push(new_item);
+// //   } catch (err) {
+// //     console.error(err);
+// //   }
+// // });
+
+WARNING_ALERTS_REFERENCE.on("child_removed", (snapshot) => {
+  WARNING_NOTIFICATIONS_ARRAY = WARNING_NOTIFICATIONS_ARRAY.filter((item) => item.uid !== snapshot.key);
+  WARNING_COUNTER_INT = WARNING_NOTIFICATIONS_ARRAY.length;
+  // checkDriverMarkerOnMap("warning", key, "finished");
+  // const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
+  // removeMarkerFromMap(marker);
+  removeCircleMarkerFromMap(snapshot.key, "warning");
+  WARNING_MAP_MARKERS_ARRAY = WARNING_MAP_MARKERS_ARRAY.filter((item) => item.options.id !== snapshot.key);
+  settingNewCarTypeInMap(snapshot.key, snapshot.val());
+  cleanAlertCountInContainerMap(WARNING_COUNTER_INT, "warning");
+});
+
+/**
+ * Panic References (OnAdded, onChanged, onRemoved)
+ **/
+PANIC_ALERTS_REFERENCE.on("child_added", (snapshot) => {
+  const driverData = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === snapshot.key);
+  console.log({ driverData, PanicUid: snapshot.key });
+  PANIC_ALERTS_ARRAY.push({ ...driverData, p: snapshot.val() });
+  PANIC_COUNTER_INT = PANIC_ALERTS_ARRAY.length;
+  // checkDriverMarkerOnMap("panic", snapshot.key, "start");
+  // addDriverMarkerOnMap(driverData, snapshot.val(), iconPanic, "panic");
+  addCircleToMap({ uid: snapshot.key, node: snapshot.val() }, "#ff0000", "panic");
+  // addDataDriverToList(driverData, "panic", dom_icons.redcar);
+  addWarningInfoToModalTable(driverData, snapshot.val(), "panic", dom_icons.panic_icon);
+  showAlertCountersOnMapContainer("panic", PANIC_COUNTER_INT);
+  // executeWebService()
+  GeographicZone.setView([snapshot.val().l[0], snapshot.val().l[1]], 14);
+});
+
+PANIC_ALERTS_REFERENCE.on("child_removed", (snapshot) => {
+  PANIC_ALERTS_ARRAY = PANIC_ALERTS_ARRAY.filter((item) => item.uid !== snapshot.key);
+  PANIC_COUNTER_INT = PANIC_ALERTS_ARRAY.length;
+  // checkDriverMarkerOnMap("warning", key, "finished");
+  // const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
+  // removeMarkerFromMap(marker);
+  removeCircleMarkerFromMap(snapshot.key, "panic");
+  PANIC_MAP_MARKERS_ARRAY = PANIC_MAP_MARKERS_ARRAY.filter((item) => item.options.id !== snapshot.key);
+  settingNewCarTypeInMap(snapshot.key, snapshot.val());
+  cleanAlertCountInContainerMap(PANIC_COUNTER_INT, "panic");
+});
+// PANIC_ALERTS_REFERENCE.on("child_changed", (snap) => {
+//   try {
+//     const { key } = snap;
+//     const driver = findDriverDataByUID(key, PANIC_ALERTS);
+//     const marker = findDriverMarkerByUID(key, PANIC_MAP_MARKERS);
+//     const latitude = snap.val().l[0];
+//     const longitude = snap.val().l[1];
+
+//     if (!driver) return;
+
+//     const newDegree = getDegreesFromMarker(
+//       { lat: marker._latlng.lat, lng: marker._latlng.lng },
+//       { lat: latitude, lng: longitude }
+//     );
+
+//     marker.setLatLng([latitude, longitude]);
+//     updateDriverMarkerOrientation(key, newDegree);
+
+//     /* Update the Object from his Array*/
+//     const new_item = updateNodePosition(driver, snap.val());
+//     PANIC_ALERTS = PANIC_ALERTS.filter((item) => item.id !== snap.key);
+//     PANIC_ALERTS.push(new_item);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
+
+// PANIC_ALERTS_REFERENCE.on("child_removed", (snap) => {
+//   try {
+//     const { key } = snap;
+//     PANIC_COUNTER--;
+//     PANIC_ALERTS = PANIC_ALERTS.filter((item) => item.id !== key);
+//     checkDriverMarkerOnMap("panic", key, "finished");
+//     const marker = findDriverMarkerByUID(key, PANIC_MAP_MARKERS);
+//     removeMarkerFromMap(marker);
+//     removeCircleMarkerFromMap(key, "panic");
+//     PANIC_MAP_MARKERS = PANIC_MAP_MARKERS.filter((item) => item.options.id !== key);
+//     settingNewCarTypeInMap(key, snap.val());
+//     cleanAlertCountInContainerMap(PANIC_COUNTER, "panic");
+//   } catch (err) {
+//     console.error(err);
+//   }
+// });
+
+$(document).on("click", ".tab-button", function (event) {
+  const { currentTarget } = event;
   const modalTabButtons = document.querySelectorAll("button.tab-button");
   const nameTab = currentTarget.getAttribute("data-tab");
   const isSelected = currentTarget.getAttribute("aria-selected");
@@ -190,584 +766,4 @@ function tabModalEventListener({ currentTarget }) {
     const isVisible = element.getAttribute("data-tabcontainer") === nameTab;
     element.setAttribute("data-visibility", isVisible ? "true" : "false");
   });
-}
-
-const findDriverMarkerByUID = (uid, marker) => marker.find(({ options }) => options.id === uid);
-
-const findDriverDataByUID = (uid, array) => array.find(({ id }) => id === uid);
-
-const removeDataFromTable = (uid) => {
-  const elementString = "tr.tr_" + uid;
-  document.querySelectorAll(elementString).forEach((element) => {
-    element.remove();
-  });
-};
-
-const showAlertCountersOnMapContainer = (e, count) => {
-  const button = document.querySelector(`button[data-event='${e}'`);
-  const separator = document.querySelector(`hr.separator.warpan`);
-
-  if (WARNING_COUNTER >= 1) {
-    isIconWarningActive = true;
-    separator.style.display = "block";
-    button.style.display = "flex";
-  }
-  if (PANIC_COUNTER >= 1) {
-    isIconPanicActive = true;
-    if (separator.style.display === "none") {
-      separator.style.display = "block";
-    }
-    button.style.display = "flex";
-  }
-  document.querySelector(`span#${e}-data`).textContent = count;
-};
-
-const updateNodePosition = (array, node) => {
-  return {
-    id: array.id,
-    personal: array.personal,
-    status: array.status,
-    delegation: array.delegation,
-    vehicle: array.vehicle,
-    w: node,
-  };
-};
-
-const addDataDriverToList = async (driver, event, icon) => {
-  try {
-    if (driver !== undefined) {
-      const list_container = document.querySelector("table#data-list tbody");
-      const id = driver.id;
-      const TR = document.createElement("tr");
-      const TD = document.createElement("td");
-      const SPAN = document.createElement("span");
-      const IMG = document.createElement("img");
-      TR.classList.add(`tr_${id}`);
-      TD.classList.add("cell-list");
-      TR.setAttribute("data-type", event);
-      TD.setAttribute("data-num", driver.vehicle.num_economic);
-      TD.setAttribute("data-phone", driver.personal.phone);
-      TD.setAttribute("data-licence", driver.personal.licence);
-
-      SPAN.textContent = driver.vehicle.plate;
-
-      IMG.src = icon;
-      IMG.classList.add("car_icon");
-
-      TD.append(SPAN, IMG);
-      TR.append(TD);
-
-      TR.addEventListener("click", (event) => {
-        const self = event.currentTarget;
-        const id = self.getAttribute("class").split("_")[1];
-        const type = self.getAttribute("data-type");
-        focusMarkerOnMap(id, type);
-      });
-
-      list_container.insertAdjacentElement("beforeend", TR);
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-const removeMarkerFromMap = (item) => {
-  const { options } = item;
-  const element = `img[alt='${options.alt}']`;
-  item.removeFrom(GeographicZone);
-  document.querySelectorAll(element).forEach((e) => e.remove());
-};
-
-const focusMarkerOnMap = async (uid, t) => {
-  let driverMarkerItem = [];
-
-  if (t !== "inactive") {
-    if (t === "active") driverMarkerItem = ACTIVE_MAP_MARKERS.filter(({ options }) => options.id === uid);
-    if (t === "working") driverMarkerItem = WORKING_MAP_MARKERS.filter(({ options }) => options.id === uid);
-    if (t === "warning") driverMarkerItem = WARNING_MAP_MARKERS.filter(({ options }) => options.id === uid);
-    if (t === "panic") driverMarkerItem = PANIC_MAP_MARKERS.filter(({ options }) => options.id === uid);
-    driverMarkerItem[0].openPopup();
-    const { lat, lng } = driverMarkerItem[0].getLatLng();
-    GeographicZone.setView([lat, lng], 12);
-    return;
-  }
-
-  updateSearchInactiveFilter(i);
-  const marker = findDriverMarkerByUID(i, INACTIVE_MAP_MARKERS);
-  marker.openPopup();
-  const { latitude, longitude } = marker.getLatLng();
-  GeographicZone.setView([latitude, longitude], 12);
-};
-
-const updateSearchInactiveFilter = (i) => {
-  SEARCH_INACTIVE_FILTER.forEach((item) => {
-    item.style.display = "none";
-  });
-  SEARCH_INACTIVE_FILTER = [];
-  const inactive_marker = document.querySelector(`img[alt='marker-${i}']`);
-  inactive_marker.style.display = "block";
-  SEARCH_INACTIVE_FILTER.push(inactive_marker);
-  return;
-};
-
-const getPopUpCardFromMarker = (item, current, type) => {
-  console.log({ item, current, type });
-  try {
-    if (item !== undefined) {
-      return `   
-    <div class="driver-popup"> 
-      <div class="formContainer" data-tabcontainer="conductor" data-visibility="true">
-        <div class="popup-header">
-          <h2 style="margin-bottom: 0.5rem;">Datos generales del conductor</h2>
-        </div>
-        <div class="popup-body">
-          <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
-            <h6>Operador:</h6>
-            <span>${item.personal.name}</span>
-          </div>
-          <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
-            <h6>Contacto:</h6>
-            <span>${item.personal.phone}</span>
-          </div>
-          <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
-            <h6>Económico:</h6>
-            <span>${item.vehicle.num_economic}</span>
-          </div>
-          <div style="display: flex; flex-direction: row; justify-content: space-between; column-gap: 1rem;">
-            <h6>Estado:</h6>
-            <span>${item.status.status}</span>
-          </div>
-        </div>
-      </div> 
-    </div>`;
-    }
-  } catch (err) {
-    return false;
-  }
-};
-  
-
-const getDegreesFromMarker = (gps1, gps2) => {
-  const rad = Math.PI / 180;
-  let lat1 = gps1.lat * rad;
-  let lat2 = gps2.lat * rad;
-  let lon1 = gps1.lng * rad;
-  let lon2 = gps2.lng * rad;
-  let y = Math.sin(lon2 - lon1) * Math.cos(lat2);
-  let x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
-  let bearing = ((Math.atan2(y, x) * 180) / Math.PI + 360) % 360;
-  return bearing >= 180 ? bearing - 360 : bearing;
-};
-
-const setMarkerToArray = async (object, type) => {
-  if (type === "active") return ACTIVE_MAP_MARKERS.push(object);
-  if (type === "inactive") return INACTIVE_MAP_MARKERS.push(object);
-  if (type === "working") return WORKING_MAP_MARKERS.push(object);
-  if (type === "warning") return WARNING_MAP_MARKERS.push(object);
-  if (type === "panic") return PANIC_MAP_MARKERS.push(object);
-  return;
-};
-
-const updateDriverMarkerOrientation = (i, a) => {
-  const iconImg = document.querySelector(`img[alt='marker-${i}']`);
-  const iconStyle = iconImg.style.transform;
-  iconImg.style.transformOrigin = "center";
-  const newTransformAngle = `${iconStyle.split("rotate")[0]} rotate(${a}deg)`;
-  iconImg.style.transform = newTransformAngle;
-};
-
-const addWarningInfoToModalTable = (item, pos, type, icon) => {
-  const modal = document.querySelector("div.modal-container-body table#alerts-list tbody");
-  const items = [
-    `<img class="${pos}_icon" src="${icon}"/>`,
-    item.personal.name,
-    item.personal.phone,
-    item.personal.badge,
-    item.personal.email,
-    item.vehicle.num_economic,
-    item.vehicle.brand,
-    item.vehicle.plate,
-    `${item.vehicle.type.replace("automovil ", "")} - ${item.vehicle.color}`,
-    `<button class="attention-button" data-type='${type}' data-id='${item.id}'><img src='${dom_icons.edit}'/></button>`,
-  ];
-
-  const TR = document.createElement("TR");
-  TR.setAttribute("class", `${type}-list_${item.id}`);
-
-  items.forEach((i) => {
-    const TD = document.createElement("TD");
-    TD.insertAdjacentHTML("beforeend", i);
-    TR.appendChild(TD);
-  });
-
-  const BUTTON = TR.lastElementChild.children[0];
-  BUTTON.addEventListener("click", (e) => {
-    const self = e.currentTarget;
-    const id = self.getAttribute("data-id");
-    attendAlertFromListModal(type, id);
-  });
-
-  modal.insertAdjacentElement("beforeend", TR);
-};
-
-const attendAlertFromListModal = (type, i) => {
-  const alert_box = document.querySelector("div.modal-alert-box");
-  alert_box.setAttribute("data-id", i);
-  alert_box.setAttribute("data-type", type);
-  alert_box.style.display = "block";
-};
-
-const checkDriverMarkerOnMap = async (type, uid, event) => {
-  try {
-    let whichTypeIs = "";
-    const isWorking = await DRIVERS_WORKING_REFERENCE.child(uid)
-      .get()
-      .then((snap) => {
-        return snap.exists();
-      });
-    const isActive = await DRIVERS_ACTIVE_REFERENCE.child(uid)
-      .get()
-      .then((snap) => {
-        return snap.exists();
-      });
-    whichTypeIs = isWorking === true ? "working" : isActive === true ? "active" : "";
-
-    if (!isWorking && !isActive) return;
-
-    const marker = document.querySelector(`img[alt='marker-${uid}'][data-type='${whichTypeIs}']`);
-    // console.log(marker);
-    // console.log(whichTypeIs);
-    const table_row = document.querySelectorAll(`tr.tr_${uid}`);
-
-    if (event === "start") {
-      marker.style.display = "none";
-      table_row.forEach((item) => {
-        if (item.getAttribute("data-type") !== type) {
-          item.classList.add("no-display");
-        }
-      });
-      return;
-    }
-    marker.style.display = "block";
-    table_row.forEach((item) => {
-      if (item.getAttribute("data-type") !== type) {
-        item.classList.remove("no-display");
-      }
-    });
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-const cleanAlertCountInContainerMap = (counter, type) => {
-  document.querySelector(`span#${type}-data`).textContent = counter;
-
-  if (counter === 0) {
-    document.querySelector(`button.map-data.warpan.${type}`).style.display = "none";
-  }
-
-  if (WARNING_COUNTER + PANIC_COUNTER < 1) {
-    document.querySelectorAll(".warpan").forEach((elem) => {
-      elem.style.display = "none";
-    });
-    GeographicZone.setView([32.4660333, -116.9167898], 11);
-    return;
-  }
-
-  return;
-};
-
-const addCircleToMap = (item, color, type) => {
-  const circleOptions = {
-    radius: type === "warning" ? 1200 : 2000,
-    stroke: true,
-    weight: 2,
-    opacity: 0.65,
-    color: color,
-    fillColor: color,
-    className: `circle-${item.uid}`,
-  };
-  const CIRCLE_MAP_MARKER = L.circle([item.node.l[0], item.node.l[1]], circleOptions);
-  if (type === "warning") {
-    WARNING_MAP_CIRCLE_MARKERS.push(CIRCLE_MAP_MARKER);
-  }
-  if (type === "panic") {
-    PANIC_CIRCLE_MAP_MARKERS.push(CIRCLE_MAP_MARKER);
-  }
-  CIRCLE_MAP_MARKER.addTo(GeographicZone);
-};
-
-const removeCircleMarkerFromMap = (uid, type) => {
-  let CIRCLE_MAP_MARKER =
-    type === "warning"
-      ? WARNING_MAP_CIRCLE_MARKERS.filter(({ options }) => options.className === `circle-${uid}`)
-      : PANIC_CIRCLE_MAP_MARKERS.filter(({ options }) => options.className === `circle-${uid}`);
-
-  CIRCLE_MAP_MARKER.forEach((item) => {
-    item.removeFrom(GeographicZone);
-  });
-};
-
-const executeWebService = () => {
-  const api = "http://ec2-3-15-238-62.us-east-2.compute.amazonaws.com/SendActivation.asmx/ActivationLog";
-  const xhr = new XMLHttpRequest();
-
-  xhr.addEventListener("load", () => {
-    if (this.readyState === 4 && this.status === 200) {
-      console.log(this.response);
-    } else {
-      console.log(this.response);
-    }
-  });
-  xhr.open("GET", api);
-  xhr.send();
-};
-
-/**
- * Drivers Working References (OnAdded, onChanged, onRemoved)
- **/
-DRIVERS_WORKING_REFERENCE.on("child_added", (snap) => {
-  try {
-    WORKING_COUNTER++;
-    INACTIVE_COUNTER--;
-    const item = findDriverDataByUID(snap.key, DRIVERS);
-    WORKING_DRIVERS.push({ ...item, w: snap.val() });
-    addDriverMarkerOnMap(item, snap.val(), iconWorking, "working");
-    addDataDriverToList(item, "working", dom_icons.redcar);
-    WORKING_TOTAL_POINTER.textContent = WORKING_COUNTER;
-    INACTIVE_TOTAL_POINTER.textContent = INACTIVE_COUNTER;
-  } catch (err) {
-    console.error(err);
-  }
 });
-
-DRIVERS_WORKING_REFERENCE.on("child_changed", (snap) => {
-  try {
-    const driver = findDriverDataByUID(snap.key, WORKING_DRIVERS);
-    const marker = findDriverMarkerByUID(snap.key, WORKING_MAP_MARKERS);
-    const latitude = snap.val().l[0];
-    const longitude = snap.val().l[1];
-
-    if (!driver) return;
-
-    const newDegree = getDegreesFromMarker(
-      { lat: marker._latlng.lat, lng: marker._latlng.lng },
-      { lat: latitude, lng: longitude }
-    );
-
-    marker.setLatLng([latitude, longitude]);
-    updateDriverMarkerOrientation(snap.key, newDegree);
-
-    const new_item = updateNodePosition(driver, snap.val());
-    WORKING_DRIVERS = WORKING_DRIVERS.filter((item) => item.id !== snap.key);
-    WORKING_DRIVERS.push(new_item);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-DRIVERS_WORKING_REFERENCE.on("child_removed", ({ key }) => {
-  try {
-    WORKING_COUNTER--;
-    WORKING_DRIVERS = WORKING_DRIVERS.filter(({ id }) => id !== key);
-    const marker = findDriverMarkerByUID(key, WORKING_MAP_MARKERS);
-    removeMarkerFromMap(marker);
-    removeDataFromTable(key);
-    WORKING_MAP_MARKERS = WORKING_MAP_MARKERS.filter(({ options }) => options.id !== key);
-    WORKING_TOTAL_POINTER.textContent = WORKING_COUNTER;
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-/**
- * Realtime Events
- * @param {Array<Object>} snapshot - Listado de objetos dentro de la colección.
- * @throws {Error} Si dentro de una funcion algo se ejecuta mal.
- */
-DRIVERS_ACTIVE_REFERENCE.on("child_added", (snapshot) => {
-  try {
-    ACTIVE_COUNTER++;
-    INACTIVE_COUNTER--;
-    const item = findDriverDataByUID(snapshot.key, DRIVERS);
-    ACTIVE_DRIVERS.push({ ...item, a: snapshot.val() });
-    addDriverMarkerOnMap(item, snapshot.val(), iconActive, "active");
-    addDataDriverToList(item, "active", dom_icons.greencar);
-    ACTIVE_TOTAL_POINTER.textContent = ACTIVE_COUNTER;
-    INACTIVE_TOTAL_POINTER.textContent = INACTIVE_COUNTER;
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-DRIVERS_ACTIVE_REFERENCE.on("child_changed", (snap) => {
-  try {
-    const driver = findDriverDataByUID(snap.key, ACTIVE_DRIVERS);
-    const marker = findDriverMarkerByUID(snap.key, ACTIVE_MAP_MARKERS);
-    const latitude = snap.val().l[0];
-    const longitude = snap.val().l[1];
-
-    if (!driver) return;
-
-    const newDegree = getDegreesFromMarker(
-      { lat: marker._latlng.lat, lng: marker._latlng.lng },
-      { lat: latitude, lng: longitude }
-    );
-
-    marker.setLatLng([latitude, longitude]);
-    updateDriverMarkerOrientation(snap.key, newDegree);
-
-    const newDriverPosition = updateNodePosition(driver, snap.val());
-    ACTIVE_DRIVERS = ACTIVE_DRIVERS.filter((item) => item.id !== snap.key);
-    ACTIVE_DRIVERS.push(newDriverPosition);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-DRIVERS_ACTIVE_REFERENCE.on("child_removed", ({ key }) => {
-  try {
-    ACTIVE_COUNTER--;
-    ACTIVE_DRIVERS = ACTIVE_DRIVERS.filter(({ id }) => id !== key);
-    const marker = findDriverMarkerByUID(key, ACTIVE_MAP_MARKERS);
-    removeMarkerFromMap(marker);
-    removeDataFromTable(key);
-    ACTIVE_MAP_MARKERS = ACTIVE_MAP_MARKERS.filter(({ options }) => options.id !== key);
-    ACTIVE_TOTAL_POINTER.textContent = ACTIVE_COUNTER;
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-/**
- * Warning References (OnAdded, onChanged, onRemoved)
- **/
-WARNING_ALERTS_REFERENCE.on("child_added", (snap) => {
-  try {
-    WARNING_COUNTER++;
-    const item = findDriverDataByUID(snap.key, DRIVERS);
-    WARNING_NOTIFICATIONS.push({ ...item, w: snap.val() });
-    checkDriverMarkerOnMap("warning", snap.key, "start");
-    addDriverMarkerOnMap(item, snap.val(), iconWarning, "warning");
-    addCircleToMap({ uid: snap.key, node: snap.val() }, "goldenrod", "warning");
-    addDataDriverToList(item, "warning", dom_icons.yellowcar);
-    addWarningInfoToModalTable(item, snap.val(), "warning", dom_icons.warning_icon);
-    showAlertCountersOnMapContainer("warning", WARNING_COUNTER);
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-WARNING_ALERTS_REFERENCE.on("child_changed", (snap) => {
-  try {
-    const { key } = snap;
-    const driver = findDriverDataByUID(key, WARNING_NOTIFICATIONS);
-    const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
-    const latitude = snap.val().l[0];
-    const longitude = snap.val().l[1];
-
-    if (!driver) return;
-
-    const newDegree = getDegreesFromMarker(
-      { lat: marker._latlng.lat, lng: marker._latlng.lng },
-      { lat: latitude, lng: longitude }
-    );
-
-    marker.setLatLng([latitude, longitude]);
-    updateDriverMarkerOrientation(key, newDegree);
-
-    /* Update the Object from his Array*/
-    const new_item = updateNodePosition(driver, snap.val());
-    WARNING_NOTIFICATIONS = WARNING_NOTIFICATIONS.filter((item) => item.id !== snap.key);
-    WARNING_NOTIFICATIONS.push(new_item);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-WARNING_ALERTS_REFERENCE.on("child_removed", (snap) => {
-  try {
-    const { key } = snap;
-    WARNING_COUNTER--;
-    WARNING_NOTIFICATIONS = WARNING_NOTIFICATIONS.filter((item) => item.id !== key);
-    checkDriverMarkerOnMap("warning", key, "finished");
-    const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
-    removeMarkerFromMap(marker);
-    removeCircleMarkerFromMap(key, "warning");
-    WARNING_MAP_MARKERS = WARNING_MAP_MARKERS.filter((item) => item.options.id !== key);
-    settingNewCarTypeInMap(key, snap.val());
-    cleanAlertCountInContainerMap(WARNING_COUNTER, "warning");
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-/**
- * Panic References (OnAdded, onChanged, onRemoved)
- **/
-PANIC_ALERTS_REFERENCE.on("child_added", (snap) => {
-  try {
-    PANIC_COUNTER++;
-    const item = findDriverDataByUID(snap.key, DRIVERS);
-    PANIC_ALERTS.push({ ...item, p: snap.val() });
-    checkDriverMarkerOnMap("panic", snap.key, "start");
-    addDriverMarkerOnMap(item, snap.val(), iconPanic, "panic");
-    addCircleToMap({ uid: snap.key, node: snap.val() }, "#ff0000", "panic");
-    addDataDriverToList(item, "panic", dom_icons.redcar);
-    addWarningInfoToModalTable(item, snap.val(), "panic", dom_icons.panic_icon);
-    showAlertCountersOnMapContainer("panic", PANIC_COUNTER);
-    // executeWebService()
-    GeographicZone.setView([snap.val().l[0], snap.val().l[1]], 14);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-PANIC_ALERTS_REFERENCE.on("child_changed", (snap) => {
-  try {
-    const { key } = snap;
-    const driver = findDriverDataByUID(key, PANIC_ALERTS);
-    const marker = findDriverMarkerByUID(key, PANIC_MAP_MARKERS);
-    const latitude = snap.val().l[0];
-    const longitude = snap.val().l[1];
-
-    if (!driver) return;
-
-    const newDegree = getDegreesFromMarker(
-      { lat: marker._latlng.lat, lng: marker._latlng.lng },
-      { lat: latitude, lng: longitude }
-    );
-
-    marker.setLatLng([latitude, longitude]);
-    updateDriverMarkerOrientation(key, newDegree);
-
-    /* Update the Object from his Array*/
-    const new_item = updateNodePosition(driver, snap.val());
-    PANIC_ALERTS = PANIC_ALERTS.filter((item) => item.id !== snap.key);
-    PANIC_ALERTS.push(new_item);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-PANIC_ALERTS_REFERENCE.on("child_removed", (snap) => {
-  try {
-    const { key } = snap;
-    PANIC_COUNTER--;
-    PANIC_ALERTS = PANIC_ALERTS.filter((item) => item.id !== key);
-    checkDriverMarkerOnMap("panic", key, "finished");
-    const marker = findDriverMarkerByUID(key, PANIC_MAP_MARKERS);
-    removeMarkerFromMap(marker);
-    removeCircleMarkerFromMap(key, "panic");
-    PANIC_MAP_MARKERS = PANIC_MAP_MARKERS.filter((item) => item.options.id !== key);
-    settingNewCarTypeInMap(key, snap.val());
-    cleanAlertCountInContainerMap(PANIC_COUNTER, "panic");
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-$(document).on("click", ".tab-button", function (e) {
-  tabModalEventListener(e);
-});
- 

@@ -131,7 +131,7 @@ aside a.nav-sublink {
   transition: background-color 300ms ease 0s;
   margin: 0 auto;
   position: relative;
-  z-index: 40;
+  /* z-index: 40; */
   border-radius: 5px;
 }
 
@@ -175,7 +175,7 @@ header nav {
   padding: 0 1rem;
   background-color: transparent;
   position: relative;
-  z-index: 11;
+  /* z-index: 11; */
 }
 
 header nav h1.app-title {
@@ -226,7 +226,7 @@ header div.header-bg-image {
   background-position-x: 35%;
   background-position-y: -78px;
   opacity: 0.25;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 /*======================================================================================*/
@@ -535,7 +535,7 @@ button[type="submit"] > span {
   font-weight: 500;
 }
 
-#concesionario-submenu,
+#historico-submenu,
 #administracion-submenu {
   position: absolute;
   left: 258px;
@@ -545,24 +545,23 @@ button[type="submit"] > span {
   border: 1px solid #5a5959;
   width: 256px;
 }
-
-#concesionario-submenu ul,
+#historico-submenu,
 #administracion-submenu ul {
   list-style: none;
 }
 
-#concesionario-submenu[data-displayed="hidden"],
+#historico-submenu[data-displayed="hidden"],
 #administracion-submenu[data-displayed="hidden"] {
   display: none;
 }
 
-#concesionario-submenu[data-displayed="visible"],
+#historico-submenu[data-displayed="visible"],
 #administracion-submenu[data-displayed="visible"] {
   display: block;
 }
 
 li#admin-menu-li::after,
-li#concesionario-menu-li::after {
+li#historico-menu-li::after {
   content: url(../../assets/svg/arrow_menu_closed.svg);
   position: absolute;
   right: 1rem;
@@ -573,7 +572,7 @@ li#concesionario-menu-li::after {
 }
 
 li#admin-menu-li:hover::after,
-li#concesionario-menu-li:hover::after {
+li#historico-menu-li:hover::after{
   transform: rotate(270deg);
   transition: transform 150ms linear;
 }

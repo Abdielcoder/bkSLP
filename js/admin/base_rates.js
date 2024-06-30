@@ -1,19 +1,42 @@
 const firestore = firebase.firestore();
 const realtime = firebase.database().ref();
 
+const formTarifas = document.querySelector("form#tarifas");
 const INFO_TARIFAS_COLLECTION = realtime.child("Info_Tarifas/SLP");
-const TARIFAS_COLLECTION = realtime.child("Tarifas/SLP")
+const TARIFAS_COLLECTION = realtime.child("Tarifas/");
 const LOGS_INFO_TARIFAS_COLLECTION = firestore.collection("LogsCambioTarifa");
+const selectMunicipio = document.querySelector("select#municipio");
 
-let DATATABLE = null;
+let DATATABLE_LOGS = null;
 
-const showTarifaBase = () => {
-  INFO_TARIFAS_COLLECTION.once("value", (snapshot) => {
+const getTarifaBaseByMunicipio = (municipio) => {
+  realtime.child(`Tarifas/${municipio}`).once("value", (snapshot) => {
     const formElements = Array.from(document.querySelector("form#tarifas")).slice(0, -1);
     formElements.forEach((element) => {
       element.value = snapshot.val()[element.name];
     });
   });
+};
+
+const getTarifasChangeLogs = async () => {
+  const logs = await firestore
+    .collection("tarifasLogs")
+    .get()
+    .then((snapshot) => {
+      const array = [];
+      snapshot.docs.forEach((document) => {
+        array.push({ uid: document.id, ...document.data() });
+      });
+      return array;
+    });
+  const tableWasCreated = generateDatatable();
+  if (tableWasCreated === false) {
+    DATATABLE_LOGS.clear().draw(false);
+  }
+  for (let index = 0; index < logs.length; index++) {
+    const data_list = [index + 1, logs[index].datetime, logs[index].municipio, logs[index].adminName];
+    DATATABLE_LOGS.row.add([...data_list]).draw(false);
+  }
 };
 
 function getElementsFromCollection() {
@@ -50,25 +73,24 @@ const getRateChangeLogs = async () => {
   });
 };
 
-const getAllRatesChangeLogs = async (isCreated) => {
-  try {
-    const tableWasCreated = generateDatatable(isCreated);
-    if (tableWasCreated === false) {
-      DATATABLE.clear().draw(false);
-    }
-    const changeLogs = await getRateChangeLogs();
-    changeLogs.forEach((item) => {
-      const data_list = [item.cambio.descripcion, item.estatus, item.fechaHora, item.validadores.validador];
-      DATATABLE.row.add([...data_list]).draw(false);
-    });
-  } catch (err) {
-    console.log(err.code);
-    console.log(err.message);
-  }
-};
+// const getAllRatesChangeLogs = async (isCreated) => {
+//   try {
+//     const tableWasCreated = generateDatatable(isCreated);
+//     if (tableWasCreated === false) {
+//       DATATABLE_LOGS.clear().draw(false);
+//     }
+//     const changeLogs = await getRateChangeLogs();
+//     changeLogs.forEach((item) => {
+//       const data_list = [item.cambio.descripcion, item.estatus, item.fechaHora, item.validadores.validador];
+//       DATATABLE_LOGS.row.add([...data_list]).draw(false);
+//     });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 const generateDatatable = () => {
-  DATATABLE = new DataTable("#changelogs-list", {
+  DATATABLE_LOGS = new DataTable("#changelogs-list", {
     info: false,
     paging: false,
     searching: false,
@@ -76,31 +98,65 @@ const generateDatatable = () => {
   });
 };
 
-document.querySelector("form#tarifas").addEventListener("submit", async (e) => {
-  e.preventDefault();
+formTarifas.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  console.log(event.target.elements);
 
-  const inputs = Array.from(document.querySelector("form#tarifas")).slice(0, -1);
+  const inputs = Array.from(event.target.elements).slice(0, -1);
   const updateObj = {};
 
   inputs.forEach((element) => {
     const { name, value } = element;
-    updateObj[name] = value;
+    updateObj[name] = parseFloat(value).toFixed(2);
   });
-
-  const isUpdated = await INFO_TARIFAS_COLLECTION.update(updateObj)
+  console.log({ updateObj });
+  const isUpdated = await realtime
+    .child(`Tarifas/${selectMunicipio.value}`)
+    .update(updateObj)
     .then(() => true)
     .catch(() => false);
   if (isUpdated) {
-    alert("Datos actualizados con éxito.");
-    TARIFAS_COLLECTION.update(updateObj);
+    window.alert("Datos actualizados con éxito.");
+    await setLogs(updateObj);
   } else {
-    alert("Se ha presentado un error al actualizar.");
+    window.alert("Se ha presentado un error al actualizar.");
   }
 });
 
 function main() {
-  getAllRatesChangeLogs();
-  showTarifaBase();
+  selectMunicipio.value = "SLP";
+  // getAllRatesChangeLogs();
+  getTarifaBaseByMunicipio(selectMunicipio.value);
+  getTarifasChangeLogs();
 }
+
+/**
+ * Agregar log de cambios
+ */
+
+async function setLogs() {
+  const user = { uid: sessionStorage.getItem("user"), name: sessionStorage.getItem("username") };
+  const datetime = new Date().toISOString();
+
+  const isLogUploaded = await firestore
+    .collection("tarifasLogs")
+    .add({
+      adminUid: user.uid,
+      adminName: user.name,
+      datetime,
+      municipio: selectMunicipio.value,
+    })
+    .then(() => true)
+    .catch(() => false);
+  console.log({ isLogUploaded });
+}
+
+/**
+ * Seleccionar municipio
+ */
+
+selectMunicipio.addEventListener("change", function (event) {
+  getTarifaBaseByMunicipio(event.target.value);
+});
 
 main();

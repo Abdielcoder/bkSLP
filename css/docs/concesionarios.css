@@ -501,6 +501,6 @@ table#usuarios-list td {
   }
 }
 
-.hidden {
+.hidden:not(li) {
   display: none !important;
 }

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="../assets/icons/favicon.ico" />
-    <title>Tu Taxi | Portal Administrativo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../css/docs/main.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tu Taxi | Accesos a plataforma</title>
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
     <link
@@ -13,8 +11,49 @@
       type="text/css"
       href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css"
     />
-  </head>
+    <style>
+      table#access-list {
+        width: 100%;
+        display: table;
+        position: relative;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        text-transform: uppercase;
+        border-collapse: collapse;
+      }
 
+      table#access-list tbody tr.even {
+        background-color: #fff;
+        transition: background-color 100ms linear;
+      }
+
+      table#access-list tbody tr.odd {
+        background-color: rgba(40, 40, 40, 0.05);
+        transition: background-color 100ms linear;
+      }
+
+      table#access-list tbody tr:hover {
+        background-color: #0c5a0f2a;
+        cursor: pointer;
+        transition: background-color 100ms linear;
+      }
+
+      table#access-list thead tr th {
+        color: #2d6e3d;
+        text-align: start;
+        font-size: 14px;
+        background-color: #fff;
+        white-space: nowrap;
+      }
+
+      table#access-list tbody tr td {
+        font-size: 14px;
+        height: 2.5rem;
+        padding: 0 8px !important;
+        text-transform: uppercase !important;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
   <body>
     <div id="root" class="preload">
       <!-- Aside -->
@@ -25,25 +64,25 @@
           </div>
           <hr />
           <ul class="nav">
-            <li class="nav-item" id="mapa-menu-li">
+            <li class="nav-item" id="mapa-menu-li" style="display: none">
               <a class="nav-link" href="./maps.html">
                 <span class="link-icons material-icons-sharp">map</span>
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="concesionario-menu-li">
+            <li class="nav-item" id="concesionario-menu-li" style="display: none">
               <a class="nav-link" href="./concesionarios.html" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
-                CONCESIONARIOS
+                CONCESIONARIO
               </a>
             </li>
-            <li class="nav-item" id="vehiculos-menu-li">
+            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
               <a class="nav-link" href="./vehicles.html">
                 <span class="link-icons material-icons-sharp">directions_car</span>
-                VEHICULOS
+                VEHICULO
               </a>
             </li>
-            <li class="nav-item" id="conductores-menu-li">
+            <li class="nav-item" id="conductores-menu-li" style="display: none">
               <a class="nav-link" href="./users.html">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONDUCTORES
@@ -115,7 +154,7 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="./accesos.html">
+                    <a class="nav-sublink" href="#">
                       <span class="link-icons material-icons-sharp">history</span>
                       ACCESOS
                     </a>
@@ -154,75 +193,20 @@
       <!-- Main -->
       <main>
         <div class="page-title">
-          <h2 class="header-module-title">Dashboard Backoffice</h2>
+          <h2 class="header-module-title">Ultimos Accesos</h2>
         </div>
-        <div class="container" style="padding-top: 1rem">
-          <div class="dashboard_stats">
-            <div class="stat-card">
-              <h4># de viajes</h4>
-              <div class="stat-data">
-                <span data-icon_type="vehicle" class="material-icons-sharp">directions_car</span>
-                <span id="tripTotal">-</span>
-              </div>
-            </div>
-            <div class="stat-card">
-              <h4>Recaudo</h4>
-              <div class="stat-data">
-                <span data-icon_type="currency" class="material-icons-sharp">attach_money</span>
-                <span id="tripCollection">-</span>
-              </div>
-            </div>
-            <div class="stat-card">
-              <h4># promedio de viajes</h4>
-              <div class="stat-data">
-                <span data-icon_type="vehicle" class="material-icons-sharp">directions_car</span>
-                <span id="tripAvgTrips">-</span>
-              </div>
-            </div>
-            <div class="stat-card">
-              <h4>$ promedio por viaje</h4>
-              <div class="stat-data">
-                <span data-icon_type="currency" class="material-icons-sharp">attach_money</span>
-                <span id="tripAvgCollection">-</span>
-              </div>
-            </div>
-          </div>
-          <div class="graphics_container">
-            <div class="tadi-card">
-              <div class="card-header">
-                <h3>Vehículos</h3>
-              </div>
-              <div class="card-body">
-                <div class="graphic-container">
-                  <div>
-                    <canvas id="myChart" style="width: 360px; height: 360px"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tadi-card">
-              <div class="card-header">
-                <h3>Vehículos Activos</h3>
-              </div>
-              <div class="card-body">
-                <div class="graphic-container">
-                  <div>
-                    <canvas id="myChart_2" style="width: 360px; height: 360px"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tadi-card">
-              <div class="card-header">
-                <h3>Empadronamiento</h3>
-              </div>
-              <div class="card-body">
-                <div class="graphic-container">
-                  <div>
-                    <canvas id="myChart_3" style="width: 360px; height: 360px"></canvas>
-                  </div>
-                </div>
-              </div>
+
+        <div class="container-module col-12">
+          <div class="module-body" style="max-width: 1280px; margin-inline: auto; padding: 0 1.5rem 1.5rem">
+            <div class="table_container" style="margin-top: 1rem;">
+              <table id="access-list">
+                <thead>
+                  <th>Correo electrónico</th>
+                  <th>Usuario</th>
+                  <th>Fecha de acceso</th>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -238,18 +222,82 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
   <script type="module" src="../js/config/auth-config.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-  <script src="../js/global-context.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
   <script
     type="text/javascript"
     src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
   ></script>
-  <script src="../js/charts/chartsjs-plugin-label.js"></script>
-  <script type="module" src="../js/dashboard/main.js" async></script>
-  <!-- <script type="module" src="../js/dom/defaults.js"></script> -->
+  <script src="../js/global-context.js"></script>
+  <script type="module">
+    const firestore = firebase.firestore();
+
+    const showAccesos = async () => {
+      const accesos = await firestore
+        .collection("loginAccesos")
+        .orderBy("timestamp", "desc")
+        .limit(20)
+        .get()
+        .then((snapshot) => {
+          let array = [];
+          snapshot.docs.forEach((document) => {
+            array.push(document.data());
+          });
+          return array;
+        });
+      console.log({ accesos });
+      return accesos;
+    };
+    async function generateTable() {
+      const logs = await showAccesos();
+
+      await insertDataIntoTable(logs);
+
+      new DataTable("#access-list", {
+        dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
+        buttons: [
+          {
+            extend: "collection",
+            text: "Exportar",
+            buttons: ["excelHtml5", "pdfHtml5", "print"],
+          },
+        ],
+        oLanguage: {
+          sSearch: "Busqueda:",
+          oPaginate: {
+            sFirst: "Primera", // This is the link to the first page
+            sPrevious: "Anterior", // This is the link to the previous page
+            sNext: "Siguiente", // This is the link to the next page
+            sLast: "Ultima", // This is the link to the last page
+          },
+        },
+        language: {
+          info: "Se muestran los registros _START_ al _END_ de _TOTAL_. ",
+          infoEmpty: "No se muestran registros.",
+          emptyTable: "No se registran datos en la tabla.",
+          infoFiltered: "(Filtrado de _MAX_ registros).",
+        },
+      });
+    }
+
+    async function insertDataIntoTable(data) {
+      for (let index = 0; index < data.length - 1; index++) {
+        const rowElement = document.createElement("tr");
+        const correo = document.createElement("td");
+        correo.innerHTML = data[index].email;
+        const timestamp = document.createElement("td");
+        timestamp.innerHTML = data[index].timestamp;
+        const usuario = document.createElement("td");
+        usuario.innerHTML = data[index].username;
+        [correo, usuario, timestamp].forEach((element) => {
+          rowElement.insertAdjacentElement("beforeend", element);
+        });
+        document.querySelector("table#access-list tbody").insertAdjacentElement("beforeend", rowElement);
+      }
+    }
+
+    generateTable();
+  </script>
 </html>

@@ -2,7 +2,7 @@ main {
   overflow-y: auto;
   overflow-x: hidden;
 }
- 
+
 table#messages-list {
   width: 100%;
   display: table;
@@ -18,9 +18,9 @@ table#messages-list tbody tr.even {
 }
 
 table#messages-list tbody tr.odd {
-  background-color: rgba(0, 0, 0, .05);
+  background-color: rgba(0, 0, 0, 0.05);
   transition: background-color 100ms linear;
-} 
+}
 table#messages-list thead th {
   color: #2d6e3d;
   text-align: start;
@@ -36,7 +36,7 @@ table#messages-list tbody tr td {
   text-transform: uppercase !important;
   white-space: nowrap;
 }
-   
+
 #buttons_container {
   display: flex;
   flex-flow: row nowrap;
@@ -85,7 +85,7 @@ table#messages-list tbody tr td {
 }
 
 .dialogContainer {
-  padding:  0px 20px 20px;
+  padding: 0px 20px 20px;
 }
 
 #modalFormCancel {
@@ -102,4 +102,133 @@ table#messages-list tbody tr td {
 
 #modalFormSubmit span {
   color: white;
+}
+
+.tabsContainer {
+  display: flex;
+  padding-top: 1rem;
+  flex-flow: row nowrap;
+  column-gap: 1rem;
+}
+
+.tabsContainer button.tab {
+  padding: 0rem 1rem;
+  min-height: 40px;
+  max-height: 40px;
+  background-color: #fff;
+  border: 1px solid rgba(128, 128, 128, 0.357);
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.tabsContainer button.tab.selected {
+  cursor: default;
+  color: white;
+  background-color: #2d6e3dc0;
+}
+
+.tabsContainer button.tab:not(.selected):hover {
+  cursor: pointer;
+  background-color: rgb(248, 248, 248);
+  transition: all 150ms linear;
+}
+
+.aside-dialog[data-visibility="visible"] {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+}
+
+.aside-dialog[data-visibility="hidden"] {
+  display: none;
+}
+
+.aside-dialog aside div.aside-content {
+  background-color: white;
+  width: 40vw;
+  height: 100vh;
+  right: 0;
+  top: 0;
+  position: absolute;
+  box-shadow: -8px 0px 20px 0px #0000004a;
+}
+
+.sendMessageContainer {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
+  padding: 1rem 0;
+}
+
+.sendMessageContainer > div {
+  flex-grow: 1;
+}
+
+form,
+form * {
+  display: block;
+}
+
+form input[type="text"],
+form textarea {
+  min-height: 40px;
+  padding: 0 1rem;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid gray;
+  outline: 2px solid gray;
+  margin-top: 4px;
+  max-height: 40px;
+  outline: none;
+}
+
+form textarea {
+  min-height: 200px;
+  padding: 1rem;
+  resize: none;
+}
+
+form label {
+  margin-bottom: 1rem;
+}
+
+form button {
+  min-height: 40px;
+  max-width: 200px;
+  width: 100%;
+  background-color: #62906c;
+  border: 1px solid green;
+  border-radius: 3px;
+  color: white;
+  float: right;
+}
+
+form button:hover {
+  cursor: pointer;
+  background-color: green;
+  transition: all 150ms linear;
+}
+
+.messagesTypeContainer {
+  & > label {
+    display: inline-block;
+    margin-right: 1rem;
+  }
+  margin-bottom: 1rem;
+}
+
+#driverForm {
+  display: flex;
+  column-gap: 1rem;
+  align-items: end;
+  & > label {
+    flex-grow: 1;
+    margin-bottom: 0 !important;
+  }
+  & > button {
+    height: 2.5rem;
+  }
 }

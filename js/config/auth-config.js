@@ -19,10 +19,13 @@ const redirectToIndex = () => {
 const isAuthenticated = () => sessionStorage.getItem("user");
 
 window.onload = async function () {
-  if (window.location.pathname === "/index.html") return;
-
-  if (document.querySelector("div#root") !== null) {
-    document.querySelector("div#root").classList.remove("preload");
+  try {
+    if (window.location.pathname === "/index.html") return; 
+    if (document.querySelector("div#root") !== null) {
+      document.querySelector("div#root").classList.remove("preload");
+    }
+  } catch (error) {
+    console.log({ error: error });
   }
 };
 
@@ -32,9 +35,8 @@ const renderMenus = () => {
   const concesionarioMenu = document.querySelector("#concesionario-menu-li");
   const mapaMenu = document.querySelector("#mapa-menu-li");
   const adminMenu = document.querySelector("#admin-menu-li");
+  const historicoMenu = document.querySelector("#historico-menu-li");
   const rolesMenu = document.querySelector("#roles-menu-li");
-  const conductoresSubmenu = document.querySelector("li#conductores-submenu-li");
-  const vehiculosSubmenu = document.querySelector("li#vehiculos-submenu-li");
 
   const renderMap = sessionStorage.getItem("mapaPermission");
   const renderConcesionarios = sessionStorage.getItem("concesionariosPermission");
@@ -83,23 +85,16 @@ const renderMenus = () => {
     concesionarioMenu.remove();
   } else {
     concesionarioMenu.style.display = "block";
-    if (conductoresPermission == 1 && vehiculosPermission === 1) {
-      vehiculosMenu.remove();
-      conductoresMenu.remove();
-      conductoresSubmenu.style.display = "block";
-      vehiculosSubmenu.style.display = "block";
-      return;
-    }
-    if (conductoresPermission == 0) {
-      conductoresSubmenu.remove();
-    } else {
-      conductoresSubmenu.style.display = "block";
-    }
-    if (vehiculosPermission == 0) {
-      vehiculosSubmenu.remove();
-    } else {
-      vehiculosSubmenu.style.display = "block";
-    }
+  }
+  if (conductoresPermission == 0) {
+    conductoresMenu.remove();
+  } else {
+    conductoresMenu.style.display = "block";
+  }
+  if (vehiculosPermission == 0) {
+    vehiculosMenu.remove();
+  } else {
+    vehiculosMenu.style.display = "block";
   }
 };
 

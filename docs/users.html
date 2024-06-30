@@ -5,8 +5,8 @@
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <title>Tu Taxi | Conductores</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/users_drivers.css" />
+    <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -25,41 +25,25 @@
           </div>
           <hr />
           <ul class="nav">
-            <li class="nav-item" id="mapa-menu-li" style="display: none">
+            <li class="nav-item" id="mapa-menu-li">
               <a class="nav-link" href="./maps.html">
                 <span class="link-icons material-icons-sharp">map</span>
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="concesionario-menu-li" style="display: none">
-              <a class="nav-link hasSubmenu" href="./concesionarios.html" id="concesionario">
+            <li class="nav-item" id="concesionario-menu-li">
+              <a class="nav-link" href="./concesionarios.html" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIO
               </a>
-              <div id="concesionario-submenu" data-displayed="hidden">
-                <ul class="nav-link-submenu">
-                  <li class="nav-item-submenu" id="vehiculos-submenu-li" style="display: none">
-                    <a class="nav-link" href="./vehicles.html">
-                      <span class="link-icons material-icons-sharp">directions_car</span>
-                      VEHICULOS
-                    </a>
-                  </li>
-                  <li class="nav-item" id="conductores-submenu-li" style="display: none">
-                    <a class="nav-link" href="./users.html">
-                      <span class="link-icons material-icons-sharp">person</span>
-                      CONDUCTORES
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </li>
-            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
+            <li class="nav-item" id="vehiculos-menu-li">
               <a class="nav-link" href="./vehicles.html">
                 <span class="link-icons material-icons-sharp">directions_car</span>
                 VEHICULO
               </a>
             </li>
-            <li class="nav-item" id="conductores-menu-li" style="display: none">
+            <li class="nav-item" id="conductores-menu-li">
               <a class="nav-link selectedPage" href="#">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONDUCTORES
@@ -71,11 +55,27 @@
                 CHATS
               </a>
             </li>
-            <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="./historico.html">
+            <li class="nav-item menu-button menu-closed" id="historico-menu-li">
+              <a class="nav-link" href="#" id="historico">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
+              <div id="historico-submenu" data-displayed="hidden">
+                <ul>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./historico-conductores.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CONDUCTORES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./historico-clientes.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CLIENTES
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
               <a class="nav-link" href="#" id="administracion">
@@ -96,18 +96,12 @@
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none">
+                  <li class="nav-item menu-linked hidden" id="roles-menu-li">
                     <a class="nav-sublink" href="../admin/roles/index.html">
                       <span class="link-icons material-icons-sharp">groups</span>
                       ROLES
                     </a>
                   </li>
-                  <!-- <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/clientes/index.html">
-                      <span class="link-icons material-icons-sharp">person_pin</span>
-                      CLIENTES
-                    </a>
-                  </li> -->
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../admin/rates.html">
                       <span class="link-icons material-icons-sharp">paid</span>
@@ -120,6 +114,12 @@
                       TARIFAS BASE
                     </a>
                   </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./accesos.html">
+                      <span class="link-icons material-icons-sharp">history</span>
+                      ACCESOS
+                    </a>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -127,6 +127,12 @@
               <a class="nav-link" href="../admin/clientes/index.html">
                 <span class="link-icons material-icons-sharp">person_pin</span>
                 CLIENTES
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./seguridad-publica.html">
+                <span class="link-icons material-icons-sharp">local_police</span>
+                Seguridad Pública
               </a>
             </li>
           </ul>
@@ -167,7 +173,7 @@
                       <th>Email</th>
                       <th>Teléfono</th>
                       <th>Curp</th>
-                      <th>Num. Económico</th>
+                      <!-- <th>Num. Económico</th> -->
                       <th>Gafete SCT</th>
                       <th>Fecha de registro</th>
                       <th>Acciones</th>
@@ -226,7 +232,7 @@
                   </h2>
                   <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
-                      <label for="nombre">Nombre(s)</label>
+                      <label for="nombre">Nombre(s) <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Nombre(s)"
@@ -239,7 +245,9 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="apellidoPaterno">Apellido Paterno</label>
+                      <label for="apellidoPaterno"
+                        >Apellido Paterno <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="text"
                         placeholder="Apellido Paterno"
@@ -252,7 +260,9 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="apellidoMaterno">Apellido Materno</label>
+                      <label for="apellidoMaterno"
+                        >Apellido Materno <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="text"
                         placeholder="Apellido Materno"
@@ -267,7 +277,9 @@
                   </div>
                   <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
-                      <label for="correoElectronico">Correo electrónico</label>
+                      <label for="correoElectronico"
+                        >Correo electrónico <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="email"
                         placeholder="Correo electrónico"
@@ -285,7 +297,7 @@
                       </select>
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="curp">Curp</label>
+                      <label for="curp">Curp <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Curp"
@@ -301,7 +313,7 @@
                   </div>
                   <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
-                      <label for="rfc">RFC</label>
+                      <label for="rfc">RFC <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="RFC"
@@ -314,7 +326,7 @@
                       />
                     </div>
                     <div class="formGroup selectForm">
-                      <label for="tipoSangre">Tipo de sangre</label>
+                      <label for="tipoSangre">Tipo de sangre <span style="color: rgb(185, 39, 39)">*</span></label>
                       <select name="tipoSangre" id="tipoSangre" required>
                         <option value="A-">A-</option>
                         <option value="A+">A+</option>
@@ -327,7 +339,7 @@
                       </select>
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="telefono">Telefono</label>
+                      <label for="telefono">Telefono <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="tel"
                         placeholder="Teléfono"
@@ -340,9 +352,11 @@
                       />
                     </div>
                   </div>
-                  <div class="form-columns flex-nowrap">
+                  <div class="form-columns flex-nowrap" style="justify-content: flex-start">
                     <div class="formGroup inputForm">
-                      <label for="telefonoEmergencia">Telefono de Emergencia</label>
+                      <label for="telefonoEmergencia"
+                        >Telefono de Emergencia <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="tel"
                         placeholder="Teléfono de emergencia"
@@ -354,7 +368,7 @@
                         data-length="10"
                       />
                     </div>
-                    <div class="formGroup inputForm">
+                    <!-- <div class="formGroup inputForm">
                       <label for="numeroEconomico">Numero Económico</label>
                       <input
                         type="text"
@@ -366,14 +380,14 @@
                         data-length="4"
                         required
                       />
-                    </div>
+                    </div> -->
                     <div class="formGroup inputForm">
-                      <label for="numGafeteSCT">Gafete SCT</label>
+                      <label for="numGafeteSCT">Gafete SCT <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Gafete SCT"
                         name="numGafeteSCT"
-                        class="only-characters"
+                        class="only-numbers"
                         id="numGafeteSCT"
                         required
                         style="text-transform: uppercase"
@@ -387,7 +401,7 @@
                   </h2>
                   <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm" style="max-width: 100%">
-                      <label for="calle">Calle</label>
+                      <label for="calle">Calle <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Calle"
@@ -399,7 +413,7 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="numeroCasa">Número</label>
+                      <label for="numeroCasa">Número <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Número"
@@ -413,7 +427,9 @@
                   </div>
                   <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
-                      <label for="colonia">Colonia o Fraccionamiento</label>
+                      <label for="colonia"
+                        >Colonia o Fraccionamiento <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="text"
                         placeholder="Colonia"
@@ -425,7 +441,7 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="cp">Código Postal</label>
+                      <label for="cp">Código Postal <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Código postal"
@@ -438,7 +454,7 @@
                       />
                     </div>
                     <div class="formGroup selectForm">
-                      <label for="municipio">Municipio</label>
+                      <label for="municipio">Municipio <span style="color: rgb(185, 39, 39)">*</span></label>
                       <select name="municipio" id="municipio" required>
                         <option value="sanluis">SAN LUIS POTOSI</option>
                         <option value="soledaddegraciano">SOLEDAD DE GRACIANO SÁNCHEZ</option>
@@ -1599,7 +1615,7 @@
         <div id="usuariosBajaModal" class="modalForm">
           <div class="formContainer">
             <div class="containerBody">
-              <p>¿Estás seguro de dar de baja a este operador?</p>
+              <p>¿Estás seguro de dar de baja a este conductor?</p>
               <form id="userBaja">
                 <input id="userDeleteIdentifier" type="hidden" value="" />
                 <input id="userDeleteEmailId" type="hidden" value="" />
@@ -1851,13 +1867,26 @@
         getDataFromDriversList(document);
       });
 
+      const exportOptions = {
+        columns: [0, 1, 2, 3, 4, 5, 6],
+      };
+
       usersDataTableContext = new DataTable(usuariosTabla, {
         dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
         buttons: [
           {
-            extend: "collection",
-            text: "Exportar",
-            buttons: ["excelHtml5", "pdfHtml5", "print"],
+            extend: "excelHtml5",
+            exportOptions,
+          },
+          {
+            extend: "pdfHtml5",
+            orientation: "landscape",
+            pageSize: "A4",
+            exportOptions,
+          },
+          {
+            extend: "print",
+            exportOptions,
           },
         ],
         oLanguage: {
@@ -1887,7 +1916,7 @@
           list.correoElectronico,
           list.telefono,
           list.curp || "",
-          list.numeroEconomico,
+          // list.numeroEconomico,
           list.numGafeteSCT || "",
           formatDate(list.fechaAlta),
         ],
@@ -2301,13 +2330,14 @@
 
     async function updateRealtimeUserVehicle(data, uid) {
       try {
-        const { marca, modelo, placa, tipoVehiculo, color } = data;
+        const { marca, modelo, placa, tipoVehiculo, color, numeroEconomico } = data;
         const vehicleData = {
           marca,
           modelo,
           placa,
           tipo_vehiculo: tipoVehiculo,
           tipo: "LIBRE",
+          numero_economico: numeroEconomico,
           color,
         };
 
@@ -2555,6 +2585,22 @@
         return;
       }
 
+      // Verify if vehicle has been assigned before to driver
+      const vehiclesAssigned = document.querySelectorAll("tr.vehicleAssigned");
+      if (vehiclesAssigned.length > 0) {
+        let totalVehiclesAssigned = 0;
+        vehiclesAssigned?.forEach((vehicleContainer) => {
+          const vehicleUniqueId = vehicleContainer.getAttribute("data-reference");
+          if (vehicleUniqueId == item.id) {
+            totalVehiclesAssigned++;
+          }
+        });
+        if (totalVehiclesAssigned > 0) {
+          window.alert("Vehículo ya se encuentra asignado al conductor, intente con otro numero de placas.");
+          return;
+        }
+      }
+
       const uid = document.querySelector("#usuariosAltaModal").dataset.reference;
       const message = "¿Estás seguro de asignar este vehículo al conductor?";
       if (!confirm(message)) return;
@@ -2569,7 +2615,7 @@
             ...item.data,
             habilitado: false,
           });
-        await asignarVehiculoAConductorRealtime(uid, item.id);
+        await asignarVehiculoAConductorRealtime(uid, item);
         alert("Se ha asignado el vehículo al usuario.");
         await getAndRenderVehiclesFromUser();
       } catch (error) {
@@ -2581,6 +2627,7 @@
     async function asignarVehiculoAConductorRealtime(conductor, vehiculo) {
       try {
         const reference = firebase.database().ref("Users/Drivers/" + conductor);
+        console.table(vehiculo.id);
         const snapshot = await reference.get();
         const data = snapshot.val();
         let arrayVehiculosAsignados = [];
@@ -2590,12 +2637,15 @@
           } else {
             arrayVehiculosAsignados = [data.vehiculosAsignados];
           }
-          arrayVehiculosAsignados.push({ habilitado: false, uid: vehiculo });
+          arrayVehiculosAsignados.push({ habilitado: false, uid: vehiculo.id });
         } else {
-          arrayVehiculosAsignados.push({ habilitado: false, uid: vehiculo });
+          arrayVehiculosAsignados.push({ habilitado: false, uid: vehiculo.id });
         }
 
-        await reference.update({ vehiculosAsignados: arrayVehiculosAsignados });
+        await reference.update({
+          numero_economico: vehiculo.numeroEconomico,
+          vehiculosAsignados: arrayVehiculosAsignados,
+        });
       } catch (error) {}
     }
 

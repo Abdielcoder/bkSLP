@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="../assets/icons/favicon.ico" />
     <title>Tu Taxi - Concesionarios</title>
+    <link rel="icon" href="../assets/icons/favicon.ico" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/concesionarios.css" />
@@ -13,6 +13,7 @@
       type="text/css"
       href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css"
     />
+    
     <!-- <link rel="stylesheet" href="../css/coreui.css"> -->
   </head>
 
@@ -26,41 +27,25 @@
           </div>
           <hr />
           <ul class="nav">
-            <li class="nav-item" id="mapa-menu-li" style="display: none">
+            <li class="nav-item" id="mapa-menu-li">
               <a class="nav-link" href="./maps.html">
                 <span class="link-icons material-icons-sharp">map</span>
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="concesionario-menu-li" style="display: none">
-              <a class="nav-link hasSubmenu selectedPage" href="#" id="concesionario">
+            <li class="nav-item" id="concesionario-menu-li">
+              <a class="nav-link selectedPage" href="#" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIOS
               </a>
-              <div id="concesionario-submenu" data-displayed="hidden">
-                <ul class="nav-link-submenu">
-                  <li class="nav-item-submenu" id="vehiculos-submenu-li" style="display: none">
-                    <a class="nav-link" href="./vehicles.html">
-                      <span class="link-icons material-icons-sharp">directions_car</span>
-                      VEHICULOS
-                    </a>
-                  </li>
-                  <li class="nav-item" id="conductores-submenu-li" style="display: none">
-                    <a class="nav-link" href="./users.html">
-                      <span class="link-icons material-icons-sharp">person</span>
-                      CONDUCTORES
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </li>
-            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
+            <li class="nav-item" id="vehiculos-menu-li">
               <a class="nav-link" href="./vehicles.html">
                 <span class="link-icons material-icons-sharp">directions_car</span>
-                VEHICULO
+                VEHICULOS
               </a>
             </li>
-            <li class="nav-item" id="conductores-menu-li" style="display: none">
+            <li class="nav-item" id="conductores-menu-li">
               <a class="nav-link" href="./users.html">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONDUCTORES
@@ -72,11 +57,27 @@
                 CHATS
               </a>
             </li>
-            <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="./historico.html">
+            <li class="nav-item menu-button menu-closed" id="historico-menu-li">
+              <a class="nav-link" href="#" id="historico">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
+              <div id="historico-submenu" data-displayed="hidden">
+                <ul>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./historico-conductores.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CONDUCTORES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./historico-clientes.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CLIENTES
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
               <a class="nav-link" href="#" id="administracion">
@@ -97,18 +98,12 @@
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none">
+                  <li class="nav-item menu-linked hidden" id="roles-menu-li">
                     <a class="nav-sublink" href="../admin/roles/index.html">
                       <span class="link-icons material-icons-sharp">groups</span>
                       ROLES
                     </a>
                   </li>
-                  <!-- <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/clientes/index.html">
-                      <span class="link-icons material-icons-sharp">person_pin</span>
-                      CLIENTES
-                    </a>
-                  </li> -->
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../admin/rates.html">
                       <span class="link-icons material-icons-sharp">paid</span>
@@ -121,6 +116,12 @@
                       TARIFAS BASE
                     </a>
                   </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./accesos.html">
+                      <span class="link-icons material-icons-sharp">history</span>
+                      ACCESOS
+                    </a>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -128,6 +129,12 @@
               <a class="nav-link" href="../admin/clientes/index.html">
                 <span class="link-icons material-icons-sharp">person_pin</span>
                 CLIENTES
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./seguridad-publica.html">
+                <span class="link-icons material-icons-sharp">local_police</span>
+                Seguridad Pública
               </a>
             </li>
           </ul>
@@ -322,7 +329,7 @@
 
                   <div class="form-columns flex-wrap justify-start">
                     <div class="formGroup selectForm">
-                      <label for="tipoSangre">Tipo de sangre</label>
+                      <label for="tipoSangre">Tipo de sangre <span style="color: rgb(185, 39, 39)">*</span></label>
                       <select name="tipoSangre" id="tipoSangre" required>
                         <option value="A-">A-</option>
                         <option value="A+">A+</option>
@@ -359,7 +366,9 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="telefonoEmergencia">Teléfono de Emergencia</label>
+                      <label for="telefonoEmergencia"
+                        >Teléfono de Emergencia <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="tel"
                         placeholder="Teléfono de emergencia"
@@ -397,7 +406,7 @@
                         name="numGafeteSCT"
                         maxlength="5"
                         data-length="5"
-                        class="only-characters"
+                        class="only-numbers"
                         style="text-transform: uppercase"
                         id="numGafeteSCT"
                         required
@@ -411,7 +420,7 @@
 
                   <div class="form-columns flex-nowrap justify-start">
                     <div class="formGroup inputForm" style="max-width: unset">
-                      <label for="calle">Calle</label>
+                      <label for="calle">Calle <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Calle"
@@ -423,7 +432,7 @@
                       />
                     </div>
                     <div class="formGroup inputForm">
-                      <label for="numeroCasa">Número</label>
+                      <label for="numeroCasa">Número <span style="color: rgb(185, 39, 39)">*</span></label>
                       <input
                         type="text"
                         placeholder="Número"
@@ -438,7 +447,9 @@
 
                   <div class="form-columns flex-nowrap">
                     <div class="formGroup inputForm">
-                      <label for="colonia">Colonia o Fraccionamiento</label>
+                      <label for="colonia"
+                        >Colonia o Fraccionamiento <span style="color: rgb(185, 39, 39)">*</span></label
+                      >
                       <input
                         type="text"
                         placeholder="Colonia"
@@ -451,7 +462,7 @@
                       />
                     </div>
                     <div class="formGroup selectForm">
-                      <label for="municipio">Municipio</label>
+                      <label for="municipio">Municipio <span style="color: rgb(185, 39, 39)">*</span></label>
                       <select name="municipio" id="municipio" required>
                         <option value="sanluis">SAN LUIS POTOSI</option>
                         <option value="soledaddegraciano">SOLEDAD DE GRACIANO SÁNCHEZ</option>
@@ -1620,13 +1631,13 @@
             <div class="formContainer" data-tabcontainer="drivers" data-visibility="false" style="padding-top: 20px">
               <div class="containerBody">
                 <p style="font-size: 16px; font-weight: 500; margin-bottom: 8px" id="placa-search-text">
-                  Busca conductor introduciendo su email, y asignalo al concesionario:
+                  Busca conductor por nombre o gafete, y asignalo al concesionario:
                 </p>
                 <div class="placa-search">
                   <form id="userEmailSearch">
                     <input
                       type="text"
-                      placeholder="Introducir correo del conductor"
+                      placeholder="Introducir nombre o gafete del conductor"
                       name="searchEmail"
                       id="searchEmail"
                       class="search-placa"
@@ -1971,14 +1982,24 @@
         const document = doc.data();
         getDataFromDriversList(document);
       });
-
+      const exportOptions = {
+        columns: [0, 1, 2, 3, 4, 5, 6, 7],
+      };
       usersDataTableContext = new DataTable(usersTable, {
         dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
         buttons: [
           {
-            extend: "collection",
-            text: "Exportar datos",
-            buttons: ["excelHtml5", "pdfHtml5", "print"],
+            extend: "excelHtml5",
+            exportOptions,
+          },
+          {
+            extend: "pdfHtml5",
+            orientation: "landscape",
+            pageSize: "A4",
+          },
+          {
+            extend: "print",
+            exportOptions,
           },
         ],
         oLanguage: {
@@ -2804,9 +2825,10 @@
       box.innerHTML = ""; // Limpiar resultados anteriores
 
       try {
-        const snapshot = await firestore.collection("conductores").where("correoElectronico", "==", searchString).get();
+        const snapshot = await firestore.collection("conductores").where("numGafeteSCT", "==", searchString).get();
         const response = snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }));
-        if (response) {
+        console.log(response);
+        if (response.length > 0) {
           box.style.display = "block";
           response.forEach((item) => {
             const {
@@ -2830,6 +2852,8 @@
             list.appendChild(button);
             box.appendChild(list);
           });
+        } else {
+          window.alert("No se encuentra conductor con ese numero de Gafete.");
         }
       } catch (error) {
         console.error("Se ha presentado un error:", error);
@@ -2842,8 +2866,8 @@
         negateAccess();
         return;
       }
-      if (totalAssigned.length >= 4) {
-        window.alert("No puede haber mas de 4 Conductores asignados a un Concesionario.");
+      if (totalAssigned.length >= 2) {
+        window.alert("No puede haber mas de 2 Conductores asignados a un Concesionario.");
         return;
       }
 
@@ -2851,6 +2875,20 @@
       const message = "¿Estás seguro de asignar este conductor al concesionario?";
       if (!confirm(message)) return;
 
+      // Verificar si conductor ya existe dentro de coleccion
+
+      const verifyIfExists = await firestore
+        .collection(CONCESIONARIOS_COLLECTION)
+        .doc(uid)
+        .collection("conductores")
+        .doc(item.id)
+        .get();
+
+      if (verifyIfExists.exists) {
+        window.alert("Conductor ya se encuentra asignado al concesionario, no se puede duplicar.");
+        return;
+      }
+      // Asignar conductor a concesionario
       try {
         await firestore
           .collection(CONCESIONARIOS_COLLECTION)
@@ -2863,6 +2901,7 @@
           });
         await updateUserRealTimeAssignedConcesionario(uid, item.id);
         await getAndRenderDriversFromUser();
+        window.alert("Se ha asignado el conductor al concesionario.");
       } catch (error) {
         alert("Se ha presentado un error, favor de verificar con un administrador.");
         console.error(error);

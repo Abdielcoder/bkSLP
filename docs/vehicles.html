@@ -5,9 +5,9 @@
     <link rel="icon" href="../assets/icons/favicon.ico" />
     <title>Tu Taxi | Vehículos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/vehicles.css" />
+    <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
     <link
       rel="stylesheet"
       type="text/css"
@@ -25,41 +25,25 @@
           </div>
           <hr />
           <ul class="nav">
-            <li class="nav-item" id="mapa-menu-li" style="display: none">
+            <li class="nav-item" id="mapa-menu-li">
               <a class="nav-link" href="./maps.html">
                 <span class="link-icons material-icons-sharp">map</span>
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="concesionario-menu-li" style="display: none">
-              <a class="nav-link hasSubmenu" href="./concesionarios.html" id="concesionario">
+            <li class="nav-item" id="concesionario-menu-li">
+              <a class="nav-link" href="./concesionarios.html" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIO
               </a>
-              <div id="concesionario-submenu" data-displayed="hidden">
-                <ul class="nav-link-submenu">
-                  <li class="nav-item-submenu" id="vehiculos-submenu-li" style="display: none">
-                    <a class="nav-link" href="./vehicles.html">
-                      <span class="link-icons material-icons-sharp">directions_car</span>
-                      VEHICULOS
-                    </a>
-                  </li>
-                  <li class="nav-item" id="conductores-submenu-li" style="display: none">
-                    <a class="nav-link" href="./users.html">
-                      <span class="link-icons material-icons-sharp">person</span>
-                      CONDUCTORES
-                    </a>
-                  </li>
-                </ul>
-              </div>
             </li>
-            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
+            <li class="nav-item" id="vehiculos-menu-li">
               <a class="nav-link selectedPage" href="./vehicles.html">
                 <span class="link-icons material-icons-sharp">directions_car</span>
                 VEHICULOS
               </a>
             </li>
-            <li class="nav-item" id="conductores-menu-li" style="display: none">
+            <li class="nav-item" id="conductores-menu-li">
               <a class="nav-link" href="./users.html">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONDUCTORES
@@ -71,11 +55,27 @@
                 CHATS
               </a>
             </li>
-            <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="./historico.html">
+            <li class="nav-item menu-button menu-closed" id="historico-menu-li">
+              <a class="nav-link" href="#" id="historico">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
+              <div id="historico-submenu" data-displayed="hidden">
+                <ul>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./historico-conductores.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CONDUCTORES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./historico-clientes.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CLIENTES
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
               <a class="nav-link" href="#" id="administracion">
@@ -96,18 +96,12 @@
                       ADMINISTRADORES
                     </a>
                   </li>
-                  <li class="nav-item menu-linked hidden" id="roles-menu-li" style="display: none">
+                  <li class="nav-item menu-linked hidden" id="roles-menu-li">
                     <a class="nav-sublink" href="../admin/roles/index.html">
                       <span class="link-icons material-icons-sharp">groups</span>
                       ROLES
                     </a>
                   </li>
-                  <!-- <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/clientes/index.html">
-                      <span class="link-icons material-icons-sharp">person_pin</span>
-                      CLIENTES
-                    </a>
-                  </li> -->
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../admin/rates.html">
                       <span class="link-icons material-icons-sharp">paid</span>
@@ -119,6 +113,11 @@
                       <span class="link-icons material-icons-sharp">attach_money</span>
                       TARIFAS BASE
                     </a>
+                  </li><li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./accesos.html">
+                      <span class="link-icons material-icons-sharp">history</span>
+                      ACCESOS
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -127,6 +126,12 @@
               <a class="nav-link" href="../admin/clientes/index.html">
                 <span class="link-icons material-icons-sharp">person_pin</span>
                 CLIENTES
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./seguridad-publica.html">
+                <span class="link-icons material-icons-sharp">local_police</span>
+                Seguridad Pública
               </a>
             </li>
           </ul>
@@ -166,7 +171,7 @@
                       <th>Modelo</th>
                       <th>Año</th>
                       <th>Tipo</th>
-                      <th>Número Económico</th>
+                      <th>Núm. Económico</th>
                       <th>Color</th>
                       <th>Acciones</th>
                     </tr>
@@ -1428,6 +1433,34 @@
         formObject.fechaAlta = todayDate;
         formObject.fechaActualizacion = todayDate;
         formObject.placa = formObject.placaNumero + formObject.placaTipo;
+
+        // Verify if Vehicle exists in collection
+
+        const verifyIfExistsByPlate = await VEHICULOS_REFERENCE.where("placa", "==", formObject.placa).get();
+        const verifyIfExistsByEconomicNumber = await VEHICULOS_REFERENCE.where(
+          "numeroEconomico",
+          "==",
+          formObject.numeroEconomico
+        ).get();
+        console.log({ verifyIfExistsByPlate, verifyIfExistsByEconomicNumber });
+        if (verifyIfExistsByPlate.docs.length > 0) {
+          window.alert(
+            "Vehiculo con el numero de placas: " +
+              String(formObject.placa).toUpperCase() +
+              " ya se encuentra dado de alta. Intente con otro numero de placa."
+          );
+          return;
+        }
+        if (verifyIfExistsByEconomicNumber.docs.length > 0) {
+          window.alert(
+            "Vehiculo con el numero de placas: " +
+              String(formObject.placa).toUpperCase() +
+              " ya se encuentra dado de alta. Intente con otro numero de placa."
+          );
+          return;
+        }
+        return;
+
         const vehicleRef = await VEHICULOS_REFERENCE.add(formObject);
 
         if (vehicleRef) {
@@ -1521,13 +1554,24 @@
           insertDataToTableBody(e, index);
         });
 
+        const exportOptions = {
+          columns: [0, 1, 2, 3, 4, 5, 6],
+        };
+
         vehiclesTable = new DataTable("#vehicle-list", {
           dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
           buttons: [
             {
-              extend: "collection",
-              text: "Exportar",
-              buttons: ["excelHtml5", "pdfHtml5", "print"],
+              extend: "excelHtml5",
+              exportOptions,
+            },
+            {
+              extend: "pdfHtml5",
+              exportOptions,
+            },
+            {
+              extend: "print",
+              exportOptions,
             },
           ],
           oLanguage: {

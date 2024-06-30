@@ -33,34 +33,18 @@
               </a>
             </li>
             <li class="nav-item" id="concesionario-menu-li" style="display: none">
-              <a class="nav-link hasSubmenu" href="../../docs/concesionarios.html" id="concesionario">
+              <a class="nav-link" href="../../docs/concesionarios.html" id="concesionario">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIOS
-              </a>
-              <div id="concesionario-submenu" data-displayed="hidden">
-                <ul class="nav-link-submenu">
-                  <li class="nav-item-submenu" id="vehiculos-submenu-li" style="display: none">
-                    <a class="nav-link" href="../../docs/vehicles.html">
-                      <span class="link-icons material-icons-sharp">directions_car</span>
-                      VEHICULOS
-                    </a>
-                  </li>
-                  <li class="nav-item" id="conductores-submenu-li" style="display: none">
-                    <a class="nav-link" href="../../docs/users.html">
-                      <span class="link-icons material-icons-sharp">person</span>
-                      CONDUCTORES
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              </a> 
             </li>
-            <li class="nav-item" id="vehiculos-menu-li" style="display: none">
+            <li class="nav-item" id="vehiculos-menu-li">
               <a class="nav-link" href="../../docs/vehicles.html">
                 <span class="link-icons material-icons-sharp">directions_car</span>
                 VEHICULOS
               </a>
             </li>
-            <li class="nav-item" id="conductores-menu-li" style="display: none">
+            <li class="nav-item" id="conductores-menu-li">
               <a class="nav-link" href="../../docs/users.html">
                 <span class="link-icons material-icons-sharp">person</span>
                 CONDUCTORES
@@ -72,11 +56,27 @@
                 CHATS
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../../docs/historico.html">
+            <li class="nav-item menu-button menu-closed" id="historico-menu-li">
+              <a class="nav-link" href="#" id="historico">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
+              <div id="historico-submenu" data-displayed="hidden">
+                <ul>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="../../docs/historico-conductores.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CONDUCTORES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="../../historico-clientes.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CLIENTES
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
               <a class="nav-link" href="#" id="administracion">
@@ -102,13 +102,7 @@
                       <span class="link-icons material-icons-sharp">groups</span>
                       ROLES
                     </a>
-                  </li>
-                  <!-- <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../clientes/index.html">
-                      <span class="link-icons material-icons-sharp">person_pin</span>
-                      CLIENTES
-                    </a>
-                  </li> -->
+                  </li> 
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../rates.html">
                       <span class="link-icons material-icons-sharp">paid</span>
@@ -121,6 +115,12 @@
                       TARIFAS BASE
                     </a>
                   </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="../../docs/accesos.html">
+                      <span class="link-icons material-icons-sharp">history</span>
+                      ACCESOS
+                    </a>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -128,6 +128,12 @@
               <a class="nav-link" href="../clientes/index.html">
                 <span class="link-icons material-icons-sharp">person_pin</span>
                 CLIENTES
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../docs/seguridad-publica.html">
+                <span class="link-icons material-icons-sharp">local_police</span>
+                Seguridad Pública
               </a>
             </li>
           </ul>

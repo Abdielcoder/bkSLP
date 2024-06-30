@@ -1,90 +1,194 @@
-import { totalDriversChart, activeDriversChart, padronChart, data as DT } from "../charts/charts.default.js";
-
 const firestore = firebase.firestore();
-// import { logs_accesos } from "../config/firestore-config.js";
+const realtime = firebase.database().ref();
+const conductoresReference = realtime.child("Users/Drivers");
+const enServicioReference = realtime.child("drivers_working");
+const activosReference = realtime.child("active_drivers");
+const viajesReference = realtime.child("DriverTripTadi");
 
-const ctx = document.querySelector("canvas#myChart").getContext("2d");
-const ctx2 = document.querySelector("canvas#myChart_2").getContext("2d");
-const ctx3 = document.querySelector("canvas#myChart_3").getContext("2d");
-const myChart = new Chart(ctx, totalDriversChart);
-const myChart2 = new Chart(ctx2, activeDriversChart);
-const myChart3 = new Chart(ctx3, padronChart);
+const getFullDriverTripNodeData = async (conductores) => {
+  let tripsList = [];
+  let totalTrips = 0;
+  let totalTripsFinished = 0;
+  let totalTripsRefunds = 0;
 
-const getDataTRips = () => {
-  document.querySelector("span#tripTotal").textContent = DT.tTrips;
-  document.querySelector("span#tripCollection").textContent = `${formatCurrency(DT.tRefunds)}`;
-  document.querySelector("span#tripAvgTrips").textContent = parseFloat(DT.tTrips / DT.rP).toFixed(2);
-  document.querySelector("span#tripAvgCollection").textContent = `${formatCurrency(
-    (DT.tRefunds / DT.tTrips).toFixed(2)
-  )}`;
-};
+  await viajesReference.once("value", (snapshot) => {
+    snapshot.forEach((document) => {
+      let driverTrips = [];
+      let finishedTrips = 0;
+      let tripsRefunds = 0;
 
-const showAccesos = async () => {
-  await firestore
-    .collection("loginAccesos")
-    .orderBy("timestamp", "desc")
-    .limit(20)
-    .get()
-    .then((snapshot) => {
-      let array = [];
-      snapshot.docs.forEach((document) => {
-        array.push(document.data());
+      document.forEach((trip) => {
+        const { status, tripCost } = trip.val();
+        finishedTrips = status === "finish" ? finishedTrips + 1 : finishedTrips;
+        tripsRefunds = tripCost !== undefined ? tripsRefunds + tripCost : tripsRefunds;
+        driverTrips.push({
+          dateEpoch: parseInt(trip.key.replace("-", "")),
+          t: trip,
+        });
       });
-      showAccesosHTML(array);
+      tripsList.push({
+        trips: driverTrips,
+        finishedTrips: finishedTrips,
+        refunds: tripsRefunds,
+      });
+
+      totalTrips = totalTrips + driverTrips.length;
+      totalTripsFinished = totalTripsFinished + finishedTrips;
+      totalTripsRefunds = totalTripsRefunds + tripsRefunds;
     });
-
-  new DataTable("#access-list", {
-    dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
-    buttons: [
-      {
-        extend: "collection",
-        text: "Exportar",
-        buttons: ["excelHtml5", "pdfHtml5", "print"],
-      },
-    ],
-    oLanguage: {
-      sSearch: "Busqueda:",
-      oPaginate: {
-        sFirst: "Primera", // This is the link to the first page
-        sPrevious: "Anterior", // This is the link to the previous page
-        sNext: "Siguiente", // This is the link to the next page
-        sLast: "Ultima", // This is the link to the last page
-      },
-    },
-    language: {
-      info: "Se muestran los registros _START_ al _END_ de _TOTAL_. ",
-      infoEmpty: "No se muestran registros.",
-      emptyTable: "No se registran datos en la tabla.",
-      infoFiltered: "(Filtrado de _MAX_ registros).",
-    },
   });
+
+  return {
+    totalTripsRefunds,
+    totalTrips,
+    totalTripsFinished,
+    data: tripsList,
+    gP: conductores.length,
+    rP: tripsList.length,
+  };
 };
 
-const showAccesosHTML = (documents) => {
-  const table = document.querySelector("table#access-list tbody");
-
-  documents.forEach((doc) => { 
-    const trTag = document.createElement("tr");
-    const emailTag = document.createElement("td");
-    emailTag.innerHTML = doc.email;
-    const dateTag = document.createElement("td");
-    dateTag.innerHTML = doc.timestamp.split("T")[0];
-    const timeTag = document.createElement("td");
-    timeTag.innerHTML = doc.timestamp.split("T")[1].split(".")[0];
-    const username = document.createElement("td");
-    username.innerHTML = doc.username;
-    trTag.append(emailTag);
-    trTag.append(username);
-    trTag.append(dateTag);
-    trTag.append(timeTag);
-    table.append(trTag);
+const getAllDocumentsFromCollection = async (collection) =>
+  await collection.once("value").then((snapshot) => {
+    let array = [];
+    snapshot.forEach((document) => {
+      array.push({ uuid: document.key, ...document.val() });
+    });
+    return { length: array.length, list: array };
   });
+
+const main = async () => {
+  const conductoresData = await getAllDocumentsFromCollection(conductoresReference);
+  const enServicioData = await getAllDocumentsFromCollection(enServicioReference);
+  const activosData = await getAllDocumentsFromCollection(activosReference);
+  const driverTrips = await getFullDriverTripNodeData(conductoresData);
+
+  const totalDriversChart = {
+    type: "pie",
+    data: {
+      labels: ["Activos", "En servicio", "Inactivos"],
+      datasets: [
+        {
+          label: "Num Datos",
+          data: [
+            activosData.length,
+            enServicioData.length,
+            conductoresData.length - activosData.length - enServicioData.length,
+          ],
+          backgroundColor: ["#691c32", "#f5a43f", "#0C425A"],
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        labels: {
+          render: (args) => {
+            return args.value;
+          },
+          fontColor: "#fff",
+          fontStyle: "bold",
+          position: "middle",
+        },
+        tooltip: { enabled: true },
+        legend: {
+          display: true,
+          position: "right",
+          title: { text: "Conductores", display: true, padding: 6, font: { size: 16 } },
+          align: "center",
+          labels: { font: { size: 12 } },
+        },
+      },
+      layout: { autoPadding: true, padding: 16, fullSize: true },
+    },
+  };
+
+  const activeDriversChart = {
+    type: "pie",
+    data: {
+      labels: ["Activos", "En servicio"],
+      datasets: [
+        {
+          label: "Num Datos",
+          data: [activosData.length, enServicioData.length],
+          backgroundColor: ["#691c32", "#0C425A"],
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        labels: {
+          render: (args) => {
+            return `${args.percentage}%`;
+          },
+          precision: 2,
+          position: "middle",
+          fontColor: "#fff",
+          fontStyle: "bold",
+        },
+        tooltip: { enabled: true },
+        legend: {
+          display: true,
+          position: "right",
+          title: { text: "Tipo", display: true, padding: 6, font: { size: 16 } },
+          align: "center",
+          labels: { font: { size: 12 } },
+        },
+      },
+      layout: { autoPadding: true, padding: 16, fullSize: true },
+    },
+  };
+
+  const padronChart = {
+    type: "pie",
+    data: {
+      labels: ["Concesionarios", "Conductores"],
+      datasets: [
+        {
+          label: "Num Datos",
+          data: [conductoresData.length, conductoresData.length],
+          backgroundColor: ["#0C425A", "#333"],
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        labels: {
+          precision: 2,
+          fontColor: "#fff",
+          fontStyle: "bold",
+          position: "middle",
+        },
+        tooltip: { enabled: true },
+        legend: {
+          display: true,
+          position: "right",
+          title: { text: "En registro", display: true, padding: 6, font: { size: 16 } },
+          align: "center",
+          labels: { font: { size: 12 } },
+        },
+      },
+      layout: { autoPadding: true, padding: 16, fullSize: true },
+    },
+  };
+  document.querySelector("span#tripTotal").textContent = driverTrips.totalTrips;
+  document.querySelector("span#tripCollection").textContent = `${formatCurrency(driverTrips.totalTripsRefunds)}`;
+  document.querySelector("span#tripAvgTrips").textContent = parseFloat(driverTrips.totalTrips / driverTrips.rP).toFixed(
+    2
+  );
+  document.querySelector("span#tripAvgCollection").textContent = `${formatCurrency(
+    (driverTrips.totalTripsRefunds / driverTrips.totalTrips).toFixed(2)
+  )}`;
+
+  const ctx = document.querySelector("canvas#myChart").getContext("2d");
+  const ctx2 = document.querySelector("canvas#myChart_2").getContext("2d");
+  const ctx3 = document.querySelector("canvas#myChart_3").getContext("2d");
+  const myChart = new Chart(ctx, totalDriversChart);
+  const myChart2 = new Chart(ctx2, activeDriversChart);
+  const myChart3 = new Chart(ctx3, padronChart);
 };
-  
-const formatCurrency = (cx) => {
+
+const formatCurrency = (currencyString) => {
   const coin = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
-  return coin.format(cx);
+  return coin.format(currencyString);
 };
-
-getDataTRips();
-showAccesos();
+main();

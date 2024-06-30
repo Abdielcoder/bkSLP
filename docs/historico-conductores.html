@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="../assets/icons/favicon.ico" />
-    <title>Tu Taxi - Histórico</title>
+    <title>Tu Taxi - Histórico Conductores</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/historico.css" />
@@ -13,7 +13,43 @@
       type="text/css"
       href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.css"
     />
-    <!-- <link rel="stylesheet" href="../css/coreui.css"> -->
+    <style>
+      .filter-container {
+        display: flex;
+        flex-direction: row;
+        column-gap: 1rem;
+        align-items: baseline;
+      }
+      .filter-container label {
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.5rem;
+      }
+
+      .filter-container input,
+      .filter-container select {
+        height: 40px;
+        padding: 8px 12px;
+        border-radius: 3px;
+        border: 1px solid #8080808a;
+      }
+
+      label[data-format="currency"] {
+        position: relative;
+      }
+      label[data-format="currency"]::before {
+        content: "$";
+        display: block;
+        position: absolute;
+        left: 0.5rem;
+        top: 2.3rem;
+        z-index: 1;
+      }
+
+      label[data-format="currency"] input[type="text"] {
+        padding-left: 1.5rem;
+      }
+    </style>
   </head>
 
   <body>
@@ -56,11 +92,27 @@
                 CHATS
               </a>
             </li>
-            <li class="nav-item" id="historico-menu-li">
-              <a class="nav-link" href="#">
+            <li class="nav-item menu-button menu-closed" id="historico-menu-li">
+              <a class="nav-link" href="#" id="historico">
                 <span class="link-icons material-icons-sharp">token</span>
                 HISTORICO DE VIAJES
               </a>
+              <div id="historico-submenu" data-displayed="hidden">
+                <ul>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./historico-conductores.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CONDUCTORES
+                    </a>
+                  </li>
+                  <li class="nav-item menu-linked hidden">
+                    <a class="nav-sublink" href="./historico-clientes.html">
+                      <span class="link-icons material-icons-sharp">person</span>
+                      CLIENTES
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
               <a class="nav-link" href="#" id="administracion">
@@ -139,14 +191,14 @@
       <!-- Main -->
       <main style="position: relative">
         <div class="page-title">
-          <h2 class="header-module-title">Consulta histórica de viajes</h2>
+          <h2 class="header-module-title">Histórico de viajes</h2>
         </div>
         <div class="container">
           <div class="container-module col-12">
             <div class="module-body">
               <div class="body-header">
-                <div>
-                  <!-- <h2
+                <!-- <div>
+                  <h2
                     style="
                       margin: 0;
                       color: #333;
@@ -156,58 +208,87 @@
                       margin-bottom: 0.5rem;
                     "
                   >
-                    Consu
-                  </h2> -->
-                  <div>
-                    <p>Seleccione tipo de usuario el cual desea consultar el histórico</p>
-                    <label for="driverType">
-                      <input type="radio" name="userType" class="userType" id="driverType" checked />
-                      Conductor
-                    </label>
-                    <label for="clientType">
-                      <input type="radio" name="userType" class="userType" id="clientType" />
-                      Cliente
-                    </label>
-                    <form id="searchUserForm">
-                      <label for="searchUserInput" id="searchUserFormLabel">
-                        Buscar conductor por nombre o número de gafete
-                        <input
-                          type="text"
-                          name="searchUserInput"
-                          id="searchUserInput"
-                          placeholder="Introducir nombre o Número de Gafete"
-                        />
-                      </label>
-                      <button type="submit">Buscar</button>
-                    </form>
-                  </div>
-                  <!-- <select name="conductores" id="listadoConductores" style="padding: 10px 8px">
-                    <option value="0">Seleccionar un conductor</option>
-                  </select> -->
+                    Consulta de Conductores
+                  </h2>
+                </div> -->
+              </div>
+              <div id="body-content">
+                <div class="filter-container" style="margin-bottom: 1rem">
+                  <label for="filterConductor" style="flex-grow: 1">
+                    Buscar conductor Número de Gafete
+                    <div style="display: flex; flex-flow: row nowrap; column-gap: 0.5rem">
+                      <input
+                        type="text"
+                        name="filterConductor"
+                        id="filterConductor"
+                        placeholder="Introducir número de gafete"
+                        style="width: 100%"
+                      />
+                      <input
+                        type="button"
+                        value="buscar"
+                        id="filterConductorButton"
+                        style="background-color: #2d6e3d; border-radius: 3px; color: whitesmoke"
+                      />
+                    </div>
+                  </label>
+                  <label for="filterStartDate">
+                    Fecha Inicio
+                    <input type="date" name="filterStartDate" id="filterStartDate" />
+                  </label>
+                  <label for="filterEndDate">
+                    Fecha Final
+                    <input type="date" name="filterEndDate" id="filterEndDate" />
+                  </label>
+                  <label for="filterCantidadMin" data-format="currency">
+                    Monto MIN
+                    <input
+                      type="text"
+                      name="filterCantidadMin"
+                      id="filterCantidadMin"
+                      style="max-width: 80px"
+                      placeholder="0"
+                    />
+                  </label>
+                  <label for="filterCantidadMax" data-format="currency">
+                    Monto MAX
+                    <input
+                      type="text"
+                      name="filterCantidadMax"
+                      id="filterCantidadMax"
+                      style="max-width: 80px"
+                      placeholder="999"
+                    />
+                  </label>
+                  <label for="filterCalificacion">
+                    Calificación
+                    <div>
+                      <input type="radio" name="filterCalificacion" id="rateOne" />
+                      <input type="radio" name="filterCalificacion" id="rateTwo" />
+                      <input type="radio" name="filterCalificacion" id="rateThree" />
+                      <input type="radio" name="filterCalificacion" id="rateFour" />
+                      <input type="radio" name="filterCalificacion" id="rateFive" />
+                    </div>
+                  </label>
+                </div>
+                <div class="table-container">
+                  <table id="table-historico">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Monto</th>
+                        <th>Recibo</th>
+                        <th>Trayectoria</th>
+                        <th>Partida</th>
+                        <th>Destino</th>
+                        <th>Calificación</th>
+                        <th>Reseña</th>
+                      </tr>
+                    </thead>
+                  </table>
                 </div>
               </div>
-              <div id="body-content"></div>
-              <!-- <div class="table-container display-none">
-                <table id="historico">
-                  <thead>
-                    <tr>
-                      <th>Operador</th>
-                      <th>Número Económico</th>
-                      <th>Fecha de Inicio</th>
-                      <th>Hora de Inicio</th>
-                      <th>Duracion del viaje</th>
-                      <th>Monto</th>
-                      <th>Recibo desglosado</th>
-                      <th>Trayectoria</th>
-                      <th>Ubicación Partida</th>
-                      <th>Ubicación Destino</th>
-                      <th>Calificación</th>
-                      <th>Reseña</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div> -->
             </div>
           </div>
         </div>
@@ -275,8 +356,9 @@
     const firestore = firebase.firestore();
 
     let CONDUCTORES_REFERENCE = firestore.collection("conductores");
+    let CLIENT_TRIPS_REFERENCE = firestore.collection("clientTrips");
     let LISTADO_CONDUCTORES = document.querySelector("select#listadoConductores");
-    let TABLA_HISTORICO = document.querySelector("#historico");
+    let TABLA_HISTORICO = document.querySelector("#table-historico");
     let DATATABLE_CONTEXT = null;
     let CONDUCTORES_ARRAY = [];
 
@@ -285,9 +367,8 @@
       if (docs) {
         let conductoresList = [];
         docs.forEach((doc, index) => {
-          const conductor = { uid: doc.id, data: doc.data() };
+          const conductor = { uid: doc.id, ...doc.data() };
           conductoresList.push(conductor);
-          createOptionElements(conductor, index);
         });
         return conductoresList;
       }
@@ -302,31 +383,44 @@
       LISTADO_CONDUCTORES.insertAdjacentElement("beforeend", optionTag);
     }
 
-    async function getDriverTrips(uid) {
-      const trips = await realtime
-        .child("DriverTrip/" + uid)
-        .once("value")
-        .then((snapshot) => Object.entries(snapshot.val()))
-        .catch((error) => false);
-      if (trips) {
-        const conductorSeleccionado = CONDUCTORES_ARRAY.find((conductor) => conductor.uid);
-        for (let i = 0; i < trips.length; i++) {
-          const tableRowData = destructureConductorData(conductorSeleccionado, trips[i]);
-          insertDataToRowTable(tableRowData);
-        }
-        generateDataTable();
-      }
+    async function getDriverTrips() {
+      const trips = await firebase
+        .firestore()
+        .collection("driverTripSlp")
+        .get()
+        .then((snapshot) => {
+          let array = [];
+          snapshot.docs.forEach((document) => {
+            array.push({ uid: document.id, ...document.data() });
+          });
+          return array;
+        })
+        .catch((error) => {
+          console.error({ error });
+          return false;
+        });
     }
 
     function generateDataTable() {
-      TABLA_HISTORICO.parentElement.classList.remove("display-none");
+      const exportOptions = {
+        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      };
       DATATABLE_CONTEXT = new DataTable(TABLA_HISTORICO, {
         dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
         buttons: [
           {
-            extend: "collection",
-            text: "Exportar",
-            buttons: ["excelHtml5", "pdfHtml5", "print"],
+            extend: "excelHtml5",
+            exportOptions,
+          },
+          {
+            extend: "pdfHtml5",
+            orientation: "landscape",
+            pageSize: "A4",
+            exportOptions,
+          },
+          {
+            extend: "print",
+            exportOptions,
           },
         ],
         oLanguage: {
@@ -357,23 +451,23 @@
       TABLA_HISTORICO.children[1].append(rowTag);
     }
 
-    function destructureConductorData({ data }, [tripId, tripData]) {
-      const [date, time] = formatTimestampToString(tripData.timeStart);
-      return [
-        [data.nombre, data.apellidoPaterno, data.apellidoMaterno].join(" "), //operador
-        data.numeroEconomico, //numeroEconomico
-        date, //fechaInicio
-        time, //HoraInicio
-        tripData.time.text, //duracion
-        "$ " + tripData.tripCost, //monto
-        0, //recibo
-        0, //trayectoria
-        0, //ubicacionPartida
-        tripData.finalDestination, //ubicacionDestino
-        0, //calificacion
-        0, //resena
-      ];
-    }
+    // function destructureConductorData({ data }, [tripId, tripData]) {
+    //   const [date, time] = formatTimestampToString(tripData.timeStart);
+    //   return [
+    //     [data.nombre, data.apellidoPaterno, data.apellidoMaterno].join(" "), //operador
+    //     data.numeroEconomico, //numeroEconomico
+    //     date, //fechaInicio
+    //     time, //HoraInicio
+    //     tripData.time.text, //duracion
+    //     "$ " + tripData.tripCost, //monto
+    //     0, //recibo
+    //     0, //trayectoria
+    //     0, //ubicacionPartida
+    //     tripData.finalDestination, //ubicacionDestino
+    //     0, //calificacion
+    //     0, //resena
+    //   ];
+    // }
 
     function formatTimestampToString(timestamp) {
       const datetime = new Date(parseInt(timestamp) * 1000).toLocaleString("en-US", {
@@ -386,36 +480,118 @@
       DATATABLE_CONTEXT.clear().destroy();
     }
 
-    // LISTADO_CONDUCTORES.addEventListener("change", async function (e) {
-    //   await getDriverTrips(e.target.value);
+    async function main() {
+      const conductores = await getConductores();
+      CONDUCTORES_ARRAY = [...conductores];
+      await getDriverTrips();
+      generateDataTable();
+    }
+
+    main();
+
+    // const userSearchForm = document.querySelector("form#searchUserForm");
+    // const bodyContainer = document.querySelector("div#body-content");
+    // const driverTypeUser = document.querySelector("#driverType");
+    // const clientTypeUser = document.querySelector("#clientType");
+    // const userSearchInput = document.querySelector("input#searchUserInput");
+
+    // userSearchForm.addEventListener("submit", async function (event) {
+    //   event.preventDefault();
+    //   const stringArgument = String(userSearchInput.value).toUpperCase();
+    //   if (driverTypeUser.checked === true) {
+    //     const resultsByNombre = await CONDUCTORES_REFERENCE.where("nombre", "==", stringArgument).get();
+    //     const resultsByApellidoPaterno = await CONDUCTORES_REFERENCE.where(
+    //       "apellidoPaterno",
+    //       "==",
+    //       stringArgument
+    //     ).get();
+    //     const resultsByNumGafeteSCT = await CONDUCTORES_REFERENCE.where("numGafeteSCT", "==", stringArgument).get();
+    //     console.log({
+    //       resultsByNombre,
+    //       resultsBypellidoPaterno,
+    //       resultsByNumGafeteSCT,
+    //     });
+    //   }
     // });
 
-    // async function main() {
-    //   const conductores = await getConductores();
-    //   CONDUCTORES_ARRAY = [...conductores];
-    // }
+    /**
+     * Buscar conductor para desplegar su informacion en la tabla
+     **/
 
-    // main();
+    const searchDriverInput = document.querySelector("#filterConductor");
+    const searchDriverButton = document.querySelector("#filterConductorButton");
 
-    const userSearchForm = document.querySelector("form#searchUserForm");
-    const bodyContainer = document.querySelector("div#body-content");
-    const driverTypeUser = document.querySelector("#driverType");
-    const clientTypeUser = document.querySelector("#clientType");
-    const userSearchInput = document.querySelector("input#searchUserInput");
-
-    userSearchForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
-      const stringArgument = String(userSearchInput.value).toUpperCase();
-      if (driverTypeUser.checked === true) {
-        const resultsByNombre = await CONDUCTORES_REFERENCE.where("nombre", "==", stringArgument).get();
-        const resultsByApellidoPaterno = await CONDUCTORES_REFERENCE.where( "apellidoPaterno", "==", stringArgument ).get();
-        const resultsByNumGafeteSCT = await CONDUCTORES_REFERENCE.where("numGafeteSCT", "==", stringArgument).get();
-        console.log({
-          resultsByNombre,
-          resultsBypellidoPaterno,
-          resultsByNumGafeteSCT,
+    searchDriverButton.addEventListener("click", async function (event) {
+      const stringValue = searchDriverInput.value;
+      const [{ uid }] = await firestore
+        .collection("conductores")
+        .where("numGafeteSCT", "==", String(stringValue).toUpperCase())
+        .get()
+        .then((snapshot) => {
+          let array = [];
+          snapshot.docs.forEach((document) => {
+            array.push({ uid: document.id, ...document.data() });
+          });
+          return array;
+        })
+        .catch((error) => {
+          console.error({ error });
+          return false;
         });
-      } 
+      if (uid !== false) {
+        const trips = await firestore
+          .collection("driverTripSlp")
+          .doc(uid)
+          .collection("trips")
+          .get()
+          .then((snapshot) => {
+            let array = [];
+            snapshot.docs.forEach((document) => {
+              array.push({ uid: document.id, ...document.data() });
+            });
+            return array;
+          })
+          .catch((error) => {
+            console.error({ error });
+            return false;
+          });
+        if (trips !== false) {
+          let counter = 0;
+          clearDataTable();
+          trips.forEach(function (trip) {
+            const rowElement = document.createElement("tr");
+            const cellsValues = [
+              counter + 1,
+              trip.fecha,
+              "$ " + trip.totalPagasScope,
+              "$ " + trip.totalPagasScope,
+              "N/A",
+              trip.origen,
+              trip.destination,
+              "N/A",
+              "N/A",
+            ];
+
+            Object.values(cellsValues).forEach(function (cell) {
+              const cellElement = document.createElement("td");
+              cellElement.innerText = cell;
+              rowElement.insertAdjacentElement("beforeend", cellElement);
+            });
+            TABLA_HISTORICO.children[1].append(rowElement);
+            counter = counter + 1;
+          });
+          generateDataTable();
+        } else {
+          window.alert("Conductor registrado, sin embargo no cuenta con viajes registrados.");
+        }
+      } else {
+        window.alert("No se encontró conductor, intente con otro número de gafete.");
+        return;
+      }
     });
+
+    function findDriverByNameOrGafete() {}
   </script>
 </html>
+
+<!-- 554DS -->

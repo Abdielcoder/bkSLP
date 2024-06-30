@@ -497,6 +497,6 @@ button.botonAsignar:hover {
   }
 }
 
-.hidden {
+.hidden:not(li) {
   display: none !important;
 }

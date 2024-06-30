@@ -29,6 +29,16 @@ export const createUserAndSaveData = async (elements, collection, isConcesionari
       firestoreData = { ...firestoreData, ...i };
     });
 
+    const snapshot = await firestore
+      .collection("conductores")
+      .where("numGafeteSCT", "==", firestoreData.numGafeteSCT)
+      .get();
+    if (snapshot?.docs[0]?.exists) {
+      window.alert(
+        `Ya se encuentra registrado un usuario con el gafete: ${firestoreData.numGafeteSCT}, intente con otro.`
+      );
+      return false;
+    }
     firestoreData = { ...firestoreData, fechaAlta: new Date().toISOString() };
 
     const { status, code, user } = await firebase
@@ -38,6 +48,10 @@ export const createUserAndSaveData = async (elements, collection, isConcesionari
         return { status: 200, user: user.user };
       })
       .catch((error) => {
+        console.log({ catcherror: error });
+        if (error.code === "auth/email-already-in-use") {
+          window.alert("ERROR: El correo electrónico ya se encuentra registrado con otro usuario.");
+        }
         return { status: 500, code: error.code };
       });
     if (status === 200) {
@@ -129,6 +143,29 @@ export const deleteDocumentByUid = async (uid, collection) => {
 
   if (result !== false) {
     window.alert("Se ha eliminado el registro con exito.");
+    // Eliminar conductores asignados de concesionarios
+    await firestore
+      .collection("concesionarios")
+      .get()
+      .then((concesionarios) => {
+        concesionarios.docs.forEach(async (concesionario) => {
+          const verifyIfExists = await firestore
+            .collection("concesionarios")
+            .doc(concesionario.id)
+            .collection("conductores")
+            .doc(uid)
+            .get();
+
+          if (verifyIfExists) {
+            await firestore
+              .collection("concesionarios")
+              .doc(concesionario.id)
+              .collection("conductores")
+              .doc(uid)
+              .delete();
+          }
+        });
+      });
     return true;
   }
   window.alert("Se ha presentado un error!");
@@ -184,34 +221,6 @@ export const resetPasswordToUser = async (email) => {
   }
 };
 
-export const getDocumentsFromMessageCollection = async () => {
-  const list = await firestore
-    .collection("mensajes")
-    .get()
-    .catch((error) => false);
-  if (list) {
-    let information = [];
-    list.forEach((item) => {
-      const { accion, descripcion, destino, ejecutado, fechaAlta, message } = item.data();
-      information.push([message, descripcion, destino /*, ejecutado, accion*/]);
-    });
-    console.log({ information });
-    return information;
-  }
-};
-
-export const addDocumentToMessageCollection = async (e) => {
-  let firestoreData = {};
-
-  firestoreData = Object.assign(e, { fechaAlta: new Date().toISOString() });
-
-  return await firestore
-    .collection("Mensajes")
-    .doc()
-    .set(firestoreData)
-    .then((result) => true)
-    .catch((error) => false);
-};
 
 export const getVehiclesFromInnerDocumentCollection = async (concesionarioUID, collection) => {
   try {
@@ -399,7 +408,8 @@ const insertIntoRealTime = async (data) => {
     gafete: numGafeteSCT,
     genero: sexo,
     id: uid,
-    image: "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg",
+    image:
+      "https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small/default-avatar-profile-icon-of-social-media-user-vector.jpg",
     last_gps_location: "32.446237013348124, -116.84971051461638",
     marca: "N/A",
     modelo: "N/A",
