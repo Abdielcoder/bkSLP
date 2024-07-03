@@ -86,16 +86,25 @@
         padding: 1rem;
 
         & > h2 {
-          font-size: 1.5rem;
+          font-size: 2.5rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          font-weight: lighter;
         }
       }
+
       .dialog-container .container-body {
         background-color: white;
         padding: 1rem;
         width: 100%;
+      }
+
+      #alert-icon {
+        align-items: center;
+        text-transform: uppercase;
+        display: flex;
+        column-gap: 0.25rem;
       }
 
       #formulario-atencion {
@@ -121,10 +130,22 @@
           & > button[type="submit"] {
             background-color: green;
             color: white;
+            transition: all 150ms linear;
+          }
+          & > button[type="submit"]:hover {
+            background-color: rgb(13, 112, 13);
+            color: white;
+            transition: all 150ms linear;
           }
           & > button[type="button"] {
             background-color: white;
             color: black;
+            transition: all 150ms linear;
+          }
+          & > button[type="button"]:hover {
+            background-color: rgb(246, 246, 246);
+            color: black;
+            transition: all 150ms linear;
           }
           & > button {
             min-height: 40px;
@@ -148,10 +169,23 @@
         opacity: 0;
         visibility: hidden;
       }
+
       div[data-visibility="visible"] {
         display: block;
         opacity: 1;
         visibility: visible;
+      }
+
+      .cell-span {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+      }
+
+      h2.main-title {
+        font-size: 1.5rem;
+        color: green;
+        text-transform: capitalize;
       }
     </style>
   </head>
@@ -218,7 +252,7 @@
                 </ul>
               </div>
             </li>
-            <li class="nav-item menu-button menu-closed" id="admin-menu-li" style="display: none">
+            <li class="nav-item menu-button menu-closed" id="admin-menu-li">
               <a class="nav-link" href="#" id="administracion">
                 <span class="link-icons material-icons-sharp">manage_accounts</span>
                 ADMINISTRACIÓN
@@ -303,6 +337,9 @@
             <div class="module-body">
               <div id="body-content">
                 <div class="table-container">
+                  <h2 class="main-title">Alertas emergentes</h2>
+                  <br />
+
                   <table id="table-alertas">
                     <thead>
                       <tr>
@@ -312,6 +349,29 @@
                         <th>Placa</th>
                         <th>Ubicación</th>
                         <th>Contacto</th>
+                        <th>Tipo de alerta</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <br />
+                <hr />
+                <br />
+                <div class="alerts-log">
+                  <h2 class="main-title">Historico de alertas atendidas</h2>
+                  <br />
+                  <table id="table-alertas-logs">
+                    <thead>
+                      <tr>
+                        <th>Folio</th>
+                        <th>Fecha</th>
+                        <th>Conductor</th>
+                        <th>Observaciones</th>
+                        <th>Seguimiento</th>
+                        <th>¿Alerta falsa?</th>
+                        <th>Estado</th>
+                        <th>Atendido por</th>
                         <th>Tipo de alerta</th>
                       </tr>
                     </thead>
@@ -335,11 +395,11 @@
                 <form action="" id="formulario-atencion">
                   <label for="folio">
                     Folio:
-                    <input type="text" name="folio" id="folio" />
+                    <input type="text" name="folio" id="folio" placeholder="Número de Folio" />
                   </label>
                   <label for="descripcion">
                     Descripción:
-                    <input type="text" name="descripcion" id="descripcion" />
+                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" />
                   </label>
                   <label for="fakeAlert" class="checkbox-label">
                     <input type="checkbox" name="fakeAlert" id="fakeAlert" />
@@ -347,7 +407,7 @@
                   </label>
                   <label for="seguimiento">
                     Seguimiento:
-                    <input type="text" name="seguimiento" id="seguimiento" />
+                    <input type="text" name="seguimiento" id="seguimiento" placeholder="Comentario de seguimiento" />
                   </label>
                   <label for="finishedEvent" class="checkbox-label">
                     <input type="checkbox" name="finishedEvent" id="finishedEvent" />
@@ -355,7 +415,7 @@
                   </label>
                   <label for="observaciones">
                     Observaciones
-                    <input type="text" name="observaciones" id="observaciones" />
+                    <input type="text" name="observaciones" id="observaciones" placeholder="Observaciones" />
                   </label>
                   <div class="form-buttons">
                     <button type="button" id="dialog-cancel-button">Cancelar</button>
@@ -430,14 +490,22 @@
     const firestore = firebase.firestore();
 
     const tableAlertas = document.querySelector("table#table-alertas");
+    const tableAlertasLogs = document.querySelector("table#table-alertas-logs");
     let tableAlertasContext = null;
+    let tableAlertasLogsContext = null;
     const dialogAlert = document.querySelector("div[role='dialog']");
     const cancelButton = document.querySelector("button#dialog-cancel-button");
+    let globalSelectedUserAlert = {};
+
+    let panicAlerts = [];
+    let warningAlerts = [];
+
     cancelButton.addEventListener("click", function (event) {
       const key = dialogAlert.getAttribute("data-key");
       dialogAlert.setAttribute("data-visibility", "hidden");
       document.querySelector(`input[type='checkbox'][data-key='${key}']`).checked = false;
       dialogAlert.setAttribute("data-key", null);
+      dialogAlert.removeAttribute("data-type");
       document.querySelector("#alert-icon").innerHTML = "";
     });
 
@@ -492,6 +560,46 @@
       });
     }
 
+    const generateDataTableLogs = () => {
+      const exportOptions = {
+        columns: [0, 1, 2, 3, 4, 5],
+      };
+      tableAlertasLogsContext = new DataTable(tableAlertasLogs, {
+        dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
+        buttons: [
+          {
+            extend: "excelHtml5",
+            exportOptions,
+          },
+          {
+            extend: "pdfHtml5",
+            orientation: "landscape",
+            pageSize: "A4",
+            exportOptions,
+          },
+          {
+            extend: "print",
+            exportOptions,
+          },
+        ],
+        oLanguage: {
+          sSearch: "Busqueda:",
+          oPaginate: {
+            sFirst: "Primera",
+            sPrevious: "Anterior",
+            sNext: "Siguiente",
+            sLast: "Ultima",
+          },
+        },
+        language: {
+          info: "Se muestran los registros _START_ al _END_ de _TOTAL_. ",
+          infoEmpty: "No se muestran registros.",
+          emptyTable: "No se registran datos en la tabla.",
+          infoFiltered: "(Filtrado de _MAX_ registros).",
+        },
+      });
+    };
+
     async function getDriverInfoFromCollection(key) {
       return await realtime
         .child(`Users/Drivers/${key}`)
@@ -510,33 +618,40 @@
         data.placa,
         `[${data.ubicacion.latitud}, ${data.ubicacion.longitud}]`,
         data.telefono,
-        type,
+        type.icono,
       ];
 
       arrayData.forEach(function (element) {
         const cellElement = document.createElement("td");
-        cellElement.innerHTML = element;
+        const spanElement = document.createElement("span");
+        spanElement.innerHTML = element;
+        spanElement.classList.add("cell-span");
+        cellElement.insertAdjacentElement("beforeend", spanElement);
         rowElement.insertAdjacentElement("beforeend", cellElement);
       });
 
-      const actionData = createActionFunctionality(data.uuid, type);
+      const actionData = createActionFunctionality(data, type);
 
       rowElement.insertAdjacentElement("afterbegin", actionData);
+      rowElement.setAttribute("data-key", data.uuid);
+      rowElement.setAttribute("data-type", type.texto);
       //   tableAlertas.row.add(arrayData).draw(false);
       tableAlertas.children[1].insertAdjacentElement("beforeend", rowElement);
     }
 
-    function createActionFunctionality(key, type) {
+    function createActionFunctionality(data, type) {
       const cellElement = document.createElement("td");
       const checkboxElement = document.createElement("input");
       checkboxElement.type = "checkbox";
       checkboxElement.checked = false;
-      checkboxElement.setAttribute("data-key", key);
+      checkboxElement.setAttribute("data-key", data.uuid);
       checkboxElement.addEventListener("click", function (event) {
         if (event.target.checked) {
           dialogAlert.setAttribute("data-visibility", "visible");
-          dialogAlert.setAttribute("data-key", key);
-          document.querySelector("#alert-icon").innerHTML = type;
+          dialogAlert.setAttribute("data-key", data.uuid);
+          dialogAlert.setAttribute("data-type", type.texto);
+          document.querySelector("#alert-icon").innerHTML = type.icono;
+          globalSelectedUserAlert = data;
         }
       });
 
@@ -559,29 +674,136 @@
         municipio: data.MUNICIPIO,
       };
 
-      createRowsFromData(requiredInformation, type);
+      createRowsFromData({ ...data, ...requiredInformation }, type);
     }
 
     const panicCollectionReference = realtime.child("panic_button");
     panicCollectionReference.on("child_added", async function (snapshot) {
       const panicData = { key: snapshot.key, ...snapshot.val() };
       const driver = await getDriverInfoFromCollection(panicData.key);
-      createCardWithDriverInformation({ ...panicData, ...driver }, PanicIcon + " emergencia");
+      const information = { ...panicData, ...driver };
+      const styles = { icono: PanicIcon + " emergencia", texto: "panico" };
+      panicAlerts.push(information);
+      createCardWithDriverInformation(information, styles);
+    });
+
+    panicCollectionReference.on("child_removed", async function (snapshot) {
+      const panicData = { key: snapshot.key, ...snapshot.val() };
+      const driver = await getDriverInfoFromCollection(panicData.key);
+
+      panicAlerts = panicAlerts.filter(({ key }) => key === panicData.key);
+      tableAlertasContext.clear().destroy();
+      if (panicAlerts.length > 0) {
+        const styles = { icono: PanicIcon + " emergencia", texto: "panico" };
+        panicAlerts.forEach((element) => {
+          createCardWithDriverInformation(element, styles);
+        });
+        generateDataTable();
+      }
     });
 
     const warningCollectionReference = realtime.child("warning");
     warningCollectionReference.on("child_added", async function (snapshot) {
-      const panicData = { key: snapshot.key, ...snapshot.val() };
-      const driver = await getDriverInfoFromCollection(panicData.key);
-      createCardWithDriverInformation({ ...panicData, ...driver }, WarningIcon + " alerta");
+      const warningData = { key: snapshot.key, ...snapshot.val() };
+      const driver = await getDriverInfoFromCollection(warningData.key);
+      const information = { ...warningData, ...driver };
+      const styles = { icono: WarningIcon + " alerta", texto: "warning" };
+      warningAlerts.push(information);
+      createCardWithDriverInformation(information, styles);
+    });
+
+    warningCollectionReference.on("child_removed", async function (snapshot) {
+      const warningData = { key: snapshot.key, ...snapshot.val() };
+      const driver = await getDriverInfoFromCollection(warningData.key);
+      warningAlerts = warningAlerts.filter(({ key }) => key === warningData.key);
+      if (warningAlerts.length > 0) {
+        const styles = { icono: WarningIcon + " alerta", texto: "warning" };
+        tableAlertasContext.clear().destroy();
+        warningAlerts.forEach((element) => {
+          createCardWithDriverInformation(element, styles);
+        });
+        generateDataTable();
+      }
     });
 
     function clearDataTable() {
       tableAlertasContext.clear().destroy();
     }
 
+    function clearDataTableLogs() {
+      tableAlertasLogsContext.clear().destroy();
+    }
+
+    const formAlertAttention = document.querySelector("#formulario-atencion");
+
+    formAlertAttention.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      console.log(globalSelectedUserAlert);
+      const formElements = Array.from(event.target.elements).slice(0, -2);
+      const formData = {};
+      formElements.forEach(function (element) {
+        const { type, name, value, id, checked } = element;
+        if (type === "checkbox") {
+          formData[name] = checked;
+        } else {
+          formData[name] = value;
+        }
+      });
+      formData["conductorUID"] = dialogAlert.getAttribute("data-key");
+      formData["conductorNombre"] = globalSelectedUserAlert.nombreCompleto;
+      formData["adminEmail"] = sessionStorage.getItem("email");
+      formData["adminUID"] = sessionStorage.getItem("user");
+      formData["timestamp"] = new Date().toISOString();
+      formData["tipo"] = dialogAlert.getAttribute("data-type");
+      const firestoreResponse = await firestore
+        .collection("LogsAlertas")
+        .add(formData)
+        .then(() => true)
+        .catch(() => false);
+      if (firestoreResponse) {
+        const collection = dialogAlert.getAttribute("data-type") === "panico" ? "panic_button" : "warning";
+        await realtime.child(`${collection}/${globalSelectedUserAlert.key}`).remove();
+      }
+    });
+
+    const getLogsFromFirestore = async () => {
+      if (tableAlertasLogsContext !== null) {
+        clearDataTableLogs();
+      }
+      const { docs } = await firestore.collection("LogsAlertas").get();
+      const documentsArray = [];
+      docs.forEach(function (document) {
+        documentsArray.push([
+          document.data().folio,
+          document.data().timestamp,
+          document.data().conductorNombre,
+          document.data().observaciones,
+          document.data().seguimiento,
+          document.data().fakeAlert,
+          document.data().finishedEvent,
+          document.data().adminEmail,
+          document.data().tipo,
+        ]);
+      });
+
+      const tableBody = document.querySelector("#table-alertas-logs tbody");
+      documentsArray.forEach((rowData) => {
+        const rowElement = document.createElement("tr");
+
+        rowData.forEach((cell) => {
+          const cellElement = document.createElement("td");
+          cellElement.innerHTML = cell;
+          rowElement.insertAdjacentElement("beforeend", cellElement);
+        });
+        tableBody.append(rowElement);
+      });
+
+      generateDataTableLogs();
+    };
+
     document.addEventListener("DOMContentLoaded", function (event) {
       generateDataTable();
+      getLogsFromFirestore();
       document.querySelectorAll("tr.odd").forEach(function (element) {
         element.remove();
       });

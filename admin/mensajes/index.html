@@ -43,6 +43,11 @@
         background-color: rgb(179, 179, 179);
         color: whitesmoke;
       }
+
+      .driverResultContainer label {
+        text-transform: uppercase;
+        margin-left: 4px;
+      }
     </style>
   </head>
 
@@ -386,6 +391,7 @@
   </script>
   <script async defer>
     const firestore = firebase.firestore();
+    let messageTableContext = null;
     let messageReceiverUser = null;
     let isThisMessageUnique = null;
 
@@ -446,11 +452,13 @@
 
     const generateTable = async () => {
       const information = await getDocumentsFromMessageCollection();
-      createRowToTable(information);
+      await createRowToTable(information);
+
       const exportOptions = {
         columns: [0, 1, 2, 3, 4, 5],
       };
-      new DataTable("#messages-list", {
+
+      messageTableContext = await new DataTable("#messages-list", {
         dom: "<'datatable-top'fB><'datatable-middle't><'datatable-bottom'lp>",
         buttons: [
           {
@@ -620,8 +628,9 @@
         timestamp: new Date().toISOString(),
         epoch: new Date().getTime(),
         type: isThisMessageUnique ? "singular" : "massive",
-        to: messageReceiverUser,
+        to: isThisMessageUnique ? messageReceiverUser : "all",
         from: sessionStorage.getItem("user"),
+        estatus: "open",
       };
 
       elements.map(function (element, index) {
@@ -629,21 +638,17 @@
         return;
       });
 
-      await sendMessage(formBodyObject);
+      await sendMessage(formBodyObject, isThisMessageUnique);
     });
 
-    async function sendMessage(data) {
-      const epoch = new Date().getTime();
-      const messageResponse = await firebase
-        .database()
-        .ref()
-        .child(`MensajesSLP`)
-        .child(String(epoch))
-        .set(data)
-        .catch(function (error) {
-          console.error(error);
-          return error;
-        });
+    async function sendMessage(data, unique) {
+      const reference = unique
+        ? firebase.database().ref().child(`MensajesSLP/Singular/${data.to}/${data.epoch}`)
+        : firebase.database().ref().child(`MensajesSLP/Massive/${data.epoch}`);
+      const messageResponse = await reference.set(data).catch(function (error) {
+        console.error(error);
+        return error;
+      });
     }
 
     /*
@@ -657,21 +662,60 @@
       const message =
         "Se le enviará al usuario un mensaje de reporte de objeto perdido en su unidad, ¿Deseas enviar el mensaje?";
       if (confirm(message)) {
-        setTimeout(() => {
-          window.alert("Mensaje de reporte por objeto perdido enviado correctamente.");
-        }, 500);
+        const epoch = new Date().getTime();
+        const realtimeResponse = firebase
+          .database()
+          .ref()
+          .child(`MensajesSLP/Reports/${messageReceiverUser}/${epoch}`)
+          .set({
+            body: "El cliente ha reportado un objeto perdido en su unidad.",
+            timestamp: new Date().toISOString(),
+            epoch,
+            uuid: messageReceiverUser,
+            type: "report",
+            title: "Reporte de objeto perdido.",
+            estatus: "open",
+          })
+          .then(() => true)
+          .catch(() => false);
+        if (realtimeResponse) {
+          setTimeout(() => {
+            window.alert("Mensaje de reporte por objeto perdido enviado correctamente.");
+          }, 500);
+        }
       }
     });
+
     complaintsButton.addEventListener("click", function (event) {
       const message = "Se le enviará al usuario un mensaje de quejas y sugerencias, ¿Deseas enviar el mensaje?";
       if (confirm(message)) {
         const queja = window.prompt("Introduzca queja y presione 'OK' para enviar el reporte al usuario.");
-        setTimeout(() => {
-          window.alert("Mensaje se ha enviado correctamente.");
-        }, 500);
+        const epoch = new Date().getTime();
+        const realtimeResponse = firebase
+          .database()
+          .ref()
+          .child(`MensajesSLP/Complaints/${messageReceiverUser}/${epoch}`)
+          .set({
+            body: queja,
+            timestamp: new Date().toISOString(),
+            epoch,
+            uuid: messageReceiverUser,
+            type: "queja",
+            title: "Reporte de queja y sugerencias",
+            estatus: "open",
+          })
+          .then(() => true)
+          .catch(() => false);
+        if (realtimeResponse) {
+          setTimeout(() => {
+            window.alert("Mensaje se ha enviado correctamente.");
+          }, 500);
+        }
       }
     });
 
-    generateTable();
+    document.addEventListener("DOMContentLoaded", async function (e) {
+      await generateTable();
+    });
   </script>
 </html>
