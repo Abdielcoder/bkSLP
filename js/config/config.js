@@ -415,7 +415,7 @@ const insertIntoRealTime = async (data) => {
     modelo: "N/A",
     noLicencia_chofer: "N/A",
     nombre_chofer: [nombre, apellidoPaterno, apellidoMaterno].join(" "),
-    numero_economico: numeroEconomico,
+    numero_economico: numeroEconomico || "",
     placa: "N/A",
     proceso: "NIGUNO",
     psw: "NINGUNO",
