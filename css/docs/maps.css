@@ -383,14 +383,14 @@ div.box-container {
   font-size: 13px;
 }
 
-.body-buttons button:first-child {
+.body-buttons button:last-child {
   background-color: #0d6efd;
   color: white;
   font-weight: bold;
   border: 1px solid #0000ff8a;
 }
 
-.body-buttons button:first-child:hover {
+.body-buttons button:last-child:hover {
   background-color: #0a63e6;
 }
 

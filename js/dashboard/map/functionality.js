@@ -4,28 +4,24 @@ const realtime = firebase.database().ref();
 const DRIVERS_REALTIME_REFERENCE = realtime.child("Users/Drivers");
 const DRIVERS_WORKING_REFERENCE = realtime.child("drivers_working");
 const DRIVERS_ACTIVE_REFERENCE = realtime.child("active_drivers");
+const CLIENTS_REFERENCE = realtime.child("Users/Clients");
 export const PANIC_ALERTS_REFERENCE = realtime.child("panic_button");
 export const WARNING_ALERTS_REFERENCE = realtime.child("warning");
-
+let MODAL_ALERTS_IS_OPENED = false;
 let GLOBAL_ALL_DRIVERS_ARRAY = [];
 let GLOBAL_WORKING_DRIVERS_ARRAY = [];
 let GLOBAL_ACTIVE_DRIVERS_ARRAY = [];
-let WARNING_NOTIFICATIONS_ARRAY = [];
-let PANIC_ALERTS_ARRAY = [];
 let WORKING_MAP_MARKERS_ARRAY = [];
 let ACTIVE_MAP_MARKERS_ARRAY = [];
 let INACTIVE_MAP_MARKERS_ARRAY = [];
-let WARNING_MAP_MARKERS_ARRAY = [];
-let WARNING_MAP_CIRCLE_MARKERS_ARRAY = [];
-let PANIC_MAP_MARKERS_ARRAY = [];
-let PANIC_CIRCLE_MAP_MARKERS_ARRAY = [];
-let SEARCH_INACTIVE_FILTER_ARRAY = [];
+// let SEARCH_INACTIVE_FILTER_ARRAY = [];
+let CLIENTS_INFO_ARRAY = [];
+let CLIENTS_PANICS_ARRAY = [];
+let CLIENTS_WARNINGS_ARRAY = [];
 let ALL_DRIVERS_COUNTER_INT = 0;
 let ACTIVE_COUNTER_INT = 0;
 let WORKING_COUNTER_INT = 0;
 let INACTIVE_COUNTER_INT = 0;
-let WARNING_COUNTER_INT = 0;
-let PANIC_COUNTER_INT = 0;
 
 const TAXI_TOTAL_POINTER = document.querySelector("span#total-data");
 // const LIBRE_TOTAL_POINTER = document.querySelector("span#libre-data");
@@ -37,6 +33,18 @@ const INACTIVE_TOTAL_POINTER = document.querySelector("span#inactive-data");
 /* Warning / Panic */
 let isIconWarningActive = false;
 let isIconPanicActive = false;
+
+async function getAllClients() {
+  const clientsSnapshot = await CLIENTS_REFERENCE.once("value").then((snapshot) => {
+    let allClientsFromSnapshot = [];
+    snapshot.forEach((document) => {
+      let object = document.val();
+      allClientsFromSnapshot.push({ ...object, uid: document?.key });
+    });
+    return allClientsFromSnapshot;
+  });
+  return clientsSnapshot;
+}
 
 async function getAllDrivers() {
   const driversSnapshot = await DRIVERS_REALTIME_REFERENCE.once("value")
@@ -94,9 +102,9 @@ async function getAllDrivers() {
 
 async function main() {
   const drivers = await getAllDrivers();
-  console.log({ MAIN: drivers });
+  const clients = await getAllClients();
   GLOBAL_ALL_DRIVERS_ARRAY = drivers.array;
-  console.log({ drivers });
+  CLIENTS_INFO_ARRAY = clients;
   // drivers?.array.forEach((item) => {
   //   addDriverMarkerOnMap(item, undefined, iconInactive, "inactive");
   //   addDataDriverToList(item, "inactive", dom_icons.blackcar);
@@ -110,7 +118,10 @@ async function main() {
   // SITIO_TOTAL_POINTER.textContent = drivers.taxiSitioCounter;
 }
 
+await main();
+
 const addDriverMarkerOnMap = async (data, currentDriver, iconColor, type) => {
+  console.log({ data, currentDriver, iconColor, type });
   try {
     const markerPopUpContainer = getPopUpCardFromMarker(data, currentDriver, type);
     const whichService = data.servicio || "indefinido";
@@ -333,23 +344,23 @@ const updateDriverMarkerOrientation = (uid, deg) => {
 };
 
 const addWarningInfoToModalTable = (item, pos, type, icon) => {
-  const modal = document.querySelector("div.modal-container-body table#alerts-list tbody");
   console.log({ item, pos, type, icon });
+  const modal = document.querySelector("div.modal-container-body table#alerts-list tbody");
   const items = [
     `<img class="${pos}_icon" src="${icon}"/>`,
-    item.nombreChofer,
-    item.telefono,
-    item.gafete,
-    item.correo,
-    item.numeroEconomico,
-    item.marca,
-    item.placa,
-    `${item.servicio.replace("automovil ", "")} - ${item.color}`,
-    `<button class="attention-button" data-type='${type}' data-id='${item.uid}'><img src='${dom_icons.edit}'/></button>`,
+    item.isDriver ? item?.nombreChofer : item.name,
+    item?.telefono || "",
+    item?.gafete || "",
+    item.isDriver ? item?.correo : item.email,
+    item?.numeroEconomico || "",
+    item?.marca || "",
+    item?.placa || "",
+    `${(item?.servicio && item?.servicio.replace("automovil ", "")) || ""} - ${(item?.color && item?.color) || ""}`,
+    `<button class="attention-button" data-type='${type}' data-id='${item?.uid}'><img src='${dom_icons?.edit}'/></button>`,
   ];
 
   const TR = document.createElement("TR");
-  TR.setAttribute("class", `${type}-list_${item.uid}`);
+  TR.setAttribute("class", `${type}-list_${item?.uid}`);
 
   items.forEach((i) => {
     const TD = document.createElement("TD");
@@ -376,14 +387,12 @@ const attendAlertFromListModal = (type, uid) => {
 
 const checkDriverMarkerOnMap = async (type, uuid, event) => {
   try {
-    console.log({ type, uuid, event });
     let whichTypeIs = "";
     const isWorking = GLOBAL_WORKING_DRIVERS_ARRAY.find(({ uid }) => uid === uuid);
     const isActive = GLOBAL_ACTIVE_DRIVERS_ARRAY.find(({ uid }) => uid === uuid);
     if (isWorking) whichTypeIs = "working";
     if (isActive) whichTypeIs = "active";
 
-    console.log({ whichTypeIs, isWorking, isActive });
     // if (!isWorking && !isActive) return;
 
     // const marker = document.querySelector(`img[alt='marker-${uuid}'][data-type='${whichTypeIs}']`);
@@ -415,13 +424,12 @@ const cleanAlertCountInContainerMap = (counter, type) => {
   if (counter === 0) {
     document.querySelector(`button.map-data.warpan.${type}`).style.display = "none";
   }
-  console.log({ WARNING_COUNTER_INT, PANIC_COUNTER_INT });
 
   if (WARNING_COUNTER_INT + PANIC_COUNTER_INT < 1) {
     document.querySelectorAll(".warpan").forEach((elem) => {
       elem.style.display = "none";
     });
-    GeographicZone.setView([32.4660333, -116.9167898], 11);
+    GeographicZone.setView([22.151456550718237, -100.97786442650008], 13);
     return;
   }
 };
@@ -452,6 +460,8 @@ const removeCircleMarkerFromMap = (uid, type) => {
       ? WARNING_MAP_CIRCLE_MARKERS_ARRAY.filter(({ options }) => options.className === `circle-${uid}`)
       : PANIC_CIRCLE_MAP_MARKERS_ARRAY.filter(({ options }) => options.className === `circle-${uid}`);
 
+  // console.log({ CIRCLE_MAP_MARKER, WARNING_MAP_CIRCLE_MARKERS_ARRAY, PANIC_CIRCLE_MAP_MARKERS_ARRAY, uid, type });
+
   CIRCLE_MAP_MARKER.forEach((item) => {
     item.removeFrom(GeographicZone);
   });
@@ -476,8 +486,6 @@ const removeCircleMarkerFromMap = (uid, type) => {
  * Drivers Working References (OnAdded, onChanged, onRemoved)
  **/
 
-main();
-
 DRIVERS_WORKING_REFERENCE.on("child_added", (snapshot) => {
   try {
     const workingDriverSnapshot = { uid: snapshot.key, ...snapshot.val() };
@@ -493,7 +501,7 @@ DRIVERS_WORKING_REFERENCE.on("child_added", (snapshot) => {
       }
     }
     const driverData = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === workingDriverSnapshot.uid);
-
+    console.log({ Working: driverData });
     if (driverData === null || driverData === undefined) return;
     GLOBAL_WORKING_DRIVERS_ARRAY.push({ ...driverData, ...workingDriverSnapshot });
     WORKING_COUNTER_INT = GLOBAL_WORKING_DRIVERS_ARRAY.length;
@@ -537,11 +545,7 @@ DRIVERS_WORKING_REFERENCE.on("child_removed", ({ key }) => {
   removeMarkerFromMap(marker);
   removeDataFromTable(key);
   WORKING_MAP_MARKERS_ARRAY = WORKING_MAP_MARKERS_ARRAY.filter(({ options }) => options.id !== key);
-  console.log({
-    active: ACTIVE_COUNTER_INT,
-    working: WORKING_COUNTER_INT,
-    total: GLOBAL_WORKING_DRIVERS_ARRAY.length,
-  });
+
   WORKING_TOTAL_POINTER.textContent = WORKING_COUNTER_INT;
   INACTIVE_TOTAL_POINTER.textContent = GLOBAL_ALL_DRIVERS_ARRAY.length - ACTIVE_COUNTER_INT - WORKING_COUNTER_INT;
 });
@@ -549,7 +553,7 @@ DRIVERS_WORKING_REFERENCE.on("child_removed", ({ key }) => {
 DRIVERS_ACTIVE_REFERENCE.on("child_added", (snapshot) => {
   try {
     const activeDriverSnapshot = { uid: snapshot.key, ...snapshot.val() };
-
+    console.log({ activeDriverSnapshot });
     const isAWorkingExist = GLOBAL_WORKING_DRIVERS_ARRAY.find(({ uid }) => uid === activeDriverSnapshot.uid);
     if (isAWorkingExist) {
       try {
@@ -560,15 +564,16 @@ DRIVERS_ACTIVE_REFERENCE.on("child_added", (snapshot) => {
         console.error(error);
       }
     }
-
+    console.log({ GLOBAL_ALL_DRIVERS_ARRAY });
     const driverData = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === activeDriverSnapshot.uid);
+    console.log({ Active: driverData });
     if (driverData === null || driverData === undefined) return;
 
     GLOBAL_ACTIVE_DRIVERS_ARRAY.push({ ...driverData, ...activeDriverSnapshot });
     ACTIVE_COUNTER_INT = GLOBAL_ACTIVE_DRIVERS_ARRAY.length;
 
     INACTIVE_COUNTER_INT = ALL_DRIVERS_COUNTER_INT - ACTIVE_COUNTER_INT - WORKING_COUNTER_INT;
-    const markerAdded = addDriverMarkerOnMap(driverData, activeDriverSnapshot, iconActive, "active");
+    addDriverMarkerOnMap(driverData, activeDriverSnapshot, iconActive, "active");
     addDataDriverToList(driverData, "active", dom_icons.greencar);
 
     ACTIVE_TOTAL_POINTER.textContent = ACTIVE_COUNTER_INT;
@@ -607,55 +612,58 @@ DRIVERS_ACTIVE_REFERENCE.on("child_removed", ({ key }) => {
   removeMarkerFromMap(marker);
   removeDataFromTable(key);
   ACTIVE_MAP_MARKERS_ARRAY = ACTIVE_MAP_MARKERS_ARRAY.filter(({ options }) => options.id !== key);
-  console.log({
-    active: ACTIVE_COUNTER_INT,
-    working: WORKING_COUNTER_INT,
-    total: GLOBAL_WORKING_DRIVERS_ARRAY.length,
-  });
+
   ACTIVE_TOTAL_POINTER.textContent = ACTIVE_COUNTER_INT;
   INACTIVE_TOTAL_POINTER.textContent = GLOBAL_ALL_DRIVERS_ARRAY.length - ACTIVE_COUNTER_INT - WORKING_COUNTER_INT;
 });
 
-/**
- * Warning References (OnAdded, onChanged, onRemoved)
- **/
+$(document).on("click", ".tab-button", function (event) {
+  const { currentTarget } = event;
+  // const modalTabButtons = document.querySelectorAll("button.tab-button");
+  const nameTab = currentTarget.getAttribute("data-tab");
+  const isSelected = currentTarget.getAttribute("aria-selected");
+
+  if (isSelected == "true") {
+    return false;
+  }
+
+  // modalTabButtons.forEach((element) => {
+  //   const isCurrentElement = element.getAttribute("data-tab") === nameTab;
+  //   if (element.getAttribute("aria-selected") == "true" || !isCurrentElement) {
+  //     element.setAttribute("aria-selected", "false");
+  //   } else {
+  //     element.setAttribute("aria-selected", "true");
+  //   }
+  // });
+
+  const tabContents = document.querySelectorAll("div.formContainer");
+  tabContents.forEach((element) => {
+    const isVisible = element.getAttribute("data-tabcontainer") === nameTab;
+    element.setAttribute("data-visibility", isVisible ? "true" : "false");
+  });
+});
+
+let WARNING_NOTIFICATIONS_ARRAY = [];
+let WARNING_MAP_MARKERS_ARRAY = [];
+let WARNING_MAP_CIRCLE_MARKERS_ARRAY = [];
+
+let PANIC_ALERTS_ARRAY = [];
+let PANIC_MAP_MARKERS_ARRAY = [];
+let PANIC_CIRCLE_MAP_MARKERS_ARRAY = [];
+
+let WARNING_COUNTER_INT = 0;
+let PANIC_COUNTER_INT = 0;
+
 WARNING_ALERTS_REFERENCE.on("child_added", (snapshot) => {
-  const driverData = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === snapshot.key);
-  WARNING_NOTIFICATIONS_ARRAY.push({ ...driverData, w: snapshot.val() });
-  checkDriverMarkerOnMap("warning", snapshot.key, "start");
+  WARNING_NOTIFICATIONS_ARRAY.push({ uid: snapshot.key, ...snapshot.val() });
+  WARNING_COUNTER_INT = WARNING_NOTIFICATIONS_ARRAY.length;
+  // checkDriverMarkerOnMap("warning", snapshot.key, "start");
   // addDriverMarkerOnMap(item, snap.val(), iconWarning, "warning");
   addCircleToMap({ uid: snapshot.key, node: snapshot.val() }, "goldenrod", "warning");
   // addDataDriverToList(item, "warning", dom_icons.yellowcar);
-  WARNING_COUNTER_INT = WARNING_NOTIFICATIONS_ARRAY.length;
-  addWarningInfoToModalTable(driverData, snapshot.val(), "warning", dom_icons.warning_icon);
+  // addWarningInfoToModalTable(driverData, snapshot.val(), "warning", dom_icons.warning_icon);
   showAlertCountersOnMapContainer("warning", WARNING_COUNTER_INT);
 });
-// // WARNING_ALERTS_REFERENCE.on("child_changed", (snap) => {
-// //   try {
-// //     const { key } = snap;
-// //     const driver = findDriverDataByUID(key, WARNING_NOTIFICATIONS);
-// //     const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
-// //     const latitude = snap.val().l[0];
-// //     const longitude = snap.val().l[1];
-
-// //     if (!driver) return;
-
-// //     const newDegree = getDegreesFromMarker(
-// //       { lat: marker._latlng.lat, lng: marker._latlng.lng },
-// //       { lat: latitude, lng: longitude }
-// //     );
-
-// //     marker.setLatLng([latitude, longitude]);
-// //     updateDriverMarkerOrientation(key, newDegree);
-
-// //     /* Update the Object from his Array*/
-// //     const new_item = updateNodePosition(driver, snap.val());
-// //     WARNING_NOTIFICATIONS = WARNING_NOTIFICATIONS.filter((item) => item.id !== snap.key);
-// //     WARNING_NOTIFICATIONS.push(new_item);
-// //   } catch (err) {
-// //     console.error(err);
-// //   }
-// // });
 
 WARNING_ALERTS_REFERENCE.on("child_removed", (snapshot) => {
   WARNING_NOTIFICATIONS_ARRAY = WARNING_NOTIFICATIONS_ARRAY.filter((item) => item.uid !== snapshot.key);
@@ -665,26 +673,20 @@ WARNING_ALERTS_REFERENCE.on("child_removed", (snapshot) => {
   // removeMarkerFromMap(marker);
   removeCircleMarkerFromMap(snapshot.key, "warning");
   WARNING_MAP_MARKERS_ARRAY = WARNING_MAP_MARKERS_ARRAY.filter((item) => item.options.id !== snapshot.key);
-  settingNewCarTypeInMap(snapshot.key, snapshot.val());
-  cleanAlertCountInContainerMap(WARNING_COUNTER_INT, "warning");
+  // settingNewCarTypeInMap(snapshot.key, snapshot.val());
+  cleanWarningAlertCounterInContainerMap(WARNING_COUNTER_INT);
 });
 
-/**
- * Panic References (OnAdded, onChanged, onRemoved)
- **/
 PANIC_ALERTS_REFERENCE.on("child_added", (snapshot) => {
-  const driverData = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === snapshot.key);
-  console.log({ driverData, PanicUid: snapshot.key });
-  PANIC_ALERTS_ARRAY.push({ ...driverData, p: snapshot.val() });
+  PANIC_ALERTS_ARRAY.push({ uid: snapshot.key, ...snapshot.val() });
   PANIC_COUNTER_INT = PANIC_ALERTS_ARRAY.length;
   // checkDriverMarkerOnMap("panic", snapshot.key, "start");
   // addDriverMarkerOnMap(driverData, snapshot.val(), iconPanic, "panic");
   addCircleToMap({ uid: snapshot.key, node: snapshot.val() }, "#ff0000", "panic");
   // addDataDriverToList(driverData, "panic", dom_icons.redcar);
-  addWarningInfoToModalTable(driverData, snapshot.val(), "panic", dom_icons.panic_icon);
+  // addWarningInfoToModalTable(driverData, snapshot.val(), "panic", dom_icons.panic_icon);
   showAlertCountersOnMapContainer("panic", PANIC_COUNTER_INT);
-  // executeWebService()
-  GeographicZone.setView([snapshot.val().l[0], snapshot.val().l[1]], 14);
+  // GeographicZone.setView([snapshot.val().l[0], snapshot.val().l[1]], 14);
 });
 
 PANIC_ALERTS_REFERENCE.on("child_removed", (snapshot) => {
@@ -695,75 +697,84 @@ PANIC_ALERTS_REFERENCE.on("child_removed", (snapshot) => {
   // removeMarkerFromMap(marker);
   removeCircleMarkerFromMap(snapshot.key, "panic");
   PANIC_MAP_MARKERS_ARRAY = PANIC_MAP_MARKERS_ARRAY.filter((item) => item.options.id !== snapshot.key);
-  settingNewCarTypeInMap(snapshot.key, snapshot.val());
-  cleanAlertCountInContainerMap(PANIC_COUNTER_INT, "panic");
+  // settingNewCarTypeInMap(snapshot.key, snapshot.val());
+  cleanPanicAlertCounterInContainerMap(PANIC_COUNTER_INT);
 });
-// PANIC_ALERTS_REFERENCE.on("child_changed", (snap) => {
-//   try {
-//     const { key } = snap;
-//     const driver = findDriverDataByUID(key, PANIC_ALERTS);
-//     const marker = findDriverMarkerByUID(key, PANIC_MAP_MARKERS);
-//     const latitude = snap.val().l[0];
-//     const longitude = snap.val().l[1];
 
-//     if (!driver) return;
+const panicCounterButton = document.querySelector("button#button-panic-counter");
+const warningCounterButton = document.querySelector("button#button-warning-counter");
+const alerts_modal = document.querySelector("div.modal.alerts-modal");
+panicCounterButton.addEventListener("click", function (event) {
+  const panicAlerts = getPanicAlerts();
+  panicAlerts.forEach(function (alert) {
+    addWarningInfoToModalTable(alert, alert, "panic", dom_icons.panic_icon);
+  });
+  alerts_modal.style.display = "block";
+  MODAL_ALERTS_IS_OPENED = true;
+});
 
-//     const newDegree = getDegreesFromMarker(
-//       { lat: marker._latlng.lat, lng: marker._latlng.lng },
-//       { lat: latitude, lng: longitude }
-//     );
+warningCounterButton.addEventListener("click", function (event) {
+  const warningAlerts = getWarningAlerts();
+  warningAlerts.forEach(function (alert) {
+    addWarningInfoToModalTable(alert, alert, "warning", dom_icons.warning_icon);
+  });
+  alerts_modal.style.display = "block";
+  MODAL_ALERTS_IS_OPENED = true;
+});
 
-//     marker.setLatLng([latitude, longitude]);
-//     updateDriverMarkerOrientation(key, newDegree);
-
-//     /* Update the Object from his Array*/
-//     const new_item = updateNodePosition(driver, snap.val());
-//     PANIC_ALERTS = PANIC_ALERTS.filter((item) => item.id !== snap.key);
-//     PANIC_ALERTS.push(new_item);
-//   } catch (err) {
-//     console.error(err);
-//   }
-// });
-
-// PANIC_ALERTS_REFERENCE.on("child_removed", (snap) => {
-//   try {
-//     const { key } = snap;
-//     PANIC_COUNTER--;
-//     PANIC_ALERTS = PANIC_ALERTS.filter((item) => item.id !== key);
-//     checkDriverMarkerOnMap("panic", key, "finished");
-//     const marker = findDriverMarkerByUID(key, PANIC_MAP_MARKERS);
-//     removeMarkerFromMap(marker);
-//     removeCircleMarkerFromMap(key, "panic");
-//     PANIC_MAP_MARKERS = PANIC_MAP_MARKERS.filter((item) => item.options.id !== key);
-//     settingNewCarTypeInMap(key, snap.val());
-//     cleanAlertCountInContainerMap(PANIC_COUNTER, "panic");
-//   } catch (err) {
-//     console.error(err);
-//   }
-// });
-
-$(document).on("click", ".tab-button", function (event) {
-  const { currentTarget } = event;
-  const modalTabButtons = document.querySelectorAll("button.tab-button");
-  const nameTab = currentTarget.getAttribute("data-tab");
-  const isSelected = currentTarget.getAttribute("aria-selected");
-
-  if (isSelected == "true") {
-    return false;
-  }
-
-  modalTabButtons.forEach((element) => {
-    const isCurrentElement = element.getAttribute("data-tab") === nameTab;
-    if (element.getAttribute("aria-selected") == "true" || !isCurrentElement) {
-      element.setAttribute("aria-selected", "false");
+function getPanicAlerts() {
+  let array = [];
+  PANIC_ALERTS_ARRAY.forEach(function (element) {
+    let elementFind = null;
+    elementFind = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === element.uid);
+    if (elementFind !== undefined) {
+      array.push({ ...elementFind, isDriver: true, isPanic: true });
     } else {
-      element.setAttribute("aria-selected", "true");
+      elementFind = CLIENTS_INFO_ARRAY.find(({ uid }) => uid === element.uid);
+      if (elementFind !== undefined) {
+        array.push({ ...elementFind, isDriver: false, isPanic: true });
+      }
     }
   });
+  return array;
+}
 
-  const tabContents = document.querySelectorAll("div.formContainer");
-  tabContents.forEach((element) => {
-    const isVisible = element.getAttribute("data-tabcontainer") === nameTab;
-    element.setAttribute("data-visibility", isVisible ? "true" : "false");
+function getWarningAlerts() {
+  let array = [];
+  WARNING_NOTIFICATIONS_ARRAY.forEach(function (element) {
+    let elementFind = null;
+    elementFind = GLOBAL_ALL_DRIVERS_ARRAY.find(({ uid }) => uid === element.uid);
+
+    if (elementFind !== undefined) {
+      array.push({ ...elementFind, isDriver: true, isPanic: false });
+    } else {
+      elementFind = CLIENTS_INFO_ARRAY.find(({ uid }) => uid === element.uid);
+      if (elementFind !== undefined) {
+        array.push({ ...elementFind, isDriver: false, isPanic: false });
+      }
+    }
   });
+  return array;
+}
+
+const cleanWarningAlertCounterInContainerMap = (counter) => {
+  document.querySelector("span#warning-data").textContent = counter;
+  if (counter === 0) {
+    document.querySelector(`button#button-warning-counter`).style.display = "none";
+  }
+};
+
+const cleanPanicAlertCounterInContainerMap = (counter) => {
+  document.querySelector("span#panic-data").textContent = counter;
+  if (counter === 0) {
+    document.querySelector(`button#button-panic-counter`).style.display = "none";
+  }
+};
+
+document.addEventListener("keyup", function (event) {
+  if (event.code === "Escape" && MODAL_ALERTS_IS_OPENED === true) {
+    alerts_modal.style.display = "none";
+    MODAL_ALERTS_IS_OPENED = false;
+    document.querySelector("table#alerts-list tbody").innerHTML = null;
+  }
 });

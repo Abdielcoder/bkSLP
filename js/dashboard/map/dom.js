@@ -48,10 +48,10 @@ const searchDataFromList = (val) => {
 
 map_container_buttons.forEach((item) => {
   item.addEventListener("click", (e) => {
-    if (item.classList.contains("warpan")) {
-      alerts_modal.style.display = "block";
-      return;
-    }
+    // if (item.classList.contains("warpan")) {
+    //   alerts_modal.style.display = "block";
+    //   return;
+    // }
 
     const self = e.currentTarget;
     const event = self.getAttribute("data-event");
@@ -327,13 +327,13 @@ alert_box_confirm.addEventListener("click", (e) => {
   const confirm_msg = "La alerta será atendida y registrada en un histórico en la base de datos. ¿Desea continuar?";
   if (confirm(confirm_msg)) {
     const id = alert_box.getAttribute("data-id");
-    const type = alert_box.getAttribute("data-type");
+    const type = alert_box.getAttribute("data-type"); 
     attendAlertFromListModal(type, id);
   }
   return;
 });
 
-const attendAlertFromListModal = (type, i) => {
+const attendAlertFromListModal = (type, uid) => { 
   const observation = document.querySelector("input.input-observations").value;
   const datetime = getFormatedTimeStamp();
   if (type === "warning") {
@@ -343,10 +343,10 @@ const attendAlertFromListModal = (type, i) => {
         user_uid: "test",
         timestamp: datetime.unformatted,
         observation: observation,
-        driver_uid: i,
+        driver_uid: uid,
       })
       .then((success) => {
-        const row = document.querySelector(`tr.${type}-list_${i}`);
+        const row = document.querySelector(`tr.${type}-list_${uid}`);
         if (row.parentElement.childElementCount === 1) {
           alerts_modal.style.display = "none";
         }
@@ -354,8 +354,8 @@ const attendAlertFromListModal = (type, i) => {
         row.remove();
       })
       .then((final) => {
-        WARNING_ALERTS_REFERENCE.child(i).remove();
-        const aside_row = document.querySelector(`tr.tr_${i}[data-type='${type}']`) || false;
+        WARNING_ALERTS_REFERENCE.child(uid).remove();
+        const aside_row = document.querySelector(`tr.tr_${uid}[data-type='${type}']`) || false;
         if (aside_row !== false) aside_row.remove();
         alert("Se ha atendido la alerta de manera correcta.");
       });
@@ -367,10 +367,10 @@ const attendAlertFromListModal = (type, i) => {
         user_uid: "test",
         timestamp: datetime.unformatted,
         observation: observation,
-        driver_uid: i,
+        driver_uid: uid,
       })
       .then((success) => {
-        const row = document.querySelector(`tr.${type}-list_${i}`);
+        const row = document.querySelector(`tr.${type}-list_${uid}`);
         if (row.parentElement.childElementCount === 1) {
           alerts_modal.style.display = "none";
         }
@@ -378,8 +378,8 @@ const attendAlertFromListModal = (type, i) => {
         row.remove();
       })
       .then((final) => {
-        PANIC_ALERTS_REFERENCE.child(i).remove();
-        const aside_row = document.querySelector(`tr.tr_${i}[data-type='${type}']`) || false;
+        PANIC_ALERTS_REFERENCE.child(uid).remove();
+        const aside_row = document.querySelector(`tr.tr_${uid}[data-type='${type}']`) || false;
         if (aside_row !== false) aside_row.remove();
         alert("Se ha atendido la alerta de manera correcta.");
       });
@@ -401,3 +401,4 @@ const getFormatedTimeStamp = () => {
     formated: YY + "_" + MM + "_" + DD + "_" + hour + "_" + mins + "_" + segs + "_" + mseg,
   };
 };
+
