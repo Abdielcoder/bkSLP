@@ -252,26 +252,26 @@ const removeMarkerFromMap = (item) => {
   document.querySelectorAll(element).forEach((event) => event.remove());
 };
 
-// const focusMarkerOnMap = async (uid, t) => {
-//   let driverMarkerItem = [];
+const focusMarkerOnMap = async (uid, t) => {
+  let driverMarkerItem = [];
 
-//   if (t !== "inactive") {
-//     if (t === "active") driverMarkerItem = ACTIVE_MAP_MARKERS.filter(({ options }) => options.id === uid);
-//     if (t === "working") driverMarkerItem = WORKING_MAP_MARKERS.filter(({ options }) => options.id === uid);
-//     if (t === "warning") driverMarkerItem = WARNING_MAP_MARKERS.filter(({ options }) => options.id === uid);
-//     if (t === "panic") driverMarkerItem = PANIC_MAP_MARKERS.filter(({ options }) => options.id === uid);
-//     driverMarkerItem[0].openPopup();
-//     const { lat, lng } = driverMarkerItem[0].getLatLng();
-//     GeographicZone.setView([lat, lng], 12);
-//     return;
-//   }
+  if (t !== "inactive") {
+    if (t === "active") driverMarkerItem = ACTIVE_MAP_MARKERS_ARRAY.filter(({ options }) => options.id === uid);
+    if (t === "working") driverMarkerItem = WORKING_MAP_MARKERS_ARRAY.filter(({ options }) => options.id === uid);
+    if (t === "warning") driverMarkerItem = WARNING_MAP_MARKERS_ARRAY.filter(({ options }) => options.id === uid);
+    if (t === "panic") driverMarkerItem = PANIC_MAP_MARKERS_ARRAY.filter(({ options }) => options.id === uid);
+    driverMarkerItem[0].openPopup();
+    const { lat, lng } = driverMarkerItem[0].getLatLng();
+    GeographicZone.setView([lat, lng], 12);
+    return;
+  }
 
-//   updateSearchInactiveFilter(i);
-//   const marker = findDriverMarkerByUID(i, INACTIVE_MAP_MARKERS);
-//   marker.openPopup();
-//   const { latitude, longitude } = marker.getLatLng();
-//   GeographicZone.setView([latitude, longitude], 12);
-// };
+  updateSearchInactiveFilter(i);
+  const marker = findDriverMarkerByUID(i, INACTIVE_MAP_MARKERS_ARRAY);
+  marker.openPopup();
+  const { latitude, longitude } = marker.getLatLng();
+  GeographicZone.setView([latitude, longitude], 12);
+};
 
 // const updateSearchInactiveFilter = (i) => {
 //   SEARCH_INACTIVE_FILTER.forEach((item) => {
