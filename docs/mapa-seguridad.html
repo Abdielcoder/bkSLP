@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tu Taxi | Mapa</title>
+    <link rel="icon" href="../assets/icons/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
+    <link rel="stylesheet" href="../css/docs/maps.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <style>
+      div.dialog[role="dialog"] {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 2080;
+        border: 1px solid #000000d9;
+      }
+
+      div.dialog[role="dialog"] div.dialog-container {
+        width: 480px;
+        height: auto;
+        position: absolute;
+        left: 1rem;
+        border: 1px solid #000000d9;
+        bottom: 1rem;
+      }
+
+      .dialog-container .container-header {
+        background-color: white;
+        padding: 1rem;
+
+        & > h2 {
+          font-size: 2.5rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-weight: lighter;
+        }
+      }
+
+      .dialog-container .container-body {
+        background-color: white;
+        padding: 1rem;
+        width: 100%;
+      }
+
+      #alert-icon {
+        align-items: center;
+        text-transform: uppercase;
+        display: flex;
+        column-gap: 0.25rem;
+      }
+
+      #formulario-atencion {
+        & > label {
+          display: block;
+          margin-bottom: 0.5rem;
+          width: 100%;
+        }
+
+        & > label input[type="text"] {
+          display: block;
+          margin-top: 4px;
+          padding: 8px 12px;
+          border: 1px solid rgba(128, 128, 128, 0.5);
+          border-radius: 3px;
+          width: inherit;
+        }
+        & > label select {
+          display: block;
+          margin-top: 4px;
+          padding: 8px 12px;
+          border: 1px solid rgba(128, 128, 128, 0.5);
+          border-radius: 3px;
+          width: inherit;
+        }
+        & > div.form-buttons {
+          display: flex;
+          column-gap: 1rem;
+          padding: 1rem 0 0 0;
+          & > button[type="submit"] {
+            background-color: green;
+            color: white;
+            transition: all 150ms linear;
+          }
+          & > button[type="submit"]:hover {
+            background-color: rgb(13, 112, 13);
+            color: white;
+            transition: all 150ms linear;
+          }
+          & > button[type="button"] {
+            background-color: white;
+            color: black;
+            transition: all 150ms linear;
+          }
+          & > button[type="button"]:hover {
+            background-color: rgb(246, 246, 246);
+            color: black;
+            transition: all 150ms linear;
+          }
+          & > button {
+            min-height: 40px;
+            width: 100%;
+            outline: none;
+            border-radius: 3px;
+            border: 1px solid rgba(128, 128, 128, 0.5);
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .checkbox-label {
+        padding: 0.5rem 0;
+      }
+
+      button.vigilate-button {
+        padding: 0.5rem 0.75rem;
+        margin-top: 8px;
+        width: 50%;
+        display: block;
+        margin-inline: auto;
+        color: white;
+        border: none;
+        background-color: green;
+        border-radius: 2px;
+        transition: all 150ms linear;
+        &:hover {
+          cursor: pointer;
+          background-color: rgb(2, 109, 2);
+          transition: all 150ms linear;
+        }
+      }
+
+      div#vigilancia-dialog {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        width: 480px;
+        left: unset;
+        background-color: white;
+        padding: 1rem;
+      }
+
+      div#vigilancia-dialog .dialog-header {
+        padding: 4px;
+        background-color: #e9e9e9;
+        border-radius: 2px;
+        margin-bottom: 1rem;
+      }
+
+      .dialog-header .dialog-header__alert-info {
+        padding: 2px 0;
+        display: flex;
+        flex-direction: row;
+        column-gap: 0.5rem;
+      }
+
+      .dialog-body__tools {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        column-gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .dialog-body__map {
+        border: 1px solid black;
+        width: 100%;
+        height: 400px;
+        background-color: antiquewhite;
+      }
+
+      .dialog-body__tools button {
+        background-color: #7cb81e;
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+        transition: all 150ms linear;
+        &:hover {
+          background-color: #6da316;
+          cursor: pointer;
+          transition: all 150ms linear;
+        }
+      }
+
+      button.button-toggle-alert {
+        border: none;
+        cursor: pointer;
+        background: transparent;
+        transition: all 150ms linear;
+        animation: bouncer 250ms both reverse linear infinite;
+      }
+
+      .alert-toggle {
+        display: block;
+        position: absolute;
+        right: 2rem;
+        bottom: 2rem;
+        z-index: 3080;
+      }
+
+      @keyframes bouncer {
+        from {
+          scale: 1;
+        }
+        to {
+          scale: 1.25;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root">
+      <!-- Aside -->
+      <aside>
+        <div id="aside-container">
+          <div class="logo">
+            <a class="home-link" href="./main.html">Tu Taxi | Backoffice</a>
+          </div>
+          <hr />
+        </div>
+        <div class="search-bar">
+          <input type="text" name="" id="searching-bar" placeholder="Placas ó No. económico" />
+          <i class="search-icon"></i>
+        </div>
+        <div class="data-list">
+          <table id="data-list">
+            <tbody></tbody>
+          </table>
+        </div>
+      </aside>
+
+      <!-- Header -->
+      <header>
+        <nav>
+          <h1 class="app-title">Tu taxi - Portal Administrativo</h1>
+          <button type="button" class="close-app" id="signout-button">
+            <span class="material-icons-sharp">logout</span>
+            Cerrar Sesión
+          </button>
+        </nav>
+        <div class="header-bg-image"></div>
+      </header>
+
+      <!-- Main content -->
+      <main>
+        <!-- Map -->
+        <div id="mapid"></div>
+        <script type="text/javaScript" src="../js/dashboard/map-security/maps.js"></script>
+
+        <!-- Alert icon: Appears only when an Alert is active -->
+        <div class="alert-toggle">
+          <button type="button" class="button-toggle-alert" id="button-toggle-alert">
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="64px"
+              height="64px"
+              viewBox="0 0 32 32"
+              xml:space="preserve"
+              fill="#000000"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <style type="text/css">
+                  .avocado_een {
+                    fill: #231f20;
+                  }
+                  .avocado_zeven {
+                    fill: #788287;
+                  }
+                  .avocado_zeventien {
+                    fill: #cc4121;
+                  }
+                  .avocado_achttien {
+                    fill: #d1712a;
+                  }
+                  .st0 {
+                    fill: #231f20;
+                  }
+                  .st1 {
+                    fill: #0b1719;
+                  }
+                  .st2 {
+                    fill: #ead13f;
+                  }
+                  .st3 {
+                    fill: #e0a838;
+                  }
+                  .st4 {
+                    fill: #716558;
+                  }
+                  .st5 {
+                    fill: #fffaee;
+                  }
+                  .st6 {
+                    fill: #3d3935;
+                  }
+                  .st7 {
+                    fill: #dbd2c1;
+                  }
+                  .st8 {
+                    fill: #a3aeb5;
+                  }
+                  .st9 {
+                    fill: #8d3e93;
+                  }
+                  .st10 {
+                    fill: #248ebc;
+                  }
+                  .st11 {
+                    fill: #6f9b45;
+                  }
+                  .st12 {
+                    fill: #af9480;
+                  }
+                  .st13 {
+                    fill: #c3cc6a;
+                  }
+                </style>
+                <g id="LABELS"></g>
+                <g id="Uploaded to svgrepo.com">
+                  <g>
+                    <polygon class="avocado_zeven" points="2.93,29.5 3.729,25.5 28.59,25.5 29.39,29.5 "></polygon>
+                    <path
+                      class="avocado_zeventien"
+                      d="M4.862,25.5L6.206,9.377C6.527,5.521,9.811,2.5,13.681,2.5h4.958 c3.87,0,7.153,3.021,7.475,6.877L27.457,25.5H4.862z"
+                    ></path>
+                    <g>
+                      <path
+                        class="avocado_achttien"
+                        d="M12.452,25.5l0.885-9.727c0.118-1.296,1.188-2.273,2.489-2.273h0.348 c1.301,0,2.371,0.978,2.489,2.273l0.885,9.727H12.452z"
+                      ></path>
+                    </g>
+                    <path
+                      class="avocado_een"
+                      d="M29,25h-1.083L26.611,9.336C26.266,5.189,22.8,2,18.639,2h-4.958C9.52,2,6.054,5.189,5.708,9.336 L4.403,25H3.319l-1,5H30L29,25z M6.705,9.419C7.005,5.819,10.069,3,13.681,3h4.958c3.612,0,6.676,2.819,6.976,6.419L26.913,25 h-6.909l-0.008-0.091l-0.835-9.181C19.02,14.173,17.735,13,16.174,13h-0.347c-1.562,0-2.846,1.173-2.988,2.728l-0.835,9.181 L11.996,25h-6.59L6.705,9.419z M19,25h-6l0.835-9.181C13.928,14.789,14.792,14,15.826,14h0.347c1.034,0,1.898,0.789,1.992,1.819 L19,25z M3.539,29l0.6-3H28.18l0.6,3H3.539z"
+                    ></path>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Alert Dialog -->
+        <div
+          class="dialog"
+          role="dialog"
+          data-visibility="hidden"
+          data-reference=""
+          id="dialog-alert-attention"
+          style="display: none"
+        >
+          <div class="dialog-container">
+            <div class="container-header">
+              <h2>
+                Atención de alerta <span id="alert-icon" style="align-items: center; text-transform: uppercase"></span>
+              </h2>
+            </div>
+            <div class="container-body">
+              <div class="form-container">
+                <form action="" id="formulario-atencion">
+                  <label for="folio">
+                    Folio:
+                    <input type="text" name="folio" id="folio" placeholder="Número de Folio" />
+                  </label>
+                  <label for="descripcion">
+                    Descripción:
+                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" />
+                  </label>
+                  <label for="fakeAlert" class="checkbox-label">
+                    <input type="checkbox" name="fakeAlert" id="fakeAlert" />
+                    ¿Falsa alarma?
+                  </label>
+                  <label for="seguimiento">
+                    Seguimiento:
+                    <input type="text" name="seguimiento" id="seguimiento" placeholder="Comentario de seguimiento" />
+                  </label>
+                  <label for="finishedEvent" class="checkbox-label">
+                    <input type="checkbox" name="finishedEvent" id="finishedEvent" />
+                    ¿Evento finalizado?
+                  </label>
+                  <label for="tipoAlerta" class="checkbox-label">
+                    Tipo de Alerta:
+                    <select name="tipoAlerta" id="tipoAlerta" value="panic" style="width: 100%">
+                      <option value="panic" selected>Panico</option>
+                      <option value="warning">Warning</option>
+                    </select>
+                  </label>
+                  <label for="observaciones">
+                    Observaciones
+                    <input type="text" name="observaciones" id="observaciones" placeholder="Observaciones" />
+                  </label>
+                  <div class="form-buttons">
+                    <button type="button" id="dialog-cancel-button">Cancelar</button>
+                    <button type="submit">Continuar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alert Dialog -->
+        <div class="dialog" role="dialog" id="vigilancia-dialog" style="display: none">
+          <div class="dialog-header">
+            <div id="dialog-header__conductor" class="dialog-header__alert-info">
+              <h5>Conductor:</h5>
+              <span></span>
+            </div>
+            <div id="dialog-header__usuario" class="dialog-header__alert-info">
+              <h5>Usuario:</h5>
+              <span></span>
+            </div>
+            <div id="dialog-header__numEconomico" class="dialog-header__alert-info">
+              <h5>Num. Economico:</h5>
+              <span></span>
+            </div>
+          </div>
+          <div class="dialog-body">
+            <div class="dialog-body__tools">
+              <button
+                type="button"
+                id="button-close"
+                style="background-color: white; border: 1px solid #00000040; margin-right: auto"
+              >
+                Cerrar
+              </button>
+              <button type="button" id="button-video">Video</button>
+              <button type="button" id="button-audio">Audio</button>
+              <button type="button" id="button-attention">Atención</button>
+            </div>
+            <div class="dialog-body__map"></div>
+          </div>
+        </div>
+
+        <!-- Alerts Counter Display -->
+        <div class="map-data-container">
+          <button
+            type="button"
+            class="map-data warpan warning"
+            id="button-warning-counter"
+            data-event="warning"
+            style="display: none"
+          >
+            <span>
+              <img src="../assets/svg/warning.svg" />
+              Warning
+            </span>
+            <span id="warning-data">0</span>
+          </button>
+          <button
+            type="button"
+            class="map-data warpan panic"
+            id="button-panic-counter"
+            data-event="panic"
+            style="display: none"
+          >
+            <span>
+              <img src="../assets/svg/panic.svg" />
+              Panico
+            </span>
+            <span id="panic-data">0</span>
+          </button>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer>
+        <p id="copyrightFooter"></p>
+      </footer>
+    </div>
+
+    <div class="modal alerts-modal" style="display: none">
+      <div class="modal-container">
+        <a href="#" class="close" data-ref="alerts-modal"></a>
+        <div class="modal-container-header"></div>
+        <div class="modal-container-body">
+          <table id="alerts-list" style="text-transform: uppercase">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Placas</th>
+                <th>Num Eco</th>
+                <th>Conductor</th>
+                <th>Usuario</th>
+                <th>Tipo de Viaje</th>
+                <th>Tipo de Alarma</th>
+                <th>¿Quien Activó?</th>
+                <th>Teléfono</th>
+                <th>Formato</th>
+                <th>Mapa</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <audio hidden id="panic-audio">
+      <source src="../assets/audio/panic.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio hidden id="warning-audio">
+      <source src="../assets/audio/warning.mp3" type="audio/mpeg" />
+    </audio>
+  </body>
+</html>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+<script type="text/javascript" src="../js/config/auth-config.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+<!-- <script src="../js/global-context.js"></script> -->
+
+<script type="text/javascript" defer async>
+  const icons = {
+    phone: "<img class='card_icon' src='../assets/svg/phone.svg' />",
+    male: "<img class='card_icon' src='../assets/svg/male.svg' />",
+    female: "<img class='card_icon' src='../assets/svg/female.svg' />",
+    number: "<img class='card_icon' src='../assets/svg/number.svg' />",
+    colors: "<img class='card_icon' src='../assets/svg/palette_color.svg' />",
+    card: "<img class='card_icon' src='../assets/svg/card.svg' />",
+    badge: "<img class='card_icon' src='../assets/svg/badge.svg' />",
+    mail: "<img class='card_icon' src='../assets/svg/email.svg' />",
+    car: "<img class='card_icon' src='../assets/svg/cartype.svg' />",
+    greencar: "<img class='car_icon' src='../assets/img/green.png' />",
+    blackcar: "<img class='car_icon' src='../assets/img/black.png' />",
+    bluecar: "<img class='car_icon' src='../assets/img/blue.png' />",
+    redcar: "<img class='car_icon' src='../assets/img/red.png' />",
+    purplecar: "<img class='car_icon' src='../assets/img/purple.png' />",
+    panic_alert: "<img class='car_icon' src='../assets/svg/panic_alert.svg' />",
+    warning_alert: "<img class='car_icon' src='../assets/svg/warning_alert.svg' />",
+    add: "<img class='crud-icon' src='../assets/img/add_b.svg' />",
+    edit: "<img class='crud-icon' src='../assets/img/edit_blue.svg' />",
+    del: "<img class='crud-icon' src='../assets/img/delete_red.svg' />",
+    check: "<img class='crud-icon' src='../assets/svg/check.svg'",
+  };
+
+  const dom_icons = {
+    phone: "../assets/svg/phone.svg",
+    male: "../assets/svg/male.svg",
+    female: "../assets/svg/female.svg",
+    number: "../assets/svg/number.svg",
+    colors: "../assets/svg/palette_color.svg",
+    card: "../assets/svg/card.svg",
+    badge: "../assets/svg/badge.svg",
+    mail: "../assets/svg/email.svg",
+    car: "../assets/svg/cartype.svg",
+    greencar: "../assets/img/green.png",
+    blackcar: "../assets/img/black.png",
+    yellowcar: "../assets/img/yellow.png",
+    bluecar: "../assets/img/blue.png",
+    warning_icon: "../assets/svg/warning.svg",
+    panic_icon: "../assets/svg/panic.svg",
+    purplecar: "../assets/img/purple.png",
+    redcar: "../assets/img/red.png",
+    panic_alert: "../assets/svg/panic_alert.svg",
+    warning_alert: "../assets/svg/warning_alert.svg",
+    add: "../assets/img/add_b.svg",
+    edit: "../assets/svg/edit.svg",
+    del: "../assets/img/delete_red.svg",
+    check: "../assets/svg/check.svg",
+  };
+
+  const realtime = firebase.database().ref();
+  const dialogAlert = document.querySelector("div[role='dialog']");
+  let globalSelectedUserAlert = {};
+  const DRIVERS_REALTIME_REFERENCE = realtime.child("Users/Drivers");
+  const CLIENTS_REFERENCE = realtime.child("Users/Clients");
+  const PANIC_ALERTS_REFERENCE = realtime.child("panic_button");
+  const WARNING_ALERTS_REFERENCE = realtime.child("warning");
+  let MODAL_ALERTS_IS_OPENED = false;
+  let GLOBAL_ALL_DRIVERS_ARRAY = [];
+  let CLIENTS_INFO_ARRAY = [];
+  let CLIENTS_PANICS_ARRAY = [];
+  let CLIENTS_WARNINGS_ARRAY = [];
+
+  /* Warning / Panic */
+  let isIconWarningActive = false;
+  let isIconPanicActive = false;
+
+  async function getAllClients() {
+    const clientsSnapshot = await CLIENTS_REFERENCE.once("value").then((snapshot) => {
+      let allClientsFromSnapshot = [];
+      snapshot.forEach((document) => {
+        let object = document.val();
+        allClientsFromSnapshot.push({ ...object, uid: document?.key });
+      });
+      return allClientsFromSnapshot;
+    });
+    return clientsSnapshot;
+  }
+
+  async function getAllDrivers() {
+    const driversSnapshot = await DRIVERS_REALTIME_REFERENCE.once("value")
+      .then((snapshot) => {
+        let allDriversFromSnapshot = [];
+        let taxiLibreCounter = 0;
+        let taxiSitioCounter = 0;
+        snapshot.forEach((document) => {
+          let object = document.val();
+          let documentData = {
+            uid: object.id,
+            nombreChofer: object.nombre_chofer,
+            correo: object.correo,
+            telefono: object.telefono,
+            genero: object.genero,
+            gafete: object.gafete,
+            licenciaChofer: object.noLicencia_chofer,
+            tarjetonCiudad: object.tarjeton_ciudad,
+            numeroEconomico: object.numero_economico,
+            servicio: object.tipo || "",
+            marca: object.marca,
+            modelo: object.modelo,
+            color: object.color,
+            placa: object.placa,
+            tipoVehiculo: object.tipo_vehiculo,
+            lastGps: (() => {
+              if (object.last_gps_location === undefined) {
+                return [32.53169856666667, -116.95251346666667];
+              }
+              const gps = object.last_gps_location.split(", ");
+              return { lat: gps[0], lng: gps[1] };
+            })(),
+            idDelegacion: object.delegacionID,
+            municipio: object.MUNICIPIO,
+            messageFlag: object.banderaMensajeI || "N/A",
+            estatus: object.estatus || "N/A",
+            proceso: object.proceso || "N/A",
+          };
+          String(documentData.service).toUpperCase() == "SITIO" ? taxiSitioCounter++ : taxiSitioCounter;
+          String(documentData.service).toUpperCase() == "LIBRE" ? taxiLibreCounter++ : taxiLibreCounter;
+          allDriversFromSnapshot.push(documentData);
+        });
+        return {
+          array: allDriversFromSnapshot,
+          taxiSitioCounter,
+          taxiLibreCounter,
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+        return [];
+      });
+    return driversSnapshot;
+  }
+
+  async function main() {
+    const drivers = await getAllDrivers();
+    const clients = await getAllClients();
+    GLOBAL_ALL_DRIVERS_ARRAY = drivers.array;
+    CLIENTS_INFO_ARRAY = clients;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const year = new Date().getFullYear();
+    document.querySelector("#copyrightFooter").textContent = "\u00A9 " + year + " Copyright, Tu Taxi.";
+    main();
+  });
+
+  document.querySelector("button#signout-button").addEventListener("click", function () {
+    firebase.auth().signOut();
+    sessionStorage.clear();
+    window.location.replace("https://tutaxislp.com.mx");
+  });
+
+  const addDriverMarkerOnMap = async (data, iconColor, type) => {
+    try {
+      const popup = getPopUpCardFromMarker(data, type);
+
+      const latitude = data.l[0];
+      const longitude = data.l[1];
+
+      const markerOptions = {
+        id: data.id,
+        title: data.placa,
+        icon: iconColor,
+        alt: `marker-${data.id}`,
+        pos: `icon-${data.id}`,
+      };
+
+      let marker = L.marker([latitude, longitude], markerOptions);
+
+      if (popup) {
+        marker.bindPopup(popup, { maxWidth: 500 }).on("click", (event) => {
+          globalSelectedUserAlert = data;
+          event.target.openPopup();
+        });
+        const button = popup.querySelector(".vigilate-button");
+        button.addEventListener("click", () => {
+          document.querySelector("#vigilancia-dialog").style.display = "block";
+          globalSelectedUserAlert = data;
+          document.querySelector("#dialog-header__conductor>span").innerHTML = data?.nombre_chofer;
+          document.querySelector("#dialog-header__usuario>span").innerHTML = data?.name;
+          document.querySelector("#dialog-header__numEconomico>span").innerHTML = data?.numero_economico;
+        });
+      }
+      await marker.addTo(GeographicZone);
+
+      const markerIcon = marker._icon;
+      markerIcon.classList.add("eye-filter");
+      markerIcon.setAttribute("data-type", type);
+      markerIcon.setAttribute("data-vision", "visible");
+
+      setMarkerToArray(marker, type);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  document.querySelector("button#button-close").addEventListener("click", function () {
+    document.querySelector("#vigilancia-dialog").style.display = "none";
+  });
+  document.querySelector("button#button-attention").addEventListener("click", function () {
+    document.querySelector("#dialog-alert-attention").style.display = "block";
+  });
+
+  document.querySelector("#dialog-cancel-button").addEventListener("click", function () {
+    document.querySelector("#dialog-alert-attention").style.display = "none";
+  });
+  const formAlertAttention = document.querySelector("#formulario-atencion");
+
+  formAlertAttention.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const formElements = Array.from(event.target.elements).slice(0, -2);
+    const formData = {};
+    formElements.forEach(function (element) {
+      const { type, name, value, id, checked } = element;
+      if (type === "checkbox") {
+        formData[name] = checked;
+      } else {
+        formData[name] = value;
+      }
+    });
+ 
+    formData["conductorUID"] = globalSelectedUserAlert.id;
+    formData["conductorNombre"] = globalSelectedUserAlert.nombre_chofer;
+    formData["adminEmail"] = sessionStorage.getItem("email");
+    formData["adminUID"] = sessionStorage.getItem("user");
+    formData["timestamp"] = new Date().toISOString();
+    formData["tipo"] = document.querySelector("select#tipoAlerta").value; 
+    console.log({formData})
+    console.log({globalSelectedUserAlert})
+    const firestoreResponse = await firestore
+      .collection("LogsAlertas")
+      .add(formData)
+      .then(() => true)
+      .catch(() => false);
+    if (firestoreResponse) {
+      const collection = formData["tipo"] === "panic" ? "panic_button" : "warning";
+      const logResponse = await realtime
+        .child(`${collection}/${formData.conductorUID}`)
+        .remove()
+        .then(() => true)
+        .catch(() => false);
+      if (logResponse) {
+        window.alert("Se ha atendido la alerta.");
+        dialogAlert.style.display = "none";
+        dialogAlert.setAttribute("data-visibility", "hidden");
+        dialogAlert.setAttribute("data-reference", null);
+        dialogAlert.removeAttribute("data-type");
+      } else {
+        window.alert("Se presentó un error al atender alerta");
+      }
+    }
+  });
+
+  const settingNewCarTypeInMap = (uid, snapshot) => {
+    let workingDriver = findDriverMarkerByUID(uid, WORKING_MAP_MARKERS_ARRAY);
+    if (workingDriver) {
+      const item = findDriverDataByUID(uid, GLOBAL_ALL_DRIVERS_ARRAY);
+      addDriverMarkerOnMap(item, snapshot, iconWorking, dom_icons.bluecar);
+      return;
+    }
+
+    let activeDriver = findDriverMarkerByUID(uid, ACTIVE_MAP_MARKERS_ARRAY);
+    if (activeDriver) {
+      const item = findDriverDataByUID(uid, GLOBAL_ALL_DRIVERS_ARRAY);
+      addDriverMarkerOnMap(item, snapshot, iconActive, dom_icons.greencar);
+    }
+  };
+
+  const findDriverMarkerByUID = (uid, marker) => marker.find(({ options }) => options.id === uid);
+
+  const findDriverDataByUID = (uid, array) => array.find(({ id }) => id === uid);
+
+  const removeDataFromTable = (uid) => {
+    const elementString = "tr.tr_" + uid;
+    document.querySelectorAll(elementString).forEach((element) => {
+      element.remove();
+    });
+  };
+
+  const showAlertCountersOnMapContainer = (e, count) => {
+    const button = document.querySelector(`button[data-event='${e}'`);
+
+    if (WARNING_COUNTER_INT >= 1) {
+      isIconWarningActive = true;
+      button.style.display = "flex";
+    }
+    if (PANIC_COUNTER_INT >= 1) {
+      isIconPanicActive = true;
+
+      button.style.display = "flex";
+    }
+    document.querySelector(`span#${e}-data`).textContent = count;
+  };
+
+  const updateNodePosition = (array, node) => {
+    return {
+      ...array,
+      w: node,
+    };
+  };
+
+  const addDataDriverToList = async (driver, event, icon) => {
+    if (driver === undefined) return;
+
+    const tableBody = document.querySelector("table#data-list tbody");
+    const trElement = document.createElement("tr");
+    const tdElement = document.createElement("td");
+    const spanElement = document.createElement("span");
+    const imageElement = document.createElement("img");
+    trElement.classList.add(`tr_${driver.id}`);
+    tdElement.classList.add("cell-list");
+    trElement.setAttribute("data-type", event);
+    tdElement.setAttribute("data-num", driver.numeroEconomico);
+    tdElement.setAttribute("data-phone", driver.telefono);
+    tdElement.setAttribute("data-licence", driver.licenciaChofer);
+    tdElement.style.textTransform = "uppercase";
+
+    spanElement.textContent = driver.placa;
+
+    imageElement.src = icon;
+    imageElement.classList.add("car_icon");
+
+    tdElement.append(spanElement, imageElement);
+    trElement.append(tdElement);
+
+    trElement.addEventListener("click", (event) => {
+      const { currentTarget } = event;
+      const type = currentTarget.getAttribute("data-type");
+      focusMarkerOnMap(driver.id, type);
+    });
+
+    tableBody.insertAdjacentElement("beforeend", trElement);
+  };
+
+  const removeMarkerFromMap = (item) => {
+    if (item === undefined) return;
+    const { options } = item;
+    const element = `img[alt='${options.alt}']`;
+    item.removeFrom(GeographicZone);
+    document.querySelectorAll(element).forEach((event) => event.remove());
+  };
+
+  const focusMarkerOnMap = async (uid, t) => {
+    let driverMarkerItem = [];
+
+    if (t === "warning") driverMarkerItem = WARNING_MAP_MARKERS_ARRAY.filter(({ options }) => options.id === uid);
+    if (t === "panic") driverMarkerItem = PANIC_MAP_MARKERS_ARRAY.filter(({ options }) => options.id === uid);
+    driverMarkerItem[0].openPopup();
+    const { lat, lng } = driverMarkerItem[0].getLatLng();
+    GeographicZone.setView([lat, lng], 12);
+  };
+
+  const getPopUpCardFromMarker = (driver) => {
+    if (driver !== undefined) {
+      const container = document.createElement("div");
+      container.className = "driver-popup";
+      container.setAttribute("data-reference", driver.uid);
+
+      const formContainer = document.createElement("div");
+      formContainer.className = "formContainer";
+      formContainer.setAttribute("data-tabcontainer", "conductor");
+      formContainer.setAttribute("data-visibility", "true");
+      container.appendChild(formContainer);
+
+      const popupHeader = document.createElement("div");
+      popupHeader.className = "popup-header";
+      formContainer.appendChild(popupHeader);
+
+      const headerTitle = document.createElement("h2");
+      headerTitle.style.marginBottom = "0.5rem";
+      headerTitle.textContent = "Datos generales del conductor";
+      popupHeader.appendChild(headerTitle);
+
+      const popupBody = document.createElement("div");
+      popupBody.className = "popup-body";
+      formContainer.appendChild(popupBody);
+
+      const createRow = (labelText, valueText) => {
+        const row = document.createElement("div");
+        row.style.display = "flex";
+        row.style.flexDirection = "row";
+        row.style.justifyContent = "space-between";
+        row.style.columnGap = "1rem";
+
+        const label = document.createElement("h6");
+        label.textContent = labelText;
+        row.appendChild(label);
+
+        const value = document.createElement("span");
+        value.textContent = valueText;
+        if (labelText === "Operador:") {
+          value.style.textTransform = "uppercase";
+        }
+        row.appendChild(value);
+
+        return row;
+      };
+
+      popupBody.appendChild(createRow("Operador:", driver.nombreChofer));
+      popupBody.appendChild(createRow("Contacto:", driver.telefono));
+      popupBody.appendChild(createRow("Económico:", driver.numeroEconomico));
+      popupBody.appendChild(createRow("Estado:", driver.estatus));
+
+      const buttonContainer = document.createElement("div");
+      popupBody.appendChild(buttonContainer);
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "vigilate-button";
+      button.setAttribute("data-reference", driver.uid);
+      button.textContent = "Vigilar";
+      buttonContainer.appendChild(button);
+
+      return container;
+    }
+  };
+
+  const getDegreesFromMarker = (gps1, gps2) => {
+    const rad = Math.PI / 180;
+    let lat1 = gps1.lat * rad;
+    let lat2 = gps2.lat * rad;
+    let lon1 = gps1.lng * rad;
+    let lon2 = gps2.lng * rad;
+    let y = Math.sin(lon2 - lon1) * Math.cos(lat2);
+    let x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
+    let bearing = ((Math.atan2(y, x) * 180) / Math.PI + 360) % 360;
+    return bearing >= 180 ? bearing - 360 : bearing;
+  };
+
+  const setMarkerToArray = async (object, type) => {
+    if (type === "warning") return WARNING_MAP_MARKERS_ARRAY.push(object);
+    if (type === "panic") return PANIC_MAP_MARKERS_ARRAY.push(object);
+    return;
+  };
+
+  const updateDriverMarkerOrientation = (uid, deg) => {
+    const iconImg = document.querySelector(`img[alt='marker-${uid}']`);
+    const iconStyle = iconImg.style.transform;
+    iconImg.style.transformOrigin = "center";
+    iconImg.style.transform = `${iconStyle.split("rotate")[0]} rotate(${deg}deg)`;
+  };
+
+  const addWarningInfoToModalTable = (item, pos, type, icon) => {
+    const modal = document.querySelector("div.modal-container-body table#alerts-list tbody");
+    const elementButton = document.createElement("button");
+    elementButton.type = "button";
+    elementButton.setAttribute(
+      "style",
+      "background-color: transparent;border: none;color: #2ba2d7; text-decoration: underline;"
+    );
+    elementButton.addEventListener("click", function () {
+      document.querySelector("#dialog-alert-attention").style.display = "block";
+      document.querySelector("div.modal.alerts-modal").style.display = "none";
+      globalSelectedUserAlert = item;
+      focusMarkerOnMap(pos.uid, type);
+    });
+    elementButton.innerText = "Formato";
+    const elementMapButton = document.createElement("button");
+    elementMapButton.type = "button";
+    elementMapButton.setAttribute(
+      "style",
+      "background-color: transparent;border: none;color: #2ba2d7; text-decoration: underline;"
+    );
+    elementMapButton.addEventListener("click", function () {
+      document.querySelector("#vigilancia-dialog").style.display = "block";
+      document.querySelector("div.modal.alerts-modal").style.display = "none";
+      focusMarkerOnMap(pos.uid, type);
+      globalSelectedUserAlert = item;
+    });
+    elementMapButton.innerText = "Mapa";
+    const items = [
+      // `<img class="${pos}_icon" src="${icon}"/>`,
+      pos?.start,
+      pos?.start,
+      item?.placa,
+      item?.numero_economico,
+      item?.nombre_chofer,
+      item?.name || "-",
+      item?.servicio || "-",
+      type,
+      pos?.uid,
+      item?.telefono || "",
+    ];
+
+    const TR = document.createElement("TR");
+    TR.setAttribute("class", `${type}-list_${item?.uid}`);
+
+    items.forEach((i) => {
+      const TD = document.createElement("TD");
+      TD.insertAdjacentHTML("beforeend", i);
+      TR.appendChild(TD);
+    });
+
+    const TDFormato = document.createElement("TD");
+    TDFormato.insertAdjacentElement("beforeend", elementButton);
+    const TDMapa = document.createElement("TD");
+    TDMapa.insertAdjacentElement("beforeend", elementMapButton);
+
+    TR.insertAdjacentElement("beforeend", TDFormato);
+    TR.insertAdjacentElement("beforeend", TDMapa);
+
+    modal.insertAdjacentElement("beforeend", TR);
+  };
+
+  const checkDriverMarkerOnMap = async (type, uuid, event) => {
+    try {
+      let whichTypeIs = "";
+      const isWorking = GLOBAL_WORKING_DRIVERS_ARRAY.find(({ uid }) => uid === uuid);
+      const isActive = GLOBAL_ACTIVE_DRIVERS_ARRAY.find(({ uid }) => uid === uuid);
+      if (isWorking) whichTypeIs = "working";
+      if (isActive) whichTypeIs = "active";
+
+      // if (!isWorking && !isActive) return;
+
+      // const marker = document.querySelector(`img[alt='marker-${uuid}'][data-type='${whichTypeIs}']`);
+      // const table_row = document.querySelectorAll(`tr.tr_${uuid}`);
+
+      // if (event === "start") {
+      //   marker.style.display = "none";
+      //   table_row.forEach((item) => {
+      //     if (item.getAttribute("data-type") !== type) {
+      //       item.classList.add("no-display");
+      //     }
+      //   });
+      //   return;
+      // }
+      // marker.style.display = "block";
+      // table_row.forEach((item) => {
+      //   if (item.getAttribute("data-type") !== type) {
+      //     item.classList.remove("no-display");
+      //   }
+      // });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const cleanAlertCountInContainerMap = (counter, type) => {
+    document.querySelector(`span#${type}-data`).textContent = counter;
+
+    if (counter === 0) {
+      document.querySelector(`button.map-data.warpan.${type}`).style.display = "none";
+    }
+
+    if (WARNING_COUNTER_INT + PANIC_COUNTER_INT < 1) {
+      document.querySelectorAll(".warpan").forEach((elem) => {
+        elem.style.display = "none";
+      });
+      GeographicZone.setView([22.151456550718237, -100.97786442650008], 13);
+      return;
+    }
+  };
+
+  const addCircleToMap = (item, color, type) => {
+    const circleOptions = {
+      radius: type === "warning" ? 1200 : 2000,
+      stroke: true,
+      weight: 2,
+      opacity: 0.65,
+      color: color,
+      fillColor: color,
+      className: `circle-${item.uid}`,
+    };
+    const CIRCLE_MAP_MARKER = L.circle([item.node.l[0], item.node.l[1]], circleOptions);
+    if (type === "warning") {
+      WARNING_MAP_CIRCLE_MARKERS_ARRAY.push(CIRCLE_MAP_MARKER);
+    }
+    if (type === "panic") {
+      PANIC_CIRCLE_MAP_MARKERS_ARRAY.push(CIRCLE_MAP_MARKER);
+    }
+    CIRCLE_MAP_MARKER.addTo(GeographicZone);
+  };
+
+  const removeCircleMarkerFromMap = (uid, type) => {
+    let CIRCLE_MAP_MARKER =
+      type === "warning"
+        ? WARNING_MAP_CIRCLE_MARKERS_ARRAY.filter(({ options }) => options.className === `circle-${uid}`)
+        : PANIC_CIRCLE_MAP_MARKERS_ARRAY.filter(({ options }) => options.className === `circle-${uid}`);
+
+    // console.log({ CIRCLE_MAP_MARKER, WARNING_MAP_CIRCLE_MARKERS_ARRAY, PANIC_CIRCLE_MAP_MARKERS_ARRAY, uid, type });
+
+    CIRCLE_MAP_MARKER.forEach((item) => {
+      item.removeFrom(GeographicZone);
+    });
+  };
+
+  $(document).on("click", ".tab-button", function (event) {
+    const { currentTarget } = event;
+    const nameTab = currentTarget.getAttribute("data-tab");
+    const isSelected = currentTarget.getAttribute("aria-selected");
+
+    if (isSelected == "true") {
+      return false;
+    }
+
+    const tabContents = document.querySelectorAll("div.formContainer");
+    tabContents.forEach((element) => {
+      const isVisible = element.getAttribute("data-tabcontainer") === nameTab;
+      element.setAttribute("data-visibility", isVisible ? "true" : "false");
+    });
+  });
+
+  let WARNING_NOTIFICATIONS_ARRAY = [];
+  let WARNING_MAP_MARKERS_ARRAY = [];
+  let WARNING_MAP_CIRCLE_MARKERS_ARRAY = [];
+
+  let PANIC_ALERTS_ARRAY = [];
+  let PANIC_MAP_MARKERS_ARRAY = [];
+  let PANIC_CIRCLE_MAP_MARKERS_ARRAY = [];
+
+  let WARNING_COUNTER_INT = 0;
+  let PANIC_COUNTER_INT = 0;
+
+  WARNING_ALERTS_REFERENCE.on("child_removed", (snapshot) => {
+    WARNING_NOTIFICATIONS_ARRAY = WARNING_NOTIFICATIONS_ARRAY.filter((item) => item.uid !== snapshot.key);
+    WARNING_COUNTER_INT = WARNING_NOTIFICATIONS_ARRAY.length;
+    // checkDriverMarkerOnMap("warning", key, "finished");
+    // const marker = findDriverMarkerByUID(key, WARNING_MAP_MARKERS);
+    // removeMarkerFromMap(marker);
+    removeCircleMarkerFromMap(snapshot.key, "warning");
+    WARNING_MAP_MARKERS_ARRAY = WARNING_MAP_MARKERS_ARRAY.filter((item) => item.options.id !== snapshot.key);
+    // settingNewCarTypeInMap(snapshot.key, snapshot.val());
+    cleanWarningAlertCounterInContainerMap(WARNING_COUNTER_INT);
+  });
+
+  async function getDriverDataByUID(uid) {
+    return await realtime
+      .child(`Users/Drivers/${uid}`)
+      .once("value")
+      .then(function (snapshot) {
+        return snapshot.val();
+      });
+  }
+
+  // PANIC_ALERTS_REFERENCE.on("child_changed", (snap) => {
+  //   const driver = findDriverDataByUID(snap.key, GLOBAL_ACTIVE_DRIVERS_ARRAY);
+  //   const marker = findDriverMarkerByUID(snap.key, PANIC_MAP_MARKERS_ARRAY);
+  //   const latitude = snap.val().l[0];
+  //   const longitude = snap.val().l[1];
+
+  //   if (!driver) return;
+
+  //   const newDegree = getDegreesFromMarker(
+  //     { lat: marker._latlng.lat, lng: marker._latlng.lng },
+  //     { lat: latitude, lng: longitude }
+  //   );
+
+  //   marker.setLatLng([latitude, longitude]);
+  //   updateDriverMarkerOrientation(snap.key, newDegree);
+
+  //   const newDriverPosition = updateNodePosition(driver, snap.val());
+  //   GLOBAL_ACTIVE_DRIVERS_ARRAY = GLOBAL_ACTIVE_DRIVERS_ARRAY.filter((item) => item.id !== snap.key);
+  //   GLOBAL_ACTIVE_DRIVERS_ARRAY.push(newDriverPosition);
+  // });
+
+  PANIC_ALERTS_REFERENCE.on("child_removed", (snapshot) => {
+    PANIC_ALERTS_ARRAY = PANIC_ALERTS_ARRAY.filter((item) => item.uid !== snapshot.key);
+    PANIC_COUNTER_INT = PANIC_ALERTS_ARRAY.length;
+    PANIC_MAP_MARKERS_ARRAY = PANIC_MAP_MARKERS_ARRAY.filter((item) => item.options.id !== snapshot.key);
+    cleanPanicAlertCounterInContainerMap(PANIC_COUNTER_INT);
+    const marker = PANIC_MAP_MARKERS_ARRAY.find(({ options }) => options.id === snapshot.key);
+    removeCircleMarkerFromMap(snapshot.key, "panic");
+    removeMarkerFromMap(marker);
+    removeDataFromTable(snapshot.key);
+    PANIC_MAP_MARKERS_ARRAY = PANIC_MAP_MARKERS_ARRAY.filter(({ options }) => options.id !== snapshot.key);
+  });
+
+  const panicCounterButton = document.querySelector("button#button-panic-counter");
+  const warningCounterButton = document.querySelector("button#button-warning-counter");
+
+  document.querySelector("#button-toggle-alert").addEventListener("click", function () {
+    alert_modal.style.display = "block";
+  });
+
+  const alert_modal = document.querySelector("div.modal.alerts-modal");
+  panicCounterButton.addEventListener("click", function (event) {
+    alert_modal.style.display = "block";
+    MODAL_ALERTS_IS_OPENED = true;
+  });
+
+  warningCounterButton.addEventListener("click", function (event) {
+    alert_modal.style.display = "block";
+    MODAL_ALERTS_IS_OPENED = true;
+  });
+
+  const cleanWarningAlertCounterInContainerMap = (counter) => {
+    document.querySelector("span#warning-data").textContent = counter;
+    if (counter === 0) {
+      document.querySelector(`button#button-warning-counter`).style.display = "none";
+    }
+  };
+
+  const cleanPanicAlertCounterInContainerMap = (counter) => {
+    document.querySelector("span#panic-data").textContent = counter;
+    if (counter === 0) {
+      document.querySelector(`button#button-panic-counter`).style.display = "none";
+    }
+  };
+
+  document.addEventListener("keyup", function (event) {
+    if (event.code === "Escape" && MODAL_ALERTS_IS_OPENED === true) {
+      alerts_modal.style.display = "none";
+      MODAL_ALERTS_IS_OPENED = false;
+      document.querySelector("table#alerts-list tbody").innerHTML = null;
+    }
+  });
+
+  window.onload = () => {
+    WARNING_ALERTS_REFERENCE.on("child_added", async (snapshot) => {
+      const driverData = await getDriverDataByUID(snapshot.key);
+      const driverInformation = { ...snapshot.val(), ...driverData };
+      WARNING_NOTIFICATIONS_ARRAY.push({ uid: snapshot.key, ...snapshot.val() });
+      WARNING_COUNTER_INT = WARNING_NOTIFICATIONS_ARRAY.length;
+      // checkDriverMarkerOnMap("warning", snapshot.key, "start");
+      // addDriverMarkerOnMap(item, snap.val(), iconWarning, "warning");
+      addCircleToMap({ uid: snapshot.key, node: snapshot.val() }, "goldenrod", "warning");
+      // addDataDriverToList(item, "warning", dom_icons.yellowcar);
+      addWarningInfoToModalTable(
+        driverData,
+        { uid: snapshot.key, ...snapshot.val() },
+        "warning",
+        dom_icons.warning_icon
+      );
+      showAlertCountersOnMapContainer("warning", WARNING_COUNTER_INT);
+    });
+
+    PANIC_ALERTS_REFERENCE.on("child_added", async (snapshot) => {
+      try {
+        const driverData = await getDriverDataByUID(snapshot.key);
+        const driverInformation = { ...snapshot.val(), ...driverData };
+        addDriverMarkerOnMap(driverInformation, iconPanic, "panic");
+        addDataDriverToList(driverInformation, "panic", dom_icons.redcar);
+        PANIC_ALERTS_ARRAY.push(driverInformation);
+        PANIC_COUNTER_INT = PANIC_ALERTS_ARRAY.length;
+        addCircleToMap({ uid: snapshot.key, node: snapshot.val() }, "#ff0000", "panic");
+        addWarningInfoToModalTable(driverData, { uid: snapshot.key, ...snapshot.val() }, "panic", dom_icons.panic_icon);
+        showAlertCountersOnMapContainer("panic", PANIC_COUNTER_INT);
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  };
+</script>
+
+<script type="text/javascript" defer async>
+  const firestore = firebase.firestore();
+  const warning_logs = firestore.collection("WarningLogs");
+  const panic_logs = firestore.collection("PanicLogs");
+  const search_bar = document.getElementById("searching-bar");
+  const map_container_buttons = document.querySelectorAll("button.map-data");
+  const alerts_modal = document.querySelector("div.modal.alerts-modal");
+  const close_modal = document.querySelector("a.close");
+  const eye = { v: "../assets/svg/visible.svg", h: "../assets/svg/hidden.svg" };
+
+  search_bar.addEventListener("keyup", (e) => {
+    const keyValue = e.target.value;
+    searchDataFromList(keyValue.toUpperCase());
+  });
+
+  const searchDataFromList = (val) => {
+    const list_rows = document.querySelectorAll("table#data-list tbody tr");
+
+    for (let i = 0; i < list_rows.length; i++) {
+      const td = list_rows[i].children[0];
+
+      const phone = td.getAttribute("data-phone");
+      const licence = td.getAttribute("data-licence");
+      const num_economic = td.getAttribute("data-num");
+      const plate = td.firstElementChild.textContent;
+      if (!plate.includes(val)) {
+        if (!licence.includes(val)) {
+          if (!num_economic.includes(val)) {
+            if (!phone.includes(val)) {
+              list_rows[i].style.display = "none";
+              continue;
+            }
+          }
+        }
+      }
+      list_rows[i].style.display = "table-row";
+    }
+    if (val === "") {
+      list_rows.forEach((item) => {
+        item.style.display = item.getAttribute("data-type") === "inactive" ? "none" : "table-row";
+      });
+    }
+  };
+
+  map_container_buttons.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      // if (item.classList.contains("warpan")) {
+      //   alerts_modal.style.display = "block";
+      //   return;
+      // }
+
+      const self = e.currentTarget;
+      const event = self.getAttribute("data-event");
+
+      if (event === undefined || event === null || event === "inactive") return;
+
+      const toggle_eye = self.getAttribute("data-vision");
+      const icon_eye = self.children[0].children[0];
+
+      if (toggle_eye === "true" || toggle_eye === true) {
+        icon_eye.setAttribute("src", eye.h);
+        self.setAttribute("data-vision", "false");
+      } else {
+        icon_eye.setAttribute("src", eye.v);
+        self.setAttribute("data-vision", "true");
+      }
+      verifyCodeOfButtonFilter(eye);
+
+      return;
+    });
+  });
+
+  const verifyCodeOfButtonFilter = (eye) => {
+    const elements = document.querySelectorAll("button.map-data.button-toggle-filter");
+    let code = "";
+    elements.forEach((item) => {
+      const isTrue = item.getAttribute("data-vision");
+      code = isTrue === true || isTrue === "true" ? code + "1" : code + "0";
+    });
+    filterMarkersFromMapByCode(code, elements, eye);
+  };
+
+  const filterMarkersFromMapByCode = (code, array, eye) => {
+    const markers_in_map = document.querySelectorAll("img.leaflet-marker-icon");
+
+    if (code === "0000" || code === "1100" || code === "0011") {
+      markers_in_map.forEach((item) => {
+        item.style.display = "none";
+      });
+      array.forEach((button) => {
+        button.setAttribute("data-vision", "false");
+        const icon_eye = button.children[0].children[0];
+        icon_eye.setAttribute("src", eye.h);
+      });
+    }
+
+    // ALL
+    if (code === "1111") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive") {
+          item.style.display = "block";
+        }
+      });
+      return;
+    }
+
+    // Sitio + Active
+    if (code === "1001") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive") {
+          const service = item.getAttribute("data-service");
+          if (type === "active" && service === "sitio") {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        }
+      });
+      return;
+    }
+
+    // Sitio + Working
+    if (code === "1010") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive") {
+          const service = item.getAttribute("data-service");
+          if (type === "working" && service === "sitio") {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        }
+      });
+      return;
+    }
+
+    // Libre + (Working & Active)
+    if (code === "1011") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive") {
+          const service = item.getAttribute("data-service");
+          if (service !== "libre") {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        }
+      });
+      return;
+    }
+
+    // Libre + (Working & Active)
+    if (code === "0111") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive") {
+          const service = item.getAttribute("data-service");
+          if (service !== "sitio") {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        }
+      });
+      return;
+    }
+
+    // Libre + Active
+    if (code === "0101") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive") {
+          const service = item.getAttribute("data-service");
+          if (type === "active" && service === "libre") {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        }
+      });
+      return;
+    }
+
+    // Libre + Working
+    if (code === "0110") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive") {
+          const service = item.getAttribute("data-service");
+          if (type === "working" && service === "libre") {
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        }
+      });
+      return;
+    }
+
+    // (Sitio & Libre) + Active
+    if (code === "1101") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive" && type !== "working") {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+      return;
+    }
+
+    // (Sitio & Libre) + Working
+    if (code === "1110") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive" && type !== "active") {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+      return;
+    }
+
+    // Sitio
+    if (code === "1000") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        const service = item.getAttribute("data-service");
+        if (service === "sitio" && type !== "inactive") {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+      array.forEach((button, index, arr) => {
+        if (index === 2 || index === 3) {
+          arr[index].setAttribute("data-vision", "true");
+          const icon_eye = button.children[0].children[0];
+          icon_eye.setAttribute("src", eye.v);
+        }
+      });
+      return;
+    }
+
+    // Libre
+    if (code === "0100") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        const service = item.getAttribute("data-service");
+        if (service === "libre" && type !== "inactive") {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+      array.forEach((button, index, arr) => {
+        if (index === 2 || index === 3) {
+          arr[index].setAttribute("data-vision", "true");
+          const icon_eye = button.children[0].children[0];
+          icon_eye.setAttribute("src", eye.v);
+        }
+      });
+      return;
+    }
+
+    // Working
+    if (code === "0010") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive" && type !== "active") {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+      array.forEach((button, index, arr) => {
+        if (index === 0 || index === 1) {
+          arr[index].setAttribute("data-vision", "true");
+          const icon_eye = button.children[0].children[0];
+          icon_eye.setAttribute("src", eye.v);
+        }
+      });
+      return;
+    }
+
+    // Active
+    if (code === "0001") {
+      markers_in_map.forEach((item) => {
+        const type = item.getAttribute("data-type");
+        if (type !== "inactive" && type !== "active") {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+      array.forEach((button, index, arr) => {
+        if (index === 0 || index === 1) {
+          arr[index].setAttribute("data-vision", "true");
+          const icon_eye = button.children[0].children[0];
+          icon_eye.setAttribute("src", eye.v);
+        }
+      });
+      return;
+    }
+  };
+
+  close_modal.addEventListener("click", (e) => {
+    alerts_modal.style.display = "none";
+  });
+
+  const attendAlertFromListModal = (type, uid) => {
+    const observation = document.querySelector("input.input-observations").value;
+    const datetime = getFormatedTimeStamp();
+    if (type === "warning") {
+      warning_logs
+        .doc(datetime.formated)
+        .set({
+          user_uid: "test",
+          timestamp: datetime.unformatted,
+          observation: observation,
+          driver_uid: uid,
+        })
+        .then((success) => {
+          const row = document.querySelector(`tr.${type}-list_${uid}`);
+          if (row.parentElement.childElementCount === 1) {
+            alerts_modal.style.display = "none";
+          }
+          alert_box.style.display = "none";
+          row.remove();
+        })
+        .then((final) => {
+          WARNING_ALERTS_REFERENCE.child(uid).remove();
+          const aside_row = document.querySelector(`tr.tr_${uid}[data-type='${type}']`) || false;
+          if (aside_row !== false) aside_row.remove();
+          alert("Se ha atendido la alerta de manera correcta.");
+        });
+    }
+    if (type === "panic") {
+      panic_logs
+        .doc(datetime.formated)
+        .set({
+          user_uid: "test",
+          timestamp: datetime.unformatted,
+          observation: observation,
+          driver_uid: uid,
+        })
+        .then((success) => {
+          const row = document.querySelector(`tr.${type}-list_${uid}`);
+          if (row.parentElement.childElementCount === 1) {
+            alerts_modal.style.display = "none";
+          }
+          alert_box.style.display = "none";
+          row.remove();
+        })
+        .then((final) => {
+          PANIC_ALERTS_REFERENCE.child(uid).remove();
+          const aside_row = document.querySelector(`tr.tr_${uid}[data-type='${type}']`) || false;
+          if (aside_row !== false) aside_row.remove();
+          alert("Se ha atendido la alerta de manera correcta.");
+        });
+    }
+  };
+
+  const getFormatedTimeStamp = () => {
+    let dateClass = new Date();
+    const timestamp = dateClass.toString().split("GMT")[0];
+    const DD = dateClass.getDate();
+    const MM = dateClass.getMonth() + 1;
+    const YY = dateClass.getFullYear();
+    const hour = dateClass.getHours();
+    const mins = dateClass.getMinutes();
+    const segs = dateClass.getSeconds();
+    const mseg = dateClass.getMilliseconds();
+    return {
+      unformatted: timestamp,
+      formated: YY + "_" + MM + "_" + DD + "_" + hour + "_" + mins + "_" + segs + "_" + mseg,
+    };
+  };
+</script>
