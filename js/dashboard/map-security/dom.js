@@ -1,8 +1,7 @@
-import { WARNING_ALERTS_REFERENCE, PANIC_ALERTS_REFERENCE } from "./functionality.js";
+import { WARNING_ALERTS_REFERENCE, PANIC_ALERTS_REFERENCE, GLOBAL_ALL_DRIVERS_ARRAY   } from "./functionality.js";
 const firestore = firebase.firestore();
 const warning_logs = firestore.collection("WarningLogs");
 const panic_logs = firestore.collection("PanicLogs");
-
 const search_bar = document.getElementById("searching-bar");
 const map_container_buttons = document.querySelectorAll("button.map-data");
 const alerts_modal = document.querySelector("div.modal.alerts-modal");
@@ -319,9 +318,20 @@ close_modal.addEventListener("click", (e) => {
 });
 
 alert_box_close.addEventListener("click", (event) => {
-  //document.querySelector("input.input-observations").value = "";
+  limpiarFormulario()
   alert_box.style.display = "none";
 });
+
+//Limpia el formulario alert-box
+function limpiarFormulario() {
+  document.querySelector("input#folio").value = "";
+  document.querySelector("input#descripcion").value = "";
+  document.querySelector("input#seguimiento").value = "";
+  document.querySelector("input#observaciones").value = "";
+  document.querySelector("input#fakeAlert").checked = false;
+  document.querySelector("input#finishedEvent").checked = false;
+}
+
 
 alert_box_confirm.addEventListener("click", (e) => {
   const confirm_msg = "La alerta será atendida y registrada en un histórico en la base de datos. ¿Desea continuar?";
@@ -334,17 +344,25 @@ alert_box_confirm.addEventListener("click", (e) => {
 });
 
 const attendAlertFromListModal = (type, uid) => { 
-  const observation = document.querySelector("input.input-observations").value;
+  const driver = GLOBAL_ALL_DRIVERS_ARRAY.find((item) => item.uid === uid);
   const datetime = getFormatedTimeStamp();
-  if (type === "warning") {
-    warning_logs
-      .doc(datetime.formated)
-      .set({
-        user_uid: "test",
-        timestamp: datetime.unformatted,
-        observation: observation,
-        driver_uid: uid,
-      })
+  const payload = {
+    folio         : document.querySelector("input#folio").value ?? "",
+    descripcion   : document.querySelector("input#descripcion").value ?? "",
+    seguimiento   : document.querySelector("input#seguimiento").value ?? "",
+    observaciones : document.querySelector("input#observaciones").value ?? "",
+    fakeAlert     : document.querySelector("input#fakeAlert").checked ?? false,
+    finishedEvent : document.querySelector("input#finishedEvent").checked ?? false,
+    adminEmail    : sessionStorage.getItem("email"),
+    adminUID      : sessionStorage.getItem("user"),
+    timestamp     : new Date().toISOString(),
+    tipo          : "warning", 
+    conductorUID  : driver.uid,
+    conductorNombre  : driver.nombreChofer
+  }
+    firestore
+      .collection("LogsAlertas")
+      .add(payload)
       .then((success) => {
         const row = document.querySelector(`tr.${type}-list_${uid}`);
         if (row.parentElement.childElementCount === 1) {
@@ -358,33 +376,12 @@ const attendAlertFromListModal = (type, uid) => {
         const aside_row = document.querySelector(`tr.tr_${uid}[data-type='${type}']`) || false;
         if (aside_row !== false) aside_row.remove();
         alert("Se ha atendido la alerta de manera correcta.");
-      });
-  }
-  if (type === "panic") {
-    panic_logs
-      .doc(datetime.formated)
-      .set({
-        user_uid: "test",
-        timestamp: datetime.unformatted,
-        observation: observation,
-        driver_uid: uid,
       })
-      .then((success) => {
-        const row = document.querySelector(`tr.${type}-list_${uid}`);
-        if (row.parentElement.childElementCount === 1) {
-          alerts_modal.style.display = "none";
-        }
-        alert_box.style.display = "none";
-        row.remove();
-      })
-      .then((final) => {
-        PANIC_ALERTS_REFERENCE.child(uid).remove();
-        const aside_row = document.querySelector(`tr.tr_${uid}[data-type='${type}']`) || false;
-        if (aside_row !== false) aside_row.remove();
-        alert("Se ha atendido la alerta de manera correcta.");
+      .catch(() => {
+        console.log("Error al registrar la alerta en la base de datos.");
       });
-  }
-};
+
+}
 
 const getFormatedTimeStamp = () => {
   let dateClass = new Date();
@@ -401,4 +398,5 @@ const getFormatedTimeStamp = () => {
     formated: YY + "_" + MM + "_" + DD + "_" + hour + "_" + mins + "_" + segs + "_" + mseg,
   };
 };
+
 

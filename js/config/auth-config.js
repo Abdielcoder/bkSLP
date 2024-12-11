@@ -20,7 +20,7 @@ const isAuthenticated = () => sessionStorage.getItem("user");
 
 window.onload = async function () {
   try {
-    if (window.location.pathname === "/index.html") return; 
+    if (window.location.pathname === "/index.html") return;
     if (document.querySelector("div#root") !== null) {
       document.querySelector("div#root").classList.remove("preload");
     }
@@ -35,15 +35,22 @@ const renderMenus = () => {
   const concesionarioMenu = document.querySelector("#concesionario-menu-li");
   const mapaMenu = document.querySelector("#mapa-menu-li");
   const adminMenu = document.querySelector("#admin-menu-li");
-  const historicoMenu = document.querySelector("#historico-menu-li");
   const rolesMenu = document.querySelector("#roles-menu-li");
+  const chatsMenu = document.querySelector("#chats-menu-li");
+  const historicoMenu = document.querySelector("#historico-menu-li");
+  const clientesMenu = document.querySelector("#clientes-menu-li");
 
   const renderMap = sessionStorage.getItem("mapaPermission");
-  const renderConcesionarios = sessionStorage.getItem("concesionariosPermission");
+  const renderConcesionarios = sessionStorage.getItem(
+    "concesionariosPermission"
+  );
   const renderConductores = sessionStorage.getItem("conductoresPermission");
   const renderVehiculos = sessionStorage.getItem("vehiculosPermission");
   const renderAdmis = sessionStorage.getItem("adminsPermission");
   const renderRoles = sessionStorage.getItem("rolesPermission");
+  const renderChats = sessionStorage.getItem("chatsPermission");
+  const renderHistorico = sessionStorage.getItem("historicoPermission");
+  const renderClientes = sessionStorage.getItem("clientesPermission");
 
   if (parseInt(renderMap.split(",")[1]) !== 1) {
     mapaMenu.remove();
@@ -56,6 +63,9 @@ const renderMenus = () => {
   const vehiculosPermission = checkStatus(renderVehiculos);
   const adminsPermission = checkStatus(renderAdmis);
   const rolesPermission = checkStatus(renderRoles);
+  const chatsPermission = checkStatus(renderChats);
+  const historicoPermission = checkStatus(renderHistorico);
+  const clientesPermission = checkStatus(renderClientes);
 
   if (adminsPermission == 0) {
     adminMenu.remove();
@@ -96,18 +106,32 @@ const renderMenus = () => {
   } else {
     vehiculosMenu.style.display = "block";
   }
+  if (chatsPermission == 0) {
+    chatsMenu.remove();
+  } else {
+    chatsMenu.style.display = "block";
+  }
+  if (historicoPermission == 0) {
+    historicoMenu.remove();
+  } else {
+    historicoMenu.style.display = "block";
+  }
+  if (clientesPermission == 0) {
+    clientesMenu.remove();
+  } else {
+    clientesMenu.style.display = "block";
+  }
 };
 
 const checkStatus = (array) => {
-  const destructuringArray = array.split("$").map((item) => parseInt(item.split(",")[1]));
-
+  const destructuringArray = array
+    .split("$")
+    .map((item) => parseInt(item.split(",")[1]));
   if (destructuringArray.every((item) => item === 1)) return 1;
   if (destructuringArray.every((item) => item === 0)) return 0;
   if (destructuringArray.some((item) => item === 1)) return 1;
-
   return null;
 };
-
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     renderMenus();

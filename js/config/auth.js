@@ -56,6 +56,9 @@ const destructuringRoleList = (data) => {
     mapa: [],
     concesionarios: [],
     vehiculos: [],
+    chats: [],
+    historico: [],
+    clientes: []
   };
   console.log({ ...data.data(), uid: data.id });
 
@@ -87,6 +90,9 @@ const destructuringRoleList = (data) => {
     ["rolesPermission", objectData.roles],
     ["mapaPermission", objectData.mapa],
     ["vehiculosPermission", objectData.vehiculos],
+    ["chatsPermission", objectData.chats],
+    ["historicoPermission", objectData.historico],
+    ["clientesPermission", objectData.clientes]
   ];
 
   return { data: objectData, array };
@@ -158,6 +164,7 @@ const setSession = async (user, timestamp) => {
 };
 
 export const logInWithEmail = (email, password) => {
+  console.log(email, password)
   try {
     auth
       .signInWithEmailAndPassword(email, password)

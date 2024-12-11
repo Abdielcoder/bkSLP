@@ -2901,7 +2901,19 @@
             ...item.data,
             habilitado: false,
           });
-        await updateUserRealTimeAssignedConcesionario(uid, item.id);
+
+        const vehiculosSnapshot = await firestore
+          .collection(CONCESIONARIOS_COLLECTION)
+          .doc(uid)
+          .collection("vehiculos")
+          .get();
+
+        const vehiculos = vehiculosSnapshot.docs.map(doc => ({
+          id: doc.id, // Include the document ID if needed
+          ...doc.data(), // Merge the document data
+        }));
+
+        await updateUserRealTimeAssignedConcesionario(uid, item.id, vehiculos);
         await getAndRenderDriversFromUser();
         window.alert("Se ha asignado el conductor al concesionario.");
       } catch (error) {
@@ -2910,12 +2922,42 @@
       }
     }
 
-    async function updateUserRealTimeAssignedConcesionario(concesionario, conductor) {
-      // console.log({ concesionario, conductor });
+    async function updateUserRealTimeAssignedConcesionario(concesionario, conductor, vehiculos) {
       try {
         const userReference = firebase.database().ref("/Users/Drivers/" + conductor);
         const snapshot = await userReference.get();
         const userData = snapshot.val();
+        const hasVehicles = vehiculos.length > 0;
+        let vehiculoDefault = {
+          color: "N/A",
+          frontal: "N/A",
+          lateralDerecho: "N/A",
+          lateralIzquierdo: "N/A",
+          marca: "N/A",
+          modelo: "N/A",
+          municipio: "N/A",
+          noSerie: "N/A",
+          numeroEconomico: "N/A",
+          placa: "N/A",
+          placaNumero: "N/A",
+          placaTipo: "N/A",
+          polizaSeguro: "N/A",
+          polizaSeguroImg: "N/A",
+          tipoCombustible: "N/A",
+          tipoVehiculo: "N/A",
+          trasero: "N/A",
+          yearVehiculo: "N/A",
+        };
+
+        if(hasVehicles) {
+          for (const key in vehiculoDefault) {
+            if (vehiculos[0].hasOwnProperty(key)) {
+              vehiculoDefault[key] = vehiculos[0][key];
+            }
+          }
+        }
+
+/*
         let arrayConcesionarios = [];
         if (userData.concesionarioAsignado) {
           if (Array.isArray(userData.concesionarioAsignado)) {
@@ -2928,7 +2970,10 @@
           arrayConcesionarios.push({ habilitado: false, uid: concesionario });
         }
 
-        await userReference.update({ concesionarioAsignado: arrayConcesionarios });
+*/
+        await userReference.update(vehiculoDefault);
+
+
         alert("Se ha asignado el conductor al concesionario.");
       } catch (error) {
         console.error(error);

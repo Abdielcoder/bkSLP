@@ -70,7 +70,7 @@ const createAdminUser = async () => {
   const formObject = await userReducerFormData();
   const userExists = CONTEXT?.some((item) => item.usuario === formObject.usuario);
   if (userExists) return errorHandler("userExists", { user: formObject.email });
-  if (!formObject.email.includes("@tutaxislp.com.mx")) return errorHandler("invalid-domain", formObject.email);
+  //if (!formObject.email.includes("@tutaxislp.com.mx")) return errorHandler("invalid-domain", formObject.email);
   const hasEmptySpaces = Object.values(formObject).some((item) => item === "");
   if (hasEmptySpaces) return errorHandler("emptySpaces");
 
@@ -106,6 +106,7 @@ async function createFirestoreUser(args) {
     .doc(args.uid)
     .set(args.data)
     .catch((error) => {
+      console.log(error)
       return false;
     });
 }

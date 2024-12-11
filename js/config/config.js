@@ -63,7 +63,26 @@ export const createUserAndSaveData = async (elements, collection, isConcesionari
       }
 
       if (collection === "conductores" || isConcesionario === true) {
-        await insertIntoRealTime(firestoreData);
+      //CAMBIOS DE ABDIEL
+        const obligatoryUserFields = {
+          banderaMensajeI: "N/A",
+          delegacionID: "N/A",
+          estatus: "N/A",
+          gafete: "N/A",
+          genero: "N/A",
+          image: "N/A",
+          last_gps_location: "N/A",
+          noLicencia_chofer: "N/A",
+          nombre_chofer: "N/A",
+          numero_economico: "N/A",
+          proceso: "N/A",
+          psw: "N/A",
+          resenas: "N/A",
+          tarjeton_ciudad: "N/A",
+          tipo: "N/A",
+          user_id: "N/A",
+        }
+        await insertIntoRealTime({...firestoreData, obligatoryUserFields});
       }
       window.alert("Se ha guardado el registro con exito.");
       return true;

@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../css/docs/tadiDefaults.css" />
     <link rel="stylesheet" href="../css/docs/historico.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       type="text/css"
@@ -206,15 +209,25 @@
                 MAPA
               </a>
             </li>
-            <li class="nav-item" id="concesionario-menu-li" style="display: none">
-              <a class="nav-link hasSubmenu selectedPage" href="#" id="concesionario">
+            <li
+              class="nav-item"
+              id="concesionario-menu-li"
+              style="display: none"
+            >
+              <a
+                class="nav-link hasSubmenu"
+                href="./concesionarios.html"
+                id="concesionario"
+              >
                 <span class="link-icons material-icons-sharp">person</span>
                 CONCESIONARIOS
               </a>
             </li>
             <li class="nav-item" id="vehiculos-menu-li">
               <a class="nav-link" href="./vehicles.html">
-                <span class="link-icons material-icons-sharp">directions_car</span>
+                <span class="link-icons material-icons-sharp"
+                  >directions_car</span
+                >
                 VEHICULO
               </a>
             </li>
@@ -239,13 +252,17 @@
                 <ul>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="./historico-conductores.html">
-                      <span class="link-icons material-icons-sharp">person</span>
+                      <span class="link-icons material-icons-sharp"
+                        >person</span
+                      >
                       CONDUCTORES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="./historico-clientes.html">
-                      <span class="link-icons material-icons-sharp">person</span>
+                      <span class="link-icons material-icons-sharp"
+                        >person</span
+                      >
                       CLIENTES
                     </a>
                   </li>
@@ -254,7 +271,9 @@
             </li>
             <li class="nav-item menu-button menu-closed" id="admin-menu-li">
               <a class="nav-link" href="#" id="administracion">
-                <span class="link-icons material-icons-sharp">manage_accounts</span>
+                <span class="link-icons material-icons-sharp"
+                  >manage_accounts</span
+                >
                 ADMINISTRACIÓN
               </a>
               <div id="administracion-submenu" data-displayed="hidden">
@@ -266,14 +285,21 @@
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
-                    <a class="nav-sublink" href="../admin/administradores/index.html">
-                      <span class="link-icons material-icons-sharp">person</span>
+                    <a
+                      class="nav-sublink"
+                      href="../admin/administradores/index.html"
+                    >
+                      <span class="link-icons material-icons-sharp"
+                        >person</span
+                      >
                       ADMINISTRADORES
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden" id="roles-menu-li">
                     <a class="nav-sublink" href="../admin/roles/index.html">
-                      <span class="link-icons material-icons-sharp">groups</span>
+                      <span class="link-icons material-icons-sharp"
+                        >groups</span
+                      >
                       ROLES
                     </a>
                   </li>
@@ -285,13 +311,17 @@
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="../admin/base_rates.html">
-                      <span class="link-icons material-icons-sharp">attach_money</span>
+                      <span class="link-icons material-icons-sharp"
+                        >attach_money</span
+                      >
                       TARIFAS BASE
                     </a>
                   </li>
                   <li class="nav-item menu-linked hidden">
                     <a class="nav-sublink" href="./accesos.html">
-                      <span class="link-icons material-icons-sharp">history</span>
+                      <span class="link-icons material-icons-sharp"
+                        >history</span
+                      >
                       ACCESOS
                     </a>
                   </li>
@@ -306,14 +336,18 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span class="link-icons material-icons-sharp">local_police</span>
+              <a class="nav-link selectedPage" href="#">
+                <span class="link-icons material-icons-sharp"
+                  >local_police</span
+                >
                 Seguridad Pública
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="./mapa-seguridad.html">
-                <span class="link-icons material-icons-sharp">local_police</span>
+                <span class="link-icons material-icons-sharp"
+                  >local_police</span
+                >
                 Mapa Seguridad
               </a>
             </li>
@@ -323,14 +357,14 @@
 
       <!-- Header  -->
       <header>
-        <nav style="position: relative; z-index: 1;">
+        <nav style="position: relative; z-index: 1">
           <h1 class="app-title">Tu taxi - Portal Administrativo</h1>
           <button class="close-app" id="signout-button">
             <span class="material-icons-sharp">logout</span>
             Cerrar Sesión
           </button>
         </nav>
-        <div class="header-bg-image" style="z-index: 0;"></div>
+        <div class="header-bg-image" style="z-index: 0"></div>
       </header>
 
       <!-- Main -->
@@ -350,6 +384,7 @@
                     <thead>
                       <tr>
                         <th></th>
+                        <th>Fecha</th>
                         <th>Conductor</th>
                         <th>Número económico</th>
                         <th>Placa</th>
@@ -393,7 +428,11 @@
           <div class="dialog-container">
             <div class="container-header">
               <h2>
-                Atención de alerta <span id="alert-icon" style="align-items: center; text-transform: uppercase"></span>
+                Atención de alerta
+                <span
+                  id="alert-icon"
+                  style="align-items: center; text-transform: uppercase"
+                ></span>
               </h2>
             </div>
             <div class="container-body">
@@ -401,11 +440,21 @@
                 <form action="" id="formulario-atencion">
                   <label for="folio">
                     Folio:
-                    <input type="text" name="folio" id="folio" placeholder="Número de Folio" />
+                    <input
+                      type="text"
+                      name="folio"
+                      id="folio"
+                      placeholder="Número de Folio"
+                    />
                   </label>
                   <label for="descripcion">
                     Descripción:
-                    <input type="text" name="descripcion" id="descripcion" placeholder="Descripción" />
+                    <input
+                      type="text"
+                      name="descripcion"
+                      id="descripcion"
+                      placeholder="Descripción"
+                    />
                   </label>
                   <label for="fakeAlert" class="checkbox-label">
                     <input type="checkbox" name="fakeAlert" id="fakeAlert" />
@@ -413,18 +462,34 @@
                   </label>
                   <label for="seguimiento">
                     Seguimiento:
-                    <input type="text" name="seguimiento" id="seguimiento" placeholder="Comentario de seguimiento" />
+                    <input
+                      type="text"
+                      name="seguimiento"
+                      id="seguimiento"
+                      placeholder="Comentario de seguimiento"
+                    />
                   </label>
                   <label for="finishedEvent" class="checkbox-label">
-                    <input type="checkbox" name="finishedEvent" id="finishedEvent" />
+                    <input
+                      type="checkbox"
+                      name="finishedEvent"
+                      id="finishedEvent"
+                    />
                     ¿Evento finalizado?
                   </label>
                   <label for="observaciones">
                     Observaciones
-                    <input type="text" name="observaciones" id="observaciones" placeholder="Observaciones" />
+                    <input
+                      type="text"
+                      name="observaciones"
+                      id="observaciones"
+                      placeholder="Observaciones"
+                    />
                   </label>
                   <div class="form-buttons">
-                    <button type="button" id="dialog-cancel-button">Cancelar</button>
+                    <button type="button" id="dialog-cancel-button">
+                      Cancelar
+                    </button>
                     <button type="submit">Continuar</button>
                   </div>
                 </form>
@@ -470,9 +535,11 @@
         input.addEventListener("input", inputValidOnlyTextOrNumber);
       });
 
-      document.querySelectorAll("input.only-characters-spaces").forEach((input) => {
-        input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
-      });
+      document
+        .querySelectorAll("input.only-characters-spaces")
+        .forEach((input) => {
+          input.addEventListener("input", inputValidOnlyTextNumberAndSpaces);
+        });
     });
   </script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
@@ -483,15 +550,27 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
   <script src="../js/global-context.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"
+  ></script>
   <script
     type="text/javascript"
     src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/b-2.1.1/b-html5-2.1.1/b-print-2.1.1/date-1.1.1/sb-1.3.0/datatables.min.js"
   ></script>
- <script type="module">
+  <script type="module">
     const realtime = firebase.database().ref();
     const firestore = firebase.firestore();
 
@@ -508,7 +587,9 @@
 
     cancelButton.addEventListener("click", function (event) {
       const key = dialogAlert.getAttribute("data-key");
-      document.querySelector(`input[type='checkbox'][data-key='${key}']`).checked = false;
+      document.querySelector(
+        `input[type='checkbox'][data-key='${key}']`
+      ).checked = false;
       dialogAlert.setAttribute("data-visibility", "hidden");
       dialogAlert.setAttribute("data-key", null);
       dialogAlert.removeAttribute("data-type");
@@ -538,7 +619,8 @@
     function createRowsFromData(data, type) {
       let rowElement = document.createElement("tr");
       const arrayData = [
-        // data.uuid,
+        "",
+        data.fecha,
         data.nombreCompleto,
         data.numeroEconomico,
         data.placa,
@@ -547,30 +629,20 @@
         type.icono,
       ];
 
-      arrayData.forEach(function (element) {
-        const cellElement = document.createElement("td");
-        const spanElement = document.createElement("span");
-        spanElement.innerHTML = element;
-        spanElement.classList.add("cell-span");
-        cellElement.insertAdjacentElement("beforeend", spanElement);
-        rowElement.insertAdjacentElement("beforeend", cellElement);
-      });
+      // Add the row to the Datatable
+      const newRow = tableAlertasContext.row.add(arrayData).draw(false).node();
 
-      const actionData = createActionFunctionality(data, type);
+      // Add attributes directly to the row
+      newRow.setAttribute("data-key", data.uuid);
+      newRow.setAttribute("data-type", type.texto);
 
-      rowElement.insertAdjacentElement("afterbegin", actionData);
-      rowElement.setAttribute("data-key", data.uuid);
-      rowElement.setAttribute("data-type", type.texto);
-      //   tableAlertas.row.add(arrayData).draw(false);
-      tableAlertas.children[1].insertAdjacentElement("beforeend", rowElement);
-    }
-
-    function createActionFunctionality(data, type) {
-      const cellElement = document.createElement("td");
+      // Add the checkbox to the first column
       const checkboxElement = document.createElement("input");
       checkboxElement.type = "checkbox";
       checkboxElement.checked = false;
       checkboxElement.setAttribute("data-key", data.uuid);
+
+      // Attach the event listener
       checkboxElement.addEventListener("click", function (event) {
         if (event.target.checked) {
           dialogAlert.setAttribute("data-visibility", "visible");
@@ -581,23 +653,33 @@
         }
       });
 
-      cellElement.insertAdjacentElement("beforeend", checkboxElement);
-      return cellElement;
+      // Append the checkbox to the first cell of the new row
+      const firstCell = newRow.cells[0];
+      firstCell.appendChild(checkboxElement);
+    }
+
+    function formatDate(input) {
+      //"2024.11.29.12.17.39" from this format to "2024-11-29 12:17:39"
+      const parts = input.split('.');
+      const [year, month, day, hour, minute, second] = parts;
+      return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
     }
 
     function createCardWithDriverInformation(data, type) {
+
       const requiredInformation = {
-        uuid: data.key,
-        nombreCompleto: data.nombre_chofer,
-        numeroEconomico: data.numero_economico,
-        placa: data.placa,
+        uuid: data.key ?? "",
+        fecha: formatDate(data.start) ?? "",
+        nombreCompleto: data.nombre_chofer ?? "",
+        numeroEconomico: data.numero_economico ?? "",
+        placa: data.placa ?? "",
         ubicacion: {
-          latitud: data.l[0],
-          longitud: data.l[1],
+          latitud: data.l[0] ?? "",
+          longitud: data.l[1] ?? "",
         },
-        correo: data.correo,
-        telefono: data.telefono,
-        municipio: data.MUNICIPIO,
+        correo: data.correo ?? "",
+        telefono: data.telefono ?? "",
+        municipio: data.MUNICIPIO ?? "",
       };
 
       createRowsFromData({ ...data, ...requiredInformation }, type);
@@ -618,13 +700,12 @@
       const driver = await getDriverInfoFromCollection(panicData.key);
 
       panicAlerts = panicAlerts.filter(({ key }) => key === panicData.key);
-      tableAlertasContext.clear().destroy();
+      //tableAlertasContext.clear().destroy();
       if (panicAlerts.length > 0) {
         const styles = { icono: PanicIcon + " emergencia", texto: "panico" };
         panicAlerts.forEach((element) => {
           createCardWithDriverInformation(element, styles);
         });
-        generateDataTable();
       }
     });
 
@@ -641,14 +722,15 @@
     warningCollectionReference.on("child_removed", async function (snapshot) {
       const warningData = { key: snapshot.key, ...snapshot.val() };
       const driver = await getDriverInfoFromCollection(warningData.key);
-      warningAlerts = warningAlerts.filter(({ key }) => key === warningData.key);
+      warningAlerts = warningAlerts.filter(
+        ({ key }) => key === warningData.key
+      );
       if (warningAlerts.length > 0) {
         const styles = { icono: WarningIcon + " alerta", texto: "warning" };
         tableAlertasContext.clear().destroy();
         warningAlerts.forEach((element) => {
-          createCardWithDriverInformation(element, styles);
+          //createCardWithDriverInformation(element, styles);
         });
-        generateDataTable();
       }
     });
 
@@ -660,6 +742,7 @@
 
     formAlertAttention.addEventListener("submit", async function (event) {
       event.preventDefault();
+
       const formElements = Array.from(event.target.elements).slice(0, -2);
       const formData = {};
       formElements.forEach(function (element) {
@@ -676,28 +759,74 @@
       formData["adminUID"] = sessionStorage.getItem("user");
       formData["timestamp"] = new Date().toISOString();
       formData["tipo"] = dialogAlert.getAttribute("data-type");
-      const firestoreResponse = await firestore
-        .collection("LogsAlertas")
-        .add(formData)
-        .then(() => true)
-        .catch(() => false);
-      if (firestoreResponse) {
-        const collection = dialogAlert.getAttribute("data-type") === "panico" ? "panic_button" : "warning";
-        const logResponse = await realtime
+
+      try {
+        // Add to Firestore
+        await firestore.collection("LogsAlertas").add(formData);
+
+        const collection =
+          dialogAlert.getAttribute("data-type") === "panico"
+            ? "panic_button"
+            : "warning";
+
+        // Remove from Realtime Database
+        await realtime
           .child(`${collection}/${globalSelectedUserAlert.key}`)
-          .remove()
-          .then(() => true)
-          .catch(() => false);
-        if (logResponse) {
-          window.alert("Se ha atendido la alerta.");
-          dialogAlert.setAttribute("data-visibility", "hidden");
-          dialogAlert.setAttribute("data-key", null);
-          dialogAlert.removeAttribute("data-type");
-        } else {
-          window.alert("Se presentó un error al atender alerta");
-        }
+          .remove();
+
+        alert("Se ha atendido la alerta.");
+
+        removeRowByDataKey(dialogAlert.getAttribute("data-key"));
+
+        // Reset dialog attributes
+        dialogAlert.setAttribute("data-visibility", "hidden");
+        dialogAlert.setAttribute("data-key", null);
+        dialogAlert.removeAttribute("data-type");
+
+        // Clear dialog icon and global selected user
+        document.querySelector("#alert-icon").innerHTML = "";
+        globalSelectedUserAlert = {};
+
+        // Dynamically add the new log to the logs table
+        appendLogToTable(formData);
+      } catch (error) {
+        console.error("Error processing the alert:", error);
+        alert("Se presentó un error al atender alerta");
       }
     });
+
+    function removeRowByDataKey(dataKey) {
+      // Use DataTables API to find the row with the specific data-key
+      const table = tableAlertasContext;
+
+      // Iterate through all rows to find the matching one
+      table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+        const row = this.node(); // Get the DOM node of the row
+        if (row.getAttribute("data-key") === dataKey) {
+          this.remove(); // Remove the row
+        }
+      });
+
+      // Redraw the table after removal
+      table.draw(false);
+    }
+
+    // Function to dynamically append the log to the table
+    function appendLogToTable(logData) {
+      const logFields = [
+        logData.folio || "-", // Folio may not always be present
+        logData.timestamp,
+        logData.conductorNombre,
+        logData.observaciones || "-",
+        logData.seguimiento || "-",
+        logData.fakeAlert ? "Sí" : "No",
+        logData.finishedEvent ? "Finalizado" : "Pendiente",
+        logData.adminEmail,
+        logData.tipo,
+      ];
+
+      tableAlertasLogsContext.row.add(logFields).draw(false);
+    }
 
     const getLogsFromFirestore = async () => {
       if (tableAlertasLogsContext !== null) {
@@ -773,7 +902,6 @@
         },
       });
     }
- 
 
     const generateDataTableLogs = () => {
       const exportOptions = {
@@ -797,6 +925,7 @@
             exportOptions,
           },
         ],
+        order: [[1, "desc"]], // Orders the table by the second column (index 1) in descending order
         oLanguage: {
           sSearch: "Busqueda:",
           oPaginate: {
@@ -815,7 +944,7 @@
       });
     };
 
-    document.addEventListener("DOMContentLoaded", function (event) { 
+    document.addEventListener("DOMContentLoaded", function (event) {
       generateDataTable();
       getLogsFromFirestore();
       document.querySelectorAll("tr.odd").forEach(function (element) {
